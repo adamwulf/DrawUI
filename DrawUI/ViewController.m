@@ -8,8 +8,9 @@
 
 #import "ViewController.h"
 #import "MMDrawView.h"
-#import "CALayerRenderer.h"
 #import "MMDrawModel.h"
+#import "CALayerRenderer.h"
+#import "DrawRectRenderer.h"
 
 @interface ViewController ()
 
@@ -25,7 +26,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _activeRenderer = [[CALayerRenderer alloc] init];
+//    _activeRenderer = [[CALayerRenderer alloc] init];
+    _activeRenderer = [[DrawRectRenderer alloc] init];
 
     [[self view] setTool:[[MMPen alloc] initWithMinSize:2 andMaxSize:6]];
     [[self view] setDrawModel:[[MMDrawModel alloc] init]];

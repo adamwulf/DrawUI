@@ -54,5 +54,4 @@
     [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
 
-
 @end
