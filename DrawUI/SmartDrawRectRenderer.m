@@ -64,7 +64,6 @@ CGFloat const kStrokeWidth = 10;
         UIBezierPath *path = [stroke path];
         
         if(path){
-            
             CGPathGetBoundingBox(nil);
             CGPathGetPathBoundingBox(nil);
             
