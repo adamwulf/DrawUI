@@ -1,5 +1,5 @@
 //
-//  DrawRectRenderer.h
+//  NaiveDrawRectRenderer.h
 //  DrawUI
 //
 //  Created by Adam Wulf on 11/13/19.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DrawRectRenderer : UIView<MMDrawViewRenderer>
+@interface NaiveDrawRectRenderer : UIView<MMDrawViewRenderer>
 
 @end
 

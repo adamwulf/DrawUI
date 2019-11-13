@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C5313F04237BCD7F00C2097A /* CALayerRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F03237BCD7F00C2097A /* CALayerRenderer.m */; };
-		C5313F07237BD3E900C2097A /* DrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F06237BD3E900C2097A /* DrawRectRenderer.m */; };
+		C5313F07237BD3E900C2097A /* NaiveDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */; };
+		C5313F0A237BD75000C2097A /* SmartDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */; };
 		C591142F237B3BE800E12FAB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C591142E237B3BE800E12FAB /* AppDelegate.m */; };
 		C5911432237B3BE800E12FAB /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911431237B3BE800E12FAB /* SceneDelegate.m */; };
 		C5911435237B3BE800E12FAB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911434237B3BE800E12FAB /* ViewController.m */; };
@@ -35,8 +36,10 @@
 /* Begin PBXFileReference section */
 		C5313F02237BCD7F00C2097A /* CALayerRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CALayerRenderer.h; sourceTree = "<group>"; };
 		C5313F03237BCD7F00C2097A /* CALayerRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CALayerRenderer.m; sourceTree = "<group>"; };
-		C5313F05237BD3E900C2097A /* DrawRectRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawRectRenderer.h; sourceTree = "<group>"; };
-		C5313F06237BD3E900C2097A /* DrawRectRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawRectRenderer.m; sourceTree = "<group>"; };
+		C5313F05237BD3E900C2097A /* NaiveDrawRectRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NaiveDrawRectRenderer.h; sourceTree = "<group>"; };
+		C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NaiveDrawRectRenderer.m; sourceTree = "<group>"; };
+		C5313F08237BD75000C2097A /* SmartDrawRectRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartDrawRectRenderer.h; sourceTree = "<group>"; };
+		C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartDrawRectRenderer.m; sourceTree = "<group>"; };
 		C591142A237B3BE800E12FAB /* DrawUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C591142D237B3BE800E12FAB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C591142E237B3BE800E12FAB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -194,8 +197,10 @@
 			children = (
 				C5313F02237BCD7F00C2097A /* CALayerRenderer.h */,
 				C5313F03237BCD7F00C2097A /* CALayerRenderer.m */,
-				C5313F05237BD3E900C2097A /* DrawRectRenderer.h */,
-				C5313F06237BD3E900C2097A /* DrawRectRenderer.m */,
+				C5313F05237BD3E900C2097A /* NaiveDrawRectRenderer.h */,
+				C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */,
+				C5313F08237BD75000C2097A /* SmartDrawRectRenderer.h */,
+				C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */,
 			);
 			name = Rendering;
 			sourceTree = "<group>";
@@ -278,13 +283,14 @@
 				C5911487237B400600E12FAB /* NSArray+MapReduce.m in Sources */,
 				C5911481237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m in Sources */,
 				C5911477237B3FAD00E12FAB /* MMPen.m in Sources */,
-				C5313F07237BD3E900C2097A /* DrawRectRenderer.m in Sources */,
+				C5313F07237BD3E900C2097A /* NaiveDrawRectRenderer.m in Sources */,
 				C5911465237B3F3100E12FAB /* MMMoveToPathElement.m in Sources */,
 				C591147E237B3FDE00E12FAB /* Constants.m in Sources */,
 				C591146B237B3F4400E12FAB /* MMDrawView.m in Sources */,
 				C5911466237B3F3100E12FAB /* MMSegmentSmoother.m in Sources */,
 				C5A7C056237BCC5B00957D53 /* MMDrawModel.m in Sources */,
 				C5911440237B3BEB00E12FAB /* main.m in Sources */,
+				C5313F0A237BD75000C2097A /* SmartDrawRectRenderer.m in Sources */,
 				C591147B237B3FCF00E12FAB /* UIColor+JotHelper.m in Sources */,
 				C5911476237B3FAC00E12FAB /* MMPencilReachability.m in Sources */,
 				C5911464237B3F3100E12FAB /* MMDrawnStroke.m in Sources */,

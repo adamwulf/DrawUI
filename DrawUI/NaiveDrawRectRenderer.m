@@ -1,20 +1,20 @@
 //
-//  DrawRectRenderer.m
+//  NaiveDrawRectRenderer.m
 //  DrawUI
 //
 //  Created by Adam Wulf on 11/13/19.
 //  Copyright © 2019 Milestone Made. All rights reserved.
 //
 
-#import "DrawRectRenderer.h"
+#import "NaiveDrawRectRenderer.h"
 
-@interface DrawRectRenderer ()
+@interface NaiveDrawRectRenderer ()
 
 @property (nonatomic, strong) MMDrawModel *model;
 
 @end
 
-@implementation DrawRectRenderer
+@implementation NaiveDrawRectRenderer
 
 -(instancetype)init{
     if(self = [super init]){
@@ -33,12 +33,12 @@
         [[[self topAnchor] constraintEqualToAnchor:[drawView topAnchor]] setActive:YES];
         [[[self bottomAnchor] constraintEqualToAnchor:[drawView bottomAnchor]] setActive:YES];
     }
-    
-    [self setNeedsDisplay];
 }
 
 -(void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel{
     _model = drawModel;
+
+    [self setNeedsDisplay];
 }
 
 -(void)drawRect:(CGRect)rect{

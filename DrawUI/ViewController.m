@@ -10,7 +10,8 @@
 #import "MMDrawView.h"
 #import "MMDrawModel.h"
 #import "CALayerRenderer.h"
-#import "DrawRectRenderer.h"
+#import "NaiveDrawRectRenderer.h"
+#import "SmartDrawRectRenderer.h"
 
 @interface ViewController ()
 
@@ -27,7 +28,10 @@
     // Do any additional setup after loading the view.
     
 //    _activeRenderer = [[CALayerRenderer alloc] init];
-    _activeRenderer = [[DrawRectRenderer alloc] init];
+//    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
+    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
+    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
+    
 
     [[self view] setTool:[[MMPen alloc] initWithMinSize:2 andMaxSize:6]];
     [[self view] setDrawModel:[[MMDrawModel alloc] init]];
