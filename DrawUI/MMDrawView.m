@@ -6,7 +6,7 @@
 //  Copyright © 2019 Milestone Made. All rights reserved.
 //
 
-#import "MMInfiniteView.h"
+#import "MMDrawView.h"
 #import "MMSegmentSmoother.h"
 #import "MMAbstractBezierPathElement.h"
 #import "MMMoveToPathElement.h"
@@ -14,7 +14,7 @@
 #import "MMDrawnStroke.h"
 
 
-@implementation MMInfiniteView {
+@implementation MMDrawView {
     MMPen *_pen;
     UITouch *_strokeTouch;
     MMDrawnStroke *_stroke;

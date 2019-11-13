@@ -10,7 +10,7 @@
 #import "Constants.h"
 #import "MMDrawnStroke.h"
 #import "MMTouchVelocityGestureRecognizer.h"
-#import "MMInfiniteView.h"
+#import "MMDrawView.h"
 #import "MMAbstractBezierPathElement.h"
 
 #define VELOCITY_CLAMP_MIN 20
@@ -74,7 +74,7 @@
  * that a new touch is about to be processed. we should
  * reset all of our counters/etc to base values
  */
-- (BOOL)willBeginStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inJotView:(MMInfiniteView *)jotView
+- (BOOL)willBeginStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inJotView:(MMDrawView *)jotView
 {
     _shortStrokeEnding = NO;
     _velocity = 1;
@@ -86,12 +86,12 @@
  * width info for this touch. let's update
  * our velocity model and state info for this new touch
  */
-- (void)willMoveStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inJotView:(MMInfiniteView *)jotView
+- (void)willMoveStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inJotView:(MMDrawView *)jotView
 {
     _velocity = [[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch];
 }
 
-- (void)willEndStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch shortStrokeEnding:(BOOL)shortStrokeEnding inJotView:(MMInfiniteView *)jotView
+- (void)willEndStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch shortStrokeEnding:(BOOL)shortStrokeEnding inJotView:(MMDrawView *)jotView
 {
     _shortStrokeEnding = shortStrokeEnding;
 }
@@ -103,7 +103,7 @@
  * we'll use pressure data to determine width if we can, otherwise
  * we'll fall back to use velocity data
  */
-- (CGFloat)widthForCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inJotView:(MMInfiniteView *)jotView
+- (CGFloat)widthForCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inJotView:(MMDrawView *)jotView
 {
     if (coalescedTouch.type == UITouchTypeStylus) {
         CGFloat width = (_maxSize + _minSize) / 2.0;
@@ -143,12 +143,12 @@
  * > 1 is loopy
  * < 0 is knotty
  */
-- (CGFloat)smoothnessForCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inJotView:(MMInfiniteView *)jotView
+- (CGFloat)smoothnessForCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inJotView:(MMDrawView *)jotView
 {
     return 0.75;
 }
 
-- (NSArray *)willAddElements:(NSArray *)elements toStroke:(MMDrawnStroke *)stroke fromPreviousElement:(MMAbstractBezierPathElement *)previousElement inJotView:(MMInfiniteView *)jotView
+- (NSArray *)willAddElements:(NSArray *)elements toStroke:(MMDrawnStroke *)stroke fromPreviousElement:(MMAbstractBezierPathElement *)previousElement inJotView:(MMDrawView *)jotView
 {
     return elements;
 }
