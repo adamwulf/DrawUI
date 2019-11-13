@@ -14,6 +14,19 @@
 		C591143A237B3BEB00E12FAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5911439237B3BEB00E12FAB /* Assets.xcassets */; };
 		C591143D237B3BEB00E12FAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C591143B237B3BEB00E12FAB /* LaunchScreen.storyboard */; };
 		C5911440237B3BEB00E12FAB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C591143F237B3BEB00E12FAB /* main.m */; };
+		C5911463237B3F3100E12FAB /* MMAbstractBezierPathElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911458237B3F3000E12FAB /* MMAbstractBezierPathElement.m */; };
+		C5911464237B3F3100E12FAB /* MMDrawnStroke.m in Sources */ = {isa = PBXBuildFile; fileRef = C591145A237B3F3000E12FAB /* MMDrawnStroke.m */; };
+		C5911465237B3F3100E12FAB /* MMMoveToPathElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C591145E237B3F3100E12FAB /* MMMoveToPathElement.m */; };
+		C5911466237B3F3100E12FAB /* MMSegmentSmoother.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911461237B3F3100E12FAB /* MMSegmentSmoother.m */; };
+		C5911467237B3F3100E12FAB /* MMCurveToPathElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911462237B3F3100E12FAB /* MMCurveToPathElement.m */; };
+		C591146B237B3F4400E12FAB /* MMInfiniteView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911469237B3F4400E12FAB /* MMInfiniteView.m */; };
+		C5911476237B3FAC00E12FAB /* MMPencilReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911473237B3FAC00E12FAB /* MMPencilReachability.m */; };
+		C5911477237B3FAD00E12FAB /* MMPen.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911474237B3FAC00E12FAB /* MMPen.m */; };
+		C591147B237B3FCF00E12FAB /* UIColor+JotHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C591147A237B3FCF00E12FAB /* UIColor+JotHelper.m */; };
+		C591147E237B3FDE00E12FAB /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = C591147D237B3FDE00E12FAB /* Constants.m */; };
+		C5911481237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911480237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m */; };
+		C5911484237B3FF900E12FAB /* MMVector.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911483237B3FF900E12FAB /* MMVector.m */; };
+		C5911487237B400600E12FAB /* NSArray+MapReduce.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911486237B400500E12FAB /* NSArray+MapReduce.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +42,34 @@
 		C591143C237B3BEB00E12FAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C591143E237B3BEB00E12FAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C591143F237B3BEB00E12FAB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C5911457237B3F3000E12FAB /* MMCurveToPathElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCurveToPathElement.h; sourceTree = "<group>"; };
+		C5911458237B3F3000E12FAB /* MMAbstractBezierPathElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMAbstractBezierPathElement.m; sourceTree = "<group>"; };
+		C5911459237B3F3000E12FAB /* AbstractBezierPathElement-Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AbstractBezierPathElement-Protected.h"; sourceTree = "<group>"; };
+		C591145A237B3F3000E12FAB /* MMDrawnStroke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawnStroke.m; sourceTree = "<group>"; };
+		C591145B237B3F3000E12FAB /* MMPlistSaving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPlistSaving.h; sourceTree = "<group>"; };
+		C591145C237B3F3000E12FAB /* MMMoveToPathElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMoveToPathElement.h; sourceTree = "<group>"; };
+		C591145D237B3F3000E12FAB /* MMAbstractBezierPathElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMAbstractBezierPathElement.h; sourceTree = "<group>"; };
+		C591145E237B3F3100E12FAB /* MMMoveToPathElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMoveToPathElement.m; sourceTree = "<group>"; };
+		C591145F237B3F3100E12FAB /* MMDrawnStroke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawnStroke.h; sourceTree = "<group>"; };
+		C5911460237B3F3100E12FAB /* MMSegmentSmoother.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSegmentSmoother.h; sourceTree = "<group>"; };
+		C5911461237B3F3100E12FAB /* MMSegmentSmoother.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSegmentSmoother.m; sourceTree = "<group>"; };
+		C5911462237B3F3100E12FAB /* MMCurveToPathElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCurveToPathElement.m; sourceTree = "<group>"; };
+		C5911469237B3F4400E12FAB /* MMInfiniteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMInfiniteView.m; sourceTree = "<group>"; };
+		C591146A237B3F4400E12FAB /* MMInfiniteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMInfiniteView.h; sourceTree = "<group>"; };
+		C5911472237B3FAC00E12FAB /* MMPen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPen.h; sourceTree = "<group>"; };
+		C5911473237B3FAC00E12FAB /* MMPencilReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPencilReachability.m; sourceTree = "<group>"; };
+		C5911474237B3FAC00E12FAB /* MMPen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPen.m; sourceTree = "<group>"; };
+		C5911475237B3FAC00E12FAB /* MMPencilReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPencilReachability.h; sourceTree = "<group>"; };
+		C5911479237B3FCF00E12FAB /* UIColor+JotHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+JotHelper.h"; sourceTree = "<group>"; };
+		C591147A237B3FCF00E12FAB /* UIColor+JotHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+JotHelper.m"; sourceTree = "<group>"; };
+		C591147C237B3FDD00E12FAB /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		C591147D237B3FDE00E12FAB /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		C591147F237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTouchVelocityGestureRecognizer.h; sourceTree = "<group>"; };
+		C5911480237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTouchVelocityGestureRecognizer.m; sourceTree = "<group>"; };
+		C5911482237B3FF800E12FAB /* MMVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMVector.h; sourceTree = "<group>"; };
+		C5911483237B3FF900E12FAB /* MMVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMVector.m; sourceTree = "<group>"; };
+		C5911485237B400500E12FAB /* NSArray+MapReduce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MapReduce.h"; sourceTree = "<group>"; };
+		C5911486237B400500E12FAB /* NSArray+MapReduce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MapReduce.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +102,9 @@
 		C591142C237B3BE800E12FAB /* DrawUI */ = {
 			isa = PBXGroup;
 			children = (
+				C5911471237B3F9C00E12FAB /* Utilities */,
+				C5911468237B3F3B00E12FAB /* DrawingView */,
+				C5911456237B3F2000E12FAB /* Path Helpers */,
 				C591142D237B3BE800E12FAB /* AppDelegate.h */,
 				C591142E237B3BE800E12FAB /* AppDelegate.m */,
 				C5911430237B3BE800E12FAB /* SceneDelegate.h */,
@@ -74,6 +118,63 @@
 				C591143F237B3BEB00E12FAB /* main.m */,
 			);
 			path = DrawUI;
+			sourceTree = "<group>";
+		};
+		C5911456237B3F2000E12FAB /* Path Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C5911459237B3F3000E12FAB /* AbstractBezierPathElement-Protected.h */,
+				C591145D237B3F3000E12FAB /* MMAbstractBezierPathElement.h */,
+				C5911458237B3F3000E12FAB /* MMAbstractBezierPathElement.m */,
+				C5911457237B3F3000E12FAB /* MMCurveToPathElement.h */,
+				C5911462237B3F3100E12FAB /* MMCurveToPathElement.m */,
+				C591145F237B3F3100E12FAB /* MMDrawnStroke.h */,
+				C591145A237B3F3000E12FAB /* MMDrawnStroke.m */,
+				C591145C237B3F3000E12FAB /* MMMoveToPathElement.h */,
+				C591145E237B3F3100E12FAB /* MMMoveToPathElement.m */,
+				C591145B237B3F3000E12FAB /* MMPlistSaving.h */,
+				C5911460237B3F3100E12FAB /* MMSegmentSmoother.h */,
+				C5911461237B3F3100E12FAB /* MMSegmentSmoother.m */,
+			);
+			name = "Path Helpers";
+			sourceTree = "<group>";
+		};
+		C5911468237B3F3B00E12FAB /* DrawingView */ = {
+			isa = PBXGroup;
+			children = (
+				C591146A237B3F4400E12FAB /* MMInfiniteView.h */,
+				C5911469237B3F4400E12FAB /* MMInfiniteView.m */,
+			);
+			name = DrawingView;
+			sourceTree = "<group>";
+		};
+		C5911471237B3F9C00E12FAB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C5911478237B3FC000E12FAB /* Categories */,
+				C591147C237B3FDD00E12FAB /* Constants.h */,
+				C591147D237B3FDE00E12FAB /* Constants.m */,
+				C5911482237B3FF800E12FAB /* MMVector.h */,
+				C5911483237B3FF900E12FAB /* MMVector.m */,
+				C591147F237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.h */,
+				C5911480237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m */,
+				C5911472237B3FAC00E12FAB /* MMPen.h */,
+				C5911474237B3FAC00E12FAB /* MMPen.m */,
+				C5911475237B3FAC00E12FAB /* MMPencilReachability.h */,
+				C5911473237B3FAC00E12FAB /* MMPencilReachability.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		C5911478237B3FC000E12FAB /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				C5911485237B400500E12FAB /* NSArray+MapReduce.h */,
+				C5911486237B400500E12FAB /* NSArray+MapReduce.m */,
+				C5911479237B3FCF00E12FAB /* UIColor+JotHelper.h */,
+				C591147A237B3FCF00E12FAB /* UIColor+JotHelper.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,7 +249,20 @@
 			files = (
 				C5911435237B3BE800E12FAB /* ViewController.m in Sources */,
 				C591142F237B3BE800E12FAB /* AppDelegate.m in Sources */,
+				C5911484237B3FF900E12FAB /* MMVector.m in Sources */,
+				C5911463237B3F3100E12FAB /* MMAbstractBezierPathElement.m in Sources */,
+				C5911487237B400600E12FAB /* NSArray+MapReduce.m in Sources */,
+				C5911481237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m in Sources */,
+				C5911477237B3FAD00E12FAB /* MMPen.m in Sources */,
+				C5911465237B3F3100E12FAB /* MMMoveToPathElement.m in Sources */,
+				C591147E237B3FDE00E12FAB /* Constants.m in Sources */,
+				C591146B237B3F4400E12FAB /* MMInfiniteView.m in Sources */,
+				C5911466237B3F3100E12FAB /* MMSegmentSmoother.m in Sources */,
 				C5911440237B3BEB00E12FAB /* main.m in Sources */,
+				C591147B237B3FCF00E12FAB /* UIColor+JotHelper.m in Sources */,
+				C5911476237B3FAC00E12FAB /* MMPencilReachability.m in Sources */,
+				C5911464237B3F3100E12FAB /* MMDrawnStroke.m in Sources */,
+				C5911467237B3F3100E12FAB /* MMCurveToPathElement.m in Sources */,
 				C5911432237B3BE800E12FAB /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
