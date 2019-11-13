@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5313F04237BCD7F00C2097A /* CALayerRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F03237BCD7F00C2097A /* CALayerRenderer.m */; };
 		C591142F237B3BE800E12FAB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C591142E237B3BE800E12FAB /* AppDelegate.m */; };
 		C5911432237B3BE800E12FAB /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911431237B3BE800E12FAB /* SceneDelegate.m */; };
 		C5911435237B3BE800E12FAB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911434237B3BE800E12FAB /* ViewController.m */; };
@@ -27,9 +28,12 @@
 		C5911481237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911480237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m */; };
 		C5911484237B3FF900E12FAB /* MMVector.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911483237B3FF900E12FAB /* MMVector.m */; };
 		C5911487237B400600E12FAB /* NSArray+MapReduce.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911486237B400500E12FAB /* NSArray+MapReduce.m */; };
+		C5A7C056237BCC5B00957D53 /* MMDrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A7C055237BCC5B00957D53 /* MMDrawModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C5313F02237BCD7F00C2097A /* CALayerRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CALayerRenderer.h; sourceTree = "<group>"; };
+		C5313F03237BCD7F00C2097A /* CALayerRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CALayerRenderer.m; sourceTree = "<group>"; };
 		C591142A237B3BE800E12FAB /* DrawUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C591142D237B3BE800E12FAB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C591142E237B3BE800E12FAB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 		C5911483237B3FF900E12FAB /* MMVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMVector.m; sourceTree = "<group>"; };
 		C5911485237B400500E12FAB /* NSArray+MapReduce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MapReduce.h"; sourceTree = "<group>"; };
 		C5911486237B400500E12FAB /* NSArray+MapReduce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MapReduce.m"; sourceTree = "<group>"; };
+		C5A7C054237BCC5B00957D53 /* MMDrawModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawModel.h; sourceTree = "<group>"; };
+		C5A7C055237BCC5B00957D53 /* MMDrawModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMDrawModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,8 +148,11 @@
 		C5911468237B3F3B00E12FAB /* DrawingView */ = {
 			isa = PBXGroup;
 			children = (
+				C5A7C053237BCC0E00957D53 /* Rendering */,
 				C591146A237B3F4400E12FAB /* MMDrawView.h */,
 				C5911469237B3F4400E12FAB /* MMDrawView.m */,
+				C5A7C054237BCC5B00957D53 /* MMDrawModel.h */,
+				C5A7C055237BCC5B00957D53 /* MMDrawModel.m */,
 			);
 			name = DrawingView;
 			sourceTree = "<group>";
@@ -175,6 +184,15 @@
 				C591147A237B3FCF00E12FAB /* UIColor+JotHelper.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		C5A7C053237BCC0E00957D53 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				C5313F02237BCD7F00C2097A /* CALayerRenderer.h */,
+				C5313F03237BCD7F00C2097A /* CALayerRenderer.m */,
+			);
+			name = Rendering;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5313F04237BCD7F00C2097A /* CALayerRenderer.m in Sources */,
 				C5911435237B3BE800E12FAB /* ViewController.m in Sources */,
 				C591142F237B3BE800E12FAB /* AppDelegate.m in Sources */,
 				C5911484237B3FF900E12FAB /* MMVector.m in Sources */,
@@ -258,6 +277,7 @@
 				C591147E237B3FDE00E12FAB /* Constants.m in Sources */,
 				C591146B237B3F4400E12FAB /* MMDrawView.m in Sources */,
 				C5911466237B3F3100E12FAB /* MMSegmentSmoother.m in Sources */,
+				C5A7C056237BCC5B00957D53 /* MMDrawModel.m in Sources */,
 				C5911440237B3BEB00E12FAB /* main.m in Sources */,
 				C591147B237B3FCF00E12FAB /* UIColor+JotHelper.m in Sources */,
 				C5911476237B3FAC00E12FAB /* MMPencilReachability.m in Sources */,

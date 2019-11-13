@@ -7,16 +7,29 @@
 //
 
 #import "ViewController.h"
+#import "MMDrawView.h"
+#import "CALayerRenderer.h"
+#import "MMDrawModel.h"
 
 @interface ViewController ()
+
+@property(nonatomic, strong) MMDrawView* view;
+@property(nonatomic, strong) NSObject<MMDrawViewRenderer>*activeRenderer;
 
 @end
 
 @implementation ViewController
+@dynamic view;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    _activeRenderer = [[CALayerRenderer alloc] init];
+
+    [[self view] setTool:[[MMPen alloc] initWithMinSize:2 andMaxSize:6]];
+    [[self view] setDrawModel:[[MMDrawModel alloc] init]];
+    [[self view] setRenderer:[self activeRenderer]];
 }
 
 
