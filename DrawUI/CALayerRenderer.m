@@ -10,6 +10,8 @@
 
 @implementation CALayerRenderer
 
+@synthesize dynamicWidth;
+
 #pragma mark - Render
 
 - (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView*)drawView

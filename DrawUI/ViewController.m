@@ -29,13 +29,14 @@
     // Do any additional setup after loading the view.
     
 //    _activeRenderer = [[CALayerRenderer alloc] init];
-//    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
+    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
 //    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
 //    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
-
-    _activeRenderer = [[CATiledLayerRenderer alloc] init];
+//    _activeRenderer = [[CATiledLayerRenderer alloc] init];
     
-    [[self view] setTool:[[MMPen alloc] initWithMinSize:2 andMaxSize:6]];
+    MMPen *pen = [[MMPen alloc] initWithMinSize:4 andMaxSize:20];
+    
+    [[self view] setTool:pen];
     [[self view] setDrawModel:[[MMDrawModel alloc] init]];
     [[self view] setRenderer:[self activeRenderer]];
 }

@@ -16,6 +16,8 @@
 
 @implementation NaiveDrawRectRenderer
 
+@synthesize dynamicWidth;
+
 -(instancetype)init{
     if(self = [super init]){
         [self setOpaque:NO];
@@ -42,19 +44,23 @@
 }
 
 -(void)drawRect:(CGRect)rect{
-    for (MMDrawnStroke *stroke in [[self model] strokes]) {
-        UIBezierPath *path = [stroke path];
+    if([self dynamicWidth]){
+        
+    }else{
+        for (MMDrawnStroke *stroke in [[self model] strokes]) {
+            UIBezierPath *path = [stroke path];
+            [path setLineWidth:2];
+            
+            [[UIColor blackColor] setStroke];
+            [path stroke];
+        }
+
+        UIBezierPath *path = [[[self model] stroke] path];
         [path setLineWidth:2];
         
         [[UIColor blackColor] setStroke];
         [path stroke];
     }
-
-    UIBezierPath *path = [[[self model] stroke] path];
-    [path setLineWidth:2];
-    
-    [[UIColor blackColor] setStroke];
-    [path stroke];
 }
 
 @end

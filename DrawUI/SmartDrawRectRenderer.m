@@ -17,6 +17,8 @@
 
 @implementation SmartDrawRectRenderer
 
+@synthesize dynamicWidth;
+
 -(instancetype)init{
     if(self = [super init]){
         [self setOpaque:NO];

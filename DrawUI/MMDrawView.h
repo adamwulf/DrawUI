@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol MMDrawViewRenderer <NSObject>
 
+@property (nonatomic, assign) BOOL dynamicWidth;
+
 -(void)drawView:(MMDrawView*)drawView willUpdateModel:(MMDrawModel*)oldModel to:(MMDrawModel*)newModel;
 -(void)drawView:(MMDrawView*)drawView didUpdateModel:(MMDrawModel*)drawModel;
 

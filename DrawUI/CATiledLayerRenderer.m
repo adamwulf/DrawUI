@@ -18,6 +18,8 @@
     CATiledLayer *_tiledLayer;
 }
 
+@synthesize dynamicWidth;
+
 #pragma mark - Initializer
 
 -(instancetype)init{

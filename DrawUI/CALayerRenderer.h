@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CALayerRenderer : NSObject<MMDrawViewRenderer>
 
+@property (nonatomic, assign) BOOL dynamicWidth;
+
 @end
 
 NS_ASSUME_NONNULL_END

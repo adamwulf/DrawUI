@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SmartDrawRectRenderer : UIView<MMDrawViewRenderer>
 
 @property (nonatomic, assign) BOOL filledPath;
+@property (nonatomic, assign) BOOL dynamicWidth;
 
 @end
 
