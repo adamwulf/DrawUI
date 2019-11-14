@@ -18,6 +18,7 @@
 
 
 @implementation MMPen {
+    CGFloat _lastWidth;
     BOOL _shortStrokeEnding;
 }
 
@@ -125,6 +126,17 @@
         if (_shortStrokeEnding) {
             return _maxSize;
         }
+        
+        if(_lastWidth){
+            CGFloat const threadshold = .5;
+            if(width - _lastWidth > threadshold){
+                width = _lastWidth + threadshold;
+            }else if(width - _lastWidth < -2*threadshold){
+                width = _lastWidth - 2*threadshold;
+            }
+        }
+        
+        _lastWidth = width;
 
         return width;
     } else {

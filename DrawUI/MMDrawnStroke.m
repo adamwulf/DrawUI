@@ -57,14 +57,18 @@
 
 #pragma mark - Touches
 
-- (MMAbstractBezierPathElement*)addTouch:(UITouch *)touch inView:(UIView *)view smoothness:(CGFloat)smoothness width:(CGFloat)width
+- (MMAbstractBezierPathElement*)addPoint:(CGPoint)point smoothness:(CGFloat)smoothness width:(CGFloat)width
 {
-    CGPoint point = [touch preciseLocationInView:view];
     MMAbstractBezierPathElement *ele = [_smoother addPoint:point andSmoothness:smoothness];
 
     if (ele) {
-        [_segments addObject:ele];
         [ele setWidth:width];
+
+        if([_segments count]){
+            [ele validateDataGivenPreviousElement:[_segments lastObject]];
+        }
+        
+        [_segments addObject:ele];
     }
     
     return ele;

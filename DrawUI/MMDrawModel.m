@@ -36,7 +36,9 @@
                 _strokeTouch = touch;
                 _stroke = [[MMDrawnStroke alloc] init];
 
-                [_stroke addTouch:touch inView:drawView smoothness:smooth width:width];
+                CGPoint point = [touch preciseLocationInView:drawView];
+
+                [_stroke addPoint:point smoothness:smooth width:width];
             }
         }
     }
@@ -58,7 +60,9 @@
                     CGFloat width = [[drawView tool] widthForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
                     CGFloat smooth = [[drawView tool] smoothnessForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
 
-                    [_stroke addTouch:coalescedTouch inView:drawView smoothness:smooth width:width];
+                    CGPoint point = [coalescedTouch preciseLocationInView:drawView];
+
+                    [_stroke addPoint:point smoothness:smooth width:width];
                 }
             }
         }
@@ -83,7 +87,9 @@
                     CGFloat width = [[drawView tool] widthForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
                     CGFloat smooth = [[drawView tool] smoothnessForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
 
-                    [_stroke addTouch:coalescedTouch inView:drawView smoothness:smooth width:width];
+                    CGPoint point = [coalescedTouch preciseLocationInView:drawView];
+
+                    [_stroke addPoint:point smoothness:smooth width:width];
                 }
 
                 if ([_stroke path]) {

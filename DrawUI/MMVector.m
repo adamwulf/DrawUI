@@ -65,7 +65,7 @@
 {
     // just divide our x and y by our length
     CGFloat length = sqrt(_x * _x + _y * _y);
-    return [MMVector vectorWithX:(_x / length) andY:(_y / length)];
+    return length ? [MMVector vectorWithX:(_x / length) andY:(_y / length)] : [MMVector vectorWithX:_x andY:_y];
 }
 
 - (MMVector *)normalizedTo:(CGFloat)someLength

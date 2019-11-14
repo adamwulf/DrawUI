@@ -38,11 +38,11 @@
 //    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
 //    _activeRenderer = [[CATiledLayerRenderer alloc] init];
     
-    MMPen *pen = [[MMPen alloc] initWithMinSize:4 andMaxSize:20];
+    MMPen *pen = [[MMPen alloc] initWithMinSize:2 andMaxSize:7];
     
     [[self view] setTool:pen];
-    [[self view] setDrawModel:[[MMDrawModel alloc] init]];
     [[self view] setRenderer:[self activeRenderer]];
+    [[self view] setDrawModel:[[MMDrawModel alloc] init]];
 }
 
 

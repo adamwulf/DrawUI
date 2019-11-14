@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, nullable, readonly) UIBezierPath *path;
 @property(nonatomic, strong, readonly) NSArray<MMAbstractBezierPathElement *> *segments;
 
-- (MMAbstractBezierPathElement*)addTouch:(UITouch *)touch inView:(UIView *)view smoothness:(CGFloat)smoothness width:(CGFloat)width;
+- (MMAbstractBezierPathElement*)addPoint:(CGPoint)point smoothness:(CGFloat)smoothness width:(CGFloat)width;
 
 @end
 
