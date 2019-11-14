@@ -46,12 +46,12 @@
 
 -(void)drawRect:(CGRect)rect{
     if([self dynamicWidth]){
-        
+        [[UIColor blackColor] setFill];
+
         for(MMDrawnStroke *stroke in [[self model] strokes]){
             for(MMAbstractBezierPathElement *element in [stroke segments]){
                 UIBezierPath *segment = [element borderPath];
                 
-                [[UIColor blackColor] setFill];
                 [segment fill];
             }
         }
@@ -59,7 +59,6 @@
         for(MMAbstractBezierPathElement *element in [[[self model] stroke] segments]){
             UIBezierPath *segment = [element borderPath];
             
-            [[UIColor blackColor] setFill];
             [segment fill];
         }
     }else{
