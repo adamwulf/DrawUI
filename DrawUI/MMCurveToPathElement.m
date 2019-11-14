@@ -149,15 +149,6 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
     CGPoint leftEnd = [endOffsetVector pointFromPoint:[self endPoint] distance:-[self width]];
     CGPoint rightEnd = [endOffsetVector pointFromPoint:[self endPoint] distance:[self width]];
     
-    void(^checkPoint)(CGPoint) = ^(CGPoint p){
-        NSAssert(!isnan(p.x) && !isnan(p.y), @"no nan");
-    };
-    
-    checkPoint(rightStart);
-    checkPoint(rightEnd);
-    checkPoint(leftStart);
-    checkPoint(leftEnd);
-
     // build up the final path
     
     CGPoint ctrl1;
@@ -169,17 +160,11 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
     ctrl1 = [[startVector normal] pointFromPoint:rightStart distance:startDist];
     ctrl2 = [[endVector normal] pointFromPoint:rightEnd distance:endDist];
 
-    checkPoint(ctrl1);
-    checkPoint(ctrl2);
-
     [stroke addCurveToPoint:rightEnd controlPoint1:ctrl1 controlPoint2:ctrl2];
     [stroke addLineToPoint:leftEnd];
 
     ctrl1 = [[endVector normal] pointFromPoint:leftEnd distance:endDist];
     ctrl2 = [[startVector normal] pointFromPoint:leftStart distance:startDist];
-    
-    checkPoint(ctrl1);
-    checkPoint(ctrl2);
 
     [stroke addCurveToPoint:leftStart controlPoint1:ctrl1 controlPoint2:ctrl2];
     [stroke closePath];
