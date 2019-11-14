@@ -31,6 +31,7 @@
 		C5911484237B3FF900E12FAB /* MMVector.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911483237B3FF900E12FAB /* MMVector.m */; };
 		C5911487237B400600E12FAB /* NSArray+MapReduce.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911486237B400500E12FAB /* NSArray+MapReduce.m */; };
 		C5A7C056237BCC5B00957D53 /* MMDrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A7C055237BCC5B00957D53 /* MMDrawModel.m */; };
+		C5D34AEA237D1FD200B450E3 /* CATiledLayerRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D34AE9237D1FD200B450E3 /* CATiledLayerRenderer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,8 @@
 		C5911486237B400500E12FAB /* NSArray+MapReduce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MapReduce.m"; sourceTree = "<group>"; };
 		C5A7C054237BCC5B00957D53 /* MMDrawModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawModel.h; sourceTree = "<group>"; };
 		C5A7C055237BCC5B00957D53 /* MMDrawModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMDrawModel.m; sourceTree = "<group>"; };
+		C5D34AE8237D1FD200B450E3 /* CATiledLayerRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CATiledLayerRenderer.h; sourceTree = "<group>"; };
+		C5D34AE9237D1FD200B450E3 /* CATiledLayerRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CATiledLayerRenderer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +200,8 @@
 			children = (
 				C5313F02237BCD7F00C2097A /* CALayerRenderer.h */,
 				C5313F03237BCD7F00C2097A /* CALayerRenderer.m */,
+				C5D34AE8237D1FD200B450E3 /* CATiledLayerRenderer.h */,
+				C5D34AE9237D1FD200B450E3 /* CATiledLayerRenderer.m */,
 				C5313F05237BD3E900C2097A /* NaiveDrawRectRenderer.h */,
 				C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */,
 				C5313F08237BD75000C2097A /* SmartDrawRectRenderer.h */,
@@ -286,6 +291,7 @@
 				C5313F07237BD3E900C2097A /* NaiveDrawRectRenderer.m in Sources */,
 				C5911465237B3F3100E12FAB /* MMMoveToPathElement.m in Sources */,
 				C591147E237B3FDE00E12FAB /* Constants.m in Sources */,
+				C5D34AEA237D1FD200B450E3 /* CATiledLayerRenderer.m in Sources */,
 				C591146B237B3F4400E12FAB /* MMDrawView.m in Sources */,
 				C5911466237B3F3100E12FAB /* MMSegmentSmoother.m in Sources */,
 				C5A7C056237BCC5B00957D53 /* MMDrawModel.m in Sources */,

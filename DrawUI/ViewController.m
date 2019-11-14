@@ -12,6 +12,7 @@
 #import "CALayerRenderer.h"
 #import "NaiveDrawRectRenderer.h"
 #import "SmartDrawRectRenderer.h"
+#import "CATiledLayerRenderer.h"
 
 @interface ViewController ()
 
@@ -29,10 +30,11 @@
     
 //    _activeRenderer = [[CALayerRenderer alloc] init];
 //    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
-    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
-    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
-    
+//    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
+//    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
 
+    _activeRenderer = [[CATiledLayerRenderer alloc] init];
+    
     [[self view] setTool:[[MMPen alloc] initWithMinSize:2 andMaxSize:6]];
     [[self view] setDrawModel:[[MMDrawModel alloc] init]];
     [[self view] setRenderer:[self activeRenderer]];

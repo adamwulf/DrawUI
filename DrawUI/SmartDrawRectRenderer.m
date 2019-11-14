@@ -7,8 +7,7 @@
 //
 
 #import "SmartDrawRectRenderer.h"
-
-CGFloat const kStrokeWidth = 10;
+#import "Constants.h"
 
 @interface SmartDrawRectRenderer ()
 

@@ -8,6 +8,8 @@
 
 #import "Constants.h"
 
+CGFloat const kStrokeWidth = 10;
+
 void CGContextSaveThenRestoreForBlock(CGContextRef context, void (^block)(void))
 {
     CGContextSaveGState(context);
