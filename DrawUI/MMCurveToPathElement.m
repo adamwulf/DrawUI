@@ -8,7 +8,7 @@
 
 #import "MMCurveToPathElement.h"
 #import "UIColor+JotHelper.h"
-#import "AbstractBezierPathElement-Protected.h"
+#import "MMAbstractBezierPathElement-Protected.h"
 #import "MMMoveToPathElement.h"
 #import "Constants.h"
 
@@ -130,6 +130,23 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
         _boundsCache = CGRectInset(_boundsCache, -[self width], -[self width]);
     }
     return _boundsCache;
+}
+
+- (UIBezierPath*)borderPath
+{
+    CGRect endPoint = CGRectInset(CGRectMake([self startPoint].x, [self startPoint].y, 0, 0), -[self width], -[self width]);
+
+    UIBezierPath *endPointPath = [UIBezierPath bezierPathWithOvalInRect:endPoint];
+    
+    UIBezierPath *stroke = [UIBezierPath bezierPath];
+    [stroke moveToPoint:[self startPoint]];
+    [stroke addCurveToPoint:[self endPoint] controlPoint1:[self ctrl1] controlPoint2:[self ctrl2]];
+
+    stroke = [UIBezierPath bezierPathWithCGPath:CGPathCreateCopyByStrokingPath([stroke CGPath], nil, 2, kCGLineCapRound, kCGLineJoinRound, kStrokeWidth)];
+
+    [stroke appendPath:endPointPath];
+    
+    return stroke;
 }
 
 /**

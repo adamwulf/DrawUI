@@ -8,13 +8,11 @@
 
 #import "MMDrawnStroke.h"
 #import "MMAbstractBezierPathElement.h"
+#import "MMAbstractBezierPathElement-Protected.h"
 #import "MMMoveToPathElement.h"
 #import "MMCurveToPathElement.h"
 #import "MMSegmentSmoother.h"
 #import "Constants.h"
-
-CGFloat const Smoothness = 0.75;
-
 
 @interface MMDrawnStroke ()
 
@@ -26,7 +24,7 @@ CGFloat const Smoothness = 0.75;
 
 @implementation MMDrawnStroke
 
-- (instancetype)initWithPen:(MMPen *)pen
+- (instancetype)init
 {
     if (self = [super init]) {
         _segments = [NSMutableArray array];
@@ -59,14 +57,17 @@ CGFloat const Smoothness = 0.75;
 
 #pragma mark - Touches
 
-- (void)addTouch:(UITouch *)touch inView:(UIView *)view
+- (MMAbstractBezierPathElement*)addTouch:(UITouch *)touch inView:(UIView *)view smoothness:(CGFloat)smoothness width:(CGFloat)width
 {
     CGPoint point = [touch preciseLocationInView:view];
-    MMAbstractBezierPathElement *ele = [_smoother addPoint:point andSmoothness:Smoothness];
+    MMAbstractBezierPathElement *ele = [_smoother addPoint:point andSmoothness:smoothness];
 
     if (ele) {
         [_segments addObject:ele];
+        [ele setWidth:width];
     }
+    
+    return ele;
 }
 
 @end

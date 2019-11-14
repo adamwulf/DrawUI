@@ -13,6 +13,7 @@
 #import "NaiveDrawRectRenderer.h"
 #import "SmartDrawRectRenderer.h"
 #import "CATiledLayerRenderer.h"
+#import "MMTouchVelocityGestureRecognizer.h"
 
 @interface ViewController ()
 
@@ -28,8 +29,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [[self view] addGestureRecognizer:[MMTouchVelocityGestureRecognizer sharedInstance]];
+    
 //    _activeRenderer = [[CALayerRenderer alloc] init];
     _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
+    [_activeRenderer setDynamicWidth:YES];
 //    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
 //    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
 //    _activeRenderer = [[CATiledLayerRenderer alloc] init];

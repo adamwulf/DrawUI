@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class MMDrawView;
 
 @interface MMPen : NSObject {
     CGFloat _defaultMinSize;
@@ -38,5 +39,12 @@
 @property(nonatomic, readonly) BOOL shouldUseVelocity;
 
 - (id)initWithMinSize:(CGFloat)_minSize andMaxSize:(CGFloat)_maxSize;
+
+
+- (BOOL)willBeginStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inDrawView:(MMDrawView *)drawView;
+- (void)willMoveStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inDrawView:(MMDrawView *)drawView;
+- (void)willEndStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch shortStrokeEnding:(BOOL)shortStrokeEnding inDrawView:(MMDrawView *)drawView;
+- (CGFloat)widthForCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inDrawView:(MMDrawView *)drawView;
+- (CGFloat)smoothnessForCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inDrawView:(MMDrawView *)drawView;
 
 @end

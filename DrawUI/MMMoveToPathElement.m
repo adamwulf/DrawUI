@@ -7,7 +7,7 @@
 //
 
 #import "MMMoveToPathElement.h"
-#import "AbstractBezierPathElement-Protected.h"
+#import "MMAbstractBezierPathElement-Protected.h"
 
 
 @implementation MMMoveToPathElement {
@@ -47,6 +47,11 @@
 - (CGFloat)angleOfEnd
 {
     return 0;
+}
+
+- (UIBezierPath*)borderPath
+{
+    return [UIBezierPath bezierPathWithOvalInRect:[self bounds]];
 }
 
 - (CGRect)bounds

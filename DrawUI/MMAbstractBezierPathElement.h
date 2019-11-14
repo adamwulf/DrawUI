@@ -16,6 +16,8 @@
 @property(nonatomic, readonly) CGPoint endPoint;
 @property(nonatomic, readonly) CGRect bounds;
 
+@property(nonatomic, readonly) UIBezierPath* borderPath;
+
 @property(nonatomic, readonly) BOOL followsMoveTo;
 @property(nonatomic, readonly) CGFloat previousWidth;
 

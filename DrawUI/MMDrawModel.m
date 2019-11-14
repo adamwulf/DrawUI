@@ -8,6 +8,8 @@
 
 #import "MMDrawModel.h"
 #import "MMDrawView.h"
+#import "MMAbstractBezierPathElement.h"
+#import "MMAbstractBezierPathElement-Protected.h"
 
 @implementation MMDrawModel{
     UITouch *_strokeTouch;
@@ -27,10 +29,14 @@
     for (UITouch *touch in touches) {
         @autoreleasepool {
             if (!_strokeTouch || _strokeTouch == touch) {
-                _strokeTouch = touch;
-                _stroke = [[MMDrawnStroke alloc] initWithPen:[drawView tool]];
+                [[drawView tool] willBeginStrokeWithCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
+                CGFloat width = [[drawView tool] widthForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
+                CGFloat smooth = [[drawView tool] smoothnessForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
 
-                [_stroke addTouch:touch inView:drawView];
+                _strokeTouch = touch;
+                _stroke = [[MMDrawnStroke alloc] init];
+
+                [_stroke addTouch:touch inView:drawView smoothness:smooth width:width];
             }
         }
     }
@@ -47,7 +53,12 @@
                 }
 
                 for (UITouch *coalescedTouch in coalesced) {
-                    [_stroke addTouch:coalescedTouch inView:drawView];
+                    [[drawView tool] willMoveStrokeWithCoalescedTouch:coalescedTouch fromTouch:touch inDrawView:drawView];
+                    
+                    CGFloat width = [[drawView tool] widthForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
+                    CGFloat smooth = [[drawView tool] smoothnessForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
+
+                    [_stroke addTouch:coalescedTouch inView:drawView smoothness:smooth width:width];
                 }
             }
         }
@@ -65,7 +76,14 @@
                 }
 
                 for (UITouch *coalescedTouch in coalesced) {
-                    [_stroke addTouch:coalescedTouch inView:drawView];
+                    BOOL shortStrokeEnding = [_stroke.segments count] <= 1;
+
+                    [[drawView tool] willEndStrokeWithCoalescedTouch:coalescedTouch fromTouch:touch shortStrokeEnding:shortStrokeEnding inDrawView:drawView];
+                    
+                    CGFloat width = [[drawView tool] widthForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
+                    CGFloat smooth = [[drawView tool] smoothnessForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
+
+                    [_stroke addTouch:coalescedTouch inView:drawView smoothness:smooth width:width];
                 }
 
                 if ([_stroke path]) {

@@ -7,6 +7,7 @@
 //
 
 #import "NaiveDrawRectRenderer.h"
+#import "MMAbstractBezierPathElement.h"
 
 @interface NaiveDrawRectRenderer ()
 
@@ -45,7 +46,21 @@
 
 -(void)drawRect:(CGRect)rect{
     if([self dynamicWidth]){
+        [[UIColor blackColor] setFill];
         
+        for(MMDrawnStroke *stroke in [[self model] strokes]){
+            for(MMAbstractBezierPathElement *element in [stroke segments]){
+                UIBezierPath *segment = [element borderPath];
+                
+                [segment fill];
+            }
+        }
+
+        for(MMAbstractBezierPathElement *element in [[[self model] stroke] segments]){
+            UIBezierPath *segment = [element borderPath];
+            
+            [segment fill];
+        }
     }else{
         for (MMDrawnStroke *stroke in [[self model] strokes]) {
             UIBezierPath *path = [stroke path];

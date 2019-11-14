@@ -7,7 +7,7 @@
 //
 
 #import "MMAbstractBezierPathElement.h"
-#import "AbstractBezierPathElement-Protected.h"
+#import "MMAbstractBezierPathElement-Protected.h"
 #import "UIColor+JotHelper.h"
 #import "Constants.h"
 #import "MMMoveToPathElement.h"
@@ -54,6 +54,11 @@
 }
 
 - (CGPoint)endPoint
+{
+    @throw kAbstractMethodException;
+}
+
+- (UIBezierPath*)borderPath
 {
     @throw kAbstractMethodException;
 }
