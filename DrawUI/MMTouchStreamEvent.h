@@ -13,11 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MMTouchStreamEvent : NSObject
 
-+ (MMTouchStreamEvent *)eventWithTouch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update;
++ (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update;
 
 /// use NSObject, as the touch is unique and consistent, but its values are
 /// stale
 /// so it's useful to track a touch through events, but not useful to introspect
+@property(nonatomic, strong) NSObject *coalescedTouch;
 @property(nonatomic, strong) NSObject *touch;
 @property(nonatomic, strong) NSObject *identifier;
 @property(nonatomic, assign) NSTimeInterval timestamp;
@@ -36,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign)
     UITouchProperties estimatedPropertiesExpectingUpdates;
 @property(nonatomic, assign, getter=isUpdate) BOOL update;
+
+- (BOOL)matchesEvent:(MMTouchStreamEvent *)otherEvent;
 
 @end
 

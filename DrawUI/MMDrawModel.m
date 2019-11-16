@@ -10,110 +10,82 @@
 #import "MMDrawView.h"
 #import "MMAbstractBezierPathElement.h"
 #import "MMAbstractBezierPathElement-Protected.h"
+#import "MMTouchStream.h"
 
-@implementation MMDrawModel{
-    UITouch *_strokeTouch;
+@implementation MMDrawModel {
+    MMTouchStreamEvent *event;
+    NSObject *_strokeTouch;
 }
 
--(instancetype)init{
-    if(self = [super init]){
+- (instancetype)init
+{
+    if (self = [super init]) {
         _strokes = [NSMutableArray array];
     }
     return self;
 }
 
-
-#pragma mark - Drawing
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event inView:(MMDrawView*)drawView
+- (void)processTouchStream:(MMTouchStream *)touchStream withTool:(MMPen *)tool
 {
-    for (UITouch *touch in touches) {
-        @autoreleasepool {
-            if (!_strokeTouch || _strokeTouch == touch) {
-                [[drawView tool] willBeginStrokeWithCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
-                CGFloat width = [[drawView tool] widthForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
-                CGFloat smooth = [[drawView tool] smoothnessForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
+    NSArray<MMTouchStreamEvent *> *eventsToProcess;
 
-                _strokeTouch = touch;
-                _stroke = [[MMDrawnStroke alloc] init];
-
-                CGPoint point = [touch preciseLocationInView:drawView];
-
-                [_stroke addPoint:point smoothness:smooth width:width];
-            }
-        }
+    if (event) {
+        eventsToProcess = [touchStream eventsSinceEvent:event matchingTouch:_strokeTouch != nil];
+    } else {
+        eventsToProcess = [touchStream eventsSinceEvent:nil];
     }
-}
 
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event inView:(MMDrawView*)drawView
-{
-    for (UITouch *touch in touches) {
-        @autoreleasepool {
-            if (_strokeTouch == touch) {
-                NSArray<UITouch *> *coalesced = [event coalescedTouchesForTouch:touch];
-                if (![coalesced count]) {
-                    coalesced = @[touch];
+    for (MMTouchStreamEvent *event in eventsToProcess) {
+        if (![event isUpdate]) {
+            if ([event phase] == UITouchPhaseBegan) {
+                if (!_strokeTouch || _strokeTouch == [event touch]) {
+                    [tool willBeginStrokeWithEvent:event];
+                    CGFloat width = [tool widthForEvent:event];
+                    CGFloat smooth = [tool smoothnessForEvent:event];
+
+                    _strokeTouch = [event touch];
+                    _stroke = [[MMDrawnStroke alloc] init];
+
+                    [_stroke addPoint:[event location] smoothness:smooth width:width];
                 }
+            } else if ([event phase] == UITouchPhaseMoved) {
+                if (_strokeTouch == [event touch]) {
+                    [tool willMoveStrokeWithEvent:event];
 
-                for (UITouch *coalescedTouch in coalesced) {
-                    [[drawView tool] willMoveStrokeWithCoalescedTouch:coalescedTouch fromTouch:touch inDrawView:drawView];
-                    
-                    CGFloat width = [[drawView tool] widthForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
-                    CGFloat smooth = [[drawView tool] smoothnessForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
+                    CGFloat width = [tool widthForEvent:event];
+                    CGFloat smooth = [tool smoothnessForEvent:event];
 
-                    CGPoint point = [coalescedTouch preciseLocationInView:drawView];
-
-                    [_stroke addPoint:point smoothness:smooth width:width];
+                    [_stroke addPoint:[event location] smoothness:smooth width:width];
                 }
-            }
-        }
-    }
-}
-
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event inView:(MMDrawView*)drawView
-{
-    for (UITouch *touch in touches) {
-        @autoreleasepool {
-            if (_strokeTouch == touch) {
-                NSArray<UITouch *> *coalesced = [event coalescedTouchesForTouch:touch];
-                if (![coalesced count]) {
-                    coalesced = @[touch];
-                }
-
-                for (UITouch *coalescedTouch in coalesced) {
+            } else if ([event phase] == UITouchPhaseEnded) {
+                if (_strokeTouch == [event touch]) {
                     BOOL shortStrokeEnding = [_stroke.segments count] <= 1;
 
-                    [[drawView tool] willEndStrokeWithCoalescedTouch:coalescedTouch fromTouch:touch shortStrokeEnding:shortStrokeEnding inDrawView:drawView];
-                    
-                    CGFloat width = [[drawView tool] widthForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
-                    CGFloat smooth = [[drawView tool] smoothnessForCoalescedTouch:touch fromTouch:touch inDrawView:drawView];
+                    [tool willEndStrokeWithEvent:event shortStrokeEnding:shortStrokeEnding];
 
-                    CGPoint point = [coalescedTouch preciseLocationInView:drawView];
+                    CGFloat width = [tool widthForEvent:event];
+                    CGFloat smooth = [tool smoothnessForEvent:event];
 
-                    [_stroke addPoint:point smoothness:smooth width:width];
+                    [_stroke addPoint:[event location] smoothness:smooth width:width];
+
+                    if ([_stroke path]) {
+                        // this stroke is complete, save it to our history
+                        [_strokes addObject:_stroke];
+                    }
+
+                    _stroke = nil;
+                    _strokeTouch = nil;
                 }
-
-                if ([_stroke path]) {
-                    // this stroke is complete, save it to our history
-                    [_strokes addObject:_stroke];
+            } else if ([event phase] == UITouchPhaseCancelled) {
+                if (_strokeTouch == [event touch]) {
+                    _strokeTouch = nil;
+                    _stroke = nil;
                 }
-
-                _stroke = nil;
-                _strokeTouch = nil;
             }
         }
     }
-}
 
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event inView:(MMDrawView*)drawView
-{
-    for (UITouch *touch in touches) {
-        @autoreleasepool {
-            if (_strokeTouch == touch) {
-                _strokeTouch = nil;
-                _stroke = nil;
-            }
-        }
-    }
+    event = [eventsToProcess lastObject] ?: event;
 }
 
 @end

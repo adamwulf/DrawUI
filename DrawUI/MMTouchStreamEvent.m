@@ -10,29 +10,36 @@
 
 @implementation MMTouchStreamEvent
 
-+ (MMTouchStreamEvent *)eventWithTouch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update
++ (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update
 {
     MMTouchStreamEvent *event = [[MMTouchStreamEvent alloc] init];
 
     [event setIdentifier:[[NSUUID UUID] UUIDString]];
+    [event setCoalescedTouch:coalescedTouch];
     [event setTouch:touch];
-    [event setTimestamp:[touch timestamp]];
-    [event setType:[touch type]];
-    [event setPhase:[touch phase]];
-    [event setForce:[touch force]];
-    [event setMaximumPossibleForce:[touch maximumPossibleForce]];
-    [event setAzimuth:[touch azimuthAngleInView:[touch view]]];
+    [event setTimestamp:[coalescedTouch timestamp]];
+    [event setType:[coalescedTouch type]];
+    [event setPhase:[coalescedTouch phase]];
+    [event setForce:[coalescedTouch force]];
+    [event setMaximumPossibleForce:[coalescedTouch maximumPossibleForce]];
+    [event setAzimuth:[coalescedTouch azimuthAngleInView:[coalescedTouch view]]];
     [event setVelocity:velocity];
-    [event setMajorRadius:[touch majorRadius]];
-    [event setMajorRadiusTolerance:[touch majorRadiusTolerance]];
-    [event setLocation:[touch preciseLocationInView:[touch view]]];
-    [event setInView:[touch view]];
-    [event setEstimationUpdateIndex:[touch estimationUpdateIndex]];
-    [event setEstimatedProperties:[touch estimatedProperties]];
-    [event setEstimatedPropertiesExpectingUpdates:[touch estimatedPropertiesExpectingUpdates]];
+    [event setMajorRadius:[coalescedTouch majorRadius]];
+    [event setMajorRadiusTolerance:[coalescedTouch majorRadiusTolerance]];
+    [event setLocation:[coalescedTouch preciseLocationInView:[coalescedTouch view]]];
+    [event setInView:[coalescedTouch view]];
+    [event setEstimationUpdateIndex:[coalescedTouch estimationUpdateIndex]];
+    [event setEstimatedProperties:[coalescedTouch estimatedProperties]];
+    [event setEstimatedPropertiesExpectingUpdates:[coalescedTouch estimatedPropertiesExpectingUpdates]];
     [event setUpdate:update];
 
     return event;
 }
+
+- (BOOL)matchesEvent:(MMTouchStreamEvent *)otherEvent
+{
+    return [self touch] == [otherEvent touch];
+}
+
 
 @end

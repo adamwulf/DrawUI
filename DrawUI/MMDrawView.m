@@ -36,7 +36,7 @@
 
 #pragma mark - Drawing
 
-- (void)drawTouches:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
+- (void)drawTouches:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event isUpdate:(BOOL)isActuallyUpdate
 {
     for (UITouch *touch in touches) {
         NSArray<UITouch *> *coalesced = [event coalescedTouchesForTouch:touch];
@@ -45,7 +45,7 @@
         }
 
         for (UITouch *coalescedTouch in coalesced) {
-            [_touchStream addStreamEvent:touch velocity:[[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:coalescedTouch]];
+            [_touchStream addStreamCoalescedTouch:coalescedTouch touch:touch velocity:[[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:coalescedTouch] isUpdate:isActuallyUpdate];
         }
     }
 }
@@ -54,42 +54,42 @@
 
 - (void)touchesEstimatedPropertiesUpdated:(NSSet<UITouch *> *)touches
 {
-    [self drawTouches:touches withEvent:nil];
+    [self drawTouches:touches withEvent:nil isUpdate:YES];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self drawTouches:touches withEvent:event];
+    [self drawTouches:touches withEvent:event isUpdate:NO];
 
     [[self renderer] drawView:self willUpdateModel:[self drawModel] to:[self drawModel]];
-    [[self drawModel] touchesBegan:touches withEvent:event inView:self];
+    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
     [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self drawTouches:touches withEvent:event];
+    [self drawTouches:touches withEvent:event isUpdate:NO];
 
     [[self renderer] drawView:self willUpdateModel:[self drawModel] to:[self drawModel]];
-    [[self drawModel] touchesMoved:touches withEvent:event inView:self];
+    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
     [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self drawTouches:touches withEvent:event];
+    [self drawTouches:touches withEvent:event isUpdate:NO];
 
     [[self renderer] drawView:self willUpdateModel:[self drawModel] to:[self drawModel]];
-    [[self drawModel] touchesEnded:touches withEvent:event inView:self];
+    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
     [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self drawTouches:touches withEvent:event];
+    [self drawTouches:touches withEvent:event isUpdate:NO];
 
     [[self renderer] drawView:self willUpdateModel:[self drawModel] to:[self drawModel]];
-    [[self drawModel] touchesCancelled:touches withEvent:event inView:self];
+    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
     [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
 

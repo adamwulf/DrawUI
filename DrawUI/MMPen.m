@@ -12,6 +12,7 @@
 #import "MMTouchVelocityGestureRecognizer.h"
 #import "MMDrawView.h"
 #import "MMAbstractBezierPathElement.h"
+#import "MMTouchStreamEvent.h"
 
 #define VELOCITY_CLAMP_MIN 20
 #define VELOCITY_CLAMP_MAX 1000
@@ -68,47 +69,30 @@
     _maxSize = maxSize;
 }
 
-#pragma mark - MMDrawViewDelegate
+#pragma mark - Events
 
-/**
- * delegate method - a notification from the MMDrawView
- * that a new touch is about to be processed. we should
- * reset all of our counters/etc to base values
- */
-- (BOOL)willBeginStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inDrawView:(MMDrawView *)drawView
+- (BOOL)willBeginStrokeWithEvent:(MMTouchStreamEvent *)touchEvent
 {
     _shortStrokeEnding = NO;
     _velocity = 1;
     return YES;
 }
 
-/**
- * notification that the MMDrawView is about to ask for
- * width info for this touch. let's update
- * our velocity model and state info for this new touch
- */
-- (void)willMoveStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inDrawView:(MMDrawView *)drawView
+- (void)willMoveStrokeWithEvent:(MMTouchStreamEvent *)touchEvent
 {
-    _velocity = [[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch];
+    _velocity = [touchEvent velocity];
 }
 
-- (void)willEndStrokeWithCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch shortStrokeEnding:(BOOL)shortStrokeEnding inDrawView:(MMDrawView *)drawView
+- (void)willEndStrokeWithEvent:(MMTouchStreamEvent *)touchEvent shortStrokeEnding:(BOOL)shortStrokeEnding
 {
     _shortStrokeEnding = shortStrokeEnding;
 }
 
-/**
- * the user has moved to this new touch point, and we need
- * to specify the width of the stroke at this position
- *
- * we'll use pressure data to determine width if we can, otherwise
- * we'll fall back to use velocity data
- */
-- (CGFloat)widthForCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inDrawView:(MMDrawView *)drawView
+- (CGFloat)widthForEvent:(MMTouchStreamEvent *)touchEvent
 {
-    if (coalescedTouch.type == UITouchTypeStylus) {
+    if (touchEvent.type == UITouchTypeStylus) {
         CGFloat width = (_maxSize + _minSize) / 2.0;
-        width *= coalescedTouch.force;
+        width *= touchEvent.force;
         if (width < _minSize)
             width = _minSize;
         if (width > _maxSize)
@@ -126,36 +110,27 @@
         if (_shortStrokeEnding) {
             return _maxSize;
         }
-        
-        if(_lastWidth){
+
+        if (_lastWidth) {
             CGFloat const threadshold = .5;
-            if(width - _lastWidth > threadshold){
+            if (width - _lastWidth > threadshold) {
                 width = _lastWidth + threadshold;
-            }else if(width - _lastWidth < -2*threadshold){
-                width = _lastWidth - 2*threadshold;
+            } else if (width - _lastWidth < -2 * threadshold) {
+                width = _lastWidth - 2 * threadshold;
             }
         }
-        
+
         _lastWidth = width;
 
         return width;
     } else {
-        CGFloat newWidth = _minSize + (_maxSize - _minSize) * coalescedTouch.force;
+        CGFloat newWidth = _minSize + (_maxSize - _minSize) * touchEvent.force;
         newWidth = MAX(_minSize, MIN(_maxSize, newWidth));
         return newWidth;
     }
 }
 
-/**
- * we'll keep this pen fairly smooth, and using 0.75 gives
- * a good effect.
- *
- * 0 will be as if we just connected with straight lines,
- * 1 is as curvey as we can get,
- * > 1 is loopy
- * < 0 is knotty
- */
-- (CGFloat)smoothnessForCoalescedTouch:(UITouch *)coalescedTouch fromTouch:(UITouch *)touch inDrawView:(MMDrawView *)drawView
+- (CGFloat)smoothnessForEvent:(MMTouchStreamEvent *)coalescedTouch
 {
     return 0.75;
 }

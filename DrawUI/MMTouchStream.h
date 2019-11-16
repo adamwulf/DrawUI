@@ -14,11 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MMTouchStream : NSObject
 
 /// Add a touch to the stream and returns its event
-- (MMTouchStreamEvent *)addStreamEvent:(UITouch *)touch velocity:(CGFloat)velocity;
+- (MMTouchStreamEvent *)addStreamCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)isActuallyUpdate;
 
 /// Returns all events that have occurred since the input event.
 /// Returns all events in the stream if the input is nil
-- (NSArray<MMTouchStreamEvent *> *)eventsSinceToken:(nullable MMTouchStreamEvent *)event;
+- (NSArray<MMTouchStreamEvent *> *)eventsSinceEvent:(nullable MMTouchStreamEvent *)event;
+
+- (NSArray<MMTouchStreamEvent *> *)eventsSinceEvent:(MMTouchStreamEvent *)event matchingTouch:(BOOL)matching;
 
 @end
 

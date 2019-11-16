@@ -22,11 +22,9 @@
     return self;
 }
 
-- (MMTouchStreamEvent *)addStreamEvent:(UITouch *)touch velocity:(CGFloat)velocity
+- (MMTouchStreamEvent *)addStreamCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)isUpdate
 {
-    BOOL isUpdate = [touch estimationUpdateIndex] ? [_estimatedIndexes containsObject:[touch estimationUpdateIndex]] : NO;
-
-    MMTouchStreamEvent *event = [MMTouchStreamEvent eventWithTouch:touch velocity:velocity isUpdate:isUpdate];
+    MMTouchStreamEvent *event = [MMTouchStreamEvent eventWithCoalescedTouch:coalescedTouch touch:touch velocity:velocity isUpdate:isUpdate];
 
     [_events addObject:event];
 
@@ -37,12 +35,12 @@
     return event;
 }
 
-- (NSArray<MMTouchStreamEvent *> *)eventsSinceToken:(MMTouchStreamEvent *)event
+- (NSArray<MMTouchStreamEvent *> *)eventsSinceEvent:(MMTouchStreamEvent *)event
 {
-    return [self eventsSinceToken:event matchingTouch:NO];
+    return [self eventsSinceEvent:event matchingTouch:NO];
 }
 
-- (NSArray<MMTouchStreamEvent *> *)eventsSinceToken:(MMTouchStreamEvent *)event matchingTouch:(BOOL)matching
+- (NSArray<MMTouchStreamEvent *> *)eventsSinceEvent:(MMTouchStreamEvent *)event matchingTouch:(BOOL)matching
 {
     if (!event) {
         return [_events copy];
@@ -55,8 +53,8 @@
         NSArray<MMTouchStreamEvent *> *output = [_events subarrayWithRange:NSMakeRange(index + 1, [_events count] - index - 1)];
 
         if (matching) {
-            return [output filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id _Nullable evaluatedObject, NSDictionary<NSString *, id> *_Nullable bindings) {
-                return [evaluatedObject touch] == [event touch];
+            return [output filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(MMTouchStreamEvent *obj, NSDictionary<NSString *, id> *_Nullable bindings) {
+                return [event matchesEvent:obj];
             }]];
         } else {
             return output;
