@@ -7,11 +7,12 @@
 //
 
 #import "SmartDrawRectRenderer.h"
+#import "MMAbstractBezierPathElement.h"
 #import "Constants.h"
 
 @interface SmartDrawRectRenderer ()
 
-@property (nonatomic, strong) MMDrawModel *model;
+@property(nonatomic, strong) MMDrawModel *model;
 
 @end
 
@@ -19,18 +20,20 @@
 
 @synthesize dynamicWidth;
 
--(instancetype)init{
-    if(self = [super init]){
+- (instancetype)init
+{
+    if (self = [super init]) {
         [self setOpaque:NO];
     }
     return self;
 }
 
--(void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel{
-    if([self superview] != drawView){
+- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
+{
+    if ([self superview] != drawView) {
         [self setTranslatesAutoresizingMaskIntoConstraints:NO];
         [drawView addSubview:self];
-        
+
         [[[self leadingAnchor] constraintEqualToAnchor:[drawView leadingAnchor]] setActive:YES];
         [[[self trailingAnchor] constraintEqualToAnchor:[drawView trailingAnchor]] setActive:YES];
         [[[self topAnchor] constraintEqualToAnchor:[drawView topAnchor]] setActive:YES];
@@ -38,55 +41,78 @@
     }
 }
 
--(void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel{
+- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
+{
     _model = drawModel;
 
     MMDrawnStroke *stroke = [drawModel stroke] ?: [[drawModel strokes] lastObject];
-    
-    if(stroke){
+
+    if (stroke) {
         CGRect pathBounds = [[stroke path] bounds];
-        
+
         pathBounds = CGRectInset(pathBounds, -kStrokeWidth, -kStrokeWidth);
 
         [self setNeedsDisplayInRect:pathBounds];
     }
 }
 
--(void)drawRect:(CGRect)rect{
+- (void)drawRect:(CGRect)rect
+{
     for (MMDrawnStroke *stroke in [[self model] strokes]) {
         [self renderStroke:stroke inRect:rect];
     }
-    
+
     [self renderStroke:[[self model] stroke] inRect:rect];
 }
 
--(void)renderStroke:(MMDrawnStroke*)stroke inRect:(CGRect)rect{
-    if([self filledPath]){
+- (void)renderStroke:(MMDrawnStroke *)stroke inRect:(CGRect)rect
+{
+    if ([self dynamicWidth]) {
+        [[UIColor blackColor] setFill];
+
+        for (MMDrawnStroke *stroke in [[self model] strokes]) {
+            for (MMAbstractBezierPathElement *element in [stroke segments]) {
+                UIBezierPath *segment = [element borderPath];
+
+                if (CGRectIntersectsRect([segment bounds], rect)) {
+                    [segment fill];
+                }
+            }
+        }
+
+        for (MMAbstractBezierPathElement *element in [[[self model] stroke] segments]) {
+            UIBezierPath *segment = [element borderPath];
+
+            if (CGRectIntersectsRect([segment bounds], rect)) {
+                [segment fill];
+            }
+        }
+    } else if ([self filledPath]) {
         UIBezierPath *path = [stroke path];
-        
-        if(path){
+
+        if (path) {
             CGPathGetBoundingBox(nil);
             CGPathGetPathBoundingBox(nil);
-            
+
             UIBezierPath *widePath = [UIBezierPath bezierPathWithCGPath:CGPathCreateCopyByStrokingPath([path CGPath], nil, kStrokeWidth, kCGLineCapRound, kCGLineJoinRound, kStrokeWidth)];
             CGRect pathBounds = [widePath bounds];
-            
+
             pathBounds = CGRectInset(pathBounds, -kStrokeWidth, -kStrokeWidth);
 
-            if(widePath && CGRectIntersectsRect(pathBounds, rect)){
+            if (widePath && CGRectIntersectsRect(pathBounds, rect)) {
                 [[UIColor blackColor] setFill];
                 [widePath fill];
             }
         }
-    }else{
+    } else {
         UIBezierPath *path = [stroke path];
         CGRect pathBounds = [[stroke path] bounds];
-        
+
         pathBounds = CGRectInset(pathBounds, -kStrokeWidth, -kStrokeWidth);
 
-        if(path && CGRectIntersectsRect(pathBounds, rect)){
+        if (path && CGRectIntersectsRect(pathBounds, rect)) {
             [path setLineWidth:kStrokeWidth];
-            
+
             [[UIColor blackColor] setStroke];
             [path stroke];
         }

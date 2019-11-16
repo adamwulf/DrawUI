@@ -10,7 +10,7 @@
 
 @implementation MMTouchStreamEvent
 
-+ (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update
++ (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update isPrediction:(BOOL)prediction
 {
     MMTouchStreamEvent *event = [[MMTouchStreamEvent alloc] init];
 
@@ -32,6 +32,7 @@
     [event setEstimatedProperties:[coalescedTouch estimatedProperties]];
     [event setEstimatedPropertiesExpectingUpdates:[coalescedTouch estimatedPropertiesExpectingUpdates]];
     [event setUpdate:update];
+    [event setPrediction:prediction];
 
     return event;
 }

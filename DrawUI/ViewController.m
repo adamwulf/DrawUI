@@ -17,29 +17,30 @@
 
 @interface ViewController ()
 
-@property(nonatomic, strong) MMDrawView* view;
-@property(nonatomic, strong) NSObject<MMDrawViewRenderer>*activeRenderer;
+@property(nonatomic, strong) MMDrawView *view;
+@property(nonatomic, strong) NSObject<MMDrawViewRenderer> *activeRenderer;
 
 @end
 
 @implementation ViewController
 @dynamic view;
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+
     [[self view] addGestureRecognizer:[MMTouchVelocityGestureRecognizer sharedInstance]];
-    
-//    _activeRenderer = [[CALayerRenderer alloc] init];
-    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
-    [_activeRenderer setDynamicWidth:YES];
-//    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
-//    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
-//    _activeRenderer = [[CATiledLayerRenderer alloc] init];
-    
+
+    //    _activeRenderer = [[CALayerRenderer alloc] init];
+    //    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
+    //    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
+    //    [_activeRenderer setDynamicWidth:YES];
+    //    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
+    _activeRenderer = [[CATiledLayerRenderer alloc] init];
+
     MMPen *pen = [[MMPen alloc] initWithMinSize:2 andMaxSize:7];
-    
+
     [[self view] setTool:pen];
     [[self view] setRenderer:[self activeRenderer]];
     [[self view] setDrawModel:[[MMDrawModel alloc] init]];

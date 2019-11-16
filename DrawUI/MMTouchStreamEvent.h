@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MMTouchStreamEvent : NSObject
 
-+ (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update;
++ (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update isPrediction:(BOOL)prediction;
 
 /// use NSObject, as the touch is unique and consistent, but its values are
 /// stale
@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign)
     UITouchProperties estimatedPropertiesExpectingUpdates;
 @property(nonatomic, assign, getter=isUpdate) BOOL update;
+@property(nonatomic, assign, getter=isPrediction) BOOL prediction;
 
 - (BOOL)matchesEvent:(MMTouchStreamEvent *)otherEvent;
 

@@ -36,7 +36,7 @@
 
 #pragma mark - Drawing
 
-- (void)drawTouches:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event isUpdate:(BOOL)isActuallyUpdate
+- (void)drawTouches:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event isUpdate:(BOOL)isUpdate
 {
     for (UITouch *touch in touches) {
         NSArray<UITouch *> *coalesced = [event coalescedTouchesForTouch:touch];
@@ -45,7 +45,13 @@
         }
 
         for (UITouch *coalescedTouch in coalesced) {
-            [_touchStream addStreamCoalescedTouch:coalescedTouch touch:touch velocity:[[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:coalescedTouch] isUpdate:isActuallyUpdate];
+            [_touchStream addStreamCoalescedTouch:coalescedTouch touch:touch velocity:[[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch] isUpdate:isUpdate isPrediction:NO];
+        }
+
+        NSArray<UITouch *> *predicted = [event predictedTouchesForTouch:touch];
+
+        for (UITouch *predictedTouch in predicted) {
+            [_touchStream addStreamCoalescedTouch:predictedTouch touch:touch velocity:[[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch] isUpdate:isUpdate isPrediction:YES];
         }
     }
 }

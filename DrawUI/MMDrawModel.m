@@ -36,7 +36,7 @@
     }
 
     for (MMTouchStreamEvent *event in eventsToProcess) {
-        if (![event isUpdate]) {
+        if (![event isUpdate] && ![event isPrediction]) {
             if ([event phase] == UITouchPhaseBegan) {
                 if (!_strokeTouch || _strokeTouch == [event touch]) {
                     [tool willBeginStrokeWithEvent:event];

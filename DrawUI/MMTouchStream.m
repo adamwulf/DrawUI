@@ -22,9 +22,9 @@
     return self;
 }
 
-- (MMTouchStreamEvent *)addStreamCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)isUpdate
+- (MMTouchStreamEvent *)addStreamCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)isUpdate isPrediction:(BOOL)prediction
 {
-    MMTouchStreamEvent *event = [MMTouchStreamEvent eventWithCoalescedTouch:coalescedTouch touch:touch velocity:velocity isUpdate:isUpdate];
+    MMTouchStreamEvent *event = [MMTouchStreamEvent eventWithCoalescedTouch:coalescedTouch touch:touch velocity:velocity isUpdate:isUpdate isPrediction:prediction];
 
     [_events addObject:event];
 
