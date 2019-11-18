@@ -267,8 +267,12 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
 
 - (void)updateWithEvent:(MMTouchStreamEvent *)event
 {
-    _curveTo = [event location];
-    _ctrl2 = _curveTo;
+    [super updateWithEvent:event];
+
+    if ([[[self events] firstObject] expectsLocationUpdate]) {
+        _ctrl2 = _curveTo;
+        _curveTo = [event location];
+    }
 }
 
 #pragma mark - Helper

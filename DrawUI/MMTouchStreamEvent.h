@@ -39,6 +39,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign, getter=isUpdate) BOOL update;
 @property(nonatomic, assign, getter=isPrediction) BOOL prediction;
 
+#pragma mark - Computed Properties
+
+@property(nonatomic, readonly) BOOL expectsLocationUpdate;
+@property(nonatomic, readonly) BOOL expectsForceUpdate;
+@property(nonatomic, readonly) BOOL expectsAzimuthUpdate;
+
+#pragma mark - Public Methods
+
 - (BOOL)matchesEvent:(MMTouchStreamEvent *)otherEvent;
 
 @end

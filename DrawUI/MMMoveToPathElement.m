@@ -91,6 +91,8 @@
 
 - (void)updateWithEvent:(MMTouchStreamEvent *)event
 {
+    [super updateWithEvent:event];
+
     [self setStartPoint:[event location]];
 }
 

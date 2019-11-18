@@ -33,6 +33,6 @@
 
 - (void)scaleForWidth:(CGFloat)widthRatio andHeight:(CGFloat)heightRatio NS_REQUIRES_SUPER;
 
-- (void)updateWithEvent:(MMTouchStreamEvent *)event;
+- (void)updateWithEvent:(MMTouchStreamEvent *)event NS_REQUIRES_SUPER;
 
 @end

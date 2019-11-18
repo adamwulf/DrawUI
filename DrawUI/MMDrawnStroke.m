@@ -74,73 +74,74 @@
 /// Returns the element that was added or updated by this event
 - (MMAbstractBezierPathElement *)addEvent:(MMTouchStreamEvent *)event;
 {
-    BOOL isUpdate = NO;
-    MMAbstractBezierPathElement *ele;
-
     if ([event estimationUpdateIndex]) {
-        ele = [_eventIdToSegment objectForKey:[event estimationUpdateIndex]];
-        isUpdate = ele != nil;
-    }
+        // Check if we can update an existing element
+        MMAbstractBezierPathElement *ele = [_eventIdToSegment objectForKey:[event estimationUpdateIndex]];
 
-    if (!isUpdate) {
-        if ([event phase] == UITouchPhaseEnded || [event phase] == UITouchPhaseCancelled) {
-            BOOL shortStrokeEnding = [_segments count] <= 1;
-
-            [_tool willEndStrokeWithEvent:event shortStrokeEnding:shortStrokeEnding];
-        } else if ([event phase] == UITouchPhaseBegan) {
-            [_tool willBeginStrokeWithEvent:event];
-        } else {
-            [_tool willMoveStrokeWithEvent:event];
-        }
-    }
-
-    if (!ele) {
-        // if we didn't have a cached event, try to build one
-        if ([event isPrediction]) {
-            // if this is a prediction, then we need to save our smoother state
-            // so that we can continue from where it left off once we get real data again
-            _savedSmoother = _savedSmoother ?: [_smoother copy];
-        } else {
-            // now we have real non-prediction data, so remove all
-            // elements that were built from predictions
-            while ([[_segments lastObject] isPrediction]) {
-                [_segments removeLastObject];
-            }
-            // and restore our smoother to our saved state pre-prediction
-            _smoother = _savedSmoother ?: _smoother;
-            _savedSmoother = nil;
-        }
-
-        CGPoint point = [event location];
-        CGFloat smoothness = [_tool smoothnessForEvent:event];
-
-        ele = [_smoother addPoint:point andSmoothness:smoothness];
-    }
-
-    // Now either update the element, or finish initializing it
-    // with its width and previous segment, etc
-    if (ele) {
-        if (isUpdate) {
-            // update a current element
+        if (ele) {
+            // if we have an element for this event already, then update and return it
             [ele updateWithEvent:event];
-        } else {
-            CGFloat width = [_tool widthForEvent:event];
+            return ele;
+        }
+    }
 
-            [ele setWidth:width];
-            [ele setEvents:[_waitingEvents arrayByAddingObject:event]];
+    // otherwise, prepare to build a new element for this event if possible
+    if ([event phase] == UITouchPhaseEnded || [event phase] == UITouchPhaseCancelled) {
+        BOOL shortStrokeEnding = [_segments count] <= 1;
 
-            [_waitingEvents removeAllObjects];
+        [_tool willEndStrokeWithEvent:event shortStrokeEnding:shortStrokeEnding];
+    } else if ([event phase] == UITouchPhaseBegan) {
+        [_tool willBeginStrokeWithEvent:event];
+    } else {
+        [_tool willMoveStrokeWithEvent:event];
+    }
 
-            if ([_segments count]) {
-                [ele validateDataGivenPreviousElement:[_segments lastObject]];
-            }
+    if ([event isPrediction]) {
+        // if this is a prediction, then we need to save our smoother state
+        // so that we can continue from where it left off once we get real data again
+        _savedSmoother = _savedSmoother ?: [_smoother copy];
+    } else {
+        // now we have real non-prediction data, so remove all
+        // elements that were built from predictions
+        while ([[_segments lastObject] isPrediction]) {
+            [_segments removeLastObject];
+        }
+        // and restore our smoother to our saved state pre-prediction
+        _smoother = _savedSmoother ?: _smoother;
+        _savedSmoother = nil;
+    }
 
-            [_segments addObject:ele];
+    // we know that this event may trigger a new element, and we have
+    // either the current smoother or a prediction-only smoother ready
+    // to build it for us.
+    CGPoint point = [event location];
+    CGFloat smoothness = [_tool smoothnessForEvent:event];
+    CGFloat width = [_tool widthForEvent:event];
+    MMAbstractBezierPathElement *ele = [_smoother addPoint:point andSmoothness:smoothness];
 
-            for (MMTouchStreamEvent *eleEvent in [ele events]) {
-                if ([eleEvent estimationUpdateIndex]) {
-                    [_eventIdToSegment setObject:ele forKey:[eleEvent estimationUpdateIndex]];
-                }
+    // Now either finish initializing it with its width and previous segment, etc
+    // we might not always get an element, that's up to the smoother to decide.
+    // it might merge many events into a single element, and in that case
+    // we should store the events that are being merged.
+    if (ele) {
+        NSArray<MMTouchStreamEvent *> *elementEvents = [_waitingEvents arrayByAddingObject:event];
+
+        [_waitingEvents removeAllObjects];
+
+        [ele setWidth:width];
+        [ele setEvents:elementEvents];
+
+        if ([_segments count]) {
+            [ele validateDataGivenPreviousElement:[_segments lastObject]];
+        }
+
+        [_segments addObject:ele];
+
+        // cache this element for each of its events. if any update ever comes in
+        // for these event ids, then this segment should be updated with any new properties
+        for (MMTouchStreamEvent *eleEvent in [ele events]) {
+            if ([eleEvent estimationUpdateIndex]) {
+                [_eventIdToSegment setObject:ele forKey:[eleEvent estimationUpdateIndex]];
             }
         }
     } else {

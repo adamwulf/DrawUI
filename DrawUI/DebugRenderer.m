@@ -55,9 +55,11 @@
                 UIBezierPath *segment = [element borderPath];
 
                 if ([element isUpdated]) {
-                    [[[UIColor redColor] colorWithAlphaComponent:.3] setFill];
+                    [[[UIColor redColor] colorWithAlphaComponent:.1] setFill];
+                } else if ([element isPrediction]) {
+                    [[[UIColor blueColor] colorWithAlphaComponent:.1] setFill];
                 } else {
-                    [[[UIColor blackColor] colorWithAlphaComponent:.3] setFill];
+                    [[[UIColor blackColor] colorWithAlphaComponent:.1] setFill];
                 }
 
                 [segment fill];
@@ -68,9 +70,11 @@
             UIBezierPath *segment = [element borderPath];
 
             if ([element isUpdated]) {
-                [[[UIColor redColor] colorWithAlphaComponent:.3] setFill];
+                [[[UIColor redColor] colorWithAlphaComponent:.1] setFill];
+            } else if ([element isPrediction]) {
+                [[[UIColor blueColor] colorWithAlphaComponent:.1] setFill];
             } else {
-                [[[UIColor blackColor] colorWithAlphaComponent:.3] setFill];
+                [[[UIColor blackColor] colorWithAlphaComponent:.1] setFill];
             }
 
             [segment fill];

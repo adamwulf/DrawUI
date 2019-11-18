@@ -165,16 +165,11 @@
 		C5911468237B3F3B00E12FAB /* DrawingView */ = {
 			isa = PBXGroup;
 			children = (
-				C5911456237B3F2000E12FAB /* Path Helpers */,
-				C5A7C053237BCC0E00957D53 /* Rendering */,
 				C591146A237B3F4400E12FAB /* MMDrawView.h */,
 				C5911469237B3F4400E12FAB /* MMDrawView.m */,
-				C5A7C054237BCC5B00957D53 /* MMDrawModel.h */,
-				C5A7C055237BCC5B00957D53 /* MMDrawModel.m */,
-				C5AB06F9237FB493007CF251 /* MMTouchStream.h */,
-				C5AB06FA237FB493007CF251 /* MMTouchStream.m */,
-				C5AB06FC237FB4A3007CF251 /* MMTouchStreamEvent.h */,
-				C5AB06FD237FB4A3007CF251 /* MMTouchStreamEvent.m */,
+				C5AB0769238288A6007CF251 /* Touch Stream */,
+				C5911456237B3F2000E12FAB /* Path Helpers */,
+				C5A7C053237BCC0E00957D53 /* Rendering */,
 			);
 			name = DrawingView;
 			sourceTree = "<group>";
@@ -223,6 +218,19 @@
 				C5AB076723824AA6007CF251 /* DebugRenderer.m */,
 			);
 			name = Rendering;
+			sourceTree = "<group>";
+		};
+		C5AB0769238288A6007CF251 /* Touch Stream */ = {
+			isa = PBXGroup;
+			children = (
+				C5AB06F9237FB493007CF251 /* MMTouchStream.h */,
+				C5AB06FA237FB493007CF251 /* MMTouchStream.m */,
+				C5AB06FC237FB4A3007CF251 /* MMTouchStreamEvent.h */,
+				C5AB06FD237FB4A3007CF251 /* MMTouchStreamEvent.m */,
+				C5A7C054237BCC5B00957D53 /* MMDrawModel.h */,
+				C5A7C055237BCC5B00957D53 /* MMDrawModel.m */,
+			);
+			name = "Touch Stream";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

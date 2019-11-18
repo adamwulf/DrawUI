@@ -37,10 +37,28 @@
     return event;
 }
 
+#pragma mark - Computed Properties
+
+- (BOOL)expectsLocationUpdate
+{
+    return [self estimatedPropertiesExpectingUpdates] & UITouchPropertyLocation;
+}
+
+- (BOOL)expectsForceUpdate
+{
+    return [self estimatedPropertiesExpectingUpdates] & UITouchPropertyForce;
+}
+
+- (BOOL)expectsAzimuthUpdate
+{
+    return [self estimatedPropertiesExpectingUpdates] & UITouchPropertyAzimuth;
+}
+
+#pragma mark - Public Methods
+
 - (BOOL)matchesEvent:(MMTouchStreamEvent *)otherEvent
 {
     return [self touch] == [otherEvent touch];
 }
-
 
 @end
