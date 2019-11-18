@@ -33,6 +33,7 @@
 		C5A7C056237BCC5B00957D53 /* MMDrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A7C055237BCC5B00957D53 /* MMDrawModel.m */; };
 		C5AB06FB237FB493007CF251 /* MMTouchStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB06FA237FB493007CF251 /* MMTouchStream.m */; };
 		C5AB06FE237FB4A3007CF251 /* MMTouchStreamEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB06FD237FB4A3007CF251 /* MMTouchStreamEvent.m */; };
+		C5AB076823824AA6007CF251 /* DebugRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB076723824AA6007CF251 /* DebugRenderer.m */; };
 		C5D34AEA237D1FD200B450E3 /* CATiledLayerRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D34AE9237D1FD200B450E3 /* CATiledLayerRenderer.m */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +90,8 @@
 		C5AB06FA237FB493007CF251 /* MMTouchStream.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMTouchStream.m; sourceTree = "<group>"; };
 		C5AB06FC237FB4A3007CF251 /* MMTouchStreamEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMTouchStreamEvent.h; sourceTree = "<group>"; };
 		C5AB06FD237FB4A3007CF251 /* MMTouchStreamEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMTouchStreamEvent.m; sourceTree = "<group>"; };
+		C5AB076623824AA6007CF251 /* DebugRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DebugRenderer.h; sourceTree = "<group>"; };
+		C5AB076723824AA6007CF251 /* DebugRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DebugRenderer.m; sourceTree = "<group>"; };
 		C5D34AE8237D1FD200B450E3 /* CATiledLayerRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CATiledLayerRenderer.h; sourceTree = "<group>"; };
 		C5D34AE9237D1FD200B450E3 /* CATiledLayerRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CATiledLayerRenderer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,6 +219,8 @@
 				C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */,
 				C5313F08237BD75000C2097A /* SmartDrawRectRenderer.h */,
 				C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */,
+				C5AB076623824AA6007CF251 /* DebugRenderer.h */,
+				C5AB076723824AA6007CF251 /* DebugRenderer.m */,
 			);
 			name = Rendering;
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 				C5911481237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m in Sources */,
 				C5911477237B3FAD00E12FAB /* MMPen.m in Sources */,
 				C5313F07237BD3E900C2097A /* NaiveDrawRectRenderer.m in Sources */,
+				C5AB076823824AA6007CF251 /* DebugRenderer.m in Sources */,
 				C5AB06FB237FB493007CF251 /* MMTouchStream.m in Sources */,
 				C5911465237B3F3100E12FAB /* MMMoveToPathElement.m in Sources */,
 				C591147E237B3FDE00E12FAB /* Constants.m in Sources */,

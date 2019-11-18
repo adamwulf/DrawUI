@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "MMDrawView.h"
 #import "MMDrawModel.h"
+#import "DebugRenderer.h"
 #import "CALayerRenderer.h"
 #import "NaiveDrawRectRenderer.h"
 #import "SmartDrawRectRenderer.h"
@@ -33,7 +34,8 @@
     [[self view] addGestureRecognizer:[MMTouchVelocityGestureRecognizer sharedInstance]];
 
     //    _activeRenderer = [[CALayerRenderer alloc] init];
-    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
+    //    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
+    _activeRenderer = [[DebugRenderer alloc] init];
     //    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
     [_activeRenderer setDynamicWidth:YES];
     //    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];

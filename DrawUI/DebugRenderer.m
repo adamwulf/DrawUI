@@ -1,21 +1,21 @@
 //
-//  NaiveDrawRectRenderer.m
+//  DebugRenderer.m
 //  DrawUI
 //
 //  Created by Adam Wulf on 11/13/19.
 //  Copyright © 2019 Milestone Made. All rights reserved.
 //
 
-#import "NaiveDrawRectRenderer.h"
+#import "DebugRenderer.h"
 #import "MMAbstractBezierPathElement.h"
 
-@interface NaiveDrawRectRenderer ()
+@interface DebugRenderer ()
 
 @property(nonatomic, strong) MMDrawModel *model;
 
 @end
 
-@implementation NaiveDrawRectRenderer
+@implementation DebugRenderer
 
 @synthesize dynamicWidth;
 
@@ -50,11 +50,15 @@
 - (void)drawRect:(CGRect)rect
 {
     if ([self dynamicWidth]) {
-        [[UIColor blackColor] setFill];
-
         for (MMDrawnStroke *stroke in [[self model] strokes]) {
             for (MMAbstractBezierPathElement *element in [stroke segments]) {
                 UIBezierPath *segment = [element borderPath];
+
+                if ([element isUpdated]) {
+                    [[[UIColor redColor] colorWithAlphaComponent:.3] setFill];
+                } else {
+                    [[[UIColor blackColor] colorWithAlphaComponent:.3] setFill];
+                }
 
                 [segment fill];
             }
@@ -62,6 +66,12 @@
 
         for (MMAbstractBezierPathElement *element in [[[self model] stroke] segments]) {
             UIBezierPath *segment = [element borderPath];
+
+            if ([element isUpdated]) {
+                [[[UIColor redColor] colorWithAlphaComponent:.3] setFill];
+            } else {
+                [[[UIColor blackColor] colorWithAlphaComponent:.3] setFill];
+            }
 
             [segment fill];
         }
