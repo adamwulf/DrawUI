@@ -19,7 +19,7 @@
 @interface MMDrawnStroke ()
 
 @property(nonatomic, strong) NSMutableArray<MMAbstractBezierPathElement *> *segments;
-@property(nonatomic, strong) NSMutableDictionary<NSNumber *, MMAbstractBezierPathElement *> *eventIdToSegment;
+@property(nonatomic, strong) NSMutableDictionary<NSObject *, MMAbstractBezierPathElement *> *eventIdToSegment;
 @property(nonatomic, strong) MMSegmentSmoother *smoother;
 
 @end
@@ -122,7 +122,7 @@
             [_segments addObject:ele];
 
             for (MMTouchStreamEvent *eleEvent in [ele events]) {
-                if ([event estimationUpdateIndex]) {
+                if ([eleEvent estimationUpdateIndex]) {
                     [_eventIdToSegment setObject:ele forKey:[eleEvent estimationUpdateIndex]];
                 }
             }

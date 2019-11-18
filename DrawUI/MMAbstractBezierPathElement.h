@@ -12,6 +12,7 @@
 
 @interface MMAbstractBezierPathElement : NSObject <MMPlistSaving>
 
+@property(nonatomic, readonly) NSString *identifier;
 @property(nonatomic, readonly) CGFloat width;
 @property(nonatomic, readonly) CGPoint startPoint;
 @property(nonatomic, readonly) CGPoint endPoint;

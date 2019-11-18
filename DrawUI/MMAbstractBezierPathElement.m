@@ -23,6 +23,7 @@
 {
     if (self = [super init]) {
         _startPoint = point;
+        _identifier = [[NSUUID UUID] UUIDString];
     }
     return self;
 }

@@ -38,8 +38,10 @@
     for (MMTouchStreamEvent *event in eventsToProcess) {
         if ([event phase] == UITouchPhaseBegan) {
             if (!_strokeTouch || _strokeTouch == [event touch]) {
-                _strokeTouch = [event touch];
-                _stroke = [[MMDrawnStroke alloc] initWithTool:tool];
+                if (![event isUpdate]) {
+                    _strokeTouch = [event touch];
+                    _stroke = [[MMDrawnStroke alloc] initWithTool:tool];
+                }
 
                 [_stroke addEvent:event];
             }
