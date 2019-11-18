@@ -76,11 +76,12 @@
             [segment fill];
         }
     } else {
+        [[UIColor blackColor] setStroke];
+
         for (MMDrawnStroke *stroke in [[self model] strokes]) {
             UIBezierPath *path = [stroke path];
             [path setLineWidth:2];
 
-            [[UIColor blackColor] setStroke];
             [path stroke];
         }
 

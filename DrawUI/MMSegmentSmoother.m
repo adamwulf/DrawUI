@@ -158,4 +158,18 @@
     _point3.y = _point3.y * heightRatio;
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+    MMSegmentSmoother *ret = [[MMSegmentSmoother alloc] init];
+
+    ret->_point0 = _point0;
+    ret->_point1 = _point1;
+    ret->_point2 = _point2;
+    ret->_point3 = _point3;
+
+    return ret;
+}
+
 @end

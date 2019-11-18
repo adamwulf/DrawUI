@@ -37,7 +37,7 @@
     //    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
     _activeRenderer = [[DebugRenderer alloc] init];
     //    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
-    [_activeRenderer setDynamicWidth:YES];
+    //    [_activeRenderer setDynamicWidth:YES];
     //    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
     //    _activeRenderer = [[CATiledLayerRenderer alloc] init];
 

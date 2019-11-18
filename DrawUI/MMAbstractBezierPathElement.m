@@ -138,4 +138,9 @@
     _updated = YES;
 }
 
+- (BOOL)isPrediction
+{
+    return [[[self events] firstObject] isPrediction];
+}
+
 @end

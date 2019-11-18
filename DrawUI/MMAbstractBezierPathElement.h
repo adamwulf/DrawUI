@@ -23,6 +23,7 @@
 @property(nonatomic, readonly) BOOL followsMoveTo;
 @property(nonatomic, readonly) CGFloat previousWidth;
 @property(nonatomic, readonly, getter=isUpdated) BOOL updated;
+@property(nonatomic, readonly, getter=isPrediction) BOOL prediction;
 
 - (CGFloat)lengthOfElement;
 - (CGFloat)angleOfStart;

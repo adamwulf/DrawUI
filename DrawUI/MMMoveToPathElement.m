@@ -49,7 +49,7 @@
     return 0;
 }
 
-- (UIBezierPath*)borderPath
+- (UIBezierPath *)borderPath
 {
     return [UIBezierPath bezierPathWithOvalInRect:[self bounds]];
 }
@@ -85,6 +85,13 @@
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"[Move to: %f,%f]", [self startPoint].x, [self startPoint].y];
+}
+
+#pragma mark - Events
+
+- (void)updateWithEvent:(MMTouchStreamEvent *)event
+{
+    [self setStartPoint:[event location]];
 }
 
 #pragma mark - PlistSaving

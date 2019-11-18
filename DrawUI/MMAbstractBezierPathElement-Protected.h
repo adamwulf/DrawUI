@@ -13,6 +13,7 @@
 
 @interface MMAbstractBezierPathElement ()
 
+@property(nonatomic, assign) CGPoint startPoint;
 @property(nonatomic, assign) CGFloat width;
 @property(nonatomic, assign) CGFloat previousWidth;
 @property(nonatomic, strong) NSArray<MMTouchStreamEvent *> *events;

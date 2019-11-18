@@ -133,7 +133,7 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
     return _boundsCache;
 }
 
-- (UIBezierPath*)borderPath
+- (UIBezierPath *)borderPath
 {
     // calculate curved border path
     MMVector *startVector = [MMVector vectorWithPoint:[self startPoint] andPoint:[self ctrl1]];
@@ -148,15 +148,15 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
     CGPoint rightStart = [startOffsetVector pointFromPoint:[self startPoint] distance:-[self previousWidth]];
     CGPoint leftEnd = [endOffsetVector pointFromPoint:[self endPoint] distance:-[self width]];
     CGPoint rightEnd = [endOffsetVector pointFromPoint:[self endPoint] distance:[self width]];
-    
+
     // build up the final path
-    
+
     CGPoint ctrl1;
     CGPoint ctrl2;
-    
+
     UIBezierPath *stroke = [UIBezierPath bezierPath];
     [stroke moveToPoint:rightStart];
-    
+
     ctrl1 = [[startVector normal] pointFromPoint:rightStart distance:startDist];
     ctrl2 = [[endVector normal] pointFromPoint:rightEnd distance:endDist];
 
@@ -168,10 +168,10 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
 
     [stroke addCurveToPoint:leftStart controlPoint1:ctrl1 controlPoint2:ctrl2];
     [stroke closePath];
-    
+
     CGRect endOval = CGRectInset(CGRectMake([self endPoint].x, [self endPoint].y, 0, 0), -[self width], -[self width]);
     [stroke appendPath:[UIBezierPath bezierPathWithOvalInRect:endOval]];
-    
+
     return stroke;
 }
 
@@ -263,6 +263,13 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
     }
 }
 
+#pragma mark - Events
+
+- (void)updateWithEvent:(MMTouchStreamEvent *)event
+{
+    _curveTo = [event location];
+    _ctrl2 = _curveTo;
+}
 
 #pragma mark - Helper
 /**

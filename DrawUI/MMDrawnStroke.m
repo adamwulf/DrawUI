@@ -27,6 +27,7 @@
 
 @implementation MMDrawnStroke {
     NSMutableArray *_waitingEvents;
+    MMSegmentSmoother *_savedSmoother;
 }
 
 - (instancetype)initWithTool:(MMPen *)tool
@@ -95,6 +96,21 @@
 
     if (!ele) {
         // if we didn't have a cached event, try to build one
+        if ([event isPrediction]) {
+            // if this is a prediction, then we need to save our smoother state
+            // so that we can continue from where it left off once we get real data again
+            _savedSmoother = _savedSmoother ?: [_smoother copy];
+        } else {
+            // now we have real non-prediction data, so remove all
+            // elements that were built from predictions
+            while ([[_segments lastObject] isPrediction]) {
+                [_segments removeLastObject];
+            }
+            // and restore our smoother to our saved state pre-prediction
+            _smoother = _savedSmoother ?: _smoother;
+            _savedSmoother = nil;
+        }
+
         CGPoint point = [event location];
         CGFloat smoothness = [_tool smoothnessForEvent:event];
 

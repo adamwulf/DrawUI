@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// so it's useful to track a touch through events, but not useful to introspect
 @property(nonatomic, strong) NSObject *coalescedTouch;
 @property(nonatomic, strong) NSObject *touch;
-@property(nonatomic, strong) NSObject *uuid;
+@property(nonatomic, strong) NSString *uuid;
 @property(nonatomic, assign) NSTimeInterval timestamp;
 @property(nonatomic, assign) UITouchType type;
 @property(nonatomic, assign) UITouchPhase phase;
