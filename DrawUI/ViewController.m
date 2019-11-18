@@ -33,11 +33,11 @@
     [[self view] addGestureRecognizer:[MMTouchVelocityGestureRecognizer sharedInstance]];
 
     //    _activeRenderer = [[CALayerRenderer alloc] init];
-    //    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
+    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
     //    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
-    //    [_activeRenderer setDynamicWidth:YES];
+    [_activeRenderer setDynamicWidth:YES];
     //    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
-    _activeRenderer = [[CATiledLayerRenderer alloc] init];
+    //    _activeRenderer = [[CATiledLayerRenderer alloc] init];
 
     MMPen *pen = [[MMPen alloc] initWithMinSize:2 andMaxSize:7];
 

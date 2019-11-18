@@ -58,7 +58,7 @@
     @throw kAbstractMethodException;
 }
 
-- (UIBezierPath*)borderPath
+- (UIBezierPath *)borderPath
 {
     @throw kAbstractMethodException;
 }
@@ -128,6 +128,13 @@
 {
     _startPoint.x = _startPoint.x * widthRatio;
     _startPoint.y = _startPoint.y * heightRatio;
+}
+
+#pragma mark - Events
+
+- (void)updateWithEvent:(MMTouchStreamEvent *)event
+{
+    _updated = YES;
 }
 
 @end

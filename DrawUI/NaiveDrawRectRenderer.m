@@ -11,7 +11,7 @@
 
 @interface NaiveDrawRectRenderer ()
 
-@property (nonatomic, strong) MMDrawModel *model;
+@property(nonatomic, strong) MMDrawModel *model;
 
 @end
 
@@ -19,18 +19,20 @@
 
 @synthesize dynamicWidth;
 
--(instancetype)init{
-    if(self = [super init]){
+- (instancetype)init
+{
+    if (self = [super init]) {
         [self setOpaque:NO];
     }
     return self;
 }
 
--(void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel{
-    if([self superview] != drawView){
+- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
+{
+    if ([self superview] != drawView) {
         [self setTranslatesAutoresizingMaskIntoConstraints:NO];
         [drawView addSubview:self];
-        
+
         [[[self leadingAnchor] constraintEqualToAnchor:[drawView leadingAnchor]] setActive:YES];
         [[[self trailingAnchor] constraintEqualToAnchor:[drawView trailingAnchor]] setActive:YES];
         [[[self topAnchor] constraintEqualToAnchor:[drawView topAnchor]] setActive:YES];
@@ -38,41 +40,53 @@
     }
 }
 
--(void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel{
+- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
+{
     _model = drawModel;
 
     [self setNeedsDisplay];
 }
 
--(void)drawRect:(CGRect)rect{
-    if([self dynamicWidth]){
-        [[UIColor blackColor] setFill];
-
-        for(MMDrawnStroke *stroke in [[self model] strokes]){
-            for(MMAbstractBezierPathElement *element in [stroke segments]){
+- (void)drawRect:(CGRect)rect
+{
+    if ([self dynamicWidth]) {
+        for (MMDrawnStroke *stroke in [[self model] strokes]) {
+            for (MMAbstractBezierPathElement *element in [stroke segments]) {
                 UIBezierPath *segment = [element borderPath];
-                
+
+                if ([element isUpdated]) {
+                    [[UIColor redColor] setFill];
+                } else {
+                    [[UIColor blackColor] setFill];
+                }
+
                 [segment fill];
             }
         }
 
-        for(MMAbstractBezierPathElement *element in [[[self model] stroke] segments]){
+        for (MMAbstractBezierPathElement *element in [[[self model] stroke] segments]) {
             UIBezierPath *segment = [element borderPath];
-            
+
+            if ([element isUpdated]) {
+                [[UIColor redColor] setFill];
+            } else {
+                [[UIColor blackColor] setFill];
+            }
+
             [segment fill];
         }
-    }else{
+    } else {
         for (MMDrawnStroke *stroke in [[self model] strokes]) {
             UIBezierPath *path = [stroke path];
             [path setLineWidth:2];
-            
+
             [[UIColor blackColor] setStroke];
             [path stroke];
         }
 
         UIBezierPath *path = [[[self model] stroke] path];
         [path setLineWidth:2];
-        
+
         [[UIColor blackColor] setStroke];
         [path stroke];
     }

@@ -12,7 +12,6 @@
 
 @class MMAbstractBezierPathElement;
 
-
 @interface MMSegmentSmoother : NSObject <MMPlistSaving>
 
 @property(nonatomic, readonly) CGPoint point0;

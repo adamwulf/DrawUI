@@ -9,11 +9,13 @@
 #ifndef JotUI_AbstractBezierPathElement_Protected_h
 #define JotUI_AbstractBezierPathElement_Protected_h
 
+#import "MMTouchStreamEvent.h"
 
 @interface MMAbstractBezierPathElement ()
 
 @property(nonatomic, assign) CGFloat width;
 @property(nonatomic, assign) CGFloat previousWidth;
+@property(nonatomic, strong) NSArray<MMTouchStreamEvent *> *events;
 
 @property(nonatomic, assign) BOOL bakedPreviousElementProps;
 @property(nonatomic, assign) NSInteger renderVersion;

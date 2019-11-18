@@ -14,7 +14,7 @@
 {
     MMTouchStreamEvent *event = [[MMTouchStreamEvent alloc] init];
 
-    [event setIdentifier:[[NSUUID UUID] UUIDString]];
+    [event setUuid:[[NSUUID UUID] UUIDString]];
     [event setCoalescedTouch:coalescedTouch];
     [event setTouch:touch];
     [event setTimestamp:[coalescedTouch timestamp]];

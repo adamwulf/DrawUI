@@ -19,13 +19,14 @@
 @interface MMDrawnStroke ()
 
 @property(nonatomic, strong) NSMutableArray<MMAbstractBezierPathElement *> *segments;
+@property(nonatomic, strong) NSMutableDictionary<NSNumber *, MMAbstractBezierPathElement *> *eventIdToSegment;
 @property(nonatomic, strong) MMSegmentSmoother *smoother;
 
 @end
 
 
 @implementation MMDrawnStroke {
-    BOOL _firstEvent;
+    NSMutableArray *_waitingEvents;
 }
 
 - (instancetype)initWithTool:(MMPen *)tool
@@ -34,7 +35,8 @@
         _tool = tool;
         _segments = [NSMutableArray array];
         _smoother = [[MMSegmentSmoother alloc] init];
-        _firstEvent = YES;
+        _eventIdToSegment = [NSMutableDictionary dictionary];
+        _waitingEvents = [NSMutableArray array];
     }
     return self;
 }
@@ -63,33 +65,70 @@
 
 #pragma mark - Touches
 
-- (MMAbstractBezierPathElement *)addEvent:(MMTouchStreamEvent *)event isEnding:(BOOL)ending;
+- (BOOL)containsEvent:(MMTouchStreamEvent *)event
 {
-    if (ending) {
-        BOOL shortStrokeEnding = [_segments count] <= 1;
+    return [event estimationUpdateIndex] && [_eventIdToSegment objectForKey:[event estimationUpdateIndex]];
+}
 
-        [_tool willEndStrokeWithEvent:event shortStrokeEnding:shortStrokeEnding];
-    } else if (_firstEvent) {
-        [_tool willBeginStrokeWithEvent:event];
-        _firstEvent = NO;
-    } else {
-        [_tool willMoveStrokeWithEvent:event];
+/// Returns the element that was added or updated by this event
+- (MMAbstractBezierPathElement *)addEvent:(MMTouchStreamEvent *)event;
+{
+    BOOL isUpdate = NO;
+    MMAbstractBezierPathElement *ele;
+
+    if ([event estimationUpdateIndex]) {
+        ele = [_eventIdToSegment objectForKey:[event estimationUpdateIndex]];
+        isUpdate = ele != nil;
     }
 
-    CGPoint point = [event location];
-    CGFloat smoothness = [_tool smoothnessForEvent:event];
-    MMAbstractBezierPathElement *ele = [_smoother addPoint:point andSmoothness:smoothness];
+    if (!isUpdate) {
+        if ([event phase] == UITouchPhaseEnded || [event phase] == UITouchPhaseCancelled) {
+            BOOL shortStrokeEnding = [_segments count] <= 1;
 
-    if (ele) {
-        CGFloat width = [_tool widthForEvent:event];
-
-        [ele setWidth:width];
-
-        if ([_segments count]) {
-            [ele validateDataGivenPreviousElement:[_segments lastObject]];
+            [_tool willEndStrokeWithEvent:event shortStrokeEnding:shortStrokeEnding];
+        } else if ([event phase] == UITouchPhaseBegan) {
+            [_tool willBeginStrokeWithEvent:event];
+        } else {
+            [_tool willMoveStrokeWithEvent:event];
         }
+    }
 
-        [_segments addObject:ele];
+    if (!ele) {
+        // if we didn't have a cached event, try to build one
+        CGPoint point = [event location];
+        CGFloat smoothness = [_tool smoothnessForEvent:event];
+
+        ele = [_smoother addPoint:point andSmoothness:smoothness];
+    }
+
+    // Now either update the element, or finish initializing it
+    // with its width and previous segment, etc
+    if (ele) {
+        if (isUpdate) {
+            // update a current element
+            [ele updateWithEvent:event];
+        } else {
+            CGFloat width = [_tool widthForEvent:event];
+
+            [ele setWidth:width];
+            [ele setEvents:[_waitingEvents arrayByAddingObject:event]];
+
+            [_waitingEvents removeAllObjects];
+
+            if ([_segments count]) {
+                [ele validateDataGivenPreviousElement:[_segments lastObject]];
+            }
+
+            [_segments addObject:ele];
+
+            for (MMTouchStreamEvent *eleEvent in [ele events]) {
+                if ([event estimationUpdateIndex]) {
+                    [_eventIdToSegment setObject:ele forKey:[eleEvent estimationUpdateIndex]];
+                }
+            }
+        }
+    } else {
+        [_waitingEvents addObject:event];
     }
 
     return ele;

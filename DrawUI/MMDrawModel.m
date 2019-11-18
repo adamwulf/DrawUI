@@ -36,35 +36,33 @@
     }
 
     for (MMTouchStreamEvent *event in eventsToProcess) {
-        if (![event isUpdate] && ![event isPrediction]) {
-            if ([event phase] == UITouchPhaseBegan) {
-                if (!_strokeTouch || _strokeTouch == [event touch]) {
-                    _strokeTouch = [event touch];
-                    _stroke = [[MMDrawnStroke alloc] initWithTool:tool];
+        if ([event phase] == UITouchPhaseBegan) {
+            if (!_strokeTouch || _strokeTouch == [event touch]) {
+                _strokeTouch = [event touch];
+                _stroke = [[MMDrawnStroke alloc] initWithTool:tool];
 
-                    [_stroke addEvent:event isEnding:NO];
-                }
-            } else if ([event phase] == UITouchPhaseMoved) {
-                if (_strokeTouch == [event touch]) {
-                    [_stroke addEvent:event isEnding:NO];
-                }
-            } else if ([event phase] == UITouchPhaseEnded) {
-                if (_strokeTouch == [event touch]) {
-                    [_stroke addEvent:event isEnding:YES];
+                [_stroke addEvent:event];
+            }
+        } else if ([event phase] == UITouchPhaseMoved) {
+            if (_strokeTouch == [event touch]) {
+                [_stroke addEvent:event];
+            }
+        } else if ([event phase] == UITouchPhaseEnded) {
+            if (_strokeTouch == [event touch]) {
+                [_stroke addEvent:event];
 
-                    if ([_stroke path]) {
-                        // this stroke is complete, save it to our history
-                        [_strokes addObject:_stroke];
-                    }
+                if ([_stroke path]) {
+                    // this stroke is complete, save it to our history
+                    [_strokes addObject:_stroke];
+                }
 
-                    _stroke = nil;
-                    _strokeTouch = nil;
-                }
-            } else if ([event phase] == UITouchPhaseCancelled) {
-                if (_strokeTouch == [event touch]) {
-                    _strokeTouch = nil;
-                    _stroke = nil;
-                }
+                _stroke = nil;
+                _strokeTouch = nil;
+            }
+        } else if ([event phase] == UITouchPhaseCancelled) {
+            if (_strokeTouch == [event touch]) {
+                _strokeTouch = nil;
+                _stroke = nil;
             }
         }
     }

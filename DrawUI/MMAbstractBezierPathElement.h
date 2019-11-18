@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MMPlistSaving.h"
+#import "MMTouchStreamEvent.h"
 
 @interface MMAbstractBezierPathElement : NSObject <MMPlistSaving>
 
@@ -16,10 +17,11 @@
 @property(nonatomic, readonly) CGPoint endPoint;
 @property(nonatomic, readonly) CGRect bounds;
 
-@property(nonatomic, readonly) UIBezierPath* borderPath;
+@property(nonatomic, readonly) UIBezierPath *borderPath;
 
 @property(nonatomic, readonly) BOOL followsMoveTo;
 @property(nonatomic, readonly) CGFloat previousWidth;
+@property(nonatomic, readonly, getter=isUpdated) BOOL updated;
 
 - (CGFloat)lengthOfElement;
 - (CGFloat)angleOfStart;
@@ -28,5 +30,7 @@
 - (UIBezierPath *)bezierPathSegment;
 
 - (void)scaleForWidth:(CGFloat)widthRatio andHeight:(CGFloat)heightRatio NS_REQUIRES_SUPER;
+
+- (void)updateWithEvent:(MMTouchStreamEvent *)event;
 
 @end

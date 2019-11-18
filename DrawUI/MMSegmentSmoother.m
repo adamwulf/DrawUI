@@ -8,6 +8,7 @@
 
 #import "MMSegmentSmoother.h"
 #import "MMAbstractBezierPathElement.h"
+#import "MMAbstractBezierPathElement-Protected.h"
 #import "MMCurveToPathElement.h"
 #import "MMMoveToPathElement.h"
 
@@ -36,13 +37,15 @@
  *
  * code modified from: http://www.effectiveui.com/blog/2011/12/02/how-to-build-a-simple-painting-app-for-ios/
  */
-- (MMAbstractBezierPathElement *)addPoint:(CGPoint)inPoint andSmoothness:(CGFloat)smoothFactor
+- (MMAbstractBezierPathElement *)addPoint:(CGPoint)inPoint andSmoothness:(CGFloat)smoothFactor;
 {
     // update the points
     _point0 = _point1;
     _point1 = _point2;
     _point2 = _point3;
     _point3 = inPoint;
+
+    MMAbstractBezierPathElement *ele;
 
     // determine if we need a new segment
     if (_point1.x > -CGFLOAT_MAX) {
@@ -99,15 +102,15 @@
             ctrl2_y = _point2.y;
         }
 
-        return [MMCurveToPathElement elementWithStart:_point1
-                                         andCurveTo:_point2
-                                        andControl1:CGPointMake(ctrl1_x, ctrl1_y)
-                                        andControl2:CGPointMake(ctrl2_x, ctrl2_y)];
+        ele = [MMCurveToPathElement elementWithStart:_point1
+                                          andCurveTo:_point2
+                                         andControl1:CGPointMake(ctrl1_x, ctrl1_y)
+                                         andControl2:CGPointMake(ctrl2_x, ctrl2_y)];
     } else if (_point2.x == -CGFLOAT_MAX) {
-        return [MMMoveToPathElement elementWithMoveTo:_point3];
+        ele = [MMMoveToPathElement elementWithMoveTo:_point3];
     }
 
-    return nil;
+    return ele;
 }
 
 
