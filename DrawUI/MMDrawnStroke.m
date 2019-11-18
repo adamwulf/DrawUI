@@ -13,6 +13,8 @@
 #import "MMCurveToPathElement.h"
 #import "MMSegmentSmoother.h"
 #import "Constants.h"
+#import "MMTouchStreamEvent.h"
+#import "MMPen.h"
 
 @interface MMDrawnStroke ()
 
@@ -22,13 +24,17 @@
 @end
 
 
-@implementation MMDrawnStroke
+@implementation MMDrawnStroke {
+    BOOL _firstEvent;
+}
 
-- (instancetype)init
+- (instancetype)initWithTool:(MMPen *)tool
 {
     if (self = [super init]) {
+        _tool = tool;
         _segments = [NSMutableArray array];
         _smoother = [[MMSegmentSmoother alloc] init];
+        _firstEvent = YES;
     }
     return self;
 }
@@ -57,20 +63,35 @@
 
 #pragma mark - Touches
 
-- (MMAbstractBezierPathElement*)addPoint:(CGPoint)point smoothness:(CGFloat)smoothness width:(CGFloat)width
+- (MMAbstractBezierPathElement *)addEvent:(MMTouchStreamEvent *)event isEnding:(BOOL)ending;
 {
+    if (ending) {
+        BOOL shortStrokeEnding = [_segments count] <= 1;
+
+        [_tool willEndStrokeWithEvent:event shortStrokeEnding:shortStrokeEnding];
+    } else if (_firstEvent) {
+        [_tool willBeginStrokeWithEvent:event];
+        _firstEvent = NO;
+    } else {
+        [_tool willMoveStrokeWithEvent:event];
+    }
+
+    CGPoint point = [event location];
+    CGFloat smoothness = [_tool smoothnessForEvent:event];
     MMAbstractBezierPathElement *ele = [_smoother addPoint:point andSmoothness:smoothness];
 
     if (ele) {
+        CGFloat width = [_tool widthForEvent:event];
+
         [ele setWidth:width];
 
-        if([_segments count]){
+        if ([_segments count]) {
             [ele validateDataGivenPreviousElement:[_segments lastObject]];
         }
-        
+
         [_segments addObject:ele];
     }
-    
+
     return ele;
 }
 

@@ -13,7 +13,7 @@
 #import "MMTouchStream.h"
 
 @implementation MMDrawModel {
-    MMTouchStreamEvent *event;
+    MMTouchStreamEvent *_lastSeenEvent;
     NSObject *_strokeTouch;
 }
 
@@ -29,8 +29,8 @@
 {
     NSArray<MMTouchStreamEvent *> *eventsToProcess;
 
-    if (event) {
-        eventsToProcess = [touchStream eventsSinceEvent:event matchingTouch:_strokeTouch != nil];
+    if (_lastSeenEvent) {
+        eventsToProcess = [touchStream eventsSinceEvent:_lastSeenEvent matchingTouch:_strokeTouch != nil];
     } else {
         eventsToProcess = [touchStream eventsSinceEvent:nil];
     }
@@ -39,34 +39,18 @@
         if (![event isUpdate] && ![event isPrediction]) {
             if ([event phase] == UITouchPhaseBegan) {
                 if (!_strokeTouch || _strokeTouch == [event touch]) {
-                    [tool willBeginStrokeWithEvent:event];
-                    CGFloat width = [tool widthForEvent:event];
-                    CGFloat smooth = [tool smoothnessForEvent:event];
-
                     _strokeTouch = [event touch];
-                    _stroke = [[MMDrawnStroke alloc] init];
+                    _stroke = [[MMDrawnStroke alloc] initWithTool:tool];
 
-                    [_stroke addPoint:[event location] smoothness:smooth width:width];
+                    [_stroke addEvent:event isEnding:NO];
                 }
             } else if ([event phase] == UITouchPhaseMoved) {
                 if (_strokeTouch == [event touch]) {
-                    [tool willMoveStrokeWithEvent:event];
-
-                    CGFloat width = [tool widthForEvent:event];
-                    CGFloat smooth = [tool smoothnessForEvent:event];
-
-                    [_stroke addPoint:[event location] smoothness:smooth width:width];
+                    [_stroke addEvent:event isEnding:NO];
                 }
             } else if ([event phase] == UITouchPhaseEnded) {
                 if (_strokeTouch == [event touch]) {
-                    BOOL shortStrokeEnding = [_stroke.segments count] <= 1;
-
-                    [tool willEndStrokeWithEvent:event shortStrokeEnding:shortStrokeEnding];
-
-                    CGFloat width = [tool widthForEvent:event];
-                    CGFloat smooth = [tool smoothnessForEvent:event];
-
-                    [_stroke addPoint:[event location] smoothness:smooth width:width];
+                    [_stroke addEvent:event isEnding:YES];
 
                     if ([_stroke path]) {
                         // this stroke is complete, save it to our history
@@ -85,7 +69,7 @@
         }
     }
 
-    event = [eventsToProcess lastObject] ?: event;
+    _lastSeenEvent = [eventsToProcess lastObject] ?: _lastSeenEvent;
 }
 
 @end

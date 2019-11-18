@@ -11,16 +11,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MMAbstractBezierPathElement;
+@class MMAbstractBezierPathElement, MMTouchStreamEvent;
 
 @interface MMDrawnStroke : NSObject
 
-- (instancetype)init;
+- (instancetype)initWithTool:(MMPen *)tool;
 
 @property(nonatomic, nullable, readonly) UIBezierPath *path;
 @property(nonatomic, strong, readonly) NSArray<MMAbstractBezierPathElement *> *segments;
+@property(nonatomic, strong, readonly) MMPen *tool;
 
-- (MMAbstractBezierPathElement*)addPoint:(CGPoint)point smoothness:(CGFloat)smoothness width:(CGFloat)width;
+- (MMAbstractBezierPathElement *)addEvent:(MMTouchStreamEvent *)event isEnding:(BOOL)ending;
 
 @end
 
