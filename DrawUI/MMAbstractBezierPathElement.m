@@ -78,6 +78,7 @@
 {
     if ([self renderVersion] != kJotUIRenderVersion && !_previousElement) {
         _previousElement = previousElement;
+        _previousElement->_nextElement = self;
         _renderVersion = kJotUIRenderVersion;
     } else {
         @throw [NSException exceptionWithName:@"RevalidateElementException" reason:@"Cannot revalidate previous element" userInfo:nil];
@@ -108,11 +109,19 @@
 
 #pragma mark - Events
 
+- (void)clearPathCaches
+{
+    // noop
+}
+
 - (void)updateWithEvent:(MMTouchStreamEvent *)event width:(CGFloat)width
 {
     if ([[[self events] firstObject] expectsForceUpdate]) {
         _width = width;
     }
+
+    [self clearPathCaches];
+    [[self nextElement] clearPathCaches];
 
     _updated = YES;
 }

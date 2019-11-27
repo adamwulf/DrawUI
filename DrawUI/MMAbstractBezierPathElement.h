@@ -19,6 +19,7 @@
 
 @property(nonatomic, readonly) UIBezierPath *borderPath;
 
+@property(nonatomic, readonly) MMAbstractBezierPathElement *nextElement;
 @property(nonatomic, readonly) MMAbstractBezierPathElement *previousElement;
 @property(nonatomic, readonly) BOOL followsMoveTo;
 @property(nonatomic, readonly, getter=isUpdated) BOOL updated;

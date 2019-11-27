@@ -21,10 +21,9 @@
     CGRect _boundsCache;
     // cache the hash, since it's expenseive to calculate
     NSUInteger _hashCache;
-
     CGFloat _subBezierlengthCache[1000];
-
     CGFloat _length;
+    UIBezierPath *_borderPath;
 }
 
 const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
@@ -135,47 +134,51 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
 
 - (UIBezierPath *)borderPath
 {
-    // calculate curved border path
-    MMVector *startVector = [MMVector vectorWithPoint:[self startPoint] andPoint:[self ctrl1]];
-    CGFloat startDist = [startVector magnitude];
-    MMVector *startOffsetVector = [[startVector perpendicular] normal];
+    if (!_borderPath) {
+        // calculate curved border path
+        MMVector *startVector = [MMVector vectorWithPoint:[self startPoint] andPoint:[self ctrl1]];
+        CGFloat startDist = [startVector magnitude];
+        MMVector *startOffsetVector = [[startVector perpendicular] normal];
 
-    MMVector *endVector = [MMVector vectorWithPoint:[self endPoint] andPoint:[self ctrl2]];
-    CGFloat endDist = [endVector magnitude];
-    MMVector *endOffsetVector = [[endVector perpendicular] normal];
+        MMVector *endVector = [MMVector vectorWithPoint:[self endPoint] andPoint:[self ctrl2]];
+        CGFloat endDist = [endVector magnitude];
+        MMVector *endOffsetVector = [[endVector perpendicular] normal];
 
-    CGPoint leftStart = [startOffsetVector pointFromPoint:[self startPoint] distance:[[self previousElement] width]];
-    CGPoint rightStart = [startOffsetVector pointFromPoint:[self startPoint] distance:-[[self previousElement] width]];
-    CGPoint leftEnd = [endOffsetVector pointFromPoint:[self endPoint] distance:-[self width]];
-    CGPoint rightEnd = [endOffsetVector pointFromPoint:[self endPoint] distance:[self width]];
+        CGPoint leftStart = [startOffsetVector pointFromPoint:[self startPoint] distance:[[self previousElement] width]];
+        CGPoint rightStart = [startOffsetVector pointFromPoint:[self startPoint] distance:-[[self previousElement] width]];
+        CGPoint leftEnd = [endOffsetVector pointFromPoint:[self endPoint] distance:-[self width]];
+        CGPoint rightEnd = [endOffsetVector pointFromPoint:[self endPoint] distance:[self width]];
 
-    // build up the final path
+        // build up the final path
 
-    CGPoint ctrl1;
-    CGPoint ctrl2;
+        CGPoint ctrl1;
+        CGPoint ctrl2;
 
-    UIBezierPath *stroke = [UIBezierPath bezierPath];
-    [stroke moveToPoint:rightStart];
+        UIBezierPath *stroke = [UIBezierPath bezierPath];
+        [stroke moveToPoint:rightStart];
 
-    ctrl1 = [[startVector normal] pointFromPoint:rightStart distance:startDist];
-    ctrl2 = [[endVector normal] pointFromPoint:rightEnd distance:endDist];
+        ctrl1 = [[startVector normal] pointFromPoint:rightStart distance:startDist];
+        ctrl2 = [[endVector normal] pointFromPoint:rightEnd distance:endDist];
 
-    [stroke addCurveToPoint:rightEnd controlPoint1:ctrl1 controlPoint2:ctrl2];
-    [stroke addLineToPoint:leftEnd];
+        [stroke addCurveToPoint:rightEnd controlPoint1:ctrl1 controlPoint2:ctrl2];
+        [stroke addLineToPoint:leftEnd];
 
-    ctrl1 = [[endVector normal] pointFromPoint:leftEnd distance:endDist];
-    ctrl2 = [[startVector normal] pointFromPoint:leftStart distance:startDist];
+        ctrl1 = [[endVector normal] pointFromPoint:leftEnd distance:endDist];
+        ctrl2 = [[startVector normal] pointFromPoint:leftStart distance:startDist];
 
-    [stroke addCurveToPoint:leftStart controlPoint1:ctrl1 controlPoint2:ctrl2];
-    [stroke closePath];
+        [stroke addCurveToPoint:leftStart controlPoint1:ctrl1 controlPoint2:ctrl2];
+        [stroke closePath];
 
-    CGRect startOval = CGRectInset(CGRectMake([self startPoint].x, [self startPoint].y, 0, 0), -[[self previousElement] width], -[[self previousElement] width]);
-    [stroke appendPath:[UIBezierPath bezierPathWithOvalInRect:startOval]];
+        CGRect startOval = CGRectInset(CGRectMake([self startPoint].x, [self startPoint].y, 0, 0), -[[self previousElement] width], -[[self previousElement] width]);
+        [stroke appendPath:[UIBezierPath bezierPathWithOvalInRect:startOval]];
 
-    CGRect endOval = CGRectInset(CGRectMake([self endPoint].x, [self endPoint].y, 0, 0), -[self width], -[self width]);
-    [stroke appendPath:[UIBezierPath bezierPathWithOvalInRect:endOval]];
+        CGRect endOval = CGRectInset(CGRectMake([self endPoint].x, [self endPoint].y, 0, 0), -[self width], -[self width]);
+        [stroke appendPath:[UIBezierPath bezierPathWithOvalInRect:endOval]];
 
-    return stroke;
+        _borderPath = stroke;
+    }
+
+    return _borderPath;
 }
 
 /**
@@ -276,6 +279,11 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
         _ctrl2 = _curveTo;
         _curveTo = [event location];
     }
+}
+
+- (void)clearPathCaches
+{
+    _borderPath = nil;
 }
 
 #pragma mark - Helper

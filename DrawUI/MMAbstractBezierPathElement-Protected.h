@@ -25,6 +25,8 @@
 
 - (CGFloat)angleBetweenPoint:(CGPoint)point1 andPoint:(CGPoint)point2;
 
+- (void)clearPathCaches;
+
 @end
 
 

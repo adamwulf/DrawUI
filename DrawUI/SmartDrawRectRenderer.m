@@ -70,38 +70,13 @@
     if ([self dynamicWidth]) {
         [[UIColor blackColor] setFill];
 
-        for (MMDrawnStroke *stroke in [[self model] strokes]) {
-            for (MMAbstractBezierPathElement *element in [stroke segments]) {
+        for (MMAbstractBezierPathElement *element in [stroke segments]) {
+            CGFloat maxWidth = MAX(element.width, element.previousElement.width);
+
+            if (CGRectIntersectsRect(CGRectInset([element bounds], -maxWidth, -maxWidth), rect)) {
                 UIBezierPath *segment = [element borderPath];
 
-                if (CGRectIntersectsRect([segment bounds], rect)) {
-                    [segment fill];
-                }
-            }
-        }
-
-        for (MMAbstractBezierPathElement *element in [[[self model] stroke] segments]) {
-            UIBezierPath *segment = [element borderPath];
-
-            if (CGRectIntersectsRect([segment bounds], rect)) {
                 [segment fill];
-            }
-        }
-    } else if ([self filledPath]) {
-        UIBezierPath *path = [stroke path];
-
-        if (path) {
-            CGPathGetBoundingBox(nil);
-            CGPathGetPathBoundingBox(nil);
-
-            UIBezierPath *widePath = [UIBezierPath bezierPathWithCGPath:CGPathCreateCopyByStrokingPath([path CGPath], nil, kStrokeWidth, kCGLineCapRound, kCGLineJoinRound, kStrokeWidth)];
-            CGRect pathBounds = [widePath bounds];
-
-            pathBounds = CGRectInset(pathBounds, -kStrokeWidth, -kStrokeWidth);
-
-            if (widePath && CGRectIntersectsRect(pathBounds, rect)) {
-                [[UIColor blackColor] setFill];
-                [widePath fill];
             }
         }
     } else {
