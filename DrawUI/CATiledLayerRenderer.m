@@ -7,6 +7,7 @@
 //
 
 #import "CATiledLayerRenderer.h"
+#import "MMAbstractBezierPathElement.h"
 #import "Constants.h"
 
 @interface CATiledLayerRenderer () <CALayerDelegate>
@@ -70,13 +71,23 @@
 
 - (void)renderStroke:(MMDrawnStroke *)stroke inContext:(CGContextRef)ctx
 {
-    if ([stroke path]) {
-        UIBezierPath *path = [[stroke path] copy];
+    if ([self dynamicWidth]) {
+        [[UIColor blackColor] setFill];
 
-        [path setLineWidth:2];
-        [[UIColor blackColor] setStroke];
+        for (MMAbstractBezierPathElement *element in [[stroke segments] copy]) {
+            UIBezierPath *segment = [element borderPath];
 
-        [path stroke];
+            [segment fill];
+        }
+    } else {
+        UIBezierPath *path = [stroke path];
+
+        if (path) {
+            [path setLineWidth:kStrokeWidth];
+
+            [[UIColor blackColor] setStroke];
+            [path stroke];
+        }
     }
 }
 

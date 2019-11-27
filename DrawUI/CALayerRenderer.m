@@ -7,6 +7,7 @@
 //
 
 #import "CALayerRenderer.h"
+#import "MMAbstractBezierPathElement.h"
 
 @implementation CALayerRenderer
 
@@ -14,9 +15,23 @@
 
 #pragma mark - Render
 
-- (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView*)drawView
+- (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView *)drawView
 {
-    if ([stroke path]) {
+    if ([self dynamicWidth]) {
+        UIBezierPath *strokePath = [UIBezierPath bezierPath];
+
+        for (MMAbstractBezierPathElement *element in [[stroke segments] copy]) {
+            [strokePath appendPath:[element borderPath]];
+        }
+
+        CAShapeLayer *layer = [CAShapeLayer layer];
+
+        layer.path = [strokePath CGPath];
+        layer.fillColor = [[UIColor blackColor] CGColor];
+        layer.lineWidth = 0;
+
+        [[drawView layer] addSublayer:layer];
+    } else if ([stroke path]) {
         CAShapeLayer *layer = [CAShapeLayer layer];
 
         layer.path = [[stroke path] CGPath];
@@ -28,7 +43,7 @@
     }
 }
 
-- (void)renderModel:(MMDrawModel*)drawModel inView:(MMDrawView*)drawView
+- (void)renderModel:(MMDrawModel *)drawModel inView:(MMDrawView *)drawView
 {
     [[[drawView layer] sublayers] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
 
@@ -41,11 +56,12 @@
 
 #pragma mark - MMDrawViewRenderer
 
--(void)drawView:(MMDrawView*)drawView willUpdateModel:(MMDrawModel*)oldModel to:(MMDrawModel*)newModel{
-    
+- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
+{
 }
 
--(void)drawView:(MMDrawView*)drawView didUpdateModel:(MMDrawModel*)drawModel{
+- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
+{
     [self renderModel:drawModel inView:drawView];
 }
 
