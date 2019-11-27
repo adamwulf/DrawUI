@@ -31,6 +31,13 @@
     return self;
 }
 
+#pragma mark - Notifications
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UIView *)drawView change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context
+{
+    [_tiledLayer setFrame:[[drawView layer] bounds]];
+}
+
 #pragma mark - MMDrawViewRenderer
 
 - (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
@@ -42,6 +49,8 @@
     if (![_tiledLayer superlayer]) {
         [[drawView layer] addSublayer:_tiledLayer];
         [_tiledLayer setFrame:[[drawView layer] bounds]];
+
+        [drawView addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
     }
 
     _lastModel = drawModel;

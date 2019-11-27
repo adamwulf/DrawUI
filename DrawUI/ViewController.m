@@ -19,7 +19,10 @@
 @interface ViewController ()
 
 @property(nonatomic, strong) IBOutlet MMDrawView *drawView;
-@property(nonatomic, strong) NSObject<MMDrawViewRenderer> *activeRenderer;
+@property(nonatomic, strong) IBOutlet UISegmentedControl *rendererControl;
+
+@property(nonatomic, strong) MMDrawModel *drawModel;
+@property(nonatomic, strong) MMPen *tool;
 
 @end
 
@@ -33,19 +36,47 @@
 
     [[self view] addGestureRecognizer:[MMTouchVelocityGestureRecognizer sharedInstance]];
 
-    //    _activeRenderer = [[CALayerRenderer alloc] init];
-    //    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
-    _activeRenderer = [[DebugRenderer alloc] init];
-    //        _activeRenderer = [[SmartDrawRectRenderer alloc] init];
-    [_activeRenderer setDynamicWidth:YES];
-    //    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
-    //    _activeRenderer = [[CATiledLayerRenderer alloc] init];
+    _tool = [[MMPen alloc] initWithMinSize:2 andMaxSize:17];
+    _drawModel = [[MMDrawModel alloc] init];
 
-    MMPen *pen = [[MMPen alloc] initWithMinSize:2 andMaxSize:17];
+    [self didChangeRenderer:[self rendererControl]];
+}
 
-    [[self drawView] setTool:pen];
-    [[self drawView] setRenderer:[self activeRenderer]];
-    [[self drawView] setDrawModel:[[MMDrawModel alloc] init]];
+- (IBAction)didChangeRenderer:(UISegmentedControl *)segmentedControl
+{
+    [[self drawView] removeFromSuperview];
+
+    _drawView = [[MMDrawView alloc] init];
+
+    [[self drawView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [[self view] insertSubview:[self drawView] atIndex:0];
+
+    [[[[self drawView] leftAnchor] constraintEqualToAnchor:[[self view] leftAnchor]] setActive:YES];
+    [[[[self drawView] rightAnchor] constraintEqualToAnchor:[[self view] rightAnchor]] setActive:YES];
+    [[[[self drawView] topAnchor] constraintEqualToAnchor:[[self view] topAnchor]] setActive:YES];
+    [[[[self drawView] bottomAnchor] constraintEqualToAnchor:[[self view] bottomAnchor]] setActive:YES];
+
+    NSObject<MMDrawViewRenderer> *renderer;
+
+    if ([segmentedControl selectedSegmentIndex] == 0) {
+        renderer = [[CALayerRenderer alloc] init];
+    } else if ([segmentedControl selectedSegmentIndex] == 1) {
+        renderer = [[CATiledLayerRenderer alloc] init];
+    } else if ([segmentedControl selectedSegmentIndex] == 2) {
+        renderer = [[NaiveDrawRectRenderer alloc] init];
+    } else if ([segmentedControl selectedSegmentIndex] == 3) {
+        renderer = [[SmartDrawRectRenderer alloc] init];
+    } else if ([segmentedControl selectedSegmentIndex] == 4) {
+        renderer = [[DebugRenderer alloc] init];
+    }
+
+    if ([renderer respondsToSelector:@selector(setDynamicWidth:)]) {
+        [(SmartDrawRectRenderer *)renderer setDynamicWidth:YES];
+    }
+
+    [[self drawView] setTool:[self tool]];
+    [[self drawView] setRenderer:renderer];
+    [[self drawView] setDrawModel:[self drawModel]];
 }
 
 - (IBAction)redraw:(id)sender

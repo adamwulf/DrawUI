@@ -59,6 +59,8 @@
         } else {
             return output;
         }
+    } else if (index == NSNotFound) {
+        return [_events copy];
     } else {
         return @[];
     }
