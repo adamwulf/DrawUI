@@ -9,6 +9,10 @@
 #import "CALayerRenderer.h"
 #import "MMAbstractBezierPathElement.h"
 
+@interface CALayerRenderer () <CALayerDelegate>
+
+@end
+
 @implementation CALayerRenderer {
     NSMutableDictionary<NSString *, CALayer *> *_strokeLayers;
 }
@@ -36,6 +40,8 @@
             layer = [CAShapeLayer layer];
         }
 
+        layer.delegate = self;
+
         [_strokeLayers setObject:layer forKey:strokeId];
     }
 
@@ -44,6 +50,10 @@
 
 - (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView *)drawView
 {
+    if (![[drawView layer] actions]) {
+        [[drawView layer] setActions:@{ @"sublayers": [NSNull null] }];
+    }
+
     if ([self dynamicWidth]) {
         CALayer *layer = [self layerForStroke:[stroke identifier]];
 
@@ -51,6 +61,7 @@
             MMAbstractBezierPathElement *element = [[stroke segments] objectAtIndex:i];
             CAShapeLayer *segmentLayer = i < [[layer sublayers] count] ? [[layer sublayers] objectAtIndex:i] : [CAShapeLayer layer];
 
+            segmentLayer.delegate = self;
             segmentLayer.path = [[element borderPath] CGPath];
             segmentLayer.fillColor = [[UIColor blackColor] CGColor];
             segmentLayer.lineWidth = 0;
@@ -100,5 +111,13 @@
 {
     [self renderModel:drawModel inView:drawView];
 }
+
+#pragma mark - CALayerDelegate
+
+- (nullable id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)event
+{
+    return [NSNull null];
+}
+
 
 @end
