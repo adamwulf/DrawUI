@@ -69,13 +69,18 @@
     @throw kAbstractMethodException;
 }
 
+- (BOOL)followsMoveTo
+{
+    return [_previousElement isKindOfClass:[MMMoveToPathElement class]];
+}
+
 - (void)validateDataGivenPreviousElement:(MMAbstractBezierPathElement *)previousElement
 {
-    if ([self renderVersion] != kJotUIRenderVersion && !_bakedPreviousElementProps) {
-        _previousWidth = previousElement.width;
+    if ([self renderVersion] != kJotUIRenderVersion && !_previousElement) {
+        _previousElement = previousElement;
         _renderVersion = kJotUIRenderVersion;
-        _followsMoveTo = [previousElement isKindOfClass:[MMMoveToPathElement class]];
-        _bakedPreviousElementProps = YES;
+    } else {
+        @throw [NSException exceptionWithName:@"RevalidateElementException" reason:@"Cannot revalidate previous element" userInfo:nil];
     }
 }
 
@@ -93,36 +98,6 @@
     return atan2f(point1.y - point2.y, point1.x - point2.x) + M_PI_2;
 }
 
-
-#pragma mark - PlistSaving
-
-- (NSDictionary *)asDictionary
-{
-    return [NSDictionary dictionaryWithObjectsAndKeys:NSStringFromClass([self class]), @"class",
-                                                      [NSNumber numberWithFloat:_startPoint.x], @"startPoint.x",
-                                                      [NSNumber numberWithFloat:_startPoint.y], @"startPoint.y",
-                                                      [NSNumber numberWithFloat:_width], @"width",
-                                                      [NSNumber numberWithBool:_followsMoveTo], @"followsMoveTo",
-                                                      [NSNumber numberWithFloat:_previousWidth], @"previousWidth",
-                                                      [NSNumber numberWithInteger:_renderVersion], @"renderVersion",
-                                                      [NSNumber numberWithBool:_bakedPreviousElementProps], @"bakedPreviousElementProps",
-                                                      nil];
-}
-
-- (id)initFromDictionary:(NSDictionary *)dictionary
-{
-    self = [super init];
-    if (self) {
-        _startPoint = CGPointMake([[dictionary objectForKey:@"startPoint.x"] floatValue], [[dictionary objectForKey:@"startPoint.y"] floatValue]);
-        _width = [[dictionary objectForKey:@"width"] floatValue];
-        _followsMoveTo = [[dictionary objectForKey:@"followsMoveTo"] boolValue];
-        _previousWidth = [[dictionary objectForKey:@"previousWidth"] floatValue];
-        _renderVersion = [[dictionary objectForKey:@"renderVersion"] integerValue];
-        _bakedPreviousElementProps = [[dictionary objectForKey:@"followsMoveTo"] boolValue];
-    }
-    return self;
-}
-
 #pragma mark - Scaling
 
 - (void)scaleForWidth:(CGFloat)widthRatio andHeight:(CGFloat)heightRatio
@@ -133,8 +108,12 @@
 
 #pragma mark - Events
 
-- (void)updateWithEvent:(MMTouchStreamEvent *)event
+- (void)updateWithEvent:(MMTouchStreamEvent *)event width:(CGFloat)width
 {
+    if ([[[self events] firstObject] expectsForceUpdate]) {
+        _width = width;
+    }
+
     _updated = YES;
 }
 

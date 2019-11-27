@@ -144,8 +144,8 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
     CGFloat endDist = [endVector magnitude];
     MMVector *endOffsetVector = [[endVector perpendicular] normal];
 
-    CGPoint leftStart = [startOffsetVector pointFromPoint:[self startPoint] distance:[self previousWidth]];
-    CGPoint rightStart = [startOffsetVector pointFromPoint:[self startPoint] distance:-[self previousWidth]];
+    CGPoint leftStart = [startOffsetVector pointFromPoint:[self startPoint] distance:[[self previousElement] width]];
+    CGPoint rightStart = [startOffsetVector pointFromPoint:[self startPoint] distance:-[[self previousElement] width]];
     CGPoint leftEnd = [endOffsetVector pointFromPoint:[self endPoint] distance:-[self width]];
     CGPoint rightEnd = [endOffsetVector pointFromPoint:[self endPoint] distance:[self width]];
 
@@ -168,6 +168,9 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
 
     [stroke addCurveToPoint:leftStart controlPoint1:ctrl1 controlPoint2:ctrl2];
     [stroke closePath];
+
+    CGRect startOval = CGRectInset(CGRectMake([self startPoint].x, [self startPoint].y, 0, 0), -[[self previousElement] width], -[[self previousElement] width]);
+    [stroke appendPath:[UIBezierPath bezierPathWithOvalInRect:startOval]];
 
     CGRect endOval = CGRectInset(CGRectMake([self endPoint].x, [self endPoint].y, 0, 0), -[self width], -[self width]);
     [stroke appendPath:[UIBezierPath bezierPathWithOvalInRect:endOval]];
@@ -200,7 +203,7 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
     //
     // now setup what we need to calculate the changes in width
     // along the stroke
-    CGFloat prevWidth = [self previousWidth];
+    CGFloat prevWidth = [[self previousElement] width];
     CGFloat widthDiff = self.width - prevWidth;
 
 
@@ -265,9 +268,9 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
 
 #pragma mark - Events
 
-- (void)updateWithEvent:(MMTouchStreamEvent *)event
+- (void)updateWithEvent:(MMTouchStreamEvent *)event width:(CGFloat)width
 {
-    [super updateWithEvent:event];
+    [super updateWithEvent:event width:width];
 
     if ([[[self events] firstObject] expectsLocationUpdate]) {
         _ctrl2 = _curveTo;
@@ -403,44 +406,6 @@ static CGFloat subdivideBezierAtLength(const CGPoint bez[4],
 
         prevT = t;
     }
-}
-
-
-#pragma mark - PlistSaving
-
-- (NSDictionary *)asDictionary
-{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[super asDictionary]];
-    [dict setObject:[NSNumber numberWithFloat:_curveTo.x] forKey:@"curveTo.x"];
-    [dict setObject:[NSNumber numberWithFloat:_curveTo.y] forKey:@"curveTo.y"];
-    [dict setObject:[NSNumber numberWithFloat:_ctrl1.x] forKey:@"ctrl1.x"];
-    [dict setObject:[NSNumber numberWithFloat:_ctrl1.y] forKey:@"ctrl1.y"];
-    [dict setObject:[NSNumber numberWithFloat:_ctrl2.x] forKey:@"ctrl2.x"];
-    [dict setObject:[NSNumber numberWithFloat:_ctrl2.y] forKey:@"ctrl2.y"];
-    return [NSDictionary dictionaryWithDictionary:dict];
-}
-
-- (id)initFromDictionary:(NSDictionary *)dictionary
-{
-    self = [super initFromDictionary:dictionary];
-    if (self) {
-        _boundsCache.origin = JotCGNotFoundPoint;
-        _curveTo = CGPointMake([[dictionary objectForKey:@"curveTo.x"] floatValue], [[dictionary objectForKey:@"curveTo.y"] floatValue]);
-        _ctrl1 = CGPointMake([[dictionary objectForKey:@"ctrl1.x"] floatValue], [[dictionary objectForKey:@"ctrl1.y"] floatValue]);
-        _ctrl2 = CGPointMake([[dictionary objectForKey:@"ctrl2.x"] floatValue], [[dictionary objectForKey:@"ctrl2.y"] floatValue]);
-
-        NSUInteger prime = 31;
-        _hashCache = 1;
-        _hashCache = prime * _hashCache + [self startPoint].x;
-        _hashCache = prime * _hashCache + [self startPoint].y;
-        _hashCache = prime * _hashCache + _curveTo.x;
-        _hashCache = prime * _hashCache + _curveTo.y;
-        _hashCache = prime * _hashCache + _ctrl1.x;
-        _hashCache = prime * _hashCache + _ctrl1.y;
-        _hashCache = prime * _hashCache + _ctrl2.x;
-        _hashCache = prime * _hashCache + _ctrl2.y;
-    }
-    return self;
 }
 
 - (UIBezierPath *)bezierPathSegment

@@ -89,33 +89,12 @@
 
 #pragma mark - Events
 
-- (void)updateWithEvent:(MMTouchStreamEvent *)event
+- (void)updateWithEvent:(MMTouchStreamEvent *)event width:(CGFloat)width
 {
-    [super updateWithEvent:event];
+    [super updateWithEvent:event width:width];
 
     [self setStartPoint:[event location]];
 }
-
-#pragma mark - PlistSaving
-
-- (id)initFromDictionary:(NSDictionary *)dictionary
-{
-    if (self = [super initFromDictionary:dictionary]) {
-        NSUInteger prime = 31;
-        _hashCache = 1;
-        _hashCache = prime * _hashCache + [self startPoint].x;
-        _hashCache = prime * _hashCache + [self startPoint].y;
-    }
-    return self;
-}
-
-- (UIBezierPath *)bezierPathSegment
-{
-    UIBezierPath *strokePath = [UIBezierPath bezierPath];
-    [strokePath moveToPoint:self.startPoint];
-    return strokePath;
-}
-
 
 #pragma mark - hashing and equality
 

@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,12 +11,39 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="MMDrawView">
+                    <view key="view" contentMode="scaleToFill" id="hCH-MI-fjg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bC-Xf-vdC" customClass="MMDrawView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eb7-G4-t2s">
+                                <rect key="frame" x="348" y="64" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="redraw:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AT3-VS-Jad"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <constraints>
+                            <constraint firstItem="8bC-Xf-vdC" firstAttribute="trailing" secondItem="D7O-VW-3Ez" secondAttribute="trailing" id="KCg-DM-G8P"/>
+                            <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="eb7-G4-t2s" secondAttribute="trailing" constant="20" id="KZo-vr-bHa"/>
+                            <constraint firstItem="eb7-G4-t2s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7O-VW-3Ez" secondAttribute="leading" id="MFM-Y5-5ar"/>
+                            <constraint firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="ate-VL-WEH"/>
+                            <constraint firstItem="8bC-Xf-vdC" firstAttribute="leading" secondItem="D7O-VW-3Ez" secondAttribute="leading" id="lSf-sM-a1g"/>
+                            <constraint firstItem="eb7-G4-t2s" firstAttribute="top" secondItem="D7O-VW-3Ez" secondAttribute="top" constant="20" id="rHs-8T-nNf"/>
+                            <constraint firstItem="8bC-Xf-vdC" firstAttribute="top" secondItem="hCH-MI-fjg" secondAttribute="top" id="tPV-2K-RQ8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="D7O-VW-3Ez"/>
                     </view>
+                    <connections>
+                        <outlet property="drawView" destination="8bC-Xf-vdC" id="SvB-kR-ZW2"/>
+                        <outlet property="view" destination="hCH-MI-fjg" id="VIL-XQ-UHQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

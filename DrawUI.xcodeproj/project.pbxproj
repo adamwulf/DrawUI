@@ -60,7 +60,6 @@
 		C5911458237B3F3000E12FAB /* MMAbstractBezierPathElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMAbstractBezierPathElement.m; sourceTree = "<group>"; };
 		C5911459237B3F3000E12FAB /* MMAbstractBezierPathElement-Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMAbstractBezierPathElement-Protected.h"; sourceTree = "<group>"; };
 		C591145A237B3F3000E12FAB /* MMDrawnStroke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawnStroke.m; sourceTree = "<group>"; };
-		C591145B237B3F3000E12FAB /* MMPlistSaving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPlistSaving.h; sourceTree = "<group>"; };
 		C591145C237B3F3000E12FAB /* MMMoveToPathElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMoveToPathElement.h; sourceTree = "<group>"; };
 		C591145D237B3F3000E12FAB /* MMAbstractBezierPathElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMAbstractBezierPathElement.h; sourceTree = "<group>"; };
 		C591145E237B3F3100E12FAB /* MMMoveToPathElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMoveToPathElement.m; sourceTree = "<group>"; };
@@ -155,7 +154,6 @@
 				C5911462237B3F3100E12FAB /* MMCurveToPathElement.m */,
 				C591145C237B3F3000E12FAB /* MMMoveToPathElement.h */,
 				C591145E237B3F3100E12FAB /* MMMoveToPathElement.m */,
-				C591145B237B3F3000E12FAB /* MMPlistSaving.h */,
 				C5911460237B3F3100E12FAB /* MMSegmentSmoother.h */,
 				C5911461237B3F3100E12FAB /* MMSegmentSmoother.m */,
 			);

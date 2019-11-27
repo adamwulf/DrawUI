@@ -122,28 +122,6 @@
     _point3 = otherSmoother.point3;
 }
 
-
-#pragma mark - PlistSaving
-
-- (NSDictionary *)asDictionary
-{
-    return [NSDictionary dictionaryWithObjectsAndKeys:NSStringFromCGPoint(_point0), @"point0",
-                                                      NSStringFromCGPoint(_point1), @"point1",
-                                                      NSStringFromCGPoint(_point2), @"point2",
-                                                      NSStringFromCGPoint(_point3), @"point3", nil];
-}
-
-- (id)initFromDictionary:(NSDictionary *)dictionary
-{
-    if (self = [super init]) {
-        _point0 = CGPointFromString([dictionary objectForKey:@"point0"]);
-        _point1 = CGPointFromString([dictionary objectForKey:@"point1"]);
-        _point2 = CGPointFromString([dictionary objectForKey:@"point2"]);
-        _point3 = CGPointFromString([dictionary objectForKey:@"point3"]);
-    }
-    return self;
-}
-
 #pragma mark - Scale
 
 - (void)scaleForWidth:(CGFloat)widthRatio andHeight:(CGFloat)heightRatio

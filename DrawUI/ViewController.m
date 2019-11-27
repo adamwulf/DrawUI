@@ -18,7 +18,7 @@
 
 @interface ViewController ()
 
-@property(nonatomic, strong) MMDrawView *view;
+@property(nonatomic, strong) IBOutlet MMDrawView *drawView;
 @property(nonatomic, strong) NSObject<MMDrawViewRenderer> *activeRenderer;
 
 @end
@@ -36,16 +36,23 @@
     //    _activeRenderer = [[CALayerRenderer alloc] init];
     //    _activeRenderer = [[NaiveDrawRectRenderer alloc] init];
     _activeRenderer = [[DebugRenderer alloc] init];
-    //    _activeRenderer = [[SmartDrawRectRenderer alloc] init];
-    //    [_activeRenderer setDynamicWidth:YES];
+    //        _activeRenderer = [[SmartDrawRectRenderer alloc] init];
+    [_activeRenderer setDynamicWidth:YES];
     //    [(SmartDrawRectRenderer*)_activeRenderer setFilledPath:YES];
     //    _activeRenderer = [[CATiledLayerRenderer alloc] init];
 
-    MMPen *pen = [[MMPen alloc] initWithMinSize:2 andMaxSize:7];
+    MMPen *pen = [[MMPen alloc] initWithMinSize:2 andMaxSize:17];
 
-    [[self view] setTool:pen];
-    [[self view] setRenderer:[self activeRenderer]];
-    [[self view] setDrawModel:[[MMDrawModel alloc] init]];
+    [[self drawView] setTool:pen];
+    [[self drawView] setRenderer:[self activeRenderer]];
+    [[self drawView] setDrawModel:[[MMDrawModel alloc] init]];
+}
+
+- (IBAction)redraw:(id)sender
+{
+    [[self drawView] setNeedsDisplay];
+
+    [[[self drawView] subviews] makeObjectsPerformSelector:@selector(setNeedsDisplay)];
 }
 
 

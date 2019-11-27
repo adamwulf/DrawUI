@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import "MMPlistSaving.h"
 
 @class MMAbstractBezierPathElement;
 
-@interface MMSegmentSmoother : NSObject <MMPlistSaving, NSCopying>
+@interface MMSegmentSmoother : NSObject <NSCopying>
 
 @property(nonatomic, readonly) CGPoint point0;
 @property(nonatomic, readonly) CGPoint point1;

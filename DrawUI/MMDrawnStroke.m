@@ -80,7 +80,9 @@
 
         if (ele) {
             // if we have an element for this event already, then update and return it
-            [ele updateWithEvent:event];
+            CGFloat width = [_tool widthForEvent:event];
+
+            [ele updateWithEvent:event width:width];
             return ele;
         }
     }

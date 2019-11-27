@@ -47,38 +47,33 @@
     [self setNeedsDisplay];
 }
 
+- (void)drawFilledStroke:(MMDrawnStroke *)stroke
+{
+    MMAbstractBezierPathElement *previousElement;
+    for (MMAbstractBezierPathElement *element in [stroke segments]) {
+        UIBezierPath *segment = [element borderPath];
+
+        if ([element isUpdated]) {
+            [[[UIColor redColor] colorWithAlphaComponent:.1] setFill];
+        } else if ([element isPrediction]) {
+            [[[UIColor blueColor] colorWithAlphaComponent:.1] setFill];
+        } else {
+            [[[UIColor blackColor] colorWithAlphaComponent:.1] setFill];
+        }
+
+        [segment fill];
+        previousElement = element;
+    }
+}
+
 - (void)drawRect:(CGRect)rect
 {
     if ([self dynamicWidth]) {
         for (MMDrawnStroke *stroke in [[self model] strokes]) {
-            for (MMAbstractBezierPathElement *element in [stroke segments]) {
-                UIBezierPath *segment = [element borderPath];
-
-                if ([element isUpdated]) {
-                    [[[UIColor redColor] colorWithAlphaComponent:.1] setFill];
-                } else if ([element isPrediction]) {
-                    [[[UIColor blueColor] colorWithAlphaComponent:.1] setFill];
-                } else {
-                    [[[UIColor blackColor] colorWithAlphaComponent:.1] setFill];
-                }
-
-                [segment fill];
-            }
+            [self drawFilledStroke:stroke];
         }
 
-        for (MMAbstractBezierPathElement *element in [[[self model] stroke] segments]) {
-            UIBezierPath *segment = [element borderPath];
-
-            if ([element isUpdated]) {
-                [[[UIColor redColor] colorWithAlphaComponent:.1] setFill];
-            } else if ([element isPrediction]) {
-                [[[UIColor blueColor] colorWithAlphaComponent:.1] setFill];
-            } else {
-                [[[UIColor blackColor] colorWithAlphaComponent:.1] setFill];
-            }
-
-            [segment fill];
-        }
+        [self drawFilledStroke:[[self model] stroke]];
     } else {
         [[UIColor blackColor] setStroke];
 
