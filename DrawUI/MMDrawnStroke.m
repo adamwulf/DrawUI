@@ -30,9 +30,12 @@
     MMSegmentSmoother *_savedSmoother;
 }
 
+@synthesize borderPath = _borderPath;
+
 - (instancetype)initWithTool:(MMPen *)tool
 {
     if (self = [super init]) {
+        _identifier = [[NSUUID UUID] UUIDString];
         _tool = tool;
         _segments = [NSMutableArray array];
         _smoother = [[MMSegmentSmoother alloc] init];
@@ -64,6 +67,21 @@
     return path;
 }
 
+- (UIBezierPath *)borderPath
+{
+    if (!_borderPath) {
+        UIBezierPath *path = [UIBezierPath bezierPath];
+
+        for (MMAbstractBezierPathElement *segment in [self segments]) {
+            [path appendPath:[segment borderPath]];
+        }
+
+        _borderPath = path;
+    }
+
+    return _borderPath;
+}
+
 #pragma mark - Touches
 
 - (NSObject *)touch
@@ -79,6 +97,8 @@
 /// Returns the element that was added or updated by this event
 - (MMAbstractBezierPathElement *)addEvent:(MMTouchStreamEvent *)event;
 {
+    _borderPath = nil;
+
     if ([event estimationUpdateIndex]) {
         // Check if we can update an existing element
         MMAbstractBezierPathElement *ele = [_eventIdToSegment objectForKey:[event estimationUpdateIndex]];

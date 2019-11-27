@@ -9,37 +9,71 @@
 #import "CALayerRenderer.h"
 #import "MMAbstractBezierPathElement.h"
 
-@implementation CALayerRenderer
+@implementation CALayerRenderer {
+    NSMutableDictionary<NSString *, CALayer *> *_strokeLayers;
+}
 
 @synthesize dynamicWidth;
 
+- (instancetype)init
+{
+    if (self = [super init]) {
+        _strokeLayers = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
 #pragma mark - Render
+
+- (__kindof CALayer *)layerForStroke:(NSString *)strokeId
+{
+    CALayer *layer = [_strokeLayers objectForKey:strokeId];
+
+    if (!layer) {
+        if ([self dynamicWidth]) {
+            layer = [CALayer layer];
+        } else {
+            layer = [CAShapeLayer layer];
+        }
+
+        [_strokeLayers setObject:layer forKey:strokeId];
+    }
+
+    return layer;
+}
 
 - (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView *)drawView
 {
     if ([self dynamicWidth]) {
-        UIBezierPath *strokePath = [UIBezierPath bezierPath];
+        CALayer *layer = [self layerForStroke:[stroke identifier]];
 
-        for (MMAbstractBezierPathElement *element in [[stroke segments] copy]) {
-            [strokePath appendPath:[element borderPath]];
+        for (NSInteger i = 0; i < [[stroke segments] count]; i++) {
+            MMAbstractBezierPathElement *element = [[stroke segments] objectAtIndex:i];
+            CAShapeLayer *segmentLayer = i < [[layer sublayers] count] ? [[layer sublayers] objectAtIndex:i] : [CAShapeLayer layer];
+
+            segmentLayer.path = [[element borderPath] CGPath];
+            segmentLayer.fillColor = [[UIColor blackColor] CGColor];
+            segmentLayer.lineWidth = 0;
+
+            if (![segmentLayer superlayer]) {
+                [layer addSublayer:segmentLayer];
+            }
         }
 
-        CAShapeLayer *layer = [CAShapeLayer layer];
-
-        layer.path = [strokePath CGPath];
-        layer.fillColor = [[UIColor blackColor] CGColor];
-        layer.lineWidth = 0;
-
-        [[drawView layer] addSublayer:layer];
+        if (!layer.superlayer) {
+            [[drawView layer] addSublayer:layer];
+        }
     } else if ([stroke path]) {
-        CAShapeLayer *layer = [CAShapeLayer layer];
+        CAShapeLayer *layer = [self layerForStroke:[stroke identifier]];
 
         layer.path = [[stroke path] CGPath];
         layer.strokeColor = [[UIColor blackColor] CGColor];
         layer.fillColor = [[UIColor clearColor] CGColor];
         layer.lineWidth = 2;
 
-        [[drawView layer] addSublayer:layer];
+        if (!layer.superlayer) {
+            [[drawView layer] addSublayer:layer];
+        }
     }
 }
 
@@ -51,7 +85,9 @@
         [self renderStroke:stroke inView:drawView];
     }
 
-    [self renderStroke:[drawModel stroke] inView:drawView];
+    if ([drawModel stroke]) {
+        [self renderStroke:[drawModel stroke] inView:drawView];
+    }
 }
 
 #pragma mark - MMDrawViewRenderer

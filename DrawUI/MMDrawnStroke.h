@@ -17,7 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithTool:(MMPen *)tool;
 
+@property(nonatomic, readonly) NSString *identifier;
 @property(nonatomic, nullable, readonly) UIBezierPath *path;
+@property(nonatomic, nullable, readonly) UIBezierPath *borderPath;
 @property(nonatomic, strong, readonly) NSArray<MMAbstractBezierPathElement *> *segments;
 @property(nonatomic, strong, readonly) MMPen *tool;
 @property(nonatomic, strong, readonly) NSObject *touch;
