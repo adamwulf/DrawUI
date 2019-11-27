@@ -61,6 +61,10 @@
 - (void)touchesEstimatedPropertiesUpdated:(NSSet<UITouch *> *)touches
 {
     [self drawTouches:touches withEvent:nil isUpdate:YES];
+
+    [[self renderer] drawView:self willUpdateModel:[self drawModel] to:[self drawModel]];
+    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
+    [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

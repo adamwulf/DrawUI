@@ -66,6 +66,11 @@
 
 #pragma mark - Touches
 
+- (NSObject *)touch
+{
+    return [[[[[self segments] lastObject] events] lastObject] touch];
+}
+
 - (BOOL)containsEvent:(MMTouchStreamEvent *)event
 {
     return [event estimationUpdateIndex] && [_eventIdToSegment objectForKey:[event estimationUpdateIndex]];

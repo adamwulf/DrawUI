@@ -14,7 +14,6 @@
 
 @implementation MMDrawModel {
     MMTouchStreamEvent *_lastSeenEvent;
-    NSObject *_strokeTouch;
 }
 
 - (instancetype)init
@@ -30,41 +29,53 @@
     NSArray<MMTouchStreamEvent *> *eventsToProcess;
 
     if (_lastSeenEvent) {
-        eventsToProcess = [touchStream eventsSinceEvent:_lastSeenEvent matchingTouch:_strokeTouch != nil];
+        eventsToProcess = [touchStream eventsSinceEvent:_lastSeenEvent matchingTouch:NO];
     } else {
         eventsToProcess = [touchStream eventsSinceEvent:nil];
     }
 
     for (MMTouchStreamEvent *event in eventsToProcess) {
         if ([event phase] == UITouchPhaseBegan) {
-            if (!_strokeTouch || _strokeTouch == [event touch]) {
+            if (!_stroke || [_stroke touch] == [event touch]) {
                 if (![event isUpdate]) {
-                    _strokeTouch = [event touch];
                     _stroke = [[MMDrawnStroke alloc] initWithTool:tool];
                 }
 
                 [_stroke addEvent:event];
             }
-        } else if ([event phase] == UITouchPhaseMoved) {
-            if (_strokeTouch == [event touch]) {
-                [_stroke addEvent:event];
-            }
-        } else if ([event phase] == UITouchPhaseEnded) {
-            if (_strokeTouch == [event touch]) {
-                [_stroke addEvent:event];
+        } else {
+            MMDrawnStroke *strokeForEvent = _stroke;
 
-                if ([_stroke path]) {
-                    // this stroke is complete, save it to our history
-                    [_strokes addObject:_stroke];
+            if (!strokeForEvent) {
+                for (MMDrawnStroke *stroke in [_strokes reverseObjectEnumerator]) {
+                    if ([stroke containsEvent:event]) {
+                        strokeForEvent = stroke;
+                        break;
+                    }
                 }
-
-                _stroke = nil;
-                _strokeTouch = nil;
             }
-        } else if ([event phase] == UITouchPhaseCancelled) {
-            if (_strokeTouch == [event touch]) {
-                _strokeTouch = nil;
-                _stroke = nil;
+
+            if ([event phase] == UITouchPhaseMoved) {
+                if ([strokeForEvent touch] == [event touch]) {
+                    [strokeForEvent addEvent:event];
+                }
+            } else if ([event phase] == UITouchPhaseEnded) {
+                if ([strokeForEvent touch] == [event touch]) {
+                    [strokeForEvent addEvent:event];
+
+                    if ([_stroke path]) {
+                        // this stroke is complete, save it to our history
+                        [_strokes addObject:_stroke];
+                    }
+
+                    if (strokeForEvent == _stroke) {
+                        _stroke = nil;
+                    }
+                }
+            } else if ([event phase] == UITouchPhaseCancelled) {
+                if ([strokeForEvent touch] == [event touch]) {
+                    _stroke = nil;
+                }
             }
         }
     }
