@@ -14,11 +14,13 @@
 
 @implementation MMDrawModel {
     MMTouchStreamEvent *_lastSeenEvent;
+    NSUInteger _version;
 }
 
 - (instancetype)init
 {
     if (self = [super init]) {
+        _version = 0;
         _strokes = [NSMutableArray array];
     }
     return self;
@@ -33,6 +35,10 @@
     } else {
         eventsToProcess = [touchStream eventsSinceEvent:nil];
     }
+
+    _version += 1;
+
+    [_stroke setVersion:_version];
 
     for (MMTouchStreamEvent *event in eventsToProcess) {
         if ([event phase] == UITouchPhaseBegan) {
@@ -55,6 +61,8 @@
                 }
             }
 
+            [strokeForEvent setVersion:_version];
+
             if ([event phase] == UITouchPhaseMoved) {
                 if ([strokeForEvent touch] == [event touch]) {
                     [strokeForEvent addEvent:event];
@@ -63,12 +71,12 @@
                 if ([strokeForEvent touch] == [event touch]) {
                     [strokeForEvent addEvent:event];
 
-                    if ([_stroke path]) {
-                        // this stroke is complete, save it to our history
-                        [_strokes addObject:_stroke];
-                    }
-
                     if (strokeForEvent == _stroke) {
+                        if ([_stroke path]) {
+                            // this stroke is complete, save it to our history
+                            [_strokes addObject:_stroke];
+                        }
+
                         _stroke = nil;
                     }
                 }

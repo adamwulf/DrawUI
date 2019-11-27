@@ -27,6 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (MMAbstractBezierPathElement *)addEvent:(MMTouchStreamEvent *)event;
 - (BOOL)containsEvent:(MMTouchStreamEvent *)event;
 
+/// Used by renderers to determine when a stroke was last updated
+@property(nonatomic, assign) NSUInteger version;
+
 @end
 
 NS_ASSUME_NONNULL_END

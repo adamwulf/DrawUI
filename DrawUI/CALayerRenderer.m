@@ -15,6 +15,7 @@
 
 @implementation CALayerRenderer {
     NSMutableDictionary<NSString *, CALayer *> *_strokeLayers;
+    NSUInteger _lastRenderedVersion;
 }
 
 @synthesize dynamicWidth;
@@ -23,6 +24,7 @@
 {
     if (self = [super init]) {
         _strokeLayers = [NSMutableDictionary dictionary];
+        _lastRenderedVersion = 0;
     }
     return self;
 }
@@ -90,15 +92,25 @@
 
 - (void)renderModel:(MMDrawModel *)drawModel inView:(MMDrawView *)drawView
 {
-    [[[drawView layer] sublayers] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+    NSUInteger maxSoFar = _lastRenderedVersion;
 
     for (MMDrawnStroke *stroke in [drawModel strokes]) {
-        [self renderStroke:stroke inView:drawView];
+        if ([stroke version] > _lastRenderedVersion) {
+            [self renderStroke:stroke inView:drawView];
+
+            maxSoFar = MAX([stroke version], maxSoFar);
+        }
     }
 
     if ([drawModel stroke]) {
-        [self renderStroke:[drawModel stroke] inView:drawView];
+        if ([[drawModel stroke] version] > _lastRenderedVersion) {
+            [self renderStroke:[drawModel stroke] inView:drawView];
+
+            maxSoFar = MAX([[drawModel stroke] version], maxSoFar);
+        }
     }
+
+    _lastRenderedVersion = maxSoFar;
 }
 
 #pragma mark - MMDrawViewRenderer
