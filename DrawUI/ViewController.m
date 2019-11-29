@@ -97,6 +97,13 @@
     }
 }
 
+- (IBAction)clearDrawing:(id)sender
+{
+    _drawModel = [[MMDrawModel alloc] init];
+
+    [self didChangeRenderer:[self rendererControl]];
+}
+
 - (IBAction)didChangeRenderer:(UISegmentedControl *)segmentedControl
 {
     [[self drawView] removeFromSuperview];

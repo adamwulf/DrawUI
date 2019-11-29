@@ -192,6 +192,7 @@
         _tool = [coder decodeObjectOfClass:[MMPen class] forKey:@"tool"];
         _segments = [[coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [MMAbstractBezierPathElement class], [MMMoveToPathElement class], [MMCurveToPathElement class]]] forKey:@"segments"] mutableCopy] ?: [NSMutableArray array];
         _smoother = [coder decodeObjectOfClass:[MMSegmentSmoother class] forKey:@"smoother"];
+        _version = [[coder decodeObjectOfClass:[NSNumber class] forKey:@"version"] unsignedIntegerValue];
 
         _eventIdToSegment = [NSMutableDictionary dictionary];
         _waitingEvents = [NSMutableArray array];
@@ -205,6 +206,7 @@
     [coder encodeObject:[self tool] forKey:@"tool"];
     [coder encodeObject:[self segments] forKey:@"segments"];
     [coder encodeObject:[self smoother] forKey:@"smoother"];
+    [coder encodeObject:@([self version]) forKey:@"version"];
 }
 
 @end

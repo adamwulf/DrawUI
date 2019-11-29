@@ -452,4 +452,38 @@ static CGFloat subdivideBezierAtLength(const CGPoint bez[4],
     _length = 0;
 }
 
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super initWithCoder:coder]) {
+        _hashCache = [[coder decodeObjectOfClass:[NSNumber class] forKey:@"hashCache"] unsignedIntegerValue];
+        _curveTo = [coder decodeCGPointForKey:@"curveTo"];
+        _ctrl1 = [coder decodeCGPointForKey:@"ctrl1"];
+        _ctrl2 = [coder decodeCGPointForKey:@"ctrl2"];
+        _length = [coder decodeDoubleForKey:@"length"];
+        _borderPath = [coder decodeObjectOfClass:[UIBezierPath class] forKey:@"borderPath"];
+        _boundsCache = [coder decodeCGRectForKey:@"boundsCache"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [super encodeWithCoder:coder];
+
+    [coder encodeObject:@(_hashCache) forKey:@"hashCache"];
+    [coder encodeCGPoint:_curveTo forKey:@"curveTo"];
+    [coder encodeCGPoint:_ctrl1 forKey:@"ctrl1"];
+    [coder encodeCGPoint:_ctrl2 forKey:@"ctrl2"];
+    [coder encodeDouble:_length forKey:@"length"];
+    [coder encodeObject:_borderPath forKey:@"borderPath"];
+    [coder encodeCGRect:_boundsCache forKey:@"boundsCache"];
+}
+
 @end

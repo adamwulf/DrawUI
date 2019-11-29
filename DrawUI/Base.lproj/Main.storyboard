@@ -54,6 +54,13 @@
                                     <action selector="loadDrawing:" destination="BYZ-38-t0r" eventType="touchUpInside" id="78w-QX-eA5"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-Q1-DTY">
+                                <rect key="frame" x="358" y="179" width="36" height="30"/>
+                                <state key="normal" title="Clear"/>
+                                <connections>
+                                    <action selector="clearDrawing:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KOi-fR-CkO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -61,8 +68,10 @@
                             <constraint firstItem="jgP-0b-fFA" firstAttribute="top" secondItem="cGc-JQ-sPN" secondAttribute="bottom" constant="8" id="Hyg-DZ-HbK"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="trailing" secondItem="D7O-VW-3Ez" secondAttribute="trailing" id="KCg-DM-G8P"/>
                             <constraint firstItem="eb7-G4-t2s" firstAttribute="top" secondItem="mAN-n8-hdg" secondAttribute="bottom" constant="8" id="Lia-1n-eP9"/>
+                            <constraint firstItem="ba4-Q1-DTY" firstAttribute="top" secondItem="jgP-0b-fFA" secondAttribute="bottom" constant="8" id="VKy-Z0-FlO"/>
                             <constraint firstItem="cGc-JQ-sPN" firstAttribute="top" secondItem="mAN-n8-hdg" secondAttribute="bottom" constant="8" id="YPW-KS-L2L"/>
                             <constraint firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="ate-VL-WEH"/>
+                            <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="ba4-Q1-DTY" secondAttribute="trailing" constant="20" id="gU4-eL-Iuk"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="leading" secondItem="D7O-VW-3Ez" secondAttribute="leading" id="lSf-sM-a1g"/>
                             <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="jgP-0b-fFA" secondAttribute="trailing" constant="20" id="nBB-4F-DLu"/>
                             <constraint firstItem="cGc-JQ-sPN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eb7-G4-t2s" secondAttribute="trailing" constant="8" symbolic="YES" id="p4x-sC-OxZ"/>

@@ -108,4 +108,26 @@
     return self == object || [self hash] == [object hash];
 }
 
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super initWithCoder:coder]) {
+        _hashCache = [[coder decodeObjectOfClass:[NSNumber class] forKey:@"hashCache"] unsignedIntegerValue];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [super encodeWithCoder:coder];
+
+    [coder encodeObject:@(_hashCache) forKey:@"hashCache"];
+}
+
 @end

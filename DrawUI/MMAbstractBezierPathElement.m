@@ -142,6 +142,12 @@
 {
     if (self = [super init]) {
         _identifier = [coder decodeObjectOfClass:[NSString class] forKey:@"identifier"];
+        _startPoint = [coder decodeCGPointForKey:@"startPoint"];
+        _width = [coder decodeDoubleForKey:@"width"];
+        _previousElement = [coder decodeObjectOfClasses:[NSSet setWithObject:[MMAbstractBezierPathElement class]] forKey:@"previousElement"];
+        _nextElement = [coder decodeObjectOfClasses:[NSSet setWithObject:[MMAbstractBezierPathElement class]] forKey:@"nextElement"];
+        _renderVersion = [coder decodeIntegerForKey:@"renderVersion"];
+        _updated = [coder decodeBoolForKey:@"updated"];
     }
     return self;
 }
@@ -149,6 +155,12 @@
 - (void)encodeWithCoder:(NSCoder *)coder
 {
     [coder encodeObject:[self identifier] forKey:@"identifier"];
+    [coder encodeCGPoint:_startPoint forKey:@"startPoint"];
+    [coder encodeDouble:_width forKey:@"width"];
+    [coder encodeObject:_previousElement forKey:@"previousElement"];
+    [coder encodeObject:_nextElement forKey:@"nextElement"];
+    [coder encodeInteger:_renderVersion forKey:@"renderVersion"];
+    [coder encodeBool:_updated forKey:@"updated"];
 }
 
 @end
