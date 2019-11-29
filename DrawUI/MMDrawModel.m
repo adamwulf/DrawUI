@@ -101,14 +101,16 @@
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     if (self = [super init]) {
-        _version = 0;
-        _strokes = [NSMutableArray array];
+        _version = [[coder decodeObjectOfClass:[NSNumber class] forKey:@"version"] unsignedIntegerValue];
+        _strokes = [[coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [MMDrawnStroke class]]] forKey:@"strokes"] mutableCopy] ?: [NSMutableArray array];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
+    [coder encodeObject:@(_version) forKey:@"version"];
+    [coder encodeObject:_strokes forKey:@"strokes"];
 }
 
 @end

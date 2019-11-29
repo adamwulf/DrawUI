@@ -135,4 +135,34 @@
     return 0.75;
 }
 
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super init]) {
+        _defaultMinSize = [coder decodeDoubleForKey:@"defaultMinSize"];
+        _defaultMaxSize = [coder decodeDoubleForKey:@"defaultMaxSize"];
+        _minSize = [coder decodeDoubleForKey:@"minSize"];
+        _maxSize = [coder decodeDoubleForKey:@"maxSize"];
+        _velocity = [coder decodeDoubleForKey:@"velocity"];
+        _color = [coder decodeObjectOfClass:[UIColor class] forKey:@"color"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeDouble:_defaultMinSize forKey:@"defaultMinSize"];
+    [coder encodeDouble:_defaultMaxSize forKey:@"defaultMaxSize"];
+    [coder encodeDouble:_minSize forKey:@"minSize"];
+    [coder encodeDouble:_maxSize forKey:@"maxSize"];
+    [coder encodeDouble:_velocity forKey:@"velocity"];
+    [coder encodeObject:_color forKey:@"color"];
+}
+
 @end

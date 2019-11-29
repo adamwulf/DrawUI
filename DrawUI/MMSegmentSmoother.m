@@ -150,4 +150,30 @@
     return ret;
 }
 
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super init]) {
+        _point0 = [coder decodeCGPointForKey:@"point0"];
+        _point1 = [coder decodeCGPointForKey:@"point1"];
+        _point2 = [coder decodeCGPointForKey:@"point2"];
+        _point3 = [coder decodeCGPointForKey:@"point3"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeCGPoint:_point0 forKey:@"point0"];
+    [coder encodeCGPoint:_point1 forKey:@"point1"];
+    [coder encodeCGPoint:_point2 forKey:@"point2"];
+    [coder encodeCGPoint:_point3 forKey:@"point3"];
+}
+
 @end

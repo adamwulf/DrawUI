@@ -65,9 +65,11 @@
                             <constraint firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="ate-VL-WEH"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="leading" secondItem="D7O-VW-3Ez" secondAttribute="leading" id="lSf-sM-a1g"/>
                             <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="jgP-0b-fFA" secondAttribute="trailing" constant="20" id="nBB-4F-DLu"/>
+                            <constraint firstItem="cGc-JQ-sPN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eb7-G4-t2s" secondAttribute="trailing" constant="8" symbolic="YES" id="p4x-sC-OxZ"/>
                             <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="cGc-JQ-sPN" secondAttribute="trailing" constant="20" id="qaJ-2W-LGE"/>
                             <constraint firstItem="eb7-G4-t2s" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="rSg-K2-43D"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="top" secondItem="hCH-MI-fjg" secondAttribute="top" id="tPV-2K-RQ8"/>
+                            <constraint firstItem="jgP-0b-fFA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7O-VW-3Ez" secondAttribute="leading" symbolic="YES" id="tjq-md-m4Y"/>
                             <constraint firstItem="mAN-n8-hdg" firstAttribute="top" secondItem="D7O-VW-3Ez" secondAttribute="top" constant="20" id="w9i-rE-NjD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="D7O-VW-3Ez"/>

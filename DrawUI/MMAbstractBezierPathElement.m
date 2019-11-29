@@ -131,4 +131,24 @@
     return [[[self events] firstObject] isPrediction];
 }
 
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super init]) {
+        _identifier = [coder decodeObjectOfClass:[NSString class] forKey:@"identifier"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:[self identifier] forKey:@"identifier"];
+}
+
 @end

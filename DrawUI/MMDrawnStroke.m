@@ -178,4 +178,33 @@
     return ele;
 }
 
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super init]) {
+        _identifier = [coder decodeObjectOfClass:[NSString class] forKey:@"identifier"];
+        _tool = [coder decodeObjectOfClass:[MMPen class] forKey:@"tool"];
+        _segments = [[coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [MMAbstractBezierPathElement class], [MMMoveToPathElement class], [MMCurveToPathElement class]]] forKey:@"segments"] mutableCopy] ?: [NSMutableArray array];
+        _smoother = [coder decodeObjectOfClass:[MMSegmentSmoother class] forKey:@"smoother"];
+
+        _eventIdToSegment = [NSMutableDictionary dictionary];
+        _waitingEvents = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:[self identifier] forKey:@"identifier"];
+    [coder encodeObject:[self tool] forKey:@"tool"];
+    [coder encodeObject:[self segments] forKey:@"segments"];
+    [coder encodeObject:[self smoother] forKey:@"smoother"];
+}
+
 @end

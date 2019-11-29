@@ -11,7 +11,7 @@
 
 @class MMAbstractBezierPathElement;
 
-@interface MMSegmentSmoother : NSObject <NSCopying>
+@interface MMSegmentSmoother : NSObject <NSSecureCoding, NSCopying>
 
 @property(nonatomic, readonly) CGPoint point0;
 @property(nonatomic, readonly) CGPoint point1;

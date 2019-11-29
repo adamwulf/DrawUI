@@ -10,7 +10,7 @@
 
 @class MMDrawView, MMTouchStreamEvent;
 
-@interface MMPen : NSObject {
+@interface MMPen : NSObject <NSSecureCoding> {
     CGFloat _defaultMinSize;
     CGFloat _defaultMaxSize;
 

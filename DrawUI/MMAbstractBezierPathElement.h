@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MMTouchStreamEvent.h"
 
-@interface MMAbstractBezierPathElement : NSObject
+@interface MMAbstractBezierPathElement : NSObject <NSSecureCoding>
 
 @property(nonatomic, readonly) NSString *identifier;
 @property(nonatomic, readonly) CGFloat width;
