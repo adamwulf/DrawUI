@@ -17,19 +17,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bC-Xf-vdC" customClass="MMDrawView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eb7-G4-t2s">
-                                        <rect key="frame" x="161" y="115" width="92" height="30"/>
-                                        <state key="normal" title="Force Render"/>
-                                        <connections>
-                                            <action selector="redraw:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AT3-VS-Jad"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstItem="eb7-G4-t2s" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Mgt-7L-zLP"/>
-                                </constraints>
                                 <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mAN-n8-hdg">
@@ -45,14 +33,40 @@
                                     <action selector="didChangeRenderer:" destination="BYZ-38-t0r" eventType="valueChanged" id="rcO-Kk-fmZ"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eb7-G4-t2s">
+                                <rect key="frame" x="161" y="103" width="92" height="30"/>
+                                <state key="normal" title="Force Render"/>
+                                <connections>
+                                    <action selector="redraw:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AT3-VS-Jad"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGc-JQ-sPN">
+                                <rect key="frame" x="360" y="103" width="34" height="30"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveDrawing:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZUp-Ex-VDr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgP-0b-fFA">
+                                <rect key="frame" x="360" y="141" width="34" height="30"/>
+                                <state key="normal" title="Load"/>
+                                <connections>
+                                    <action selector="loadDrawing:" destination="BYZ-38-t0r" eventType="touchUpInside" id="78w-QX-eA5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="mAN-n8-hdg" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="9Rm-Sc-T8t"/>
+                            <constraint firstItem="jgP-0b-fFA" firstAttribute="top" secondItem="cGc-JQ-sPN" secondAttribute="bottom" constant="8" id="Hyg-DZ-HbK"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="trailing" secondItem="D7O-VW-3Ez" secondAttribute="trailing" id="KCg-DM-G8P"/>
+                            <constraint firstItem="eb7-G4-t2s" firstAttribute="top" secondItem="mAN-n8-hdg" secondAttribute="bottom" constant="8" id="Lia-1n-eP9"/>
+                            <constraint firstItem="cGc-JQ-sPN" firstAttribute="top" secondItem="mAN-n8-hdg" secondAttribute="bottom" constant="8" id="YPW-KS-L2L"/>
                             <constraint firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="ate-VL-WEH"/>
-                            <constraint firstItem="eb7-G4-t2s" firstAttribute="top" secondItem="mAN-n8-hdg" secondAttribute="bottom" constant="20" id="fne-pL-RL1"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="leading" secondItem="D7O-VW-3Ez" secondAttribute="leading" id="lSf-sM-a1g"/>
+                            <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="jgP-0b-fFA" secondAttribute="trailing" constant="20" id="nBB-4F-DLu"/>
+                            <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="cGc-JQ-sPN" secondAttribute="trailing" constant="20" id="qaJ-2W-LGE"/>
+                            <constraint firstItem="eb7-G4-t2s" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="rSg-K2-43D"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="top" secondItem="hCH-MI-fjg" secondAttribute="top" id="tPV-2K-RQ8"/>
                             <constraint firstItem="mAN-n8-hdg" firstAttribute="top" secondItem="D7O-VW-3Ez" secondAttribute="top" constant="20" id="w9i-rE-NjD"/>
                         </constraints>
@@ -66,7 +80,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="138"/>
+            <point key="canvasLocation" x="-4" y="70"/>
         </scene>
     </scenes>
 </document>

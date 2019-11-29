@@ -36,10 +36,65 @@
 
     [[self view] addGestureRecognizer:[MMTouchVelocityGestureRecognizer sharedInstance]];
 
-    _tool = [[MMPen alloc] initWithMinSize:2 andMaxSize:17];
+    _tool = [[MMPen alloc] initWithMinSize:2 andMaxSize:7];
     _drawModel = [[MMDrawModel alloc] init];
 
     [self didChangeRenderer:[self rendererControl]];
+}
+
+- (IBAction)saveDrawing:(id)sender
+{
+    NSError *error;
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSURL *url = [NSURL fileURLWithPath:documentsDirectory];
+    url = [url URLByAppendingPathComponent:@"drawing.dat"];
+
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_drawModel requiringSecureCoding:YES error:&error];
+
+    if (error) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error Saving Data" message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action){
+
+                         }]];
+
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        [data writeToURL:url atomically:YES];
+
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Saved!" message:@"The drawing is saved" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action){
+
+                         }]];
+
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
+- (IBAction)loadDrawing:(id)sender
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSURL *url = [NSURL fileURLWithPath:documentsDirectory];
+    url = [url URLByAppendingPathComponent:@"drawing.dat"];
+
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSError *error;
+
+    _drawModel = [NSKeyedUnarchiver unarchivedObjectOfClass:[MMDrawModel class] fromData:data error:&error];
+
+    if (error) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error Loading Data" message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action){
+
+                         }]];
+
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        // build a new renderer and set its model
+        [self didChangeRenderer:[self rendererControl]];
+    }
 }
 
 - (IBAction)didChangeRenderer:(UISegmentedControl *)segmentedControl
