@@ -169,8 +169,8 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
         [stroke addCurveToPoint:leftStart controlPoint1:ctrl1 controlPoint2:ctrl2];
         [stroke closePath];
 
-        CGRect endOval = CGRectInset(CGRectMake([self endPoint].x, [self endPoint].y, 0, 0), -[self width], -[self width]);
-        [stroke appendPath:[UIBezierPath bezierPathWithOvalInRect:endOval]];
+        //        CGRect endOval = CGRectInset(CGRectMake([self endPoint].x, [self endPoint].y, 0, 0), -[self width], -[self width]);
+        //        [stroke appendPath:[UIBezierPath bezierPathWithOvalInRect:endOval]];
 
         _borderPath = stroke;
     }

@@ -74,6 +74,8 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="cGc-JQ-sPN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="q3A-K4-Td9" secondAttribute="trailing" id="33K-Gv-U3A"/>
+                            <constraint firstItem="ba4-Q1-DTY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7O-VW-3Ez" secondAttribute="leading" id="4EA-IX-9hf"/>
                             <constraint firstItem="eb7-G4-t2s" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="6BK-iw-xGO"/>
                             <constraint firstItem="mAN-n8-hdg" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="9Rm-Sc-T8t"/>
                             <constraint firstItem="jgP-0b-fFA" firstAttribute="top" secondItem="cGc-JQ-sPN" secondAttribute="bottom" constant="8" id="Hyg-DZ-HbK"/>

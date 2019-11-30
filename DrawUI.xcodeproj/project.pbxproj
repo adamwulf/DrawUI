@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5126F6D23922F23000C88ED /* CALayer+DrawUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C5126F6C23922F23000C88ED /* CALayer+DrawUI.m */; };
+		C5126F7323923E47000C88ED /* CAEraserLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5126F7223923E47000C88ED /* CAEraserLayer.m */; };
 		C5313F04237BCD7F00C2097A /* CALayerRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F03237BCD7F00C2097A /* CALayerRenderer.m */; };
 		C5313F07237BD3E900C2097A /* NaiveDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */; };
 		C5313F0A237BD75000C2097A /* SmartDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */; };
@@ -38,6 +40,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C5126F6B23922F23000C88ED /* CALayer+DrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CALayer+DrawUI.h"; sourceTree = "<group>"; };
+		C5126F6C23922F23000C88ED /* CALayer+DrawUI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CALayer+DrawUI.m"; sourceTree = "<group>"; };
+		C5126F7123923E47000C88ED /* CAEraserLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEraserLayer.h; sourceTree = "<group>"; };
+		C5126F7223923E47000C88ED /* CAEraserLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEraserLayer.m; sourceTree = "<group>"; };
 		C5313F02237BCD7F00C2097A /* CALayerRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CALayerRenderer.h; sourceTree = "<group>"; };
 		C5313F03237BCD7F00C2097A /* CALayerRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CALayerRenderer.m; sourceTree = "<group>"; };
 		C5313F05237BD3E900C2097A /* NaiveDrawRectRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NaiveDrawRectRenderer.h; sourceTree = "<group>"; };
@@ -165,6 +171,8 @@
 			children = (
 				C591146A237B3F4400E12FAB /* MMDrawView.h */,
 				C5911469237B3F4400E12FAB /* MMDrawView.m */,
+				C5126F7123923E47000C88ED /* CAEraserLayer.h */,
+				C5126F7223923E47000C88ED /* CAEraserLayer.m */,
 				C5AB0769238288A6007CF251 /* Touch Stream */,
 				C5911456237B3F2000E12FAB /* Path Helpers */,
 				C5A7C053237BCC0E00957D53 /* Rendering */,
@@ -197,6 +205,8 @@
 				C5911486237B400500E12FAB /* NSArray+MapReduce.m */,
 				C5911479237B3FCF00E12FAB /* UIColor+JotHelper.h */,
 				C591147A237B3FCF00E12FAB /* UIColor+JotHelper.m */,
+				C5126F6B23922F23000C88ED /* CALayer+DrawUI.h */,
+				C5126F6C23922F23000C88ED /* CALayer+DrawUI.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -316,6 +326,8 @@
 				C591147E237B3FDE00E12FAB /* Constants.m in Sources */,
 				C5D34AEA237D1FD200B450E3 /* CATiledLayerRenderer.m in Sources */,
 				C591146B237B3F4400E12FAB /* MMDrawView.m in Sources */,
+				C5126F7323923E47000C88ED /* CAEraserLayer.m in Sources */,
+				C5126F6D23922F23000C88ED /* CALayer+DrawUI.m in Sources */,
 				C5911466237B3F3100E12FAB /* MMSegmentSmoother.m in Sources */,
 				C5A7C056237BCC5B00957D53 /* MMDrawModel.m in Sources */,
 				C5911440237B3BEB00E12FAB /* main.m in Sources */,

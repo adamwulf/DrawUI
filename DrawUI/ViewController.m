@@ -40,6 +40,8 @@
     _drawModel = [[MMDrawModel alloc] init];
 
     [self didChangeRenderer:[self rendererControl]];
+
+    [[self view] setBackgroundColor:[UIColor colorWithWhite:.9 alpha:1]];
 }
 
 - (IBAction)saveDrawing:(id)sender
@@ -145,9 +147,9 @@
         renderer = [[DebugRenderer alloc] init];
     }
 
-    //    if ([renderer respondsToSelector:@selector(setDynamicWidth:)]) {
-    //        [(SmartDrawRectRenderer *)renderer setDynamicWidth:YES];
-    //    }
+    if ([renderer respondsToSelector:@selector(setDynamicWidth:)]) {
+        [(SmartDrawRectRenderer *)renderer setDynamicWidth:YES];
+    }
 
     [[self drawView] setTool:[self tool]];
     [[self drawView] setRenderer:renderer];

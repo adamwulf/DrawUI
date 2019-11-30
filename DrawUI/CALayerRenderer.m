@@ -8,22 +8,9 @@
 
 #import "CALayerRenderer.h"
 #import "MMAbstractBezierPathElement.h"
-
-@interface CAEraserLayer : CALayer
-
-@end
-
-@implementation CAEraserLayer
-
-@end
-
-@interface CAEraserShapeLayer : CAShapeLayer
-
-@end
-
-@implementation CAEraserShapeLayer
-
-@end
+#import "CALayer+DrawUI.h"
+#import <CoreImage/CoreImage.h>
+#import "CAEraserLayer.h"
 
 @interface CALayerRenderer () <CALayerDelegate>
 
@@ -50,23 +37,15 @@
 
 #pragma mark - Render
 
-- (__kindof CALayer *)layerForStroke:(NSString *)strokeId isEraser:(BOOL)eraser
+- (__kindof CALayer *)layerForStroke:(NSString *)strokeId
 {
     CALayer *layer = [_strokeLayers objectForKey:strokeId];
 
     if (!layer) {
         if ([self dynamicWidth]) {
-            if (eraser) {
-                layer = [CAEraserLayer layer];
-            } else {
-                layer = [CALayer layer];
-            }
+            layer = [CAEraserLayer layer];
         } else {
-            if (eraser) {
-                layer = [CAEraserShapeLayer layer];
-            } else {
-                layer = [CAShapeLayer layer];
-            }
+            layer = [CAShapeLayer layer];
         }
 
         layer.delegate = self;
@@ -79,33 +58,55 @@
 
 - (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView *)drawView
 {
+    if (![[drawView layer] actions]) {
+        [[drawView layer] setActions:@{ @"sublayers": [NSNull null] }];
+    }
+    if (![_canvasLayer superlayer]) {
+        [[drawView layer] addSublayer:_canvasLayer];
+    }
+
     if ([self dynamicWidth]) {
-        CALayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
+        CALayer *layer = [self layerForStroke:[stroke identifier]];
 
-        for (NSInteger i = 0; i < [[stroke segments] count]; i++) {
-            MMAbstractBezierPathElement *element = [[stroke segments] objectAtIndex:i];
-            CAShapeLayer *segmentLayer = i < [[layer sublayers] count] ? [[layer sublayers] objectAtIndex:i] : [CAShapeLayer layer];
+        if ([[stroke tool] color]) {
+            for (NSInteger i = 0; i < [[stroke segments] count]; i++) {
+                MMAbstractBezierPathElement *element = [[stroke segments] objectAtIndex:i];
 
-            segmentLayer.delegate = self;
-            segmentLayer.path = [[element borderPath] CGPath];
-            segmentLayer.fillColor = [[[stroke tool] color] CGColor] ?: [[UIColor whiteColor] CGColor];
-            segmentLayer.lineWidth = 0;
+                CAShapeLayer *segmentLayer = i < [[layer sublayers] count] ? [[layer sublayers] objectAtIndex:i] : [CAShapeLayer layer];
 
-            if (![segmentLayer superlayer]) {
-                [layer addSublayer:segmentLayer];
+                segmentLayer.delegate = self;
+                segmentLayer.path = [[element borderPath] CGPath];
+                segmentLayer.fillColor = [[[stroke tool] color] CGColor] ?: [[UIColor whiteColor] CGColor];
+                segmentLayer.lineWidth = 0;
+
+                // regular pen
+                if (![segmentLayer superlayer]) {
+                    [layer addSublayer:segmentLayer];
+                }
             }
-        }
 
-        if (!layer.superlayer) {
-            [_canvasLayer addSublayer:layer];
+            if (!layer.superlayer) {
+                [_canvasLayer addSublayer:layer];
+            }
+        } else {
+            CAEraserLayer *eraserLayer = (CAEraserLayer *)layer;
+
+            [eraserLayer setEraser:YES];
+            [eraserLayer setupWithCanvas:[eraserLayer originalCanvas] ?: _canvasLayer andStroke:stroke];
+
+            _canvasLayer = eraserLayer;
         }
     } else if ([stroke path]) {
-        CAShapeLayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
+        CAShapeLayer *layer = [self layerForStroke:[stroke identifier]];
 
         layer.path = [[stroke path] CGPath];
         layer.strokeColor = [[[stroke tool] color] CGColor] ?: [[UIColor whiteColor] CGColor];
         layer.fillColor = [[UIColor clearColor] CGColor];
         layer.lineWidth = 10;
+
+        if (![[stroke tool] color]) {
+            [layer setEraser:YES];
+        }
 
         if (!layer.superlayer) {
             [_canvasLayer addSublayer:layer];
@@ -136,12 +137,11 @@
     _lastRenderedVersion = maxSoFar;
 }
 
-#pragma mark - CAShapeLayerDelegate
+#pragma mark - CALayerDelegate
 
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)context
 {
-    if ([layer isKindOfClass:[CAEraserLayer class]] ||
-        [layer isKindOfClass:[CAEraserShapeLayer class]]) {
+    if ([layer isEraser]) {
         CGContextSetBlendMode(context, kCGBlendModeClear);
     }
 
@@ -154,14 +154,6 @@
 
 - (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
 {
-    if (![_canvasLayer superlayer]) {
-        [[drawView layer] addSublayer:_canvasLayer];
-        [[drawView layer] setActions:@{ @"sublayers": [NSNull null] }];
-    }
-
-    if (CGRectEqualToRect([_canvasLayer frame], [[drawView layer] bounds])) {
-        [_canvasLayer setFrame:[[drawView layer] bounds]];
-    }
 }
 
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
