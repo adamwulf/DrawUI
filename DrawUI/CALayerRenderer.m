@@ -65,7 +65,7 @@
 
             segmentLayer.delegate = self;
             segmentLayer.path = [[element borderPath] CGPath];
-            segmentLayer.fillColor = [[UIColor blackColor] CGColor];
+            segmentLayer.fillColor = [[[stroke tool] color] CGColor];
             segmentLayer.lineWidth = 0;
 
             if (![segmentLayer superlayer]) {
@@ -80,7 +80,7 @@
         CAShapeLayer *layer = [self layerForStroke:[stroke identifier]];
 
         layer.path = [[stroke path] CGPath];
-        layer.strokeColor = [[UIColor blackColor] CGColor];
+        layer.strokeColor = [[[stroke tool] color] CGColor];
         layer.fillColor = [[UIColor clearColor] CGColor];
         layer.lineWidth = 2;
 

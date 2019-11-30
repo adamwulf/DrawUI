@@ -50,6 +50,8 @@
     if (stroke) {
         CGRect pathBounds = [[stroke path] bounds];
 
+        pathBounds = CGRectInset(pathBounds, -[[stroke tool] maxSize], -[[stroke tool] maxSize]);
+
         pathBounds = CGRectInset(pathBounds, -kStrokeWidth, -kStrokeWidth);
 
         [self setNeedsDisplayInRect:pathBounds];
@@ -68,7 +70,7 @@
 - (void)renderStroke:(MMDrawnStroke *)stroke inRect:(CGRect)rect
 {
     if ([self dynamicWidth]) {
-        [[UIColor blackColor] setFill];
+        [[[stroke tool] color] setFill];
 
         for (MMAbstractBezierPathElement *element in [stroke segments]) {
             CGFloat maxWidth = MAX(element.width, element.previousElement.width);
@@ -88,7 +90,7 @@
         if (path && CGRectIntersectsRect(pathBounds, rect)) {
             [path setLineWidth:kStrokeWidth];
 
-            [[UIColor blackColor] setStroke];
+            [[[stroke tool] color] setStroke];
             [path stroke];
         }
     }

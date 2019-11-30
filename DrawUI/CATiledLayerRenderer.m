@@ -72,7 +72,7 @@
 - (void)renderStroke:(MMDrawnStroke *)stroke inContext:(CGContextRef)ctx
 {
     if ([self dynamicWidth]) {
-        [[UIColor blackColor] setFill];
+        [[[stroke tool] color] setFill];
 
         for (MMAbstractBezierPathElement *element in [[stroke segments] copy]) {
             UIBezierPath *segment = [element borderPath];
@@ -85,7 +85,7 @@
         if (path) {
             [path setLineWidth:kStrokeWidth];
 
-            [[UIColor blackColor] setStroke];
+            [[[stroke tool] color] setStroke];
             [path stroke];
         }
     }

@@ -36,11 +36,6 @@
     return self;
 }
 
-- (void)set_color:(UIColor *)color
-{
-    _color = [color colorWithAlphaComponent:1];
-}
-
 - (id)init
 {
     return [self initWithMinSize:1.6 andMaxSize:2.7];

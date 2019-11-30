@@ -104,6 +104,19 @@
     [self didChangeRenderer:[self rendererControl]];
 }
 
+- (IBAction)changeTool:(UISegmentedControl *)toolPicker
+{
+    if (toolPicker.selectedSegmentIndex == 0) {
+        _tool = [[MMPen alloc] initWithMinSize:2 andMaxSize:7];
+        [_tool setColor:[UIColor blackColor]];
+    } else {
+        _tool = [[MMPen alloc] initWithMinSize:20 andMaxSize:20];
+        [_tool setColor:[UIColor redColor]];
+    }
+
+    [[self drawView] setTool:[self tool]];
+}
+
 - (IBAction)didChangeRenderer:(UISegmentedControl *)segmentedControl
 {
     [[self drawView] removeFromSuperview];

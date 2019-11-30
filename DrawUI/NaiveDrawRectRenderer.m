@@ -50,9 +50,9 @@
 - (void)drawRect:(CGRect)rect
 {
     if ([self dynamicWidth]) {
-        [[UIColor blackColor] setFill];
-
         for (MMDrawnStroke *stroke in [[self model] strokes]) {
+            [[[stroke tool] color] setFill];
+
             for (MMAbstractBezierPathElement *element in [stroke segments]) {
                 UIBezierPath *segment = [element borderPath];
 
@@ -70,14 +70,14 @@
             UIBezierPath *path = [stroke path];
             [path setLineWidth:2];
 
-            [[UIColor blackColor] setStroke];
+            [[[stroke tool] color] setStroke];
             [path stroke];
         }
 
         UIBezierPath *path = [[[self model] stroke] path];
         [path setLineWidth:2];
 
-        [[UIColor blackColor] setStroke];
+        [[[[[self model] stroke] tool] color] setStroke];
         [path stroke];
     }
 }
