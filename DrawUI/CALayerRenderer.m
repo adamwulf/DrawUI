@@ -8,14 +8,7 @@
 
 #import "CALayerRenderer.h"
 #import "MMAbstractBezierPathElement.h"
-
-@interface CAEraserLayer : CALayer
-
-@end
-
-@implementation CAEraserLayer
-
-@end
+#import "CAEraserLayer.h"
 
 @interface CAEraserShapeLayer : CAShapeLayer
 
@@ -82,22 +75,35 @@
     if ([self dynamicWidth]) {
         CALayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
 
-        for (NSInteger i = 0; i < [[stroke segments] count]; i++) {
-            MMAbstractBezierPathElement *element = [[stroke segments] objectAtIndex:i];
-            CAShapeLayer *segmentLayer = i < [[layer sublayers] count] ? [[layer sublayers] objectAtIndex:i] : [CAShapeLayer layer];
+        if (![[stroke tool] color]) {
+            CAEraserLayer *eraserLayer = (CAEraserLayer *)layer;
 
-            segmentLayer.delegate = self;
-            segmentLayer.path = [[element borderPath] CGPath];
-            segmentLayer.fillColor = [[[stroke tool] color] CGColor] ?: [[UIColor whiteColor] CGColor];
-            segmentLayer.lineWidth = 0;
+            [eraserLayer setOpaque:NO];
+            [eraserLayer setPath:[[stroke borderPath] CGPath]];
+            [eraserLayer setFillColor:[UIColor colorWithWhite:1 alpha:0]];
+            [eraserLayer setLineWidth:0];
+            [eraserLayer setFrame:[drawView bounds]];
+            [eraserLayer setNeedsDisplay];
 
-            if (![segmentLayer superlayer]) {
-                [layer addSublayer:segmentLayer];
+            [_canvasLayer setMask:layer];
+        } else {
+            for (NSInteger i = 0; i < [[stroke segments] count]; i++) {
+                MMAbstractBezierPathElement *element = [[stroke segments] objectAtIndex:i];
+                CAShapeLayer *segmentLayer = i < [[layer sublayers] count] ? [[layer sublayers] objectAtIndex:i] : [CAShapeLayer layer];
+
+                segmentLayer.delegate = self;
+                segmentLayer.path = [[element borderPath] CGPath];
+                segmentLayer.fillColor = [[[stroke tool] color] CGColor] ?: [[UIColor blackColor] CGColor];
+                segmentLayer.lineWidth = 0;
+
+                if (![segmentLayer superlayer]) {
+                    [layer addSublayer:segmentLayer];
+                }
             }
-        }
 
-        if (!layer.superlayer) {
-            [_canvasLayer addSublayer:layer];
+            if (!layer.superlayer) {
+                [_canvasLayer addSublayer:layer];
+            }
         }
     } else if ([stroke path]) {
         CAShapeLayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];

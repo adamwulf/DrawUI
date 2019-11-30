@@ -73,6 +73,11 @@
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
 
+    CGRect r = CGContextGetClipBoundingBox(ctx);
+    CGAffineTransform transform = CGContextGetCTM(ctx);
+
+    CGRect rect = CGRectApplyAffineTransform(r, CGAffineTransformInvert(transform));
+
     if ([[stroke tool] color]) {
         [[[stroke tool] color] set];
     } else {
@@ -85,7 +90,9 @@
         for (MMAbstractBezierPathElement *element in [[stroke segments] copy]) {
             UIBezierPath *segment = [element borderPath];
 
-            [segment fill];
+            if (CGRectIntersectsRect(r, [segment bounds])) {
+                [segment fill];
+            }
         }
     } else {
         UIBezierPath *path = [stroke path];

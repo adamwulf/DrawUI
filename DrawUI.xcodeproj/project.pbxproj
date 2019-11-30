@@ -34,6 +34,7 @@
 		C5AB06FB237FB493007CF251 /* MMTouchStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB06FA237FB493007CF251 /* MMTouchStream.m */; };
 		C5AB06FE237FB4A3007CF251 /* MMTouchStreamEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB06FD237FB4A3007CF251 /* MMTouchStreamEvent.m */; };
 		C5AB076823824AA6007CF251 /* DebugRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB076723824AA6007CF251 /* DebugRenderer.m */; };
+		C5C9D3CC23926516005454CD /* CAEraserLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9D3CB23926516005454CD /* CAEraserLayer.m */; };
 		C5D34AEA237D1FD200B450E3 /* CATiledLayerRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D34AE9237D1FD200B450E3 /* CATiledLayerRenderer.m */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,8 @@
 		C5AB06FD237FB4A3007CF251 /* MMTouchStreamEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMTouchStreamEvent.m; sourceTree = "<group>"; };
 		C5AB076623824AA6007CF251 /* DebugRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DebugRenderer.h; sourceTree = "<group>"; };
 		C5AB076723824AA6007CF251 /* DebugRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DebugRenderer.m; sourceTree = "<group>"; };
+		C5C9D3CA23926516005454CD /* CAEraserLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEraserLayer.h; sourceTree = "<group>"; };
+		C5C9D3CB23926516005454CD /* CAEraserLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEraserLayer.m; sourceTree = "<group>"; };
 		C5D34AE8237D1FD200B450E3 /* CATiledLayerRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CATiledLayerRenderer.h; sourceTree = "<group>"; };
 		C5D34AE9237D1FD200B450E3 /* CATiledLayerRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CATiledLayerRenderer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -165,6 +168,8 @@
 			children = (
 				C591146A237B3F4400E12FAB /* MMDrawView.h */,
 				C5911469237B3F4400E12FAB /* MMDrawView.m */,
+				C5C9D3CA23926516005454CD /* CAEraserLayer.h */,
+				C5C9D3CB23926516005454CD /* CAEraserLayer.m */,
 				C5AB0769238288A6007CF251 /* Touch Stream */,
 				C5911456237B3F2000E12FAB /* Path Helpers */,
 				C5A7C053237BCC0E00957D53 /* Rendering */,
@@ -316,6 +321,7 @@
 				C591147E237B3FDE00E12FAB /* Constants.m in Sources */,
 				C5D34AEA237D1FD200B450E3 /* CATiledLayerRenderer.m in Sources */,
 				C591146B237B3F4400E12FAB /* MMDrawView.m in Sources */,
+				C5C9D3CC23926516005454CD /* CAEraserLayer.m in Sources */,
 				C5911466237B3F3100E12FAB /* MMSegmentSmoother.m in Sources */,
 				C5A7C056237BCC5B00957D53 /* MMDrawModel.m in Sources */,
 				C5911440237B3BEB00E12FAB /* main.m in Sources */,
