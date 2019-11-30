@@ -16,6 +16,7 @@
 @implementation CALayerRenderer {
     NSMutableDictionary<NSString *, CALayer *> *_strokeLayers;
     NSUInteger _lastRenderedVersion;
+    CALayer *_canvasLayer;
 }
 
 @synthesize dynamicWidth;
@@ -25,6 +26,8 @@
     if (self = [super init]) {
         _strokeLayers = [NSMutableDictionary dictionary];
         _lastRenderedVersion = 0;
+        _canvasLayer = [CALayer layer];
+        [_canvasLayer setDelegate:self];
     }
     return self;
 }
@@ -52,10 +55,6 @@
 
 - (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView *)drawView
 {
-    if (![[drawView layer] actions]) {
-        [[drawView layer] setActions:@{ @"sublayers": [NSNull null] }];
-    }
-
     if ([self dynamicWidth]) {
         CALayer *layer = [self layerForStroke:[stroke identifier]];
 
@@ -74,7 +73,7 @@
         }
 
         if (!layer.superlayer) {
-            [[drawView layer] addSublayer:layer];
+            [_canvasLayer addSublayer:layer];
         }
     } else if ([stroke path]) {
         CAShapeLayer *layer = [self layerForStroke:[stroke identifier]];
@@ -85,7 +84,7 @@
         layer.lineWidth = 2;
 
         if (!layer.superlayer) {
-            [[drawView layer] addSublayer:layer];
+            [_canvasLayer addSublayer:layer];
         }
     }
 }
@@ -117,6 +116,14 @@
 
 - (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
 {
+    if (![_canvasLayer superlayer]) {
+        [[drawView layer] addSublayer:_canvasLayer];
+        [[drawView layer] setActions:@{ @"sublayers": [NSNull null] }];
+    }
+
+    if (CGRectEqualToRect([_canvasLayer frame], [[drawView layer] bounds])) {
+        [_canvasLayer setFrame:[[drawView layer] bounds]];
+    }
 }
 
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
