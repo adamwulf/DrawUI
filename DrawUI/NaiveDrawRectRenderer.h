@@ -7,13 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MMDrawView.h"
+#import "SmartDrawRectRenderer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NaiveDrawRectRenderer : UIView<MMDrawViewRenderer>
-
-@property (nonatomic, assign) BOOL dynamicWidth;
+@interface NaiveDrawRectRenderer : SmartDrawRectRenderer
 
 @end
 

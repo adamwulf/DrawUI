@@ -71,9 +71,17 @@
 
 - (void)renderStroke:(MMDrawnStroke *)stroke inContext:(CGContextRef)ctx
 {
-    if ([self dynamicWidth]) {
-        [[[stroke tool] color] setFill];
+    CGContextRef context = UIGraphicsGetCurrentContext();
 
+    if ([[stroke tool] color]) {
+        [[[stroke tool] color] set];
+    } else {
+        // eraser
+        CGContextSetBlendMode(context, kCGBlendModeClear);
+        [[UIColor whiteColor] set];
+    }
+
+    if ([self dynamicWidth]) {
         for (MMAbstractBezierPathElement *element in [[stroke segments] copy]) {
             UIBezierPath *segment = [element borderPath];
 
@@ -85,10 +93,11 @@
         if (path) {
             [path setLineWidth:kStrokeWidth];
 
-            [[[stroke tool] color] setStroke];
             [path stroke];
         }
     }
+
+    CGContextSetBlendMode(context, kCGBlendModeNormal);
 }
 
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx

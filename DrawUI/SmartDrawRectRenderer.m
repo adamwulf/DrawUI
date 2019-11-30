@@ -51,7 +51,6 @@
         CGRect pathBounds = [[stroke path] bounds];
 
         pathBounds = CGRectInset(pathBounds, -[[stroke tool] maxSize], -[[stroke tool] maxSize]);
-
         pathBounds = CGRectInset(pathBounds, -kStrokeWidth, -kStrokeWidth);
 
         [self setNeedsDisplayInRect:pathBounds];
@@ -69,9 +68,17 @@
 
 - (void)renderStroke:(MMDrawnStroke *)stroke inRect:(CGRect)rect
 {
-    if ([self dynamicWidth]) {
-        [[[stroke tool] color] setFill];
+    CGContextRef context = UIGraphicsGetCurrentContext();
 
+    if ([[stroke tool] color]) {
+        [[[stroke tool] color] set];
+    } else {
+        // eraser
+        CGContextSetBlendMode(context, kCGBlendModeClear);
+        [[UIColor whiteColor] set];
+    }
+
+    if ([self dynamicWidth]) {
         for (MMAbstractBezierPathElement *element in [stroke segments]) {
             CGFloat maxWidth = MAX(element.width, element.previousElement.width);
 
@@ -90,10 +97,11 @@
         if (path && CGRectIntersectsRect(pathBounds, rect)) {
             [path setLineWidth:kStrokeWidth];
 
-            [[[stroke tool] color] setStroke];
             [path stroke];
         }
     }
+
+    CGContextSetBlendMode(context, kCGBlendModeNormal);
 }
 
 @end

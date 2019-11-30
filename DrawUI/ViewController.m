@@ -111,7 +111,7 @@
         [_tool setColor:[UIColor blackColor]];
     } else {
         _tool = [[MMPen alloc] initWithMinSize:20 andMaxSize:20];
-        [_tool setColor:[UIColor redColor]];
+        [_tool setColor:nil];
     }
 
     [[self drawView] setTool:[self tool]];
