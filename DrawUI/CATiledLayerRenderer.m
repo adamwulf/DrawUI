@@ -75,7 +75,6 @@
 
     CGRect r = CGContextGetClipBoundingBox(ctx);
     CGAffineTransform transform = CGContextGetCTM(ctx);
-
     CGRect rect = CGRectApplyAffineTransform(r, CGAffineTransformInvert(transform));
 
     if ([[stroke tool] color]) {

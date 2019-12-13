@@ -58,16 +58,18 @@
 {
     if ([self dynamicWidth]) {
         if (![[stroke tool] color]) {
-            CAEraserLayer *eraserLayer = [_canvasLayer mask] ?: [CAEraserLayer layer];
+            CAEraserLayer *eraserLayer = [_canvasLayer mask];
 
-            [eraserLayer setOpaque:NO];
-            [eraserLayer setPath:[stroke borderPath]];
-            [eraserLayer setFillColor:[UIColor colorWithWhite:0 alpha:0]];
-            [eraserLayer setLineWidth:0];
+            if (!eraserLayer) {
+                eraserLayer = [CAEraserLayer layer];
+                [eraserLayer setOpaque:NO];
+                [eraserLayer setFillColor:[UIColor colorWithWhite:0 alpha:0]];
+                [eraserLayer setLineWidth:0];
+                [_canvasLayer setMask:eraserLayer];
+            }
+
             [eraserLayer setFrame:[drawView bounds]];
-            [eraserLayer setNeedsDisplay];
-
-            [_canvasLayer setMask:eraserLayer];
+            [eraserLayer setPath:[stroke borderPath] forIdentifier:[stroke identifier]];
         } else {
             CALayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
 
@@ -91,16 +93,18 @@
         }
     } else if ([stroke path]) {
         if (![[stroke tool] color]) {
-            CAEraserLayer *eraserLayer = [_canvasLayer mask] ?: [CAEraserLayer layer];
+            CAEraserLayer *eraserLayer = [_canvasLayer mask];
 
-            [eraserLayer setOpaque:NO];
-            [eraserLayer setPath:[stroke path]];
-            [eraserLayer setStrokeColor:[UIColor colorWithWhite:0 alpha:0]];
-            [eraserLayer setLineWidth:10];
+            if (!eraserLayer) {
+                eraserLayer = [CAEraserLayer layer];
+                [eraserLayer setOpaque:NO];
+                [eraserLayer setStrokeColor:[UIColor colorWithWhite:0 alpha:0]];
+                [eraserLayer setLineWidth:10];
+                [_canvasLayer setMask:eraserLayer];
+            }
+
             [eraserLayer setFrame:[drawView bounds]];
-            [eraserLayer setNeedsDisplay];
-
-            [_canvasLayer setMask:eraserLayer];
+            [eraserLayer setPath:[stroke path] forIdentifier:[stroke identifier]];
         } else {
             CAShapeLayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
 

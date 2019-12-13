@@ -13,10 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CAEraserLayer : CALayer
 
-@property(nonatomic) UIBezierPath *path;
 @property(nonatomic) UIColor *fillColor;
 @property(nonatomic) UIColor *strokeColor;
 @property(nonatomic) CGFloat lineWidth;
+
+- (void)setPath:(UIBezierPath *)path forIdentifier:(NSString *)identifier;
 
 @end
 
