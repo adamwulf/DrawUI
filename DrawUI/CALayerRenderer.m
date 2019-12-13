@@ -41,17 +41,9 @@
 
     if (!layer) {
         if ([self dynamicWidth]) {
-            if (eraser) {
-                layer = [CAEraserLayer layer];
-            } else {
-                layer = [CALayer layer];
-            }
+            layer = [CALayer layer];
         } else {
-            if (eraser) {
-                layer = [CAEraserLayer layer];
-            } else {
-                layer = [CAShapeLayer layer];
-            }
+            layer = [CAShapeLayer layer];
         }
 
         layer.delegate = self;
@@ -65,10 +57,8 @@
 - (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView *)drawView
 {
     if ([self dynamicWidth]) {
-        CALayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
-
         if (![[stroke tool] color]) {
-            CAEraserLayer *eraserLayer = (CAEraserLayer *)layer;
+            CAEraserLayer *eraserLayer = [_canvasLayer mask] ?: [CAEraserLayer layer];
 
             [eraserLayer setOpaque:NO];
             [eraserLayer setPath:[stroke borderPath]];
@@ -77,8 +67,10 @@
             [eraserLayer setFrame:[drawView bounds]];
             [eraserLayer setNeedsDisplay];
 
-            [_canvasLayer setMask:layer];
+            [_canvasLayer setMask:eraserLayer];
         } else {
+            CALayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
+
             for (NSInteger i = 0; i < [[stroke segments] count]; i++) {
                 MMAbstractBezierPathElement *element = [[stroke segments] objectAtIndex:i];
                 CAShapeLayer *segmentLayer = i < [[layer sublayers] count] ? [[layer sublayers] objectAtIndex:i] : [CAShapeLayer layer];
@@ -98,10 +90,8 @@
             }
         }
     } else if ([stroke path]) {
-        CAShapeLayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
-
         if (![[stroke tool] color]) {
-            CAEraserLayer *eraserLayer = (CAEraserLayer *)layer;
+            CAEraserLayer *eraserLayer = [_canvasLayer mask] ?: [CAEraserLayer layer];
 
             [eraserLayer setOpaque:NO];
             [eraserLayer setPath:[stroke path]];
@@ -112,6 +102,8 @@
 
             [_canvasLayer setMask:eraserLayer];
         } else {
+            CAShapeLayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
+
             layer.path = [[stroke path] CGPath];
             layer.strokeColor = [[[stroke tool] color] CGColor] ?: [[UIColor colorWithWhite:0 alpha:0] CGColor];
             layer.fillColor = [[UIColor clearColor] CGColor];

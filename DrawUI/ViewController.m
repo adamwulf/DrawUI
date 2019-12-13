@@ -147,7 +147,7 @@
     }
 
     if ([renderer respondsToSelector:@selector(setDynamicWidth:)]) {
-        [(SmartDrawRectRenderer *)renderer setDynamicWidth:YES];
+        [(SmartDrawRectRenderer *)renderer setDynamicWidth:NO];
     }
 
     [[self drawView] setTool:[self tool]];
