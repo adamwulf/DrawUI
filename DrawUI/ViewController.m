@@ -125,6 +125,7 @@
 
     [[self drawView] setTranslatesAutoresizingMaskIntoConstraints:NO];
     [[self view] insertSubview:[self drawView] atIndex:0];
+    [[self view] setBackgroundColor:[UIColor colorWithWhite:.8 alpha:1]];
 
     [[[[self drawView] leftAnchor] constraintEqualToAnchor:[[self view] leftAnchor]] setActive:YES];
     [[[[self drawView] rightAnchor] constraintEqualToAnchor:[[self view] rightAnchor]] setActive:YES];

@@ -10,14 +10,6 @@
 #import "MMAbstractBezierPathElement.h"
 #import "CAEraserLayer.h"
 
-@interface CAEraserShapeLayer : CAShapeLayer
-
-@end
-
-@implementation CAEraserShapeLayer
-
-@end
-
 @interface CALayerRenderer () <CALayerDelegate>
 
 @end
@@ -56,7 +48,7 @@
             }
         } else {
             if (eraser) {
-                layer = [CAEraserShapeLayer layer];
+                layer = [CAEraserLayer layer];
             } else {
                 layer = [CAShapeLayer layer];
             }
@@ -79,8 +71,8 @@
             CAEraserLayer *eraserLayer = (CAEraserLayer *)layer;
 
             [eraserLayer setOpaque:NO];
-            [eraserLayer setPath:[[stroke borderPath] CGPath]];
-            [eraserLayer setFillColor:[UIColor colorWithWhite:1 alpha:0]];
+            [eraserLayer setPath:[stroke borderPath]];
+            [eraserLayer setFillColor:[UIColor colorWithWhite:0 alpha:0]];
             [eraserLayer setLineWidth:0];
             [eraserLayer setFrame:[drawView bounds]];
             [eraserLayer setNeedsDisplay];
@@ -108,13 +100,26 @@
     } else if ([stroke path]) {
         CAShapeLayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
 
-        layer.path = [[stroke path] CGPath];
-        layer.strokeColor = [[[stroke tool] color] CGColor] ?: [[UIColor whiteColor] CGColor];
-        layer.fillColor = [[UIColor clearColor] CGColor];
-        layer.lineWidth = 10;
+        if (![[stroke tool] color]) {
+            CAEraserLayer *eraserLayer = (CAEraserLayer *)layer;
 
-        if (!layer.superlayer) {
-            [_canvasLayer addSublayer:layer];
+            [eraserLayer setOpaque:NO];
+            [eraserLayer setPath:[stroke path]];
+            [eraserLayer setStrokeColor:[UIColor colorWithWhite:0 alpha:0]];
+            [eraserLayer setLineWidth:10];
+            [eraserLayer setFrame:[drawView bounds]];
+            [eraserLayer setNeedsDisplay];
+
+            [_canvasLayer setMask:eraserLayer];
+        } else {
+            layer.path = [[stroke path] CGPath];
+            layer.strokeColor = [[[stroke tool] color] CGColor] ?: [[UIColor colorWithWhite:0 alpha:0] CGColor];
+            layer.fillColor = [[UIColor clearColor] CGColor];
+            layer.lineWidth = 10;
+
+            if (!layer.superlayer) {
+                [_canvasLayer addSublayer:layer];
+            }
         }
     }
 }
@@ -140,20 +145,6 @@
     }
 
     _lastRenderedVersion = maxSoFar;
-}
-
-#pragma mark - CAShapeLayerDelegate
-
-- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)context
-{
-    if ([layer isKindOfClass:[CAEraserLayer class]] ||
-        [layer isKindOfClass:[CAEraserShapeLayer class]]) {
-        CGContextSetBlendMode(context, kCGBlendModeClear);
-    }
-
-    [layer renderInContext:context];
-
-    CGContextSetBlendMode(context, kCGBlendModeNormal);
 }
 
 #pragma mark - MMDrawViewRenderer

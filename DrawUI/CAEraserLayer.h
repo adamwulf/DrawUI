@@ -13,9 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CAEraserLayer : CALayer
 
-@property(nonatomic) CGPathRef path;
+@property(nonatomic) UIBezierPath *path;
 @property(nonatomic) UIColor *fillColor;
-@property(nonatomic) CGColorRef strokeColor;
+@property(nonatomic) UIColor *strokeColor;
 @property(nonatomic) CGFloat lineWidth;
 
 @end

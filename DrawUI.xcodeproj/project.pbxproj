@@ -168,8 +168,6 @@
 			children = (
 				C591146A237B3F4400E12FAB /* MMDrawView.h */,
 				C5911469237B3F4400E12FAB /* MMDrawView.m */,
-				C5C9D3CA23926516005454CD /* CAEraserLayer.h */,
-				C5C9D3CB23926516005454CD /* CAEraserLayer.m */,
 				C5AB0769238288A6007CF251 /* Touch Stream */,
 				C5911456237B3F2000E12FAB /* Path Helpers */,
 				C5A7C053237BCC0E00957D53 /* Rendering */,
@@ -206,11 +204,21 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		C5A7C053237BCC0E00957D53 /* Rendering */ = {
+		C595A84023A3684900ECDFDB /* Layer Rendering */ = {
 			isa = PBXGroup;
 			children = (
 				C5313F02237BCD7F00C2097A /* CALayerRenderer.h */,
 				C5313F03237BCD7F00C2097A /* CALayerRenderer.m */,
+				C5C9D3CA23926516005454CD /* CAEraserLayer.h */,
+				C5C9D3CB23926516005454CD /* CAEraserLayer.m */,
+			);
+			name = "Layer Rendering";
+			sourceTree = "<group>";
+		};
+		C5A7C053237BCC0E00957D53 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				C595A84023A3684900ECDFDB /* Layer Rendering */,
 				C5D34AE8237D1FD200B450E3 /* CATiledLayerRenderer.h */,
 				C5D34AE9237D1FD200B450E3 /* CATiledLayerRenderer.m */,
 				C5313F05237BD3E900C2097A /* NaiveDrawRectRenderer.h */,

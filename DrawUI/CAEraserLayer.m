@@ -21,13 +21,13 @@
     CGContextFillRect(inContext, self.bounds);
     CGContextSetBlendMode(inContext, kCGBlendModeSourceIn);
     if (self.strokeColor) {
-        CGContextSetStrokeColorWithColor(inContext, self.strokeColor);
+        CGContextSetStrokeColorWithColor(inContext, [self.strokeColor CGColor]);
     }
     if (self.fillColor) {
         CGContextSetFillColorWithColor(inContext, [self.fillColor CGColor]);
     }
     CGContextSetLineWidth(inContext, self.lineWidth);
-    CGContextAddPath(inContext, self.path);
+    CGContextAddPath(inContext, [self.path CGPath]);
     CGContextDrawPath(inContext, kCGPathFillStroke);
 }
 
