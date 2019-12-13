@@ -30,6 +30,7 @@
 		C5911481237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911480237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m */; };
 		C5911484237B3FF900E12FAB /* MMVector.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911483237B3FF900E12FAB /* MMVector.m */; };
 		C5911487237B400600E12FAB /* NSArray+MapReduce.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911486237B400500E12FAB /* NSArray+MapReduce.m */; };
+		C595A84623A3723200ECDFDB /* CAPencilLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C595A84523A3723200ECDFDB /* CAPencilLayer.m */; };
 		C5A7C056237BCC5B00957D53 /* MMDrawModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A7C055237BCC5B00957D53 /* MMDrawModel.m */; };
 		C5AB06FB237FB493007CF251 /* MMTouchStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB06FA237FB493007CF251 /* MMTouchStream.m */; };
 		C5AB06FE237FB4A3007CF251 /* MMTouchStreamEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB06FD237FB4A3007CF251 /* MMTouchStreamEvent.m */; };
@@ -84,6 +85,8 @@
 		C5911483237B3FF900E12FAB /* MMVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMVector.m; sourceTree = "<group>"; };
 		C5911485237B400500E12FAB /* NSArray+MapReduce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MapReduce.h"; sourceTree = "<group>"; };
 		C5911486237B400500E12FAB /* NSArray+MapReduce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MapReduce.m"; sourceTree = "<group>"; };
+		C595A84423A3723200ECDFDB /* CAPencilLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAPencilLayer.h; sourceTree = "<group>"; };
+		C595A84523A3723200ECDFDB /* CAPencilLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAPencilLayer.m; sourceTree = "<group>"; };
 		C5A7C054237BCC5B00957D53 /* MMDrawModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawModel.h; sourceTree = "<group>"; };
 		C5A7C055237BCC5B00957D53 /* MMDrawModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMDrawModel.m; sourceTree = "<group>"; };
 		C5AB06F9237FB493007CF251 /* MMTouchStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMTouchStream.h; sourceTree = "<group>"; };
@@ -211,6 +214,8 @@
 				C5313F03237BCD7F00C2097A /* CALayerRenderer.m */,
 				C5C9D3CA23926516005454CD /* CAEraserLayer.h */,
 				C5C9D3CB23926516005454CD /* CAEraserLayer.m */,
+				C595A84423A3723200ECDFDB /* CAPencilLayer.h */,
+				C595A84523A3723200ECDFDB /* CAPencilLayer.m */,
 			);
 			name = "Layer Rendering";
 			sourceTree = "<group>";
@@ -318,6 +323,7 @@
 				C5911435237B3BE800E12FAB /* ViewController.m in Sources */,
 				C591142F237B3BE800E12FAB /* AppDelegate.m in Sources */,
 				C5911484237B3FF900E12FAB /* MMVector.m in Sources */,
+				C595A84623A3723200ECDFDB /* CAPencilLayer.m in Sources */,
 				C5911463237B3F3100E12FAB /* MMAbstractBezierPathElement.m in Sources */,
 				C5911487237B400600E12FAB /* NSArray+MapReduce.m in Sources */,
 				C5911481237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m in Sources */,

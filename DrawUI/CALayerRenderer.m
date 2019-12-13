@@ -9,6 +9,7 @@
 #import "CALayerRenderer.h"
 #import "MMAbstractBezierPathElement.h"
 #import "CAEraserLayer.h"
+#import "CAPencilLayer.h"
 
 @interface CALayerRenderer () <CALayerDelegate>
 
@@ -27,7 +28,7 @@
     if (self = [super init]) {
         _strokeLayers = [NSMutableDictionary dictionary];
         _lastRenderedVersion = 0;
-        _canvasLayer = [CALayer layer];
+        _canvasLayer = [CAPencilLayer layer];
         [_canvasLayer setDelegate:self];
     }
     return self;
@@ -54,6 +55,22 @@
     return layer;
 }
 
+- (void)embedPencilLayerIfNecessary
+{
+    if ([_canvasLayer mask]) {
+        // embed the canvas in a new pencil layer
+        // so that this pencil line will be drawn
+        // /over/ the eraser lines
+        CALayer *subCanvasLayer = _canvasLayer;
+        _canvasLayer = [CAPencilLayer layer];
+        [_canvasLayer setFrame:[subCanvasLayer frame]];
+        [subCanvasLayer setFrame:[subCanvasLayer bounds]];
+
+        [[subCanvasLayer superlayer] addSublayer:_canvasLayer];
+        [_canvasLayer addSublayer:subCanvasLayer];
+    }
+}
+
 - (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView *)drawView
 {
     if ([self dynamicWidth]) {
@@ -71,6 +88,8 @@
             [eraserLayer setFrame:[drawView bounds]];
             [eraserLayer setPath:[stroke borderPath] forIdentifier:[stroke identifier]];
         } else {
+            [self embedPencilLayerIfNecessary];
+
             CALayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
 
             for (NSInteger i = 0; i < [[stroke segments] count]; i++) {
@@ -106,6 +125,8 @@
             [eraserLayer setFrame:[drawView bounds]];
             [eraserLayer setPath:[stroke path] forIdentifier:[stroke identifier]];
         } else {
+            [self embedPencilLayerIfNecessary];
+
             CAShapeLayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
 
             layer.path = [[stroke path] CGPath];
