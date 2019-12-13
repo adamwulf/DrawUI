@@ -90,23 +90,32 @@
         } else {
             [self embedPencilLayerIfNecessary];
 
+            // get the cached layer for this stroke. this stroke layer will contain
+            // all the shape layers for each of its elements
             CALayer *layer = [self layerForStroke:[stroke identifier] isEraser:[[stroke tool] color] == nil];
 
             for (NSInteger i = 0; i < [[stroke segments] count]; i++) {
                 MMAbstractBezierPathElement *element = [[stroke segments] objectAtIndex:i];
-                CAShapeLayer *segmentLayer = i < [[layer sublayers] count] ? [[layer sublayers] objectAtIndex:i] : [CAShapeLayer layer];
+                CAShapeLayer *segmentLayer = i < [[layer sublayers] count] ? [[layer sublayers] objectAtIndex:i] : nil;
 
-                segmentLayer.delegate = self;
-                segmentLayer.path = [[element borderPath] CGPath];
-                segmentLayer.fillColor = [[[stroke tool] color] CGColor] ?: [[UIColor blackColor] CGColor];
-                segmentLayer.lineWidth = 0;
-
-                if (![segmentLayer superlayer]) {
+                if (!segmentLayer) {
+                    // we don't have a layer for this segment yet, so build one
+                    segmentLayer = [CAShapeLayer layer];
+                    segmentLayer.delegate = self;
+                    segmentLayer.fillColor = [[[stroke tool] color] CGColor] ?: [[UIColor blackColor] CGColor];
+                    segmentLayer.lineWidth = 0;
                     [layer addSublayer:segmentLayer];
                 }
+
+                // update the path for this segment
+                segmentLayer.path = [[element borderPath] CGPath];
             }
 
             if (!layer.superlayer) {
+                // if we haven't added this stroke to our canvas yet, then add it.
+                // we can't always call this, as it might re-order strokes or move
+                // them to the wrong canvas, as updates for already drawn strokes
+                // may come in to the renderStroke:inView: method
                 [_canvasLayer addSublayer:layer];
             }
         }
