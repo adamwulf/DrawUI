@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// set to YES to draw only new strokes since last render, NO to draw all strokes
 @property(nonatomic, assign) BOOL drawByDiff;
 /// this model's strokes will be rendered during any call to drawRect:inContext:
-@property(nonatomic, assign, nullable) MMDrawModel *model;
+@property(nonatomic, strong, nullable) MMDrawModel *model;
 
 /// draw the model's strokes to the input context
 - (void)drawRect:(CGRect)rect inContext:(CGContextRef)context;

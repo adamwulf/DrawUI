@@ -24,7 +24,7 @@
 
 @property(nonatomic, strong) MMDrawModel *drawModel;
 @property(nonatomic, strong) MMPen *tool;
-@property(nonatomic, strong) NSObject<MMDrawViewRenderer> *renderer;
+@property(nonatomic, strong) NSObject<MMDrawViewRenderer> *currentRenderer;
 
 @end
 
@@ -46,8 +46,13 @@
 
     [[self drawView] setTool:[self tool]];
     [[self drawView] setDrawModel:[self drawModel]];
-    [[self drawView] installRenderer:[[MMThumbnailRenderer alloc] init]];
 
+    MMThumbnailRenderer *thumbnailRenderer = [[MMThumbnailRenderer alloc] init];
+
+    // install thumbnail generation
+    [[self drawView] installRenderer:thumbnailRenderer];
+
+    // also install the renderer to the UI
     [self didChangeRenderer:[self rendererControl]];
 }
 
@@ -111,7 +116,6 @@
     _drawModel = [[MMDrawModel alloc] init];
 
     [[self drawView] setDrawModel:[self drawModel]];
-    [self didChangeRenderer:[self rendererControl]];
 }
 
 - (IBAction)changeTool:(UISegmentedControl *)toolPicker
@@ -129,25 +133,25 @@
 
 - (IBAction)didChangeRenderer:(UISegmentedControl *)segmentedControl
 {
-    if (_renderer) {
-        [[self drawView] uninstallRenderer:_renderer];
+    if (_currentRenderer) {
+        [[self drawView] uninstallRenderer:_currentRenderer];
     }
 
     if ([segmentedControl selectedSegmentIndex] == 0) {
-        _renderer = [[CALayerRenderer alloc] init];
+        _currentRenderer = [[CALayerRenderer alloc] init];
     } else if ([segmentedControl selectedSegmentIndex] == 1) {
-        _renderer = [[CATiledLayerRenderer alloc] init];
+        _currentRenderer = [[CATiledLayerRenderer alloc] init];
     } else if ([segmentedControl selectedSegmentIndex] == 2) {
-        _renderer = [[NaiveDrawRectRenderer alloc] init];
+        _currentRenderer = [[NaiveDrawRectRenderer alloc] init];
     } else if ([segmentedControl selectedSegmentIndex] == 3) {
-        _renderer = [[SmartDrawRectRenderer alloc] init];
+        _currentRenderer = [[SmartDrawRectRenderer alloc] init];
     } else if ([segmentedControl selectedSegmentIndex] == 4) {
-        _renderer = [[DebugRenderer alloc] init];
+        _currentRenderer = [[DebugRenderer alloc] init];
     }
 
-    [_renderer setDynamicWidth:YES];
+    [_currentRenderer setDynamicWidth:YES];
 
-    [[self drawView] installRenderer:_renderer];
+    [[self drawView] installRenderer:_currentRenderer];
 }
 
 - (IBAction)redraw:(id)sender

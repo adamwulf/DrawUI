@@ -14,6 +14,12 @@
     NSUInteger _lastRenderedVersion;
 }
 
+- (void)setModel:(MMDrawModel *)model
+{
+    _model = model;
+    _lastRenderedVersion = 0;
+}
+
 - (void)drawRect:(CGRect)rect inContext:(CGContextRef)context
 {
     UIGraphicsPushContext(context);

@@ -50,6 +50,11 @@
     [_ctxRenderer setModel:[drawView drawModel]];
 }
 
+- (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+{
+    [_ctxRenderer setModel:newModel];
+}
+
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
 {
     if ([[drawModel strokes] count] && ![drawModel stroke]) {
