@@ -9,9 +9,12 @@
 #import "CATiledLayerRenderer.h"
 #import "MMAbstractBezierPathElement.h"
 #import "CANoFadeTiledLayer.h"
+#import "CGContextRenderer.h"
 #import "Constants.h"
 
 @interface CATiledLayerRenderer () <CALayerDelegate>
+
+@property(nonatomic, strong) CGContextRenderer *ctxRenderer;
 
 @end
 
@@ -29,8 +32,20 @@
     if (self = [super init]) {
         _tiledLayer = [CANoFadeTiledLayer layer];
         [_tiledLayer setDelegate:self];
+
+        _ctxRenderer = [[CGContextRenderer alloc] init];
     }
     return self;
+}
+
+- (BOOL)dynamicWidth
+{
+    return [[self ctxRenderer] dynamicWidth];
+}
+
+- (void)setDynamicWidth:(BOOL)dynamicWidth
+{
+    [[self ctxRenderer] setDynamicWidth:dynamicWidth];
 }
 
 #pragma mark - Notifications
@@ -49,6 +64,7 @@
 
     _lastModel = [drawView drawModel];
 
+    [[self ctxRenderer] setModel:_lastModel];
     [drawView addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
     [_tiledLayer setNeedsDisplay];
 }
@@ -63,13 +79,12 @@
 {
     _lastModel = newModel;
 
+    [[self ctxRenderer] setModel:_lastModel];
     [_tiledLayer setNeedsDisplay];
 }
 
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
 {
-    _lastModel = drawModel;
-
     MMDrawnStroke *stroke = [drawModel stroke] ?: [[drawModel strokes] lastObject];
 
     if (stroke) {
@@ -83,54 +98,13 @@
 
 #pragma mark - CALayerDelegate
 
-- (void)renderStroke:(MMDrawnStroke *)stroke inContext:(CGContextRef)ctx
-{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-
-    CGRect r = CGContextGetClipBoundingBox(ctx);
-    CGAffineTransform transform = CGContextGetCTM(ctx);
-    CGRect rect = CGRectApplyAffineTransform(r, CGAffineTransformInvert(transform));
-
-    if ([[stroke tool] color]) {
-        [[[stroke tool] color] set];
-    } else {
-        // eraser
-        CGContextSetBlendMode(context, kCGBlendModeClear);
-        [[UIColor whiteColor] set];
-    }
-
-    if ([self dynamicWidth]) {
-        for (MMAbstractBezierPathElement *element in [[stroke segments] copy]) {
-            UIBezierPath *segment = [element borderPath];
-
-            if (CGRectIntersectsRect(r, [segment bounds])) {
-                [segment fill];
-            }
-        }
-    } else {
-        UIBezierPath *path = [stroke path];
-
-        if (path) {
-            [path setLineWidth:kStrokeWidth];
-
-            [path stroke];
-        }
-    }
-
-    CGContextSetBlendMode(context, kCGBlendModeNormal);
-}
-
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx
 {
-    UIGraphicsPushContext(ctx);
+    CGRect clipRect = CGContextGetClipBoundingBox(ctx);
+    CGAffineTransform transform = CGContextGetCTM(ctx);
+    CGRect rect = CGRectApplyAffineTransform(clipRect, CGAffineTransformInvert(transform));
 
-    for (MMDrawnStroke *stroke in [[_lastModel strokes] copy]) {
-        [self renderStroke:stroke inContext:ctx];
-    }
-
-    [self renderStroke:[_lastModel stroke] inContext:ctx];
-
-    UIGraphicsPopContext();
+    [[self ctxRenderer] drawRect:clipRect inContext:ctx];
 }
 
 @end

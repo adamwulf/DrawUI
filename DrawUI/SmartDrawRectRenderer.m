@@ -8,11 +8,13 @@
 
 #import "SmartDrawRectRenderer.h"
 #import "MMAbstractBezierPathElement.h"
+#import "CGContextRenderer.h"
 #import "Constants.h"
 
 @interface SmartDrawRectRenderer ()
 
 @property(nonatomic, strong) MMDrawModel *model;
+@property(nonatomic, strong) CGContextRenderer *ctxRenderer;
 
 @end
 
@@ -24,8 +26,20 @@
 {
     if (self = [super init]) {
         [self setOpaque:NO];
+
+        _ctxRenderer = [[CGContextRenderer alloc] init];
     }
     return self;
+}
+
+- (BOOL)dynamicWidth
+{
+    return [[self ctxRenderer] dynamicWidth];
+}
+
+- (void)setDynamicWidth:(BOOL)dynamicWidth
+{
+    [[self ctxRenderer] setDynamicWidth:dynamicWidth];
 }
 
 #pragma mark - MMDrawViewRenderer
@@ -37,6 +51,8 @@
 
     _model = [drawView drawModel];
 
+    [[self ctxRenderer] setModel:[self model]];
+
     [[[self leadingAnchor] constraintEqualToAnchor:[drawView leadingAnchor]] setActive:YES];
     [[[self trailingAnchor] constraintEqualToAnchor:[drawView trailingAnchor]] setActive:YES];
     [[[self topAnchor] constraintEqualToAnchor:[drawView topAnchor]] setActive:YES];
@@ -47,6 +63,8 @@
 - (void)uninstallFromDrawView:(MMDrawView *)drawView
 {
     _model = nil;
+
+    [[self ctxRenderer] setModel:nil];
     [self removeFromSuperview];
 }
 
@@ -54,13 +72,12 @@
 {
     _model = newModel;
 
+    [[self ctxRenderer] setModel:[self model]];
     [self setNeedsDisplay];
 }
 
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
 {
-    _model = drawModel;
-
     MMDrawnStroke *stroke = [drawModel stroke] ?: [[drawModel strokes] lastObject];
 
     if (stroke) {
@@ -77,49 +94,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    for (MMDrawnStroke *stroke in [[self model] strokes]) {
-        [self renderStroke:stroke inRect:rect];
-    }
-
-    [self renderStroke:[[self model] stroke] inRect:rect];
-}
-
-- (void)renderStroke:(MMDrawnStroke *)stroke inRect:(CGRect)rect
-{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-
-    if ([[stroke tool] color]) {
-        [[[stroke tool] color] set];
-    } else {
-        // eraser
-        CGContextSetBlendMode(context, kCGBlendModeClear);
-        [[UIColor whiteColor] set];
-    }
-
-    if ([self dynamicWidth]) {
-        for (MMAbstractBezierPathElement *element in [stroke segments]) {
-            CGFloat maxWidth = MAX(element.width, element.previousElement.width);
-
-            if (CGRectIntersectsRect(CGRectInset([element bounds], -maxWidth, -maxWidth), rect)) {
-                UIBezierPath *segment = [element borderPath];
-
-                [segment fill];
-            }
-        }
-    } else {
-        UIBezierPath *path = [stroke path];
-        CGRect pathBounds = [[stroke path] bounds];
-
-        pathBounds = CGRectInset(pathBounds, -kStrokeWidth, -kStrokeWidth);
-
-        if (path && CGRectIntersectsRect(pathBounds, rect)) {
-            [path setLineWidth:kStrokeWidth];
-
-            [path stroke];
-        }
-    }
-
-    CGContextSetBlendMode(context, kCGBlendModeNormal);
+    [[self ctxRenderer] drawRect:rect inContext:UIGraphicsGetCurrentContext()];
 }
 
 @end
