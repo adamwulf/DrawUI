@@ -113,4 +113,17 @@
     [coder encodeObject:_strokes forKey:@"strokes"];
 }
 
+#pragma mark - NSCopying
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    MMDrawModel *ret = [[MMDrawModel allocWithZone:zone] init];
+
+    ret->_version = _version;
+    ret->_stroke = [_stroke copy];
+    ret->_strokes = [[NSMutableArray alloc] initWithArray:_strokes copyItems:YES];
+
+    return ret;
+}
+
 @end
