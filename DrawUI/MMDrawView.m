@@ -18,10 +18,35 @@
 @interface MMDrawView ()
 
 @property(nonatomic, strong) MMTouchStream *touchStream;
+@property(nonatomic, strong) NSMutableArray<NSObject<MMDrawViewRenderer> *> *renderers;
 
 @end
 
 @implementation MMDrawView
+
+- (instancetype)init
+{
+    if (self = [super init]) {
+        _renderers = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame]) {
+        _renderers = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super initWithCoder:coder]) {
+        _renderers = [NSMutableArray array];
+    }
+    return self;
+}
 
 #pragma mark - Properties
 
@@ -29,28 +54,39 @@
 {
     _touchStream = [[MMTouchStream alloc] init];
 
-    if ([[self renderer] respondsToSelector:@selector(drawView:willReplaceModel:withModel:)]) {
-        [[self renderer] drawView:self willReplaceModel:_drawModel withModel:newModel];
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        if ([renderer respondsToSelector:@selector(drawView:willReplaceModel:withModel:)]) {
+            [renderer drawView:self willReplaceModel:_drawModel withModel:newModel];
+        }
     }
 
     MMDrawModel *oldModel = _drawModel;
     _drawModel = newModel;
 
-    if ([[self renderer] respondsToSelector:@selector(drawView:didReplaceModel:withModel:)]) {
-        [[self renderer] drawView:self didReplaceModel:oldModel withModel:_drawModel];
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        if ([renderer respondsToSelector:@selector(drawView:didReplaceModel:withModel:)]) {
+            [renderer drawView:self didReplaceModel:oldModel withModel:_drawModel];
+        }
     }
 }
 
-- (void)setRenderer:(NSObject<MMDrawViewRenderer> *)renderer
+- (void)uninstallRenderer:(NSObject<MMDrawViewRenderer> *)renderer
 {
-    if ([[self renderer] respondsToSelector:@selector(uninstallFromDrawView:)]) {
-        [[self renderer] uninstallFromDrawView:self];
+    if ([_renderers containsObject:renderer]) {
+        if ([renderer respondsToSelector:@selector(uninstallFromDrawView:)]) {
+            [renderer uninstallFromDrawView:self];
+        }
+
+        [_renderers removeObject:renderer];
     }
+}
 
-    _renderer = renderer;
+- (void)installRenderer:(NSObject<MMDrawViewRenderer> *)renderer
+{
+    [_renderers addObject:renderer];
 
-    if ([[self renderer] respondsToSelector:@selector(installIntoDrawView:)]) {
-        [[self renderer] installIntoDrawView:self];
+    if ([renderer respondsToSelector:@selector(installIntoDrawView:)]) {
+        [renderer installIntoDrawView:self];
     }
 }
 
@@ -82,60 +118,85 @@
 {
     [self drawTouches:touches withEvent:nil isUpdate:YES];
 
-    if ([[self renderer] respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-        [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+            [renderer drawView:self willUpdateModel:[self drawModel]];
+        }
     }
 
     [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-    [[self renderer] drawView:self didUpdateModel:[self drawModel]];
+
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        [renderer drawView:self didUpdateModel:[self drawModel]];
+    }
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self drawTouches:touches withEvent:event isUpdate:NO];
 
-    if ([[self renderer] respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-        [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+            [renderer drawView:self willUpdateModel:[self drawModel]];
+        }
     }
 
     [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-    [[self renderer] drawView:self didUpdateModel:[self drawModel]];
+
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        [renderer drawView:self didUpdateModel:[self drawModel]];
+    }
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self drawTouches:touches withEvent:event isUpdate:NO];
 
-    if ([[self renderer] respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-        [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+            [renderer drawView:self willUpdateModel:[self drawModel]];
+        }
     }
 
     [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-    [[self renderer] drawView:self didUpdateModel:[self drawModel]];
+
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        [renderer drawView:self didUpdateModel:[self drawModel]];
+    }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self drawTouches:touches withEvent:event isUpdate:NO];
 
-    if ([[self renderer] respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-        [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+            [renderer drawView:self willUpdateModel:[self drawModel]];
+        }
     }
 
     [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-    [[self renderer] drawView:self didUpdateModel:[self drawModel]];
+
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        [renderer drawView:self didUpdateModel:[self drawModel]];
+    }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self drawTouches:touches withEvent:event isUpdate:NO];
 
-    if ([[self renderer] respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-        [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+            [renderer drawView:self willUpdateModel:[self drawModel]];
+        }
     }
 
     [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-    [[self renderer] drawView:self didUpdateModel:[self drawModel]];
+
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        [renderer drawView:self didUpdateModel:[self drawModel]];
+    }
 }
 
 @end

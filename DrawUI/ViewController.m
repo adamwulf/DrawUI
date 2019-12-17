@@ -23,6 +23,7 @@
 
 @property(nonatomic, strong) MMDrawModel *drawModel;
 @property(nonatomic, strong) MMPen *tool;
+@property(nonatomic, strong) NSObject<MMDrawViewRenderer> *renderer;
 
 @end
 
@@ -126,23 +127,25 @@
 
 - (IBAction)didChangeRenderer:(UISegmentedControl *)segmentedControl
 {
-    NSObject<MMDrawViewRenderer> *renderer;
-
-    if ([segmentedControl selectedSegmentIndex] == 0) {
-        renderer = [[CALayerRenderer alloc] init];
-    } else if ([segmentedControl selectedSegmentIndex] == 1) {
-        renderer = [[CATiledLayerRenderer alloc] init];
-    } else if ([segmentedControl selectedSegmentIndex] == 2) {
-        renderer = [[NaiveDrawRectRenderer alloc] init];
-    } else if ([segmentedControl selectedSegmentIndex] == 3) {
-        renderer = [[SmartDrawRectRenderer alloc] init];
-    } else if ([segmentedControl selectedSegmentIndex] == 4) {
-        renderer = [[DebugRenderer alloc] init];
+    if (_renderer) {
+        [[self drawView] uninstallRenderer:_renderer];
     }
 
-    [(SmartDrawRectRenderer *)renderer setDynamicWidth:YES];
+    if ([segmentedControl selectedSegmentIndex] == 0) {
+        _renderer = [[CALayerRenderer alloc] init];
+    } else if ([segmentedControl selectedSegmentIndex] == 1) {
+        _renderer = [[CATiledLayerRenderer alloc] init];
+    } else if ([segmentedControl selectedSegmentIndex] == 2) {
+        _renderer = [[NaiveDrawRectRenderer alloc] init];
+    } else if ([segmentedControl selectedSegmentIndex] == 3) {
+        _renderer = [[SmartDrawRectRenderer alloc] init];
+    } else if ([segmentedControl selectedSegmentIndex] == 4) {
+        _renderer = [[DebugRenderer alloc] init];
+    }
 
-    [[self drawView] setRenderer:renderer];
+    [_renderer setDynamicWidth:YES];
+
+    [[self drawView] installRenderer:_renderer];
 }
 
 - (IBAction)redraw:(id)sender
