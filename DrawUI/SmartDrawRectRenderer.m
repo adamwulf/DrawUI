@@ -28,17 +28,28 @@
     return self;
 }
 
+- (void)installIntoDrawView:(MMDrawView *)drawView
+{
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [drawView addSubview:self];
+
+    _model = [drawView drawModel];
+
+    [[[self leadingAnchor] constraintEqualToAnchor:[drawView leadingAnchor]] setActive:YES];
+    [[[self trailingAnchor] constraintEqualToAnchor:[drawView trailingAnchor]] setActive:YES];
+    [[[self topAnchor] constraintEqualToAnchor:[drawView topAnchor]] setActive:YES];
+    [[[self bottomAnchor] constraintEqualToAnchor:[drawView bottomAnchor]] setActive:YES];
+    [self setNeedsDisplay];
+}
+
+- (void)uninstallFromDrawView:(MMDrawView *)drawView
+{
+    _model = nil;
+    [self removeFromSuperview];
+}
+
 - (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
 {
-    if ([self superview] != drawView) {
-        [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [drawView addSubview:self];
-
-        [[[self leadingAnchor] constraintEqualToAnchor:[drawView leadingAnchor]] setActive:YES];
-        [[[self trailingAnchor] constraintEqualToAnchor:[drawView trailingAnchor]] setActive:YES];
-        [[[self topAnchor] constraintEqualToAnchor:[drawView topAnchor]] setActive:YES];
-        [[[self bottomAnchor] constraintEqualToAnchor:[drawView bottomAnchor]] setActive:YES];
-    }
 }
 
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel

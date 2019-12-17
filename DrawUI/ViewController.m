@@ -39,6 +39,12 @@
     _tool = [[MMPen alloc] initWithMinSize:2 andMaxSize:7];
     _drawModel = [[MMDrawModel alloc] init];
 
+    [[self view] setBackgroundColor:[UIColor colorWithWhite:.8 alpha:1]];
+
+
+    [[self drawView] setTool:[self tool]];
+    [[self drawView] setDrawModel:[self drawModel]];
+
     [self didChangeRenderer:[self rendererControl]];
 }
 
@@ -101,6 +107,7 @@
 {
     _drawModel = [[MMDrawModel alloc] init];
 
+    [[self drawView] setDrawModel:[self drawModel]];
     [self didChangeRenderer:[self rendererControl]];
 }
 
@@ -119,19 +126,6 @@
 
 - (IBAction)didChangeRenderer:(UISegmentedControl *)segmentedControl
 {
-    [[self drawView] removeFromSuperview];
-
-    _drawView = [[MMDrawView alloc] init];
-
-    [[self drawView] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [[self view] insertSubview:[self drawView] atIndex:0];
-    [[self view] setBackgroundColor:[UIColor colorWithWhite:.8 alpha:1]];
-
-    [[[[self drawView] leftAnchor] constraintEqualToAnchor:[[self view] leftAnchor]] setActive:YES];
-    [[[[self drawView] rightAnchor] constraintEqualToAnchor:[[self view] rightAnchor]] setActive:YES];
-    [[[[self drawView] topAnchor] constraintEqualToAnchor:[[self view] topAnchor]] setActive:YES];
-    [[[[self drawView] bottomAnchor] constraintEqualToAnchor:[[self view] bottomAnchor]] setActive:YES];
-
     NSObject<MMDrawViewRenderer> *renderer;
 
     if ([segmentedControl selectedSegmentIndex] == 0) {
@@ -146,13 +140,9 @@
         renderer = [[DebugRenderer alloc] init];
     }
 
-    if ([renderer respondsToSelector:@selector(setDynamicWidth:)]) {
-        [(SmartDrawRectRenderer *)renderer setDynamicWidth:YES];
-    }
+    [(SmartDrawRectRenderer *)renderer setDynamicWidth:YES];
 
-    [[self drawView] setTool:[self tool]];
     [[self drawView] setRenderer:renderer];
-    [[self drawView] setDrawModel:[self drawModel]];
 }
 
 - (IBAction)redraw:(id)sender

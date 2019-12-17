@@ -8,6 +8,7 @@
 
 #import "CATiledLayerRenderer.h"
 #import "MMAbstractBezierPathElement.h"
+#import "CANoFadeTiledLayer.h"
 #import "Constants.h"
 
 @interface CATiledLayerRenderer () <CALayerDelegate>
@@ -26,7 +27,7 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        _tiledLayer = [CATiledLayer layer];
+        _tiledLayer = [CANoFadeTiledLayer layer];
         [_tiledLayer setDelegate:self];
     }
     return self;
@@ -41,19 +42,29 @@
 
 #pragma mark - MMDrawViewRenderer
 
+- (void)installIntoDrawView:(MMDrawView *)drawView
+{
+    [[drawView layer] addSublayer:_tiledLayer];
+    [_tiledLayer setFrame:[[drawView layer] bounds]];
+
+    _lastModel = [drawView drawModel];
+
+    [drawView addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
+    [_tiledLayer setNeedsDisplay];
+}
+
+- (void)uninstallFromDrawView:(MMDrawView *)drawView
+{
+    [_tiledLayer removeFromSuperlayer];
+    [drawView removeObserver:self forKeyPath:@"bounds"];
+}
+
 - (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
 {
 }
 
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
 {
-    if (![_tiledLayer superlayer]) {
-        [[drawView layer] addSublayer:_tiledLayer];
-        [_tiledLayer setFrame:[[drawView layer] bounds]];
-
-        [drawView addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
-    }
-
     _lastModel = drawModel;
 
     MMDrawnStroke *stroke = [drawModel stroke] ?: [[drawModel strokes] lastObject];

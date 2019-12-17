@@ -10,6 +10,7 @@
 		C5313F04237BCD7F00C2097A /* CALayerRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F03237BCD7F00C2097A /* CALayerRenderer.m */; };
 		C5313F07237BD3E900C2097A /* NaiveDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */; };
 		C5313F0A237BD75000C2097A /* SmartDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */; };
+		C578111B23A8B35B00136030 /* CANoFadeTiledLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C578111A23A8B35B00136030 /* CANoFadeTiledLayer.m */; };
 		C591142F237B3BE800E12FAB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C591142E237B3BE800E12FAB /* AppDelegate.m */; };
 		C5911432237B3BE800E12FAB /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911431237B3BE800E12FAB /* SceneDelegate.m */; };
 		C5911435237B3BE800E12FAB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911434237B3BE800E12FAB /* ViewController.m */; };
@@ -46,6 +47,8 @@
 		C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NaiveDrawRectRenderer.m; sourceTree = "<group>"; };
 		C5313F08237BD75000C2097A /* SmartDrawRectRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartDrawRectRenderer.h; sourceTree = "<group>"; };
 		C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartDrawRectRenderer.m; sourceTree = "<group>"; };
+		C578111923A8B35B00136030 /* CANoFadeTiledLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CANoFadeTiledLayer.h; sourceTree = "<group>"; };
+		C578111A23A8B35B00136030 /* CANoFadeTiledLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CANoFadeTiledLayer.m; sourceTree = "<group>"; };
 		C591142A237B3BE800E12FAB /* DrawUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C591142D237B3BE800E12FAB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C591142E237B3BE800E12FAB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -112,6 +115,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C578111823A8B33900136030 /* Tiled Layer Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				C5D34AE8237D1FD200B450E3 /* CATiledLayerRenderer.h */,
+				C5D34AE9237D1FD200B450E3 /* CATiledLayerRenderer.m */,
+				C578111923A8B35B00136030 /* CANoFadeTiledLayer.h */,
+				C578111A23A8B35B00136030 /* CANoFadeTiledLayer.m */,
+			);
+			name = "Tiled Layer Rendering";
+			sourceTree = "<group>";
+		};
 		C5911421237B3BE700E12FAB = {
 			isa = PBXGroup;
 			children = (
@@ -224,8 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				C595A84023A3684900ECDFDB /* Layer Rendering */,
-				C5D34AE8237D1FD200B450E3 /* CATiledLayerRenderer.h */,
-				C5D34AE9237D1FD200B450E3 /* CATiledLayerRenderer.m */,
+				C578111823A8B33900136030 /* Tiled Layer Rendering */,
 				C5313F05237BD3E900C2097A /* NaiveDrawRectRenderer.h */,
 				C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */,
 				C5313F08237BD75000C2097A /* SmartDrawRectRenderer.h */,
@@ -326,6 +339,7 @@
 				C595A84623A3723200ECDFDB /* CAPencilLayer.m in Sources */,
 				C5911463237B3F3100E12FAB /* MMAbstractBezierPathElement.m in Sources */,
 				C5911487237B400600E12FAB /* NSArray+MapReduce.m in Sources */,
+				C578111B23A8B35B00136030 /* CANoFadeTiledLayer.m in Sources */,
 				C5911481237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m in Sources */,
 				C5911477237B3FAD00E12FAB /* MMPen.m in Sources */,
 				C5313F07237BD3E900C2097A /* NaiveDrawRectRenderer.m in Sources */,

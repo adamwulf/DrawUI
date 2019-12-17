@@ -34,6 +34,13 @@
     [[self renderer] drawView:self didUpdateModel:drawModel];
 }
 
+- (void)setRenderer:(NSObject<MMDrawViewRenderer> *)renderer
+{
+    [_renderer uninstallFromDrawView:self];
+    _renderer = renderer;
+    [_renderer installIntoDrawView:self];
+}
+
 #pragma mark - Drawing
 
 - (void)drawTouches:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event isUpdate:(BOOL)isUpdate

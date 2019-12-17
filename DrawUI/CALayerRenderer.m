@@ -36,6 +36,21 @@
 
 #pragma mark - Render
 
+- (void)installIntoDrawView:(MMDrawView *)drawView
+{
+    if (![_canvasLayer superlayer]) {
+        [[drawView layer] addSublayer:_canvasLayer];
+        [[drawView layer] setActions:@{ @"sublayers": [NSNull null] }];
+
+        [self renderModel:[drawView drawModel] inView:drawView];
+    }
+}
+
+- (void)uninstallFromDrawView:(MMDrawView *)drawView
+{
+    [_canvasLayer removeFromSuperlayer];
+}
+
 - (__kindof CALayer *)layerForStroke:(NSString *)strokeId isEraser:(BOOL)eraser
 {
     CALayer *layer = [_strokeLayers objectForKey:strokeId];
@@ -177,11 +192,6 @@
 
 - (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
 {
-    if (![_canvasLayer superlayer]) {
-        [[drawView layer] addSublayer:_canvasLayer];
-        [[drawView layer] setActions:@{ @"sublayers": [NSNull null] }];
-    }
-
     if (CGRectEqualToRect([_canvasLayer frame], [[drawView layer] bounds])) {
         [_canvasLayer setFrame:[[drawView layer] bounds]];
     }
