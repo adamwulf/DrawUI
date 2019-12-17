@@ -27,6 +27,8 @@
     return self;
 }
 
+#pragma mark - MMDrawViewRenderer
+
 - (void)installIntoDrawView:(MMDrawView *)drawView
 {
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -47,18 +49,10 @@
     _model = nil;
 }
 
-- (void)drawView:(MMDrawView *)drawView willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
-{
-}
-
 - (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
     _model = newModel;
     [self setNeedsDisplay];
-}
-
-- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel
-{
 }
 
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
@@ -67,6 +61,8 @@
 
     [self setNeedsDisplay];
 }
+
+#pragma mark - Rendering
 
 - (void)drawFilledStroke:(MMDrawnStroke *)stroke
 {

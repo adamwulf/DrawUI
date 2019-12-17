@@ -15,10 +15,15 @@
 
 @property(nonatomic, assign) BOOL dynamicWidth;
 
+- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel;
+
+@optional
+;
+
+- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel;
+
 - (void)installIntoDrawView:(MMDrawView *)drawView;
 - (void)uninstallFromDrawView:(MMDrawView *)drawView;
-- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel;
-- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel;
 
 - (void)drawView:(MMDrawView *)drawView willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel;
 - (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel;

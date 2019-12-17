@@ -29,17 +29,29 @@
 {
     _touchStream = [[MMTouchStream alloc] init];
 
-    [[self renderer] drawView:self willReplaceModel:_drawModel withModel:newModel];
+    if ([[self renderer] respondsToSelector:@selector(drawView:willReplaceModel:withModel:)]) {
+        [[self renderer] drawView:self willReplaceModel:_drawModel withModel:newModel];
+    }
+
     MMDrawModel *oldModel = _drawModel;
     _drawModel = newModel;
-    [[self renderer] drawView:self didReplaceModel:oldModel withModel:_drawModel];
+
+    if ([[self renderer] respondsToSelector:@selector(drawView:didReplaceModel:withModel:)]) {
+        [[self renderer] drawView:self didReplaceModel:oldModel withModel:_drawModel];
+    }
 }
 
 - (void)setRenderer:(NSObject<MMDrawViewRenderer> *)renderer
 {
-    [_renderer uninstallFromDrawView:self];
+    if ([[self renderer] respondsToSelector:@selector(uninstallFromDrawView:)]) {
+        [[self renderer] uninstallFromDrawView:self];
+    }
+
     _renderer = renderer;
-    [_renderer installIntoDrawView:self];
+
+    if ([[self renderer] respondsToSelector:@selector(installIntoDrawView:)]) {
+        [[self renderer] installIntoDrawView:self];
+    }
 }
 
 #pragma mark - Drawing
@@ -70,7 +82,10 @@
 {
     [self drawTouches:touches withEvent:nil isUpdate:YES];
 
-    [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    if ([[self renderer] respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+        [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    }
+
     [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
     [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
@@ -79,7 +94,10 @@
 {
     [self drawTouches:touches withEvent:event isUpdate:NO];
 
-    [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    if ([[self renderer] respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+        [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    }
+
     [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
     [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
@@ -88,7 +106,10 @@
 {
     [self drawTouches:touches withEvent:event isUpdate:NO];
 
-    [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    if ([[self renderer] respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+        [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    }
+
     [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
     [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
@@ -97,7 +118,10 @@
 {
     [self drawTouches:touches withEvent:event isUpdate:NO];
 
-    [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    if ([[self renderer] respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+        [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    }
+
     [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
     [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
@@ -106,7 +130,10 @@
 {
     [self drawTouches:touches withEvent:event isUpdate:NO];
 
-    [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    if ([[self renderer] respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+        [[self renderer] drawView:self willUpdateModel:[self drawModel]];
+    }
+
     [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
     [[self renderer] drawView:self didUpdateModel:[self drawModel]];
 }
