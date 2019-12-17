@@ -99,7 +99,7 @@
         [self presentViewController:alert animated:YES completion:nil];
     } else {
         // build a new renderer and set its model
-        [self didChangeRenderer:[self rendererControl]];
+        [[self drawView] setDrawModel:_drawModel];
     }
 }
 

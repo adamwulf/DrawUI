@@ -59,7 +59,17 @@
     [drawView removeObserver:self forKeyPath:@"bounds"];
 }
 
-- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
+- (void)drawView:(MMDrawView *)drawView willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+{
+}
+- (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+{
+    _lastModel = newModel;
+
+    [_tiledLayer setNeedsDisplay];
+}
+
+- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel
 {
 }
 

@@ -48,7 +48,18 @@
     [self removeFromSuperview];
 }
 
-- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
+- (void)drawView:(MMDrawView *)drawView willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+{
+}
+
+- (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+{
+    _model = newModel;
+
+    [self setNeedsDisplay];
+}
+
+- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel
 {
 }
 

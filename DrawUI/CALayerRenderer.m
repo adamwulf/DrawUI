@@ -28,28 +28,11 @@
     if (self = [super init]) {
         _strokeLayers = [NSMutableDictionary dictionary];
         _lastRenderedVersion = 0;
-        _canvasLayer = [CAPencilLayer layer];
-        [_canvasLayer setDelegate:self];
     }
     return self;
 }
 
 #pragma mark - Render
-
-- (void)installIntoDrawView:(MMDrawView *)drawView
-{
-    if (![_canvasLayer superlayer]) {
-        [[drawView layer] addSublayer:_canvasLayer];
-        [[drawView layer] setActions:@{ @"sublayers": [NSNull null] }];
-
-        [self renderModel:[drawView drawModel] inView:drawView];
-    }
-}
-
-- (void)uninstallFromDrawView:(MMDrawView *)drawView
-{
-    [_canvasLayer removeFromSuperlayer];
-}
 
 - (__kindof CALayer *)layerForStroke:(NSString *)strokeId isEraser:(BOOL)eraser
 {
@@ -190,7 +173,36 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel
+- (void)installIntoDrawView:(MMDrawView *)drawView
+{
+    _strokeLayers = [NSMutableDictionary dictionary];
+    _lastRenderedVersion = 0;
+    _canvasLayer = [CAPencilLayer layer];
+    [_canvasLayer setDelegate:self];
+
+    [[drawView layer] addSublayer:_canvasLayer];
+    [[drawView layer] setActions:@{ @"sublayers": [NSNull null] }];
+
+    [self renderModel:[drawView drawModel] inView:drawView];
+}
+
+- (void)uninstallFromDrawView:(MMDrawView *)drawView
+{
+    [_canvasLayer removeFromSuperlayer];
+    _canvasLayer = nil;
+}
+
+- (void)drawView:(MMDrawView *)drawView willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+{
+    [self uninstallFromDrawView:drawView];
+}
+
+- (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+{
+    [self installIntoDrawView:drawView];
+}
+
+- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel
 {
     if (CGRectEqualToRect([_canvasLayer frame], [[drawView layer] bounds])) {
         [_canvasLayer setFrame:[[drawView layer] bounds]];

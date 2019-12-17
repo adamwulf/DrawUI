@@ -49,6 +49,7 @@
 		C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartDrawRectRenderer.m; sourceTree = "<group>"; };
 		C578111923A8B35B00136030 /* CANoFadeTiledLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CANoFadeTiledLayer.h; sourceTree = "<group>"; };
 		C578111A23A8B35B00136030 /* CANoFadeTiledLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CANoFadeTiledLayer.m; sourceTree = "<group>"; };
+		C578111C23A8B43500136030 /* MMDrawViewRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawViewRenderer.h; sourceTree = "<group>"; };
 		C591142A237B3BE800E12FAB /* DrawUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C591142D237B3BE800E12FAB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C591142E237B3BE800E12FAB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -183,11 +184,12 @@
 		C5911468237B3F3B00E12FAB /* DrawingView */ = {
 			isa = PBXGroup;
 			children = (
-				C591146A237B3F4400E12FAB /* MMDrawView.h */,
-				C5911469237B3F4400E12FAB /* MMDrawView.m */,
 				C5AB0769238288A6007CF251 /* Touch Stream */,
 				C5911456237B3F2000E12FAB /* Path Helpers */,
 				C5A7C053237BCC0E00957D53 /* Rendering */,
+				C578111C23A8B43500136030 /* MMDrawViewRenderer.h */,
+				C591146A237B3F4400E12FAB /* MMDrawView.h */,
+				C5911469237B3F4400E12FAB /* MMDrawView.m */,
 			);
 			name = DrawingView;
 			sourceTree = "<group>";

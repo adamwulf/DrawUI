@@ -8,21 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MMDrawModel.h"
+#import "MMDrawViewRenderer.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
-@class MMDrawView, MMPen;
-
-@protocol MMDrawViewRenderer <NSObject>
-
-@property(nonatomic, assign) BOOL dynamicWidth;
-
-- (void)installIntoDrawView:(MMDrawView *)drawView;
-- (void)uninstallFromDrawView:(MMDrawView *)drawView;
-- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel to:(MMDrawModel *)newModel;
-- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel;
-
-@end
 
 @interface MMDrawView : UIView
 
