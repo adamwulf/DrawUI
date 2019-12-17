@@ -209,4 +209,19 @@
     [coder encodeObject:@([self version]) forKey:@"version"];
 }
 
+#pragma mark - NSCopying
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    MMDrawnStroke *ret = [[[self class] allocWithZone:zone] initWithTool:[self tool]];
+
+    ret->_version = _version;
+    ret->_smoother = _smoother;
+    ret->_identifier = _identifier;
+    ret->_segments = [[NSMutableArray alloc] initWithArray:_segments copyItems:YES];
+    ret->_borderPath = _borderPath;
+
+    return ret;
+}
+
 @end

@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class MMAbstractBezierPathElement, MMTouchStreamEvent;
 
-@interface MMDrawnStroke : NSObject <NSSecureCoding>
+@interface MMDrawnStroke : NSObject <NSSecureCoding, NSCopying>
 
 - (instancetype)initWithTool:(MMPen *)tool;
 

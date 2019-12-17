@@ -117,7 +117,7 @@
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    MMDrawModel *ret = [[MMDrawModel allocWithZone:zone] init];
+    MMDrawModel *ret = [[[self class] allocWithZone:zone] init];
 
     ret->_version = _version;
     ret->_stroke = [_stroke copy];

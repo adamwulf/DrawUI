@@ -156,9 +156,7 @@
 
 - (IBAction)redraw:(id)sender
 {
-    [[self drawView] setNeedsDisplay];
-
-    [[[self drawView] subviews] makeObjectsPerformSelector:@selector(setNeedsDisplay)];
+    [[self drawView] setDrawModel:[[[self drawView] drawModel] copy]];
 }
 
 
