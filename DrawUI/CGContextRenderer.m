@@ -10,17 +10,31 @@
 #import "MMAbstractBezierPathElement.h"
 #import "Constants.h"
 
-@implementation CGContextRenderer
+@implementation CGContextRenderer {
+    NSUInteger _lastRenderedVersion;
+}
 
 - (void)drawRect:(CGRect)rect inContext:(CGContextRef)context
 {
     UIGraphicsPushContext(context);
 
+    NSUInteger maxSoFar = _lastRenderedVersion;
+
     for (MMDrawnStroke *stroke in [[self model] strokes]) {
-        [self renderStroke:stroke inRect:rect inContext:context];
+        if (!_drawByDiff || [stroke version] > _lastRenderedVersion) {
+            [self renderStroke:stroke inRect:rect inContext:context];
+
+            maxSoFar = MAX([stroke version], maxSoFar);
+        }
     }
 
-    [self renderStroke:[[self model] stroke] inRect:rect inContext:context];
+    if (!_drawByDiff || [[[self model] stroke] version] > _lastRenderedVersion) {
+        [self renderStroke:[[self model] stroke] inRect:rect inContext:context];
+
+        maxSoFar = MAX([[[self model] stroke] version], maxSoFar);
+    }
+
+    _lastRenderedVersion = maxSoFar;
 
     UIGraphicsPopContext();
 }
