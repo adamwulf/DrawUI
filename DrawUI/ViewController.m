@@ -14,6 +14,7 @@
 #import "NaiveDrawRectRenderer.h"
 #import "SmartDrawRectRenderer.h"
 #import "CATiledLayerRenderer.h"
+#import "MMThumbnailRenderer.h"
 #import "MMTouchVelocityGestureRecognizer.h"
 
 @interface ViewController ()
@@ -45,6 +46,7 @@
 
     [[self drawView] setTool:[self tool]];
     [[self drawView] setDrawModel:[self drawModel]];
+    [[self drawView] installRenderer:[[MMThumbnailRenderer alloc] init]];
 
     [self didChangeRenderer:[self rendererControl]];
 }

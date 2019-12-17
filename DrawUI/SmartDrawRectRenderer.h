@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SmartDrawRectRenderer : UIView <MMDrawViewRenderer>
 
-@property(nonatomic, assign) BOOL dynamicWidth;
-
 @end
 
 NS_ASSUME_NONNULL_END

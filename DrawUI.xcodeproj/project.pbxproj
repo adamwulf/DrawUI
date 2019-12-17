@@ -12,6 +12,7 @@
 		C5313F0A237BD75000C2097A /* SmartDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */; };
 		C578111B23A8B35B00136030 /* CANoFadeTiledLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C578111A23A8B35B00136030 /* CANoFadeTiledLayer.m */; };
 		C578112023A8BA1800136030 /* CGContextRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C578111F23A8BA1800136030 /* CGContextRenderer.m */; };
+		C578112323A8C1BA00136030 /* MMThumbnailRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C578112223A8C1BA00136030 /* MMThumbnailRenderer.m */; };
 		C591142F237B3BE800E12FAB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C591142E237B3BE800E12FAB /* AppDelegate.m */; };
 		C5911432237B3BE800E12FAB /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911431237B3BE800E12FAB /* SceneDelegate.m */; };
 		C5911435237B3BE800E12FAB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911434237B3BE800E12FAB /* ViewController.m */; };
@@ -53,6 +54,8 @@
 		C578111C23A8B43500136030 /* MMDrawViewRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawViewRenderer.h; sourceTree = "<group>"; };
 		C578111E23A8BA1800136030 /* CGContextRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGContextRenderer.h; sourceTree = "<group>"; };
 		C578111F23A8BA1800136030 /* CGContextRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGContextRenderer.m; sourceTree = "<group>"; };
+		C578112123A8C1BA00136030 /* MMThumbnailRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMThumbnailRenderer.h; sourceTree = "<group>"; };
+		C578112223A8C1BA00136030 /* MMThumbnailRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMThumbnailRenderer.m; sourceTree = "<group>"; };
 		C591142A237B3BE800E12FAB /* DrawUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C591142D237B3BE800E12FAB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C591142E237B3BE800E12FAB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -260,6 +263,8 @@
 				C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */,
 				C5AB076623824AA6007CF251 /* DebugRenderer.h */,
 				C5AB076723824AA6007CF251 /* DebugRenderer.m */,
+				C578112123A8C1BA00136030 /* MMThumbnailRenderer.h */,
+				C578112223A8C1BA00136030 /* MMThumbnailRenderer.m */,
 			);
 			name = Rendering;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 				C5911464237B3F3100E12FAB /* MMDrawnStroke.m in Sources */,
 				C5911467237B3F3100E12FAB /* MMCurveToPathElement.m in Sources */,
 				C5911432237B3BE800E12FAB /* SceneDelegate.m in Sources */,
+				C578112323A8C1BA00136030 /* MMThumbnailRenderer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
