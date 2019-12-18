@@ -159,7 +159,7 @@
         [ele setEvents:elementEvents];
 
         if ([_segments count]) {
-            [ele validateDataGivenPreviousElement:[_segments lastObject]];
+            [ele configurePreviousElement:[_segments lastObject]];
         }
 
         [_segments addObject:ele];
@@ -222,7 +222,7 @@
 
     for (NSInteger idx = 1; idx < [ret->_segments count]; idx++) {
         // setup previous/next element relationships
-        [ret->_segments[idx] validateDataGivenPreviousElement:ret->_segments[idx - 1]];
+        [ret->_segments[idx] configurePreviousElement:ret->_segments[idx - 1]];
     }
 
     ret->_borderPath = _borderPath;

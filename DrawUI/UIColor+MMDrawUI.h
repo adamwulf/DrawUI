@@ -1,6 +1,6 @@
 //
-//  UIColor+JotHelper.h
-//  JotUI
+//  UIColor+MMDrawUI.h
+//  MMDrawUI
 //
 //  Created by Adam Wulf on 1/2/13.
 //  Copyright (c) 2013 Milestone Made. All rights reserved.
@@ -10,7 +10,7 @@
 #import <objc/runtime.h>
 
 
-@interface UIColor (JotHelper)
+@interface UIColor (MMDrawUI)
 
 /**
  * provides a nice wrapper around CGColorGetComponents

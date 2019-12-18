@@ -1,13 +1,13 @@
 //
 //  MMCurveToPathElement.m
-//  JotUI
+//  MMDrawUI
 //
 //  Created by Adam Wulf on 12/19/12.
 //  Copyright (c) 2012 Milestone Made. All rights reserved.
 //
 
 #import "MMCurveToPathElement.h"
-#import "UIColor+JotHelper.h"
+#import "UIColor+MMDrawUI.h"
 #import "MMAbstractBezierPathElement-Protected.h"
 #import "MMMoveToPathElement.h"
 #import "Constants.h"
@@ -15,7 +15,6 @@
 
 #define kDivideStepBy 1.5
 #define kAbsoluteMinWidth 0.5
-
 
 @implementation MMCurveToPathElement {
     CGRect _boundsCache;
@@ -25,8 +24,6 @@
     CGFloat _length;
     UIBezierPath *_borderPath;
 }
-
-const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
 
 - (id)initWithStart:(CGPoint)start
          andCurveTo:(CGPoint)curveTo
@@ -49,7 +46,7 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
         _hashCache = prime * _hashCache + _ctrl2.x;
         _hashCache = prime * _hashCache + _ctrl2.y;
 
-        _boundsCache.origin = JotCGNotFoundPoint;
+        _boundsCache.origin = CGPointNotFound;
     }
     return self;
 }
@@ -84,7 +81,7 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
     bez[2] = _ctrl2;
     bez[3] = _curveTo;
 
-    _length = jotLengthOfBezier(bez, .1);
+    _length = lengthOfBezier(bez, .1);
     return _length;
 }
 
@@ -121,7 +118,7 @@ const CGPoint JotCGNotFoundPoint = {-10000000.2, -999999.6};
 
 - (CGRect)bounds
 {
-    if (_boundsCache.origin.x == JotCGNotFoundPoint.x) {
+    if (CGPointEqualToPoint(_boundsCache.origin, CGPointNotFound)) {
         CGFloat minX = MIN(MIN(MIN([self startPoint].x, _curveTo.x), _ctrl1.x), _ctrl2.x);
         CGFloat minY = MIN(MIN(MIN([self startPoint].y, _curveTo.y), _ctrl1.y), _ctrl2.y);
         CGFloat maxX = MAX(MAX(MAX([self startPoint].x, _curveTo.x), _ctrl1.x), _ctrl2.x);
@@ -340,7 +337,7 @@ static inline CGFloat distanceBetween(CGPoint a, CGPoint b)
  * estimates the length along the curve of the
  * input bezier within the input acceptableError
  */
-CGFloat jotLengthOfBezier(const CGPoint bez[4], CGFloat acceptableError)
+CGFloat lengthOfBezier(const CGPoint bez[4], CGFloat acceptableError)
 {
     CGFloat polyLen = 0.0;
     CGFloat chordLen = distanceBetween(bez[0], bez[3]);
@@ -355,7 +352,7 @@ CGFloat jotLengthOfBezier(const CGPoint bez[4], CGFloat acceptableError)
     if (errLen > acceptableError) {
         CGPoint left[4], right[4];
         subdivideBezier(bez, left, right);
-        retLen = (jotLengthOfBezier(left, acceptableError) + jotLengthOfBezier(right, acceptableError));
+        retLen = (lengthOfBezier(left, acceptableError) + lengthOfBezier(right, acceptableError));
     } else {
         retLen = 0.5 * (polyLen + chordLen);
     }
@@ -388,7 +385,7 @@ static CGFloat subdivideBezierAtLength(const CGPoint bez[4],
         int lengthCacheIndex = (int)floorf(t * 1000);
         len1 = subBezierlengthCache[lengthCacheIndex];
         if (!len1) {
-            len1 = jotLengthOfBezier(bez1, 0.5 * acceptableError);
+            len1 = lengthOfBezier(bez1, 0.5 * acceptableError);
             subBezierlengthCache[lengthCacheIndex] = len1;
         }
 

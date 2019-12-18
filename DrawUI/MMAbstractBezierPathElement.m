@@ -1,6 +1,6 @@
 //
 //  AbstractSegment.m
-//  JotUI
+//  MMDrawUI
 //
 //  Created by Adam Wulf on 12/19/12.
 //  Copyright (c) 2012 Milestone Made. All rights reserved.
@@ -8,13 +8,13 @@
 
 #import "MMAbstractBezierPathElement.h"
 #import "MMAbstractBezierPathElement-Protected.h"
-#import "UIColor+JotHelper.h"
+#import "UIColor+MMDrawUI.h"
 #import "Constants.h"
 #import "MMMoveToPathElement.h"
 
 // This value should change if we ever decide to change how strokes are rendered, which would
 // cause them to need to re-calculate their cached vertex buffer
-#define kJotUIRenderVersion 1
+#define kDrawUIRenderVersion 1
 
 
 @implementation MMAbstractBezierPathElement
@@ -74,12 +74,12 @@
     return [_previousElement isKindOfClass:[MMMoveToPathElement class]];
 }
 
-- (void)validateDataGivenPreviousElement:(MMAbstractBezierPathElement *)previousElement
+- (void)configurePreviousElement:(MMAbstractBezierPathElement *)previousElement
 {
-    if ([self renderVersion] != kJotUIRenderVersion && !_previousElement) {
+    if ([self renderVersion] != kDrawUIRenderVersion && !_previousElement) {
         _previousElement = previousElement;
         _previousElement->_nextElement = self;
-        _renderVersion = kJotUIRenderVersion;
+        _renderVersion = kDrawUIRenderVersion;
     } else {
         @throw [NSException exceptionWithName:@"RevalidateElementException" reason:@"Cannot revalidate previous element" userInfo:nil];
     }

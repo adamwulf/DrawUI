@@ -1,13 +1,13 @@
 //
 //  MMAbstractBezierPathElement-Protected.h
-//  JotUI
+//  MMDrawUI
 //
 //  Created by Adam Wulf on 5/22/13.
 //  Copyright (c) 2013 Milestone Made. All rights reserved.
 //
 
-#ifndef JotUI_AbstractBezierPathElement_Protected_h
-#define JotUI_AbstractBezierPathElement_Protected_h
+#ifndef MMDrawUI_AbstractBezierPathElement_Protected_h
+#define MMDrawUI_AbstractBezierPathElement_Protected_h
 
 #import "MMTouchStreamEvent.h"
 
@@ -21,7 +21,7 @@
 
 - (id)initWithStart:(CGPoint)point;
 
-- (void)validateDataGivenPreviousElement:(MMAbstractBezierPathElement *)previousElement NS_REQUIRES_SUPER;
+- (void)configurePreviousElement:(MMAbstractBezierPathElement *)previousElement NS_REQUIRES_SUPER;
 
 - (CGFloat)angleBetweenPoint:(CGPoint)point1 andPoint:(CGPoint)point2;
 

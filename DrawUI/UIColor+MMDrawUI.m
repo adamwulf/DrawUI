@@ -1,16 +1,16 @@
 //
-//  UIColor+JotHelper.m
-//  JotUI
+//  UIColor+MMDrawUI.m
+//  MMDrawUI
 //
 //  Created by Adam Wulf on 1/2/13.
 //  Copyright (c) 2013 Milestone Made. All rights reserved.
 //
 
-#import "UIColor+JotHelper.h"
+#import "UIColor+MMDrawUI.h"
 #import <objc/runtime.h>
 
 
-@implementation UIColor (JotHelper)
+@implementation UIColor (MMDrawUI)
 
 static char COLOR_COMPONENTS;
 
@@ -38,7 +38,6 @@ static char COLOR_COMPONENTS;
 
 - (NSMutableDictionary *)colorProperties
 {
-    //    objc_getAssociatedObject(<#id object#>, <#const void *key#>)
     id props = objc_getAssociatedObject(self, &COLOR_COMPONENTS);
     if (!props) {
         props = [[NSMutableDictionary alloc] initWithCapacity:4];

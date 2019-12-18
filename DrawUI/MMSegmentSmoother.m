@@ -1,6 +1,6 @@
 //
 //  MMSegmentSmoother.m
-//  JotUI
+//  MMDrawUI
 //
 //  Created by Adam Wulf on 12/19/12.
 //  Copyright (c) 2012 Milestone Made. All rights reserved.

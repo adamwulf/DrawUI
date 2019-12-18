@@ -56,6 +56,8 @@ static inline CGRect _CGSizeAspectFillFit(CGSize sizeToScale, CGSize sizeToFill,
 #define CGSizeFit(sizeToScale, sizeToFill) _CGSizeAspectFillFit(sizeToScale, sizeToFill, NO)
 #define CGPointTranslate(point, translatex, translatey) CGPointMake((point).x + (translatex), (point).y + (translatey))
 #define CGRectTranslate(rect, translatex, translatey) CGRectMake((rect).origin.x + (translatex), (rect).origin.y + (translatey), (rect).size.width, (rect).size.height)
+#define CGPointNotFound CGPointMake(CGFLOAT_MAX, CGFLOAT_MAX)
+
 #define interpolate(s, e, p) (s * p + e * (1 - p))
 
 #ifdef __cplusplus

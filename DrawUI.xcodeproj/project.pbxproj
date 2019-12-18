@@ -28,7 +28,7 @@
 		C591146B237B3F4400E12FAB /* MMDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911469237B3F4400E12FAB /* MMDrawView.m */; };
 		C5911476237B3FAC00E12FAB /* MMPencilReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911473237B3FAC00E12FAB /* MMPencilReachability.m */; };
 		C5911477237B3FAD00E12FAB /* MMPen.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911474237B3FAC00E12FAB /* MMPen.m */; };
-		C591147B237B3FCF00E12FAB /* UIColor+JotHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C591147A237B3FCF00E12FAB /* UIColor+JotHelper.m */; };
+		C591147B237B3FCF00E12FAB /* UIColor+MMDrawUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C591147A237B3FCF00E12FAB /* UIColor+MMDrawUI.m */; };
 		C591147E237B3FDE00E12FAB /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = C591147D237B3FDE00E12FAB /* Constants.m */; };
 		C5911481237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911480237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.m */; };
 		C5911484237B3FF900E12FAB /* MMVector.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911483237B3FF900E12FAB /* MMVector.m */; };
@@ -85,8 +85,8 @@
 		C5911473237B3FAC00E12FAB /* MMPencilReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPencilReachability.m; sourceTree = "<group>"; };
 		C5911474237B3FAC00E12FAB /* MMPen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPen.m; sourceTree = "<group>"; };
 		C5911475237B3FAC00E12FAB /* MMPencilReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPencilReachability.h; sourceTree = "<group>"; };
-		C5911479237B3FCF00E12FAB /* UIColor+JotHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+JotHelper.h"; sourceTree = "<group>"; };
-		C591147A237B3FCF00E12FAB /* UIColor+JotHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+JotHelper.m"; sourceTree = "<group>"; };
+		C5911479237B3FCF00E12FAB /* UIColor+MMDrawUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MMDrawUI.h"; sourceTree = "<group>"; };
+		C591147A237B3FCF00E12FAB /* UIColor+MMDrawUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MMDrawUI.m"; sourceTree = "<group>"; };
 		C591147C237B3FDD00E12FAB /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		C591147D237B3FDE00E12FAB /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		C591147F237B3FEE00E12FAB /* MMTouchVelocityGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTouchVelocityGestureRecognizer.h; sourceTree = "<group>"; };
@@ -232,8 +232,8 @@
 			children = (
 				C5911485237B400500E12FAB /* NSArray+MapReduce.h */,
 				C5911486237B400500E12FAB /* NSArray+MapReduce.m */,
-				C5911479237B3FCF00E12FAB /* UIColor+JotHelper.h */,
-				C591147A237B3FCF00E12FAB /* UIColor+JotHelper.m */,
+				C5911479237B3FCF00E12FAB /* UIColor+MMDrawUI.h */,
+				C591147A237B3FCF00E12FAB /* UIColor+MMDrawUI.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -376,7 +376,7 @@
 				C5911440237B3BEB00E12FAB /* main.m in Sources */,
 				C5313F0A237BD75000C2097A /* SmartDrawRectRenderer.m in Sources */,
 				C5AB06FE237FB4A3007CF251 /* MMTouchStreamEvent.m in Sources */,
-				C591147B237B3FCF00E12FAB /* UIColor+JotHelper.m in Sources */,
+				C591147B237B3FCF00E12FAB /* UIColor+MMDrawUI.m in Sources */,
 				C5911476237B3FAC00E12FAB /* MMPencilReachability.m in Sources */,
 				C5911464237B3F3100E12FAB /* MMDrawnStroke.m in Sources */,
 				C5911467237B3F3100E12FAB /* MMCurveToPathElement.m in Sources */,

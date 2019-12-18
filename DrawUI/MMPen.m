@@ -1,6 +1,6 @@
 //
 //  MMPen.m
-//  jotuiexample
+//  MMDrawUI
 //
 //  Created by Adam Wulf on 12/18/12.
 //  Copyright (c) 2012 Adonit. All rights reserved.
