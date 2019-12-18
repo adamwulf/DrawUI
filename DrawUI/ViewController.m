@@ -17,14 +17,23 @@
 #import "MMThumbnailRenderer.h"
 #import "MMTouchVelocityGestureRecognizer.h"
 
+CGFloat const kScale = 4;
+
 @interface ViewController ()
 
 @property(nonatomic, strong) IBOutlet MMDrawView *drawView;
 @property(nonatomic, strong) IBOutlet UISegmentedControl *rendererControl;
+@property(nonatomic, strong) IBOutlet UISegmentedControl *scaleControl;
 
 @property(nonatomic, strong) MMDrawModel *drawModel;
 @property(nonatomic, strong) MMPen *tool;
 @property(nonatomic, strong) NSObject<MMDrawViewRenderer> *currentRenderer;
+
+@property(nonatomic, strong) IBOutlet NSLayoutConstraint *widthConstraint;
+@property(nonatomic, strong) IBOutlet NSLayoutConstraint *heightConstraint;
+
+@property(nonatomic, strong) NSLayoutConstraint *widthConstraint2;
+@property(nonatomic, strong) NSLayoutConstraint *heightConstraint2;
 
 @end
 
@@ -54,6 +63,9 @@
 
     // also install the renderer to the UI
     [self didChangeRenderer:[self rendererControl]];
+
+    _widthConstraint2 = [NSLayoutConstraint constraintWithItem:[_widthConstraint firstItem] attribute:[_widthConstraint firstAttribute] relatedBy:[_widthConstraint relation] toItem:[_widthConstraint secondItem] attribute:[_widthConstraint secondAttribute] multiplier:kScale constant:0];
+    _heightConstraint2 = [NSLayoutConstraint constraintWithItem:[_heightConstraint firstItem] attribute:[_heightConstraint firstAttribute] relatedBy:[_heightConstraint relation] toItem:[_heightConstraint secondItem] attribute:[_heightConstraint secondAttribute] multiplier:kScale constant:0];
 }
 
 - (IBAction)saveDrawing:(id)sender
@@ -152,6 +164,27 @@
     [_currentRenderer setDynamicWidth:YES];
 
     [[self drawView] installRenderer:_currentRenderer];
+}
+
+- (IBAction)didChangeScale:(id)sender
+{
+    if ([_scaleControl selectedSegmentIndex] == 1) {
+        [_widthConstraint setActive:NO];
+        [_heightConstraint setActive:NO];
+        [_widthConstraint2 setActive:YES];
+        [_heightConstraint2 setActive:YES];
+    } else {
+        [_widthConstraint2 setActive:NO];
+        [_heightConstraint2 setActive:NO];
+        [_widthConstraint setActive:YES];
+        [_heightConstraint setActive:YES];
+    }
+
+    if ([_scaleControl selectedSegmentIndex] == 2) {
+        [_drawView setTransform:CGAffineTransformMakeScale(kScale, kScale)];
+    } else {
+        [_drawView setTransform:CGAffineTransformIdentity];
+    }
 }
 
 - (IBAction)redraw:(id)sender

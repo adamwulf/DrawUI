@@ -26,7 +26,7 @@
 
     NSUInteger maxSoFar = _lastRenderedVersion;
 
-    for (MMDrawnStroke *stroke in [[self model] strokes]) {
+    for (MMDrawnStroke *stroke in [[[self model] strokes] copy]) {
         if (!_drawByDiff || [stroke version] > _lastRenderedVersion) {
             [self renderStroke:stroke inRect:rect inContext:context];
 
@@ -56,7 +56,7 @@
     }
 
     if ([self dynamicWidth]) {
-        for (MMAbstractBezierPathElement *element in [stroke segments]) {
+        for (MMAbstractBezierPathElement *element in [[stroke segments] copy]) {
             CGFloat maxWidth = MAX(element.width, element.previousElement.width);
 
             if (CGRectIntersectsRect(CGRectInset([element bounds], -maxWidth, -maxWidth), rect)) {

@@ -97,8 +97,6 @@
 /// Returns the element that was added or updated by this event
 - (MMAbstractBezierPathElement *)addEvent:(MMTouchStreamEvent *)event;
 {
-    _borderPath = nil;
-
     if ([event estimationUpdateIndex]) {
         // Check if we can update an existing element
         MMAbstractBezierPathElement *ele = [_eventIdToSegment objectForKey:[event estimationUpdateIndex]];
@@ -108,6 +106,10 @@
             CGFloat width = [_tool widthForEvent:event];
 
             [ele updateWithEvent:event width:width];
+
+            // we've updated our segments, clear out our border path
+            _borderPath = nil;
+
             return ele;
         }
     }
@@ -171,6 +173,11 @@
                 [_eventIdToSegment setObject:ele forKey:[eleEvent estimationUpdateIndex]];
             }
         }
+
+        // we've added an element. we don't need to clear the whole path, we can
+        // just update the element that exists
+        [_borderPath appendPath:[ele borderPath]];
+
     } else {
         [_waitingEvents addObject:event];
     }

@@ -43,8 +43,19 @@
                                     <action selector="changeTool:" destination="BYZ-38-t0r" eventType="valueChanged" id="M8F-Yc-HUw"/>
                                 </connections>
                             </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="g1e-vI-1Kq">
+                                <rect key="frame" x="135.5" y="144" width="143" height="32"/>
+                                <segments>
+                                    <segment title="1x"/>
+                                    <segment title="2x fr"/>
+                                    <segment title="2x tr"/>
+                                </segments>
+                                <connections>
+                                    <action selector="didChangeScale:" destination="BYZ-38-t0r" eventType="valueChanged" id="vHk-Sn-B31"/>
+                                </connections>
+                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eb7-G4-t2s">
-                                <rect key="frame" x="161" y="142" width="92" height="30"/>
+                                <rect key="frame" x="161" y="185" width="92" height="30"/>
                                 <state key="normal" title="Force Render"/>
                                 <connections>
                                     <action selector="redraw:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AT3-VS-Jad"/>
@@ -75,18 +86,20 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="eb7-G4-t2s" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="6BK-iw-xGO"/>
+                            <constraint firstItem="8bC-Xf-vdC" firstAttribute="width" secondItem="hCH-MI-fjg" secondAttribute="width" id="9KS-xf-il7"/>
                             <constraint firstItem="mAN-n8-hdg" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="9Rm-Sc-T8t"/>
+                            <constraint firstItem="g1e-vI-1Kq" firstAttribute="top" secondItem="q3A-K4-Td9" secondAttribute="bottom" constant="10" id="Gw8-6A-srJ"/>
                             <constraint firstItem="jgP-0b-fFA" firstAttribute="top" secondItem="cGc-JQ-sPN" secondAttribute="bottom" constant="8" id="Hyg-DZ-HbK"/>
                             <constraint firstItem="q3A-K4-Td9" firstAttribute="top" secondItem="mAN-n8-hdg" secondAttribute="bottom" constant="8" id="IxX-o6-P9t"/>
-                            <constraint firstItem="8bC-Xf-vdC" firstAttribute="trailing" secondItem="D7O-VW-3Ez" secondAttribute="trailing" id="KCg-DM-G8P"/>
-                            <constraint firstItem="eb7-G4-t2s" firstAttribute="top" secondItem="q3A-K4-Td9" secondAttribute="bottom" constant="8" id="Lsz-Wi-RNW"/>
                             <constraint firstItem="q3A-K4-Td9" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="NRy-Mc-CsZ"/>
                             <constraint firstItem="ba4-Q1-DTY" firstAttribute="top" secondItem="jgP-0b-fFA" secondAttribute="bottom" constant="8" id="VKy-Z0-FlO"/>
+                            <constraint firstItem="8bC-Xf-vdC" firstAttribute="height" secondItem="hCH-MI-fjg" secondAttribute="height" id="WF9-nk-ZjF"/>
                             <constraint firstItem="cGc-JQ-sPN" firstAttribute="top" secondItem="mAN-n8-hdg" secondAttribute="bottom" constant="8" id="YPW-KS-L2L"/>
-                            <constraint firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="ate-VL-WEH"/>
                             <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="ba4-Q1-DTY" secondAttribute="trailing" constant="20" id="gU4-eL-Iuk"/>
+                            <constraint firstItem="g1e-vI-1Kq" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="jdk-9Y-F0M"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="leading" secondItem="D7O-VW-3Ez" secondAttribute="leading" id="lSf-sM-a1g"/>
                             <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="jgP-0b-fFA" secondAttribute="trailing" constant="20" id="nBB-4F-DLu"/>
+                            <constraint firstItem="eb7-G4-t2s" firstAttribute="top" secondItem="g1e-vI-1Kq" secondAttribute="bottom" constant="10" id="qN1-vg-xIe"/>
                             <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="cGc-JQ-sPN" secondAttribute="trailing" constant="20" id="qaJ-2W-LGE"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="top" secondItem="hCH-MI-fjg" secondAttribute="top" id="tPV-2K-RQ8"/>
                             <constraint firstItem="jgP-0b-fFA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7O-VW-3Ez" secondAttribute="leading" symbolic="YES" id="tjq-md-m4Y"/>
@@ -96,8 +109,11 @@
                     </view>
                     <connections>
                         <outlet property="drawView" destination="8bC-Xf-vdC" id="SvB-kR-ZW2"/>
+                        <outlet property="heightConstraint" destination="WF9-nk-ZjF" id="Wat-34-gQP"/>
                         <outlet property="rendererControl" destination="mAN-n8-hdg" id="AKN-JK-nPJ"/>
+                        <outlet property="scaleControl" destination="g1e-vI-1Kq" id="9B3-tP-5ON"/>
                         <outlet property="view" destination="hCH-MI-fjg" id="VIL-XQ-UHQ"/>
+                        <outlet property="widthConstraint" destination="9KS-xf-il7" id="iCy-tJ-0ut"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
