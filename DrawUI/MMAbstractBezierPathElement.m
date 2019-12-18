@@ -163,4 +163,18 @@
     [coder encodeBool:_updated forKey:@"updated"];
 }
 
+#pragma mark - NSCopying
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    MMAbstractBezierPathElement *ret = [[[self class] allocWithZone:zone] init];
+
+    ret->_identifier = _identifier;
+    ret->_startPoint = _startPoint;
+    ret->_width = _width;
+    ret->_updated = _updated;
+
+    return ret;
+}
+
 @end

@@ -219,6 +219,12 @@
     ret->_smoother = _smoother;
     ret->_identifier = _identifier;
     ret->_segments = [[NSMutableArray alloc] initWithArray:_segments copyItems:YES];
+
+    for (NSInteger idx = 1; idx < [ret->_segments count]; idx++) {
+        // setup previous/next element relationships
+        [ret->_segments[idx] validateDataGivenPreviousElement:ret->_segments[idx - 1]];
+    }
+
     ret->_borderPath = _borderPath;
 
     return ret;

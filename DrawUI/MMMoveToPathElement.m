@@ -130,4 +130,15 @@
     [coder encodeObject:@(_hashCache) forKey:@"hashCache"];
 }
 
+#pragma mark - NSCopying
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    MMMoveToPathElement *ret = [super copyWithZone:zone];
+
+    ret->_hashCache = _hashCache;
+
+    return ret;
+}
+
 @end

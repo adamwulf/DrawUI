@@ -11,7 +11,7 @@
 #import "MMAbstractBezierPathElement.h"
 
 
-@interface MMCurveToPathElement : MMAbstractBezierPathElement <NSSecureCoding>
+@interface MMCurveToPathElement : MMAbstractBezierPathElement <NSSecureCoding, NSCopying>
 
 @property(nonatomic, readonly) CGPoint curveTo;
 @property(nonatomic, readonly) CGPoint ctrl1;

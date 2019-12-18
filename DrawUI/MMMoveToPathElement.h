@@ -14,7 +14,7 @@
  * a line segment, similar to the moveto 
  * CGPathElement
  */
-@interface MMMoveToPathElement : MMAbstractBezierPathElement <NSSecureCoding>
+@interface MMMoveToPathElement : MMAbstractBezierPathElement <NSSecureCoding, NSCopying>
 
 + (id)elementWithMoveTo:(CGPoint)point;
 

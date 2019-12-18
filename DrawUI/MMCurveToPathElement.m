@@ -486,4 +486,21 @@ static CGFloat subdivideBezierAtLength(const CGPoint bez[4],
     [coder encodeCGRect:_boundsCache forKey:@"boundsCache"];
 }
 
+#pragma mark - NSCopying
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    MMCurveToPathElement *ret = [super copyWithZone:zone];
+
+    ret->_hashCache = _hashCache;
+    ret->_curveTo = _curveTo;
+    ret->_ctrl1 = _ctrl1;
+    ret->_ctrl2 = _ctrl2;
+    ret->_length = _length;
+    ret->_borderPath = _borderPath;
+    ret->_boundsCache = _boundsCache;
+
+    return ret;
+}
+
 @end
