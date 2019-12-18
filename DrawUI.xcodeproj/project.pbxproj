@@ -10,6 +10,7 @@
 		C5313F04237BCD7F00C2097A /* CALayerRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F03237BCD7F00C2097A /* CALayerRenderer.m */; };
 		C5313F07237BD3E900C2097A /* NaiveDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */; };
 		C5313F0A237BD75000C2097A /* SmartDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */; };
+		C56CC35623A9F7F300E4FCD9 /* CAEraserLayer2.m in Sources */ = {isa = PBXBuildFile; fileRef = C56CC35523A9F7F300E4FCD9 /* CAEraserLayer2.m */; };
 		C578111B23A8B35B00136030 /* CANoFadeTiledLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C578111A23A8B35B00136030 /* CANoFadeTiledLayer.m */; };
 		C578112023A8BA1800136030 /* CGContextRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C578111F23A8BA1800136030 /* CGContextRenderer.m */; };
 		C578112323A8C1BA00136030 /* MMThumbnailRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C578112223A8C1BA00136030 /* MMThumbnailRenderer.m */; };
@@ -49,6 +50,8 @@
 		C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NaiveDrawRectRenderer.m; sourceTree = "<group>"; };
 		C5313F08237BD75000C2097A /* SmartDrawRectRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartDrawRectRenderer.h; sourceTree = "<group>"; };
 		C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartDrawRectRenderer.m; sourceTree = "<group>"; };
+		C56CC35423A9F7F300E4FCD9 /* CAEraserLayer2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEraserLayer2.h; sourceTree = "<group>"; };
+		C56CC35523A9F7F300E4FCD9 /* CAEraserLayer2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEraserLayer2.m; sourceTree = "<group>"; };
 		C578111923A8B35B00136030 /* CANoFadeTiledLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CANoFadeTiledLayer.h; sourceTree = "<group>"; };
 		C578111A23A8B35B00136030 /* CANoFadeTiledLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CANoFadeTiledLayer.m; sourceTree = "<group>"; };
 		C578111C23A8B43500136030 /* MMDrawViewRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawViewRenderer.h; sourceTree = "<group>"; };
@@ -245,6 +248,8 @@
 				C5313F03237BCD7F00C2097A /* CALayerRenderer.m */,
 				C5C9D3CA23926516005454CD /* CAEraserLayer.h */,
 				C5C9D3CB23926516005454CD /* CAEraserLayer.m */,
+				C56CC35423A9F7F300E4FCD9 /* CAEraserLayer2.h */,
+				C56CC35523A9F7F300E4FCD9 /* CAEraserLayer2.m */,
 				C595A84423A3723200ECDFDB /* CAPencilLayer.h */,
 				C595A84523A3723200ECDFDB /* CAPencilLayer.m */,
 			);
@@ -353,6 +358,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5313F04237BCD7F00C2097A /* CALayerRenderer.m in Sources */,
+				C56CC35623A9F7F300E4FCD9 /* CAEraserLayer2.m in Sources */,
 				C5911435237B3BE800E12FAB /* ViewController.m in Sources */,
 				C591142F237B3BE800E12FAB /* AppDelegate.m in Sources */,
 				C5911484237B3FF900E12FAB /* MMVector.m in Sources */,

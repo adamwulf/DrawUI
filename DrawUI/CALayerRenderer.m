@@ -9,6 +9,7 @@
 #import "CALayerRenderer.h"
 #import "MMAbstractBezierPathElement.h"
 #import "CAEraserLayer.h"
+#import "CAEraserLayer2.h"
 #import "CAPencilLayer.h"
 
 @interface CALayerRenderer () <CALayerDelegate>
@@ -73,10 +74,10 @@
 {
     if ([self dynamicWidth]) {
         if (![[stroke tool] color]) {
-            CAEraserLayer *eraserLayer = [_canvasLayer mask];
+            CAEraserLayer2 *eraserLayer = [_canvasLayer mask];
 
             if (!eraserLayer) {
-                eraserLayer = [CAEraserLayer layer];
+                eraserLayer = [[CAEraserLayer2 alloc] initWithBounds:[drawView bounds]];
                 [eraserLayer setOpaque:NO];
                 [eraserLayer setFillColor:[UIColor colorWithWhite:0 alpha:0]];
                 [eraserLayer setLineWidth:0];
@@ -119,10 +120,10 @@
         }
     } else if ([stroke path]) {
         if (![[stroke tool] color]) {
-            CAEraserLayer *eraserLayer = [_canvasLayer mask];
+            CAEraserLayer2 *eraserLayer = [_canvasLayer mask];
 
             if (!eraserLayer) {
-                eraserLayer = [CAEraserLayer layer];
+                eraserLayer = [[CAEraserLayer2 alloc] initWithBounds:[drawView bounds]];
                 [eraserLayer setOpaque:NO];
                 [eraserLayer setStrokeColor:[UIColor colorWithWhite:0 alpha:0]];
                 [eraserLayer setLineWidth:10];
