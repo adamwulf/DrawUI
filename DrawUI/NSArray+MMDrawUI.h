@@ -1,5 +1,5 @@
 //
-//  NSArray+MapReduce.h
+//  NSArray+MMDrawUI.h
 //  Loose Leaf
 //
 //  Created by Adam Wulf on 6/18/12.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface NSArray <T> (MapReduce)
+@interface NSArray <T> (MMDrawUI)
 
 - (NSArray *)map : (id (^)(T obj, NSUInteger index))mapFunc;
 - (NSArray *)mapWithSelector:(SEL)mapSelector;

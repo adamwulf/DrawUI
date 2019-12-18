@@ -8,7 +8,7 @@
 
 #import "MMTouchVelocityGestureRecognizer.h"
 #import "MMVector.h"
-#import "NSArray+MapReduce.h"
+#import "NSArray+MMDrawUI.h"
 
 #define kVelocityLowPass 0.7
 #define kDurationTouchHashSize 20
