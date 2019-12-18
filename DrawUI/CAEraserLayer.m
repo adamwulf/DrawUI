@@ -52,6 +52,7 @@
     }
 
     CGContextSetLineWidth(inContext, self.lineWidth);
+    CGContextBeginPath(inContext);
 
     for (NSString *identifier in _pathIds) {
         UIBezierPath *path = [_pathMap objectForKey:identifier];

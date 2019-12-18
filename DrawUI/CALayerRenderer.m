@@ -85,7 +85,14 @@
             }
 
             [eraserLayer setFrame:[drawView bounds]];
-            [eraserLayer setPath:[stroke borderPath] forIdentifier:[stroke identifier]];
+
+            for (MMAbstractBezierPathElement *ele in [stroke segments]) {
+                if ([ele version] > [eraserLayer version]) {
+                    [eraserLayer setPath:[ele borderPath] forIdentifier:[ele identifier]];
+                }
+            }
+
+            [eraserLayer setVersion:[stroke version]];
         } else {
             [self embedPencilLayerIfNecessary];
 

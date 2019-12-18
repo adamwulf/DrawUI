@@ -19,11 +19,13 @@
 
 @property(nonatomic, readonly) UIBezierPath *borderPath;
 
-@property(nonatomic, readonly) MMAbstractBezierPathElement *nextElement;
-@property(nonatomic, readonly) MMAbstractBezierPathElement *previousElement;
+@property(nonatomic, weak, readonly) MMAbstractBezierPathElement *nextElement;
+@property(nonatomic, weak, readonly) MMAbstractBezierPathElement *previousElement;
 @property(nonatomic, readonly) BOOL followsMoveTo;
 @property(nonatomic, readonly, getter=isUpdated) BOOL updated;
 @property(nonatomic, readonly, getter=isPrediction) BOOL prediction;
+/// Used by renderers to determine when a stroke was last updated
+@property(nonatomic, assign) NSUInteger version;
 
 - (CGFloat)lengthOfElement;
 - (CGFloat)angleOfStart;

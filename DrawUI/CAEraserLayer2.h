@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic) UIColor *fillColor;
 @property(nonatomic) UIColor *strokeColor;
 @property(nonatomic) CGFloat lineWidth;
+@property(nonatomic) NSUInteger version;
 
 - (instancetype)initWithBounds:(CGRect)bounds;
 

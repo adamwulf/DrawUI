@@ -41,6 +41,12 @@
     return self;
 }
 
+- (void)dealloc
+{
+    CGContextRelease(_imageContext);
+    CGColorSpaceRelease(_colorSpace);
+}
+
 - (void)setPath:(UIBezierPath *)path forIdentifier:(NSString *)identifier
 {
     [_pathMap setObject:path forKey:identifier];
@@ -56,6 +62,7 @@
         CGContextSetFillColorWithColor(_imageContext, [self.fillColor CGColor]);
     }
 
+    CGContextBeginPath(_imageContext);
     CGContextAddPath(_imageContext, [path CGPath]);
 
     if (self.strokeColor) {
@@ -68,7 +75,15 @@
     CGContextSetBlendMode(_imageContext, kCGBlendModeNormal);
 
     CGImageRef output = CGBitmapContextCreateImage(_imageContext);
+
+    CGImageRef previousContent = (__bridge CGImageRef)([self contents]);
+
     [self setContents:(__bridge id)output];
+
+    if (previousContent) {
+        // release previous image
+        CGImageRelease(previousContent);
+    }
 
     UIGraphicsPopContext();
 }

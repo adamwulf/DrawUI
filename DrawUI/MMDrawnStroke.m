@@ -106,6 +106,7 @@
             CGFloat width = [_tool widthForEvent:event];
 
             [ele updateWithEvent:event width:width];
+            [ele setVersion:[self version]];
 
             // we've updated our segments, clear out our border path
             _borderPath = nil;
@@ -159,6 +160,7 @@
 
         [ele setWidth:width];
         [ele setEvents:elementEvents];
+        [ele setVersion:[self version]];
 
         if ([_segments count]) {
             [ele configurePreviousElement:[_segments lastObject]];
