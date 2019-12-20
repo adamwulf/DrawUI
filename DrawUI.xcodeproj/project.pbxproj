@@ -216,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				C5911478237B3FC000E12FAB /* Categories */,
+				C578111D23A8B9F300136030 /* CGContextRenderer */,
 				C591147C237B3FDD00E12FAB /* Constants.h */,
 				C591147D237B3FDE00E12FAB /* Constants.m */,
 				C5911482237B3FF800E12FAB /* MMVector.h */,
@@ -259,7 +260,6 @@
 		C5A7C053237BCC0E00957D53 /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
-				C578111D23A8B9F300136030 /* CGContextRenderer */,
 				C595A84023A3684900ECDFDB /* Layer Rendering */,
 				C578111823A8B33900136030 /* Tiled Layer Rendering */,
 				C5313F05237BD3E900C2097A /* NaiveDrawRectRenderer.h */,

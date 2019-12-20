@@ -18,9 +18,9 @@
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel;
 
 @optional
-;
 
 - (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel;
+- (void)drawView:(MMDrawView *)drawView didUpdateBounds:(CGRect)bounds;
 
 - (void)installIntoDrawView:(MMDrawView *)drawView;
 - (void)uninstallFromDrawView:(MMDrawView *)drawView;

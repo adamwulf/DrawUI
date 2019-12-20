@@ -27,7 +27,7 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        _renderers = [NSMutableArray array];
+        [self finishInit];
     }
     return self;
 }
@@ -35,7 +35,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        _renderers = [NSMutableArray array];
+        [self finishInit];
     }
     return self;
 }
@@ -43,9 +43,27 @@
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     if (self = [super initWithCoder:coder]) {
-        _renderers = [NSMutableArray array];
+        [self finishInit];
     }
     return self;
+}
+
+- (void)finishInit
+{
+    _renderers = [NSMutableArray array];
+
+    [self addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+#pragma mark - Notifications
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UIView *)drawView change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context
+{
+    for (NSObject<MMDrawViewRenderer> *renderer in [self renderers]) {
+        if ([renderer respondsToSelector:@selector(drawView:didUpdateBounds:)]) {
+            [renderer drawView:self didUpdateBounds:[self bounds]];
+        }
+    }
 }
 
 #pragma mark - Properties

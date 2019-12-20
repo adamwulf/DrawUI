@@ -48,13 +48,6 @@
     [[self ctxRenderer] setDynamicWidth:dynamicWidth];
 }
 
-#pragma mark - Notifications
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UIView *)drawView change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context
-{
-    [_tiledLayer setFrame:[[drawView layer] bounds]];
-}
-
 #pragma mark - MMDrawViewRenderer
 
 - (void)installIntoDrawView:(MMDrawView *)drawView
@@ -75,6 +68,11 @@
     [drawView removeObserver:self forKeyPath:@"bounds"];
 }
 
+- (void)drawView:(MMDrawView *)drawView didUpdateBounds:(CGRect)bounds
+{
+    [_tiledLayer setFrame:[[drawView layer] bounds]];
+}
+
 - (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
     _lastModel = newModel;
@@ -91,6 +89,8 @@
         CGRect pathBounds = [[stroke path] bounds];
 
         pathBounds = CGRectInset(pathBounds, -kStrokeWidth, -kStrokeWidth);
+
+        [[self ctxRenderer] setModel:[drawModel copy]];
 
         [_tiledLayer setNeedsDisplayInRect:pathBounds];
     }
