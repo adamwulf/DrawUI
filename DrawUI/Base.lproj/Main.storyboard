@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -47,8 +47,8 @@
                                 <rect key="frame" x="135.5" y="144" width="143" height="32"/>
                                 <segments>
                                     <segment title="1x"/>
-                                    <segment title="2x fr"/>
-                                    <segment title="2x tr"/>
+                                    <segment title="4x fr"/>
+                                    <segment title="4x tr"/>
                                 </segments>
                                 <connections>
                                     <action selector="didChangeScale:" destination="BYZ-38-t0r" eventType="valueChanged" id="vHk-Sn-B31"/>
@@ -92,6 +92,7 @@
                             <constraint firstItem="jgP-0b-fFA" firstAttribute="top" secondItem="cGc-JQ-sPN" secondAttribute="bottom" constant="8" id="Hyg-DZ-HbK"/>
                             <constraint firstItem="q3A-K4-Td9" firstAttribute="top" secondItem="mAN-n8-hdg" secondAttribute="bottom" constant="8" id="IxX-o6-P9t"/>
                             <constraint firstItem="q3A-K4-Td9" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="NRy-Mc-CsZ"/>
+                            <constraint firstItem="cGc-JQ-sPN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7O-VW-3Ez" secondAttribute="leading" id="Ta8-vp-etl"/>
                             <constraint firstItem="ba4-Q1-DTY" firstAttribute="top" secondItem="jgP-0b-fFA" secondAttribute="bottom" constant="8" id="VKy-Z0-FlO"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="height" secondItem="hCH-MI-fjg" secondAttribute="height" id="WF9-nk-ZjF"/>
                             <constraint firstItem="cGc-JQ-sPN" firstAttribute="top" secondItem="mAN-n8-hdg" secondAttribute="bottom" constant="8" id="YPW-KS-L2L"/>
@@ -99,6 +100,7 @@
                             <constraint firstItem="g1e-vI-1Kq" firstAttribute="centerX" secondItem="hCH-MI-fjg" secondAttribute="centerX" id="jdk-9Y-F0M"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="leading" secondItem="D7O-VW-3Ez" secondAttribute="leading" id="lSf-sM-a1g"/>
                             <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="jgP-0b-fFA" secondAttribute="trailing" constant="20" id="nBB-4F-DLu"/>
+                            <constraint firstItem="ba4-Q1-DTY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7O-VW-3Ez" secondAttribute="leading" id="q1N-Jz-x5S"/>
                             <constraint firstItem="eb7-G4-t2s" firstAttribute="top" secondItem="g1e-vI-1Kq" secondAttribute="bottom" constant="10" id="qN1-vg-xIe"/>
                             <constraint firstItem="D7O-VW-3Ez" firstAttribute="trailing" secondItem="cGc-JQ-sPN" secondAttribute="trailing" constant="20" id="qaJ-2W-LGE"/>
                             <constraint firstItem="8bC-Xf-vdC" firstAttribute="top" secondItem="hCH-MI-fjg" secondAttribute="top" id="tPV-2K-RQ8"/>
