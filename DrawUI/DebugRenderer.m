@@ -49,6 +49,11 @@
     _model = nil;
 }
 
+- (void)drawView:(MMDrawView *)drawView didUpdateBounds:(CGRect)bounds
+{
+    [self setNeedsDisplay];
+}
+
 - (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
     _model = newModel;
