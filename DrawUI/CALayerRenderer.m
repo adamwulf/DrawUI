@@ -22,6 +22,7 @@
     NSMutableDictionary<NSString *, CALayer *> *_strokeLayers;
     NSUInteger _lastRenderedVersion;
     CALayer *_canvasLayer;
+    BOOL _useCachedEraserLayerType;
 }
 
 @synthesize dynamicWidth;
@@ -31,6 +32,7 @@
     if (self = [super init]) {
         _strokeLayers = [NSMutableDictionary dictionary];
         _lastRenderedVersion = 0;
+        _useCachedEraserLayerType = YES;
     }
     return self;
 }
@@ -76,18 +78,15 @@
 {
     if ([self dynamicWidth]) {
         if (![[stroke tool] color]) {
-#if kUseCachedEraserLayer
-            CACachedEraserLayer *eraserLayer = [_canvasLayer mask];
-#else
-            CARealtimeEraserLayer *eraserLayer = [_canvasLayer mask];
-#endif
+            CACachedEraserLayer *eraserLayer = eraserLayer = [_canvasLayer mask];
 
             if (!eraserLayer) {
-#if kUseCachedEraserLayer
-                eraserLayer = [[CACachedEraserLayer alloc] initWithBounds:[drawView bounds]];
-#else
-                eraserLayer = [[CARealtimeEraserLayer alloc] initWithBounds:[drawView bounds]];
-#endif
+                if (_useCachedEraserLayerType) {
+                    eraserLayer = [[CACachedEraserLayer alloc] initWithBounds:[drawView bounds]];
+                } else {
+                    eraserLayer = [[CARealtimeEraserLayer alloc] initWithBounds:[drawView bounds]];
+                }
+
                 [eraserLayer setOpaque:NO];
                 [eraserLayer setFillColor:[UIColor colorWithWhite:0 alpha:0]];
                 [eraserLayer setLineWidth:0];

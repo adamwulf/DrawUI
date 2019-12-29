@@ -19,18 +19,6 @@
     NSMutableArray<NSString *> *_pathIds;
 }
 
-@synthesize fillColor;
-@synthesize strokeColor;
-@synthesize lineWidth;
-
-- (instancetype)initWithBounds:(CGRect)bounds
-{
-    if (self = [super init]) {
-        [self setBounds:bounds];
-    }
-    return self;
-}
-
 - (NSUInteger)version
 {
     return 0;
