@@ -1,5 +1,5 @@
 //
-//  CAEraserLayer.h
+//  CARealtimeEraserLayer.h
 //  DrawUI
 //
 //  Created by Adam Wulf on 11/30/19.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CAEraserLayer : CALayer
+@interface CARealtimeEraserLayer : CALayer
 
 @property(nonatomic) UIColor *fillColor;
 @property(nonatomic) UIColor *strokeColor;

@@ -1,12 +1,12 @@
 //
-//  CAEraserLayer.m
+//  CARealtimeEraserLayer.m
 //  DrawUI
 //
 //  Created by Adam Wulf on 11/30/19.
 //  Copyright © 2019 Milestone Made. All rights reserved.
 //
 
-#import "CAEraserLayer.h"
+#import "CARealtimeEraserLayer.h"
 
 // Current strategy is to re-draw all the eraser paths to generate the mask.
 // Instead, we should use CGContextRenderer to update a bitmap context by diff,
@@ -14,7 +14,7 @@
 //
 // we'd still be using a bitmap eraser, but it should perform much better than
 // re-drawing every eraser path each frame.
-@implementation CAEraserLayer {
+@implementation CARealtimeEraserLayer {
     NSMutableDictionary<NSString *, UIBezierPath *> *_pathMap;
     NSMutableArray<NSString *> *_pathIds;
 }

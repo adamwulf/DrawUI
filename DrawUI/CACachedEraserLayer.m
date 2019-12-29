@@ -1,14 +1,14 @@
 //
-//  CAEraserLayer2.m
+//  CACachedEraserLayer.m
 //  DrawUI
 //
 //  Created by Adam Wulf on 12/18/19.
 //  Copyright © 2019 Milestone Made. All rights reserved.
 //
 
-#import "CAEraserLayer2.h"
+#import "CACachedEraserLayer.h"
 
-@implementation CAEraserLayer2 {
+@implementation CACachedEraserLayer {
     NSMutableDictionary<NSString *, UIBezierPath *> *_pathMap;
     CGColorSpaceRef _colorSpace;
     CGContextRef _imageContext;
