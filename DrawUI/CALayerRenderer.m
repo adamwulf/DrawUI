@@ -12,6 +12,8 @@
 #import "CACachedEraserLayer.h"
 #import "CAPencilLayer.h"
 
+#define kUseCachedEraserLayer 1
+
 @interface CALayerRenderer () <CALayerDelegate>
 
 @end
@@ -74,10 +76,18 @@
 {
     if ([self dynamicWidth]) {
         if (![[stroke tool] color]) {
+#if kUseCachedEraserLayer
             CACachedEraserLayer *eraserLayer = [_canvasLayer mask];
+#else
+            CARealtimeEraserLayer *eraserLayer = [_canvasLayer mask];
+#endif
 
             if (!eraserLayer) {
+#if kUseCachedEraserLayer
                 eraserLayer = [[CACachedEraserLayer alloc] initWithBounds:[drawView bounds]];
+#else
+                eraserLayer = [[CARealtimeEraserLayer alloc] initWithBounds:[drawView bounds]];
+#endif
                 [eraserLayer setOpaque:NO];
                 [eraserLayer setFillColor:[UIColor colorWithWhite:0 alpha:0]];
                 [eraserLayer setLineWidth:0];
