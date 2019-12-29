@@ -23,6 +23,19 @@
 @synthesize strokeColor;
 @synthesize lineWidth;
 
+- (instancetype)initWithBounds:(CGRect)bounds
+{
+    if (self = [super init]) {
+        [self setBounds:bounds];
+    }
+    return self;
+}
+
+- (NSUInteger)version
+{
+    return 0;
+}
+
 - (void)setPath:(UIBezierPath *)path forIdentifier:(NSString *)identifier
 {
     _pathMap = _pathMap ?: [NSMutableDictionary dictionary];
