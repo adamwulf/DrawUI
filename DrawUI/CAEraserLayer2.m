@@ -10,7 +10,6 @@
 
 @implementation CAEraserLayer2 {
     NSMutableDictionary<NSString *, UIBezierPath *> *_pathMap;
-
     CGColorSpaceRef _colorSpace;
     CGContextRef _imageContext;
 }
@@ -24,16 +23,16 @@
     if (self = [super init]) {
         [self setBounds:bounds];
 
-        // gradient is always black-white and the mask must be in the gray colorspace
         _colorSpace = CGColorSpaceCreateDeviceRGB();
-
-        // create the bitmap context
         _imageContext = CGBitmapContextCreate(NULL, CGRectGetWidth(bounds), CGRectGetHeight(bounds), 8, 0, _colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast);
 
         UIGraphicsPushContext(_imageContext);
+
+        // flip the context
         CGContextTranslateCTM(_imageContext, 0, CGRectGetHeight(bounds));
         CGContextScaleCTM(_imageContext, 1, -1);
 
+        // set background to black
         CGContextSetGrayFillColor(_imageContext, 0.0, 1.0);
         CGContextFillRect(_imageContext, [self bounds]);
         UIGraphicsPopContext();
@@ -43,6 +42,14 @@
 
 - (void)dealloc
 {
+    CGImageRef previousContent = (__bridge CGImageRef)([self contents]);
+
+    if (previousContent) {
+        [self setContents:nil];
+        // release previous image
+        CGImageRelease(previousContent);
+    }
+
     CGContextRelease(_imageContext);
     CGColorSpaceRelease(_colorSpace);
 }
