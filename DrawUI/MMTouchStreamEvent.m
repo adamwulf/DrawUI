@@ -57,7 +57,7 @@
 
 #pragma mark - Public Methods
 
-- (BOOL)matchesEvent:(MMTouchStreamEvent *)otherEvent
+- (BOOL)isSameTouchAsEvent:(MMTouchStreamEvent *)otherEvent
 {
     return [[self touchIdentifier] isEqual:[otherEvent touchIdentifier]];
 }

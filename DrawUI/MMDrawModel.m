@@ -42,7 +42,7 @@
 
     for (MMTouchStreamEvent *event in eventsToProcess) {
         if ([event phase] == UITouchPhaseBegan) {
-            if (!_stroke || [[_stroke event] matchesEvent:event]) {
+            if (!_stroke || [[_stroke event] isSameTouchAsEvent:event]) {
                 if (![event isUpdate]) {
                     _stroke = [[MMDrawnStroke alloc] initWithTool:tool];
                 }
@@ -54,7 +54,7 @@
 
             if (!strokeForEvent) {
                 for (MMDrawnStroke *stroke in [_strokes reverseObjectEnumerator]) {
-                    if ([stroke containsEvent:event]) {
+                    if ([stroke waitingForEvent:event]) {
                         strokeForEvent = stroke;
                         break;
                     }
@@ -64,11 +64,11 @@
             [strokeForEvent setVersion:_version];
 
             if ([event phase] == UITouchPhaseMoved) {
-                if ([[strokeForEvent event] matchesEvent:event]) {
+                if ([[strokeForEvent event] isSameTouchAsEvent:event]) {
                     [strokeForEvent addEvent:event];
                 }
             } else if ([event phase] == UITouchPhaseEnded) {
-                if ([[strokeForEvent event] matchesEvent:event]) {
+                if ([[strokeForEvent event] isSameTouchAsEvent:event]) {
                     [strokeForEvent addEvent:event];
 
                     if (strokeForEvent == _stroke) {
@@ -81,7 +81,7 @@
                     }
                 }
             } else if ([event phase] == UITouchPhaseCancelled) {
-                if ([[strokeForEvent event] matchesEvent:event]) {
+                if ([[strokeForEvent event] isSameTouchAsEvent:event]) {
                     _stroke = nil;
                 }
             }

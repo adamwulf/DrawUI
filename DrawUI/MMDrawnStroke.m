@@ -89,7 +89,7 @@
     return [[[[self segments] firstObject] events] firstObject];
 }
 
-- (BOOL)containsEvent:(MMTouchStreamEvent *)event
+- (BOOL)waitingForEvent:(MMTouchStreamEvent *)event
 {
     return [event estimationUpdateIndex] && [_eventIdToSegment objectForKey:[event estimationUpdateIndex]];
 }

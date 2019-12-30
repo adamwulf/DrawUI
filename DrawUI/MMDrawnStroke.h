@@ -22,10 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, nullable, readonly) UIBezierPath *borderPath;
 @property(nonatomic, strong, readonly) NSArray<MMAbstractBezierPathElement *> *segments;
 @property(nonatomic, strong, readonly) MMPen *tool;
+
+/// The first event that created this stroke. the [event touchIdentifier] can be useful for mapping this stroke to a [UITouch identifier]
 @property(nonatomic, strong, readonly) MMTouchStreamEvent *event;
 
 - (MMAbstractBezierPathElement *)addEvent:(MMTouchStreamEvent *)event;
-- (BOOL)containsEvent:(MMTouchStreamEvent *)event;
+
+/// Returns YES if the stroke is waiting for updates from the input event, NO otherwise
+- (BOOL)waitingForEvent:(MMTouchStreamEvent *)event;
 
 /// Used by renderers to determine when a stroke was last updated
 @property(nonatomic, assign) NSUInteger version;

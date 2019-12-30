@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Public Methods
 
-- (BOOL)matchesEvent:(MMTouchStreamEvent *)otherEvent;
+- (BOOL)isSameTouchAsEvent:(MMTouchStreamEvent *)otherEvent;
 
 @end
 
