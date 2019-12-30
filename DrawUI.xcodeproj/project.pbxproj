@@ -10,6 +10,7 @@
 		C5313F04237BCD7F00C2097A /* CALayerRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F03237BCD7F00C2097A /* CALayerRenderer.m */; };
 		C5313F07237BD3E900C2097A /* NaiveDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */; };
 		C5313F0A237BD75000C2097A /* SmartDrawRectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */; };
+		C5657E2923BAA44200A2B25D /* UITouch+MMDrawUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C5657E2823BAA44200A2B25D /* UITouch+MMDrawUI.m */; };
 		C56CC35623A9F7F300E4FCD9 /* CACachedEraserLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C56CC35523A9F7F300E4FCD9 /* CACachedEraserLayer.m */; };
 		C578111B23A8B35B00136030 /* CANoFadeTiledLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C578111A23A8B35B00136030 /* CANoFadeTiledLayer.m */; };
 		C578112023A8BA1800136030 /* CGContextRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C578111F23A8BA1800136030 /* CGContextRenderer.m */; };
@@ -50,6 +51,8 @@
 		C5313F06237BD3E900C2097A /* NaiveDrawRectRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NaiveDrawRectRenderer.m; sourceTree = "<group>"; };
 		C5313F08237BD75000C2097A /* SmartDrawRectRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartDrawRectRenderer.h; sourceTree = "<group>"; };
 		C5313F09237BD75000C2097A /* SmartDrawRectRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartDrawRectRenderer.m; sourceTree = "<group>"; };
+		C5657E2723BAA44200A2B25D /* UITouch+MMDrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITouch+MMDrawUI.h"; sourceTree = "<group>"; };
+		C5657E2823BAA44200A2B25D /* UITouch+MMDrawUI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITouch+MMDrawUI.m"; sourceTree = "<group>"; };
 		C56CC35423A9F7F300E4FCD9 /* CACachedEraserLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CACachedEraserLayer.h; sourceTree = "<group>"; };
 		C56CC35523A9F7F300E4FCD9 /* CACachedEraserLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CACachedEraserLayer.m; sourceTree = "<group>"; };
 		C578111923A8B35B00136030 /* CANoFadeTiledLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CANoFadeTiledLayer.h; sourceTree = "<group>"; };
@@ -238,6 +241,8 @@
 				C5911486237B400500E12FAB /* NSArray+MMDrawUI.m */,
 				C5911479237B3FCF00E12FAB /* UIColor+MMDrawUI.h */,
 				C591147A237B3FCF00E12FAB /* UIColor+MMDrawUI.m */,
+				C5657E2723BAA44200A2B25D /* UITouch+MMDrawUI.h */,
+				C5657E2823BAA44200A2B25D /* UITouch+MMDrawUI.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -388,6 +393,7 @@
 				C5911467237B3F3100E12FAB /* MMCurveToPathElement.m in Sources */,
 				C5911432237B3BE800E12FAB /* SceneDelegate.m in Sources */,
 				C578112323A8C1BA00136030 /* MMThumbnailRenderer.m in Sources */,
+				C5657E2923BAA44200A2B25D /* UITouch+MMDrawUI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

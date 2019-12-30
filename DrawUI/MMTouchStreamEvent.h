@@ -15,12 +15,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update isPrediction:(BOOL)prediction;
 
-/// use NSObject, as the touch is unique and consistent, but its values are
-/// stale
-/// so it's useful to track a touch through events, but not useful to introspect
-@property(nonatomic, strong) NSObject *coalescedTouch;
-@property(nonatomic, strong) NSObject *touch;
+/// A completely unique identifier per event, even for events built from
+/// the same touch or coalescedTouch
 @property(nonatomic, strong) NSString *uuid;
+
+/// An identifier unique to the touch that created this event. Events with the same
+/// touch will also have the same touchIdentifier
+@property(nonatomic, strong) NSObject *touchIdentifier;
 @property(nonatomic, assign) NSTimeInterval timestamp;
 @property(nonatomic, assign) UITouchType type;
 @property(nonatomic, assign) UITouchPhase phase;

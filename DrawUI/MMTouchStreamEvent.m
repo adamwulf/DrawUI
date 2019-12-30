@@ -7,6 +7,7 @@
 //
 
 #import "MMTouchStreamEvent.h"
+#import "UITouch+MMDrawUI.h"
 
 @implementation MMTouchStreamEvent
 
@@ -15,8 +16,7 @@
     MMTouchStreamEvent *event = [[MMTouchStreamEvent alloc] init];
 
     [event setUuid:[[NSUUID UUID] UUIDString]];
-    [event setCoalescedTouch:coalescedTouch];
-    [event setTouch:touch];
+    [event setTouchIdentifier:[touch identifier]];
     [event setTimestamp:[coalescedTouch timestamp]];
     [event setType:[coalescedTouch type]];
     [event setPhase:[coalescedTouch phase]];
@@ -59,7 +59,7 @@
 
 - (BOOL)matchesEvent:(MMTouchStreamEvent *)otherEvent
 {
-    return [self touch] == [otherEvent touch];
+    return [[self touchIdentifier] isEqual:[otherEvent touchIdentifier]];
 }
 
 @end
