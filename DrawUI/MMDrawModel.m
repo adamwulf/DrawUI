@@ -38,8 +38,6 @@
 
     _version += 1;
 
-    [_stroke setVersion:_version];
-
     for (MMTouchStreamEvent *event in eventsToProcess) {
         if ([event phase] == UITouchPhaseBegan) {
             if (!_stroke || [[_stroke event] isSameTouchAsEvent:event]) {
@@ -47,6 +45,7 @@
                     _stroke = [[MMDrawnStroke alloc] initWithTool:tool];
                 }
 
+                [_stroke setVersion:_version];
                 [_stroke addEvent:event];
             }
         } else {
