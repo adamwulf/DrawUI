@@ -23,6 +23,7 @@
     [event setForce:[coalescedTouch force]];
     [event setMaximumPossibleForce:[coalescedTouch maximumPossibleForce]];
     [event setAltitudeAngle:[coalescedTouch altitudeAngle]];
+    [event setAzimuthUnitVector:[coalescedTouch azimuthUnitVectorInView:[coalescedTouch view]]];
     [event setAzimuth:[coalescedTouch azimuthAngleInView:[coalescedTouch view]]];
     [event setVelocity:velocity];
     [event setMajorRadius:[coalescedTouch majorRadius]];

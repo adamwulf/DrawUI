@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat force;
 @property(nonatomic, assign) CGFloat maximumPossibleForce;
 @property(nonatomic, assign) CGFloat altitudeAngle;
+@property(nonatomic, assign) CGVector azimuthUnitVector;
 @property(nonatomic, assign) CGFloat azimuth;
 @property(nonatomic, assign) CGFloat velocity;
 @property(nonatomic, assign) CGFloat majorRadius;
