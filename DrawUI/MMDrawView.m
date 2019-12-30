@@ -108,9 +108,9 @@
     }
 }
 
-#pragma mark - Drawing
+#pragma mark - Touch Stream
 
-- (void)drawTouches:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event isUpdate:(BOOL)isUpdate
+- (void)processTouches:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event isUpdate:(BOOL)isUpdate
 {
     for (UITouch *touch in touches) {
         NSArray<UITouch *> *coalesced = [event coalescedTouchesForTouch:touch];
@@ -130,11 +130,11 @@
     }
 }
 
-#pragma mark - Events
+#pragma mark - Touch Events
 
 - (void)touchesEstimatedPropertiesUpdated:(NSSet<UITouch *> *)touches
 {
-    [self drawTouches:touches withEvent:nil isUpdate:YES];
+    [self processTouches:touches withEvent:nil isUpdate:YES];
 
     for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
         if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
@@ -151,7 +151,7 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self drawTouches:touches withEvent:event isUpdate:NO];
+    [self processTouches:touches withEvent:event isUpdate:NO];
 
     for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
         if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
@@ -168,7 +168,7 @@
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self drawTouches:touches withEvent:event isUpdate:NO];
+    [self processTouches:touches withEvent:event isUpdate:NO];
 
     for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
         if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
@@ -185,7 +185,7 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self drawTouches:touches withEvent:event isUpdate:NO];
+    [self processTouches:touches withEvent:event isUpdate:NO];
 
     for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
         if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
@@ -202,7 +202,7 @@
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self drawTouches:touches withEvent:event isUpdate:NO];
+    [self processTouches:touches withEvent:event isUpdate:NO];
 
     for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
         if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
