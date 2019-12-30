@@ -15,7 +15,7 @@
 {
     MMTouchStreamEvent *event = [[MMTouchStreamEvent alloc] init];
 
-    [event setUuid:[[NSUUID UUID] UUIDString]];
+    [event setIdentifier:[[NSUUID UUID] UUIDString]];
     [event setTouchIdentifier:[touch identifier]];
     [event setTimestamp:[coalescedTouch timestamp]];
     [event setType:[coalescedTouch type]];
@@ -61,6 +61,36 @@
 - (BOOL)isSameTouchAsEvent:(MMTouchStreamEvent *)otherEvent
 {
     return [[self touchIdentifier] isEqual:[otherEvent touchIdentifier]];
+}
+
+#pragma mark - NSCopying
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    MMTouchStreamEvent *ret = [[self class] allocWithZone:zone];
+
+    [ret setIdentifier:[self identifier]];
+    [ret setTouchIdentifier:[self touchIdentifier]];
+    [ret setTimestamp:[self timestamp]];
+    [ret setType:[self type]];
+    [ret setPhase:[self phase]];
+    [ret setForce:[self force]];
+    [ret setMaximumPossibleForce:[self maximumPossibleForce]];
+    [ret setAltitudeAngle:[self altitudeAngle]];
+    [ret setAzimuthUnitVector:[self azimuthUnitVector]];
+    [ret setAzimuth:[self azimuth]];
+    [ret setVelocity:[self velocity]];
+    [ret setMajorRadius:[self majorRadius]];
+    [ret setMajorRadiusTolerance:[self majorRadiusTolerance]];
+    [ret setLocation:[self location]];
+    [ret setInView:[self inView]];
+    [ret setEstimationUpdateIndex:[self estimationUpdateIndex]];
+    [ret setEstimatedProperties:[self estimatedProperties]];
+    [ret setEstimatedPropertiesExpectingUpdates:[self estimatedPropertiesExpectingUpdates]];
+    [ret setUpdate:[self isUpdate]];
+    [ret setPrediction:[self isPrediction]];
+
+    return ret;
 }
 
 @end

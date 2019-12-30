@@ -11,17 +11,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MMTouchStreamEvent : NSObject
+@interface MMTouchStreamEvent : NSObject <NSCopying>
 
 + (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update isPrediction:(BOOL)prediction;
 
 /// A completely unique identifier per event, even for events built from
 /// the same touch or coalescedTouch
-@property(nonatomic, strong) NSString *uuid;
+@property(nonatomic, strong) NSString *identifier;
 
 /// An identifier unique to the touch that created this event. Events with the same
 /// touch will also have the same touchIdentifier
-@property(nonatomic, strong) NSObject *touchIdentifier;
+@property(nonatomic, strong) NSString *touchIdentifier;
 @property(nonatomic, assign) NSTimeInterval timestamp;
 @property(nonatomic, assign) UITouchType type;
 @property(nonatomic, assign) UITouchPhase phase;
