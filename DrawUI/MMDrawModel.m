@@ -31,7 +31,7 @@
     NSArray<MMTouchStreamEvent *> *eventsToProcess;
 
     if (_lastSeenEvent) {
-        eventsToProcess = [touchStream eventsSinceEvent:_lastSeenEvent matchingTouch:NO];
+        eventsToProcess = [touchStream eventsSinceEvent:_lastSeenEvent];
     } else {
         eventsToProcess = [touchStream eventsSinceEvent:nil];
     }
@@ -42,7 +42,7 @@
 
     for (MMTouchStreamEvent *event in eventsToProcess) {
         if ([event phase] == UITouchPhaseBegan) {
-            if (!_stroke || [_stroke touch] == [event touch]) {
+            if (!_stroke || [[_stroke event] matchesEvent:event]) {
                 if (![event isUpdate]) {
                     _stroke = [[MMDrawnStroke alloc] initWithTool:tool];
                 }
@@ -64,11 +64,11 @@
             [strokeForEvent setVersion:_version];
 
             if ([event phase] == UITouchPhaseMoved) {
-                if ([strokeForEvent touch] == [event touch]) {
+                if ([[strokeForEvent event] matchesEvent:event]) {
                     [strokeForEvent addEvent:event];
                 }
             } else if ([event phase] == UITouchPhaseEnded) {
-                if ([strokeForEvent touch] == [event touch]) {
+                if ([[strokeForEvent event] matchesEvent:event]) {
                     [strokeForEvent addEvent:event];
 
                     if (strokeForEvent == _stroke) {
@@ -81,7 +81,7 @@
                     }
                 }
             } else if ([event phase] == UITouchPhaseCancelled) {
-                if ([strokeForEvent touch] == [event touch]) {
+                if ([[strokeForEvent event] matchesEvent:event]) {
                     _stroke = nil;
                 }
             }

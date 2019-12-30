@@ -37,11 +37,6 @@
 
 - (NSArray<MMTouchStreamEvent *> *)eventsSinceEvent:(MMTouchStreamEvent *)event
 {
-    return [self eventsSinceEvent:event matchingTouch:NO];
-}
-
-- (NSArray<MMTouchStreamEvent *> *)eventsSinceEvent:(MMTouchStreamEvent *)event matchingTouch:(BOOL)matching
-{
     if (!event) {
         return [_events copy];
     }
@@ -50,15 +45,7 @@
 
     if (index < [_events count] - 1) {
         // there's at least one more event
-        NSArray<MMTouchStreamEvent *> *output = [_events subarrayWithRange:NSMakeRange(index + 1, [_events count] - index - 1)];
-
-        if (matching) {
-            return [output filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(MMTouchStreamEvent *obj, NSDictionary<NSString *, id> *_Nullable bindings) {
-                return [event matchesEvent:obj];
-            }]];
-        } else {
-            return output;
-        }
+        return [_events subarrayWithRange:NSMakeRange(index + 1, [_events count] - index - 1)];
     } else if (index == NSNotFound) {
         return [_events copy];
     } else {

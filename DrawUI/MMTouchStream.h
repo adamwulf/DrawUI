@@ -20,8 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Returns all events in the stream if the input is nil
 - (NSArray<MMTouchStreamEvent *> *)eventsSinceEvent:(nullable MMTouchStreamEvent *)event;
 
-- (NSArray<MMTouchStreamEvent *> *)eventsSinceEvent:(MMTouchStreamEvent *)event matchingTouch:(BOOL)matching;
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -84,9 +84,9 @@
 
 #pragma mark - Touches
 
-- (NSObject *)touch
+- (MMTouchStreamEvent *)event
 {
-    return [[[[[self segments] lastObject] events] lastObject] touch];
+    return [[[[self segments] firstObject] events] firstObject];
 }
 
 - (BOOL)containsEvent:(MMTouchStreamEvent *)event

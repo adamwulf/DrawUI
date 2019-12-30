@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, nullable, readonly) UIBezierPath *borderPath;
 @property(nonatomic, strong, readonly) NSArray<MMAbstractBezierPathElement *> *segments;
 @property(nonatomic, strong, readonly) MMPen *tool;
-@property(nonatomic, strong, readonly) NSObject *touch;
+@property(nonatomic, strong, readonly) MMTouchStreamEvent *event;
 
 - (MMAbstractBezierPathElement *)addEvent:(MMTouchStreamEvent *)event;
 - (BOOL)containsEvent:(MMTouchStreamEvent *)event;

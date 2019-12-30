@@ -22,6 +22,7 @@
     [event setPhase:[coalescedTouch phase]];
     [event setForce:[coalescedTouch force]];
     [event setMaximumPossibleForce:[coalescedTouch maximumPossibleForce]];
+    [event setAltitudeAngle:[coalescedTouch altitudeAngle]];
     [event setAzimuth:[coalescedTouch azimuthAngleInView:[coalescedTouch view]]];
     [event setVelocity:velocity];
     [event setMajorRadius:[coalescedTouch majorRadius]];
