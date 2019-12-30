@@ -19,14 +19,14 @@
 @interface MMDrawnStroke ()
 
 @property(nonatomic, strong) NSMutableArray<MMAbstractBezierPathElement *> *segments;
-@property(nonatomic, strong) NSMutableDictionary<NSObject *, MMAbstractBezierPathElement *> *eventIdToSegment;
+@property(nonatomic, strong) NSMutableDictionary<NSNumber *, MMAbstractBezierPathElement *> *eventIdToSegment;
 @property(nonatomic, strong) MMSegmentSmoother *smoother;
+@property(nonatomic, strong) NSMutableArray<MMTouchStreamEvent *> *waitingEvents;
 
 @end
 
 
 @implementation MMDrawnStroke {
-    NSMutableArray *_waitingEvents;
     MMSegmentSmoother *_savedSmoother;
 }
 
@@ -197,25 +197,28 @@
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     if (self = [super init]) {
-        _identifier = [coder decodeObjectOfClass:[NSString class] forKey:@"identifier"];
-        _tool = [coder decodeObjectOfClass:[MMPen class] forKey:@"tool"];
-        _segments = [[coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [MMAbstractBezierPathElement class], [MMMoveToPathElement class], [MMCurveToPathElement class]]] forKey:@"segments"] mutableCopy] ?: [NSMutableArray array];
-        _smoother = [coder decodeObjectOfClass:[MMSegmentSmoother class] forKey:@"smoother"];
-        _version = [[coder decodeObjectOfClass:[NSNumber class] forKey:@"version"] unsignedIntegerValue];
+        NSSet *allowedClasses = [NSSet setWithArray:@[[NSArray class], [NSDictionary class], [MMAbstractBezierPathElement class], [MMMoveToPathElement class], [MMCurveToPathElement class]]];
 
-        _eventIdToSegment = [NSMutableDictionary dictionary];
-        _waitingEvents = [NSMutableArray array];
+        _identifier = [coder decodeObjectOfClass:[NSString class] forKey:PROPERTYNAME(identifier)];
+        _tool = [coder decodeObjectOfClass:[MMPen class] forKey:PROPERTYNAME(tool)];
+        _segments = [[coder decodeObjectOfClasses:allowedClasses forKey:PROPERTYNAME(segments)] mutableCopy] ?: [NSMutableArray array];
+        _smoother = [coder decodeObjectOfClass:[MMSegmentSmoother class] forKey:PROPERTYNAME(smoother)];
+        _version = [[coder decodeObjectOfClass:[NSNumber class] forKey:PROPERTYNAME(version)] unsignedIntegerValue];
+        _eventIdToSegment = [[coder decodeObjectOfClasses:allowedClasses forKey:PROPERTYNAME(eventIdToSegment)] mutableCopy] ?: [NSMutableDictionary dictionary];
+        _waitingEvents = [[coder decodeObjectOfClasses:allowedClasses forKey:PROPERTYNAME(waitingEvents)] mutableCopy] ?: [NSMutableArray array];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeObject:[self identifier] forKey:@"identifier"];
-    [coder encodeObject:[self tool] forKey:@"tool"];
-    [coder encodeObject:[self segments] forKey:@"segments"];
-    [coder encodeObject:[self smoother] forKey:@"smoother"];
-    [coder encodeObject:@([self version]) forKey:@"version"];
+    [coder encodeObject:[self identifier] forKey:PROPERTYNAME(identifier)];
+    [coder encodeObject:[self tool] forKey:PROPERTYNAME(tool)];
+    [coder encodeObject:[self segments] forKey:PROPERTYNAME(segments)];
+    [coder encodeObject:[self smoother] forKey:PROPERTYNAME(smoother)];
+    [coder encodeObject:@([self version]) forKey:PROPERTYNAME(version)];
+    [coder encodeObject:_eventIdToSegment forKey:PROPERTYNAME(eventIdToSegment)];
+    [coder encodeObject:_waitingEvents forKey:PROPERTYNAME(waitingEvents)];
 }
 
 #pragma mark - NSCopying
@@ -228,6 +231,7 @@
     ret->_smoother = _smoother;
     ret->_identifier = _identifier;
     ret->_segments = [[NSMutableArray alloc] initWithArray:_segments copyItems:YES];
+    ret->_waitingEvents = [[NSMutableArray alloc] initWithArray:_waitingEvents copyItems:YES];
 
     for (NSInteger idx = 1; idx < [ret->_segments count]; idx++) {
         // setup previous/next element relationships
