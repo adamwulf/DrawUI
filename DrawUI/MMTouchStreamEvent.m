@@ -8,6 +8,7 @@
 
 #import "MMTouchStreamEvent.h"
 #import "UITouch+MMDrawUI.h"
+#import "Constants.h"
 
 @implementation MMTouchStreamEvent
 
@@ -91,6 +92,62 @@
     [ret setPrediction:[self isPrediction]];
 
     return ret;
+}
+
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super init]) {
+        _identifier = [coder decodeObjectOfClass:[NSString class] forKey:PROPERTYNAME(identifier)];
+        _touchIdentifier = [coder decodeObjectOfClass:[NSString class] forKey:PROPERTYNAME(touchIdentifier)];
+        _timestamp = [coder decodeDoubleForKey:PROPERTYNAME(timestamp)];
+        _type = [coder decodeIntegerForKey:PROPERTYNAME(type)];
+        _phase = [coder decodeIntegerForKey:PROPERTYNAME(phase)];
+        _force = [coder decodeDoubleForKey:PROPERTYNAME(force)];
+        _maximumPossibleForce = [coder decodeDoubleForKey:PROPERTYNAME(maximumPossibleForce)];
+        _altitudeAngle = [coder decodeDoubleForKey:PROPERTYNAME(altitudeAngle)];
+        _azimuthUnitVector = [coder decodeCGVectorForKey:PROPERTYNAME(azimuthUnitVector)];
+        _azimuth = [coder decodeDoubleForKey:PROPERTYNAME(azimuth)];
+        _velocity = [coder decodeDoubleForKey:PROPERTYNAME(velocity)];
+        _majorRadius = [coder decodeDoubleForKey:PROPERTYNAME(majorRadius)];
+        _majorRadiusTolerance = [coder decodeDoubleForKey:PROPERTYNAME(majorRadiusTolerance)];
+        _location = [coder decodeCGPointForKey:PROPERTYNAME(location)];
+        _estimationUpdateIndex = [coder decodeObjectOfClass:[NSNumber class] forKey:PROPERTYNAME(estimationUpdateIndex)];
+        _estimatedProperties = [coder decodeIntegerForKey:PROPERTYNAME(estimatedProperties)];
+        _estimatedPropertiesExpectingUpdates = [coder decodeIntegerForKey:PROPERTYNAME(estimatedPropertiesExpectingUpdates)];
+        _update = [coder decodeBoolForKey:PROPERTYNAME(isUpdate)];
+        _prediction = [coder decodeBoolForKey:PROPERTYNAME(isPrediction)];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:_identifier forKey:PROPERTYNAME(identifier)];
+    [coder encodeObject:_touchIdentifier forKey:PROPERTYNAME(touchIdentifier)];
+    [coder encodeDouble:_timestamp forKey:PROPERTYNAME(timestamp)];
+    [coder encodeInteger:_type forKey:PROPERTYNAME(type)];
+    [coder encodeInteger:_phase forKey:PROPERTYNAME(phase)];
+    [coder encodeDouble:_force forKey:PROPERTYNAME(force)];
+    [coder encodeDouble:_maximumPossibleForce forKey:PROPERTYNAME(maximumPossibleForce)];
+    [coder encodeDouble:_altitudeAngle forKey:PROPERTYNAME(altitudeAngle)];
+    [coder encodeCGVector:_azimuthUnitVector forKey:PROPERTYNAME(azimuthUnitVector)];
+    [coder encodeDouble:_azimuth forKey:PROPERTYNAME(azimuth)];
+    [coder encodeDouble:_velocity forKey:PROPERTYNAME(velocity)];
+    [coder encodeDouble:_majorRadius forKey:PROPERTYNAME(majorRadius)];
+    [coder encodeDouble:_majorRadiusTolerance forKey:PROPERTYNAME(majorRadiusTolerance)];
+    [coder encodeCGPoint:_location forKey:PROPERTYNAME(location)];
+    [coder encodeObject:_estimationUpdateIndex forKey:PROPERTYNAME(estimationUpdateIndex)];
+    [coder encodeInteger:_estimatedProperties forKey:PROPERTYNAME(estimatedProperties)];
+    [coder encodeInteger:_estimatedPropertiesExpectingUpdates forKey:PROPERTYNAME(estimatedPropertiesExpectingUpdates)];
+    [coder encodeBool:_update forKey:PROPERTYNAME(isUpdate)];
+    [coder encodeBool:_prediction forKey:PROPERTYNAME(isPrediction)];
 }
 
 @end
