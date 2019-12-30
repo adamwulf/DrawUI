@@ -114,6 +114,7 @@
 {
     for (UITouch *touch in touches) {
         NSArray<UITouch *> *coalesced = [event coalescedTouchesForTouch:touch];
+
         if (![coalesced count]) {
             coalesced = @[touch];
         }

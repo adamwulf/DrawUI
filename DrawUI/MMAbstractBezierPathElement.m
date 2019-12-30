@@ -99,14 +99,6 @@
     return atan2f(point1.y - point2.y, point1.x - point2.x) + M_PI_2;
 }
 
-#pragma mark - Scaling
-
-- (void)scaleForWidth:(CGFloat)widthRatio andHeight:(CGFloat)heightRatio
-{
-    _startPoint.x = _startPoint.x * widthRatio;
-    _startPoint.y = _startPoint.y * heightRatio;
-}
-
 #pragma mark - Events
 
 - (void)clearPathCaches

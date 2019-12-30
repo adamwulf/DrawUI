@@ -431,24 +431,6 @@ static CGFloat subdivideBezierAtLength(const CGPoint bez[4],
     return self == object || [self hash] == [object hash];
 }
 
-#pragma mark - Scaling
-
-- (void)scaleForWidth:(CGFloat)widthRatio andHeight:(CGFloat)heightRatio
-{
-    [super scaleForWidth:widthRatio andHeight:heightRatio];
-
-    _curveTo.x = _curveTo.x * widthRatio;
-    _curveTo.y = _curveTo.y * heightRatio;
-
-    _ctrl1.x = _ctrl1.x * widthRatio;
-    _ctrl1.y = _ctrl1.y * heightRatio;
-
-    _ctrl2.x = _ctrl2.x * widthRatio;
-    _ctrl2.y = _ctrl2.y * heightRatio;
-
-    _length = 0;
-}
-
 #pragma mark - NSSecureCoding
 
 + (BOOL)supportsSecureCoding

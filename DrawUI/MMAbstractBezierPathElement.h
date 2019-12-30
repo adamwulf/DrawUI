@@ -33,8 +33,6 @@
 - (void)adjustStartBy:(CGPoint)adjustment;
 - (UIBezierPath *)bezierPathSegment;
 
-- (void)scaleForWidth:(CGFloat)widthRatio andHeight:(CGFloat)heightRatio NS_REQUIRES_SUPER;
-
 - (void)updateWithEvent:(MMTouchStreamEvent *)event width:(CGFloat)width NS_REQUIRES_SUPER;
 
 @end

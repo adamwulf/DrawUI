@@ -32,6 +32,4 @@
 
 - (void)copyStateFrom:(MMSegmentSmoother *)otherSmoother;
 
-- (void)scaleForWidth:(CGFloat)widthRatio andHeight:(CGFloat)heightRatio;
-
 @end

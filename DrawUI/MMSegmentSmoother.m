@@ -122,20 +122,6 @@
     _point3 = otherSmoother.point3;
 }
 
-#pragma mark - Scale
-
-- (void)scaleForWidth:(CGFloat)widthRatio andHeight:(CGFloat)heightRatio
-{
-    _point0.x = _point0.x * widthRatio;
-    _point0.y = _point0.y * heightRatio;
-    _point1.x = _point1.x * widthRatio;
-    _point1.y = _point1.y * heightRatio;
-    _point2.x = _point2.x * widthRatio;
-    _point2.y = _point2.y * heightRatio;
-    _point3.x = _point3.x * widthRatio;
-    _point3.y = _point3.y * heightRatio;
-}
-
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(nullable NSZone *)zone
