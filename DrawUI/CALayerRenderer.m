@@ -101,6 +101,7 @@
 
             for (MMAbstractBezierPathElement *ele in [stroke segments]) {
                 if ([ele version] > [eraserLayer version]) {
+                    // add the element's path to the eraser layer.
                     [eraserLayer setPath:[ele borderPath] forIdentifier:[ele identifier]];
                 }
             }

@@ -66,15 +66,13 @@
                 }
             }
 
-            // update the stroke to our new version
-            [strokeForEvent setVersion:_version];
+            if ([[strokeForEvent event] isSameTouchAsEvent:event]) {
+                // update the stroke to our new version
+                [strokeForEvent setVersion:_version];
 
-            if ([event phase] == UITouchPhaseMoved) {
-                if ([[strokeForEvent event] isSameTouchAsEvent:event]) {
+                if ([event phase] == UITouchPhaseMoved) {
                     [strokeForEvent addEvent:event];
-                }
-            } else if ([event phase] == UITouchPhaseEnded) {
-                if ([[strokeForEvent event] isSameTouchAsEvent:event]) {
+                } else if ([event phase] == UITouchPhaseEnded) {
                     [strokeForEvent addEvent:event];
 
                     if (strokeForEvent == _activeStroke) {
@@ -87,9 +85,7 @@
 
                         _activeStroke = nil;
                     }
-                }
-            } else if ([event phase] == UITouchPhaseCancelled) {
-                if ([[strokeForEvent event] isSameTouchAsEvent:event]) {
+                } else if ([event phase] == UITouchPhaseCancelled) {
                     _activeStroke = nil;
                 }
             }
