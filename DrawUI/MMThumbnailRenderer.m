@@ -57,7 +57,7 @@
 
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
 {
-    if ([[drawModel strokes] count] && ![drawModel stroke]) {
+    if ([[drawModel strokes] count] && ![drawModel activeStroke]) {
         [_ctxRenderer drawRect:[drawView bounds] inContext:_imageContext];
 
         CGImageRef theCGImage = CGBitmapContextCreateImage(_imageContext);

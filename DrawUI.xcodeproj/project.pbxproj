@@ -169,6 +169,7 @@
 			children = (
 				C5911471237B3F9C00E12FAB /* Utilities */,
 				C5911468237B3F3B00E12FAB /* DrawingView */,
+				C5A7C053237BCC0E00957D53 /* Rendering */,
 				C591142D237B3BE800E12FAB /* AppDelegate.h */,
 				C591142E237B3BE800E12FAB /* AppDelegate.m */,
 				C5911430237B3BE800E12FAB /* SceneDelegate.h */,
@@ -207,7 +208,6 @@
 			children = (
 				C5AB0769238288A6007CF251 /* Touch Stream */,
 				C5911456237B3F2000E12FAB /* Path Helpers */,
-				C5A7C053237BCC0E00957D53 /* Rendering */,
 				C578111C23A8B43500136030 /* MMDrawViewRenderer.h */,
 				C591146A237B3F4400E12FAB /* MMDrawView.h */,
 				C5911469237B3F4400E12FAB /* MMDrawView.m */,

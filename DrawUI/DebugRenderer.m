@@ -95,7 +95,7 @@
             [self drawFilledStroke:stroke];
         }
 
-        [self drawFilledStroke:[[self model] stroke]];
+        [self drawFilledStroke:[[self model] activeStroke]];
     } else {
         [[UIColor blackColor] setStroke];
 
@@ -106,7 +106,7 @@
             [path stroke];
         }
 
-        UIBezierPath *path = [[[self model] stroke] path];
+        UIBezierPath *path = [[[self model] activeStroke] path];
         [path setLineWidth:2];
 
         [[UIColor blackColor] setStroke];

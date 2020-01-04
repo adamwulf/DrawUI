@@ -30,36 +30,43 @@
 {
     NSArray<MMTouchStreamEvent *> *eventsToProcess;
 
+    // get an array of all the events we need to process this cycle
     if (_lastSeenEvent) {
         eventsToProcess = [touchStream eventsSinceEvent:_lastSeenEvent];
     } else {
         eventsToProcess = [touchStream eventsSinceEvent:nil];
     }
 
+    // increment our version since we're processing new stuff
     _version += 1;
 
+    // for each event, either add it to a stroke, or create a stroke for it
     for (MMTouchStreamEvent *event in eventsToProcess) {
         if ([event phase] == UITouchPhaseBegan) {
-            if (!_stroke || [[_stroke event] isSameTouchAsEvent:event]) {
+            if (!_activeStroke || [[_activeStroke event] isSameTouchAsEvent:event]) {
                 if (![event isUpdate]) {
-                    _stroke = [[MMDrawnStroke alloc] initWithTool:tool];
+                    _activeStroke = [[MMDrawnStroke alloc] initWithTool:tool];
                 }
 
-                [_stroke setVersion:_version];
-                [_stroke addEvent:event];
+                [_activeStroke setVersion:_version];
+                [_activeStroke addEvent:event];
             }
         } else {
-            MMDrawnStroke *strokeForEvent = _stroke;
+            MMDrawnStroke *strokeForEvent = _activeStroke;
 
             if (!strokeForEvent) {
+                // if we don't have an in-progress stroke for this event,
+                // then it might be an event to update a recently completed stroke
                 for (MMDrawnStroke *stroke in [_strokes reverseObjectEnumerator]) {
                     if ([stroke waitingForEvent:event]) {
+                        // we found a recently completed stroke that we can update
                         strokeForEvent = stroke;
                         break;
                     }
                 }
             }
 
+            // update the stroke to our new version
             [strokeForEvent setVersion:_version];
 
             if ([event phase] == UITouchPhaseMoved) {
@@ -70,18 +77,20 @@
                 if ([[strokeForEvent event] isSameTouchAsEvent:event]) {
                     [strokeForEvent addEvent:event];
 
-                    if (strokeForEvent == _stroke) {
-                        if ([_stroke path]) {
+                    if (strokeForEvent == _activeStroke) {
+                        // strokeForEvent might not equal _stroke if we're updating
+                        // a recently completed stroke.
+                        if ([_activeStroke path]) {
                             // this stroke is complete, save it to our history
-                            [_strokes addObject:_stroke];
+                            [_strokes addObject:_activeStroke];
                         }
 
-                        _stroke = nil;
+                        _activeStroke = nil;
                     }
                 }
             } else if ([event phase] == UITouchPhaseCancelled) {
                 if ([[strokeForEvent event] isSameTouchAsEvent:event]) {
-                    _stroke = nil;
+                    _activeStroke = nil;
                 }
             }
         }
@@ -119,7 +128,7 @@
     MMDrawModel *ret = [[[self class] allocWithZone:zone] init];
 
     ret->_version = _version;
-    ret->_stroke = [_stroke copy];
+    ret->_activeStroke = [_activeStroke copy];
     ret->_strokes = [[NSMutableArray alloc] initWithArray:_strokes copyItems:YES];
 
     return ret;

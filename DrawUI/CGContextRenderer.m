@@ -34,10 +34,10 @@
         }
     }
 
-    if (!_drawByDiff || [[[self model] stroke] version] > _lastRenderedVersion) {
-        [self renderStroke:[[self model] stroke] inRect:rect inContext:context];
+    if (!_drawByDiff || [[[self model] activeStroke] version] > _lastRenderedVersion) {
+        [self renderStroke:[[self model] activeStroke] inRect:rect inContext:context];
 
-        maxSoFar = MAX([[[self model] stroke] version], maxSoFar);
+        maxSoFar = MAX([[[self model] activeStroke] version], maxSoFar);
     }
 
     _lastRenderedVersion = maxSoFar;

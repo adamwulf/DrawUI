@@ -78,7 +78,11 @@
 {
     if ([self dynamicWidth]) {
         if (![[stroke tool] color]) {
-            CACachedEraserLayer *eraserLayer = eraserLayer = [_canvasLayer mask];
+            // multiple eraser strokes in a row can all share the same CACachedEraserLayer
+            // without any ill effect. Pencil layers need to maintain a correct ordering
+            // of strokes, but for eraser strokes, order doesn't matter, so if we render
+            // an updated finished stroke after the active stroke, there's no harm here
+            CACachedEraserLayer *eraserLayer = [_canvasLayer mask];
 
             if (!eraserLayer) {
                 if (_useCachedEraserLayerType) {
@@ -136,6 +140,7 @@
         }
     } else if ([stroke path]) {
         if (![[stroke tool] color]) {
+            // same as above, we don't use a per-stroke eraser layers since order doesn't matter
             CACachedEraserLayer *eraserLayer = [_canvasLayer mask];
 
             if (!eraserLayer) {
@@ -177,11 +182,11 @@
         }
     }
 
-    if ([drawModel stroke]) {
-        if ([[drawModel stroke] version] > _lastRenderedVersion) {
-            [self renderStroke:[drawModel stroke] inView:drawView];
+    if ([drawModel activeStroke]) {
+        if ([[drawModel activeStroke] version] > _lastRenderedVersion) {
+            [self renderStroke:[drawModel activeStroke] inView:drawView];
 
-            maxSoFar = MAX([[drawModel stroke] version], maxSoFar);
+            maxSoFar = MAX([[drawModel activeStroke] version], maxSoFar);
         }
     }
 

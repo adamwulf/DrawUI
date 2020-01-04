@@ -83,7 +83,7 @@
 
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
 {
-    MMDrawnStroke *stroke = [drawModel stroke] ?: [[drawModel strokes] lastObject];
+    MMDrawnStroke *stroke = [drawModel activeStroke] ?: [[drawModel strokes] lastObject];
 
     if (stroke) {
         CGRect pathBounds = [[stroke path] bounds];

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MMDrawModel : NSObject <NSSecureCoding, NSCopying>
 
-@property(nonatomic, strong) MMDrawnStroke *stroke;
+@property(nonatomic, strong) MMDrawnStroke *activeStroke;
 @property(nonatomic, strong) NSMutableArray<MMDrawnStroke *> *strokes;
 
 - (void)processTouchStream:(MMTouchStream *)touchStream withTool:(MMPen *)tool;
