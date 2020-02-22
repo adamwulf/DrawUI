@@ -39,7 +39,7 @@
     return self;
 }
 
-#pragma mark - Render
+#pragma mark - Cache
 
 - (__kindof CALayer *)layerForStroke:(NSString *)strokeId isEraser:(BOOL)eraser
 {
@@ -75,6 +75,8 @@
         [_canvasLayer addSublayer:subCanvasLayer];
     }
 }
+
+#pragma mark - Render
 
 - (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView *)drawView
 {
