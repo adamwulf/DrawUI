@@ -15,12 +15,14 @@
 #import "MMTouchStream.h"
 #import "MMTouchVelocityGestureRecognizer.h"
 
+
 @interface MMDrawView ()
 
 @property(nonatomic, strong) MMTouchStream *touchStream;
 @property(nonatomic, strong) NSMutableArray<NSObject<MMDrawViewRenderer> *> *renderers;
 
 @end
+
 
 @implementation MMDrawView
 
@@ -129,6 +131,18 @@
             [_touchStream addStreamCoalescedTouch:predictedTouch touch:touch velocity:[[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch] isUpdate:isUpdate isPrediction:YES];
         }
     }
+
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+            [renderer drawView:self willUpdateModel:[self drawModel]];
+        }
+    }
+
+    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
+
+    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+        [renderer drawView:self didUpdateModel:[self drawModel]];
+    }
 }
 
 #pragma mark - Touch Events
@@ -136,86 +150,26 @@
 - (void)touchesEstimatedPropertiesUpdated:(NSSet<UITouch *> *)touches
 {
     [self processTouches:touches withEvent:nil isUpdate:YES];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-            [renderer drawView:self willUpdateModel:[self drawModel]];
-        }
-    }
-
-    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        [renderer drawView:self didUpdateModel:[self drawModel]];
-    }
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self processTouches:touches withEvent:event isUpdate:NO];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-            [renderer drawView:self willUpdateModel:[self drawModel]];
-        }
-    }
-
-    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        [renderer drawView:self didUpdateModel:[self drawModel]];
-    }
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self processTouches:touches withEvent:event isUpdate:NO];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-            [renderer drawView:self willUpdateModel:[self drawModel]];
-        }
-    }
-
-    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        [renderer drawView:self didUpdateModel:[self drawModel]];
-    }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self processTouches:touches withEvent:event isUpdate:NO];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-            [renderer drawView:self willUpdateModel:[self drawModel]];
-        }
-    }
-
-    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        [renderer drawView:self didUpdateModel:[self drawModel]];
-    }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self processTouches:touches withEvent:event isUpdate:NO];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-            [renderer drawView:self willUpdateModel:[self drawModel]];
-        }
-    }
-
-    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        [renderer drawView:self didUpdateModel:[self drawModel]];
-    }
 }
 
 @end

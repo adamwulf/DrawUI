@@ -75,6 +75,7 @@
 		C59D82362400F054001CE1AD /* CAEraserLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = C59D82342400F054001CE1AD /* CAEraserLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C59D82372400F054001CE1AD /* CAEraserLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D82352400F054001CE1AD /* CAEraserLayer.m */; };
 		C59D82392400F323001CE1AD /* MMTouchStreamEvent-Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C59D82382400F300001CE1AD /* MMTouchStreamEvent-Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C59D823B2400F5FE001CE1AD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C59D823A2400F5FE001CE1AD /* README.md */; };
 		C5EB306223C083EF00A5FE3D /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5EB306023C083EF00A5FE3D /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5EB306523C083EF00A5FE3D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5EB305E23C083EF00A5FE3D /* DrawUI.framework */; };
 		C5EB306623C083EF00A5FE3D /* DrawUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5EB305E23C083EF00A5FE3D /* DrawUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -167,6 +168,7 @@
 		C59D82342400F054001CE1AD /* CAEraserLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEraserLayer.h; sourceTree = "<group>"; };
 		C59D82352400F054001CE1AD /* CAEraserLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEraserLayer.m; sourceTree = "<group>"; };
 		C59D82382400F300001CE1AD /* MMTouchStreamEvent-Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MMTouchStreamEvent-Private.h"; sourceTree = "<group>"; };
+		C59D823A2400F5FE001CE1AD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		C5A7C054237BCC5B00957D53 /* MMDrawModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawModel.h; sourceTree = "<group>"; };
 		C5A7C055237BCC5B00957D53 /* MMDrawModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMDrawModel.m; sourceTree = "<group>"; };
 		C5AB06F9237FB493007CF251 /* MMTouchStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMTouchStream.h; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 		C591142C237B3BE800E12FAB /* DrawUIExample */ = {
 			isa = PBXGroup;
 			children = (
+				C59D823A2400F5FE001CE1AD /* README.md */,
 				C591142D237B3BE800E12FAB /* AppDelegate.h */,
 				C591142E237B3BE800E12FAB /* AppDelegate.m */,
 				C5911430237B3BE800E12FAB /* SceneDelegate.h */,
@@ -510,6 +513,7 @@
 			files = (
 				C591143D237B3BEB00E12FAB /* LaunchScreen.storyboard in Resources */,
 				C591143A237B3BEB00E12FAB /* Assets.xcassets in Resources */,
+				C59D823B2400F5FE001CE1AD /* README.md in Resources */,
 				C5911438237B3BE800E12FAB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
