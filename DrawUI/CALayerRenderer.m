@@ -14,15 +14,19 @@
 
 #define kUseCachedEraserLayer 1
 
+
 @interface CALayerRenderer () <CALayerDelegate>
 
+/// YES to cache the eraser layer contents to a bitmap, NO to redraw the eraser layer each update
+@property(nonatomic, assign) BOOL useCachedEraserLayerType;
+
 @end
+
 
 @implementation CALayerRenderer {
     NSMutableDictionary<NSString *, CALayer *> *_strokeLayers;
     NSUInteger _lastRenderedVersion;
     CALayer *_canvasLayer;
-    BOOL _useCachedEraserLayerType;
 }
 
 @synthesize dynamicWidth;
@@ -100,7 +104,10 @@
             [eraserLayer setFrame:[drawView bounds]];
 
             for (MMAbstractBezierPathElement *ele in [stroke segments]) {
-                if ([ele version] > [eraserLayer version]) {
+                // Only draw the element if:
+                // 1. we're using realtime eraser (which will update predicted strokes)
+                // 2. or the element is not a prediction (since the cached eraser can't remove previous path)
+                if ([ele version] > [eraserLayer version] && (!_useCachedEraserLayerType || ![ele isPrediction])) {
                     // add the element's path to the eraser layer.
                     [eraserLayer setPath:[ele borderPath] forIdentifier:[ele identifier]];
                 }

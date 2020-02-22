@@ -13,6 +13,8 @@
 
 @protocol MMDrawViewRenderer <NSObject>
 
+/// YES if the renderer should adjust the width throughout the stroke
+/// NO for strokes to have uniform width
 @property(nonatomic, assign) BOOL dynamicWidth;
 
 - (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel;

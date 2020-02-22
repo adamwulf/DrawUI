@@ -8,6 +8,11 @@
 
 #import "CACachedEraserLayer.h"
 
+// Similar to CARealtimeEraserLayer, but we cache the results into a CGContext.
+// This means that if a path changes from a predicted touch, etc, we'd need to
+// to re-cache the entire context. Currently, this isn't being done, and the
+// cache is maintained for the life of the Layer. The performance though is
+// significantly faster
 @implementation CACachedEraserLayer {
     NSMutableDictionary<NSString *, UIBezierPath *> *_pathMap;
     CGColorSpaceRef _colorSpace;

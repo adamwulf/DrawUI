@@ -19,11 +19,13 @@
 
 CGFloat const kScale = 4;
 
+
 @interface ViewController ()
 
 @property(nonatomic, strong) IBOutlet MMDrawView *drawView;
 @property(nonatomic, strong) IBOutlet UISegmentedControl *rendererControl;
 @property(nonatomic, strong) IBOutlet UISegmentedControl *scaleControl;
+@property(nonatomic, strong) IBOutlet UISwitch *dynamicWidthSwitch;
 
 @property(nonatomic, strong) MMDrawModel *drawModel;
 @property(nonatomic, strong) MMPen *tool;
@@ -36,6 +38,7 @@ CGFloat const kScale = 4;
 @property(nonatomic, strong) NSLayoutConstraint *heightConstraint2;
 
 @end
+
 
 @implementation ViewController
 @dynamic view;
@@ -163,9 +166,15 @@ CGFloat const kScale = 4;
         _currentRenderer = [[DebugRenderer alloc] init];
     }
 
-    [_currentRenderer setDynamicWidth:YES];
+    [_currentRenderer setDynamicWidth:[[self dynamicWidthSwitch] isOn]];
 
     [[self drawView] installRenderer:_currentRenderer];
+}
+
+- (IBAction)didChangeDynamicWidth:(id)sender
+{
+    // re-render the drawing with updated dynamic width
+    [self didChangeRenderer:[self rendererControl]];
 }
 
 - (IBAction)didChangeScale:(id)sender

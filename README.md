@@ -2,6 +2,8 @@
 
 DrawUI is drop in library to support high performance ink. The framework cleanly separates the touch input from the pen-stroke model from the ink rendering itself. This clean separation allows for principled optimizations and customization.
 
+The goal is to be able to easily swap out renderers for the same model data, making it easy to change how a drawing is rendered, either in realtime, by replay, or in a background thread, etc etc.
+
 ## Input
 
 `MMTouchStream`: A stream of touch and stylus inputs events. An array of `MMTouchStreamEvent`s implement `NSCopying` and `NSSecureCoding` so that they can be easily stored and replayed at any time.
