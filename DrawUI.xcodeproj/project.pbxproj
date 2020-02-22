@@ -74,6 +74,7 @@
 		C59D82332400D299001CE1AD /* MMCanCacheEraser.h in Headers */ = {isa = PBXBuildFile; fileRef = C59D82322400D299001CE1AD /* MMCanCacheEraser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C59D82362400F054001CE1AD /* CAEraserLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = C59D82342400F054001CE1AD /* CAEraserLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C59D82372400F054001CE1AD /* CAEraserLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D82352400F054001CE1AD /* CAEraserLayer.m */; };
+		C59D82392400F323001CE1AD /* MMTouchStreamEvent-Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C59D82382400F300001CE1AD /* MMTouchStreamEvent-Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C5EB306223C083EF00A5FE3D /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5EB306023C083EF00A5FE3D /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5EB306523C083EF00A5FE3D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5EB305E23C083EF00A5FE3D /* DrawUI.framework */; };
 		C5EB306623C083EF00A5FE3D /* DrawUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5EB305E23C083EF00A5FE3D /* DrawUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -165,6 +166,7 @@
 		C59D82322400D299001CE1AD /* MMCanCacheEraser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMCanCacheEraser.h; sourceTree = "<group>"; };
 		C59D82342400F054001CE1AD /* CAEraserLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEraserLayer.h; sourceTree = "<group>"; };
 		C59D82352400F054001CE1AD /* CAEraserLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEraserLayer.m; sourceTree = "<group>"; };
+		C59D82382400F300001CE1AD /* MMTouchStreamEvent-Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MMTouchStreamEvent-Private.h"; sourceTree = "<group>"; };
 		C5A7C054237BCC5B00957D53 /* MMDrawModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawModel.h; sourceTree = "<group>"; };
 		C5A7C055237BCC5B00957D53 /* MMDrawModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMDrawModel.m; sourceTree = "<group>"; };
 		C5AB06F9237FB493007CF251 /* MMTouchStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMTouchStream.h; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				C5AB06F9237FB493007CF251 /* MMTouchStream.h */,
 				C5AB06FA237FB493007CF251 /* MMTouchStream.m */,
 				C5AB06FC237FB4A3007CF251 /* MMTouchStreamEvent.h */,
+				C59D82382400F300001CE1AD /* MMTouchStreamEvent-Private.h */,
 				C5AB06FD237FB4A3007CF251 /* MMTouchStreamEvent.m */,
 				C5A7C054237BCC5B00957D53 /* MMDrawModel.h */,
 				C5A7C055237BCC5B00957D53 /* MMDrawModel.m */,
@@ -417,6 +420,7 @@
 				C5111B4C23C08592004BAC48 /* UITouch+MMDrawUI.h in Headers */,
 				C5111B5723C08592004BAC48 /* MMAbstractBezierPathElement.h in Headers */,
 				C5111B4B23C08592004BAC48 /* UIColor+MMDrawUI.h in Headers */,
+				C59D82392400F323001CE1AD /* MMTouchStreamEvent-Private.h in Headers */,
 				C5111B5023C08592004BAC48 /* MMTouchVelocityGestureRecognizer.h in Headers */,
 				C5111B5B23C08592004BAC48 /* MMDrawViewRenderer.h in Headers */,
 				C5111B5E23C08592004BAC48 /* CARealtimeEraserLayer.h in Headers */,

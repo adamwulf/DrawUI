@@ -9,6 +9,8 @@
 #import "MMTouchStreamEvent.h"
 #import "UITouch+MMDrawUI.h"
 #import "Constants.h"
+#import "MMTouchStreamEvent-Private.h"
+
 
 @implementation MMTouchStreamEvent
 
