@@ -35,6 +35,7 @@ FOUNDATION_EXPORT const unsigned char DrawUIVersionString[];
 #import <DrawUI/MMMoveToPathElement.h>
 #import <DrawUI/MMSegmentSmoother.h>
 
+#import <DrawUI/MMCanCacheEraser.h>
 #import <DrawUI/MMDrawViewRenderer.h>
 #import <DrawUI/MMDrawView.h>
 

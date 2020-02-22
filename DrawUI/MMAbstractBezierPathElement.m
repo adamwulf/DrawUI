@@ -165,6 +165,7 @@
     ret->_startPoint = _startPoint;
     ret->_width = _width;
     ret->_updated = _updated;
+    ret->_version = _version;
     ret->_events = [[NSArray alloc] initWithArray:_events copyItems:YES];
 
     return ret;

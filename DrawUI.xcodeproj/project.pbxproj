@@ -71,6 +71,9 @@
 		C591143A237B3BEB00E12FAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5911439237B3BEB00E12FAB /* Assets.xcassets */; };
 		C591143D237B3BEB00E12FAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C591143B237B3BEB00E12FAB /* LaunchScreen.storyboard */; };
 		C5911440237B3BEB00E12FAB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C591143F237B3BEB00E12FAB /* main.m */; };
+		C59D82332400D299001CE1AD /* MMCanCacheEraser.h in Headers */ = {isa = PBXBuildFile; fileRef = C59D82322400D299001CE1AD /* MMCanCacheEraser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C59D82362400F054001CE1AD /* CAEraserLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = C59D82342400F054001CE1AD /* CAEraserLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C59D82372400F054001CE1AD /* CAEraserLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D82352400F054001CE1AD /* CAEraserLayer.m */; };
 		C5EB306223C083EF00A5FE3D /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5EB306023C083EF00A5FE3D /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5EB306523C083EF00A5FE3D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5EB305E23C083EF00A5FE3D /* DrawUI.framework */; };
 		C5EB306623C083EF00A5FE3D /* DrawUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5EB305E23C083EF00A5FE3D /* DrawUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -159,6 +162,9 @@
 		C5911486237B400500E12FAB /* NSArray+MMDrawUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MMDrawUI.m"; sourceTree = "<group>"; };
 		C595A84423A3723200ECDFDB /* CAPencilLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAPencilLayer.h; sourceTree = "<group>"; };
 		C595A84523A3723200ECDFDB /* CAPencilLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAPencilLayer.m; sourceTree = "<group>"; };
+		C59D82322400D299001CE1AD /* MMCanCacheEraser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMCanCacheEraser.h; sourceTree = "<group>"; };
+		C59D82342400F054001CE1AD /* CAEraserLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEraserLayer.h; sourceTree = "<group>"; };
+		C59D82352400F054001CE1AD /* CAEraserLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEraserLayer.m; sourceTree = "<group>"; };
 		C5A7C054237BCC5B00957D53 /* MMDrawModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawModel.h; sourceTree = "<group>"; };
 		C5A7C055237BCC5B00957D53 /* MMDrawModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMDrawModel.m; sourceTree = "<group>"; };
 		C5AB06F9237FB493007CF251 /* MMTouchStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMTouchStream.h; sourceTree = "<group>"; };
@@ -275,6 +281,7 @@
 				C5AB0769238288A6007CF251 /* Touch Stream */,
 				C5911456237B3F2000E12FAB /* Path Helpers */,
 				C578111C23A8B43500136030 /* MMDrawViewRenderer.h */,
+				C59D82322400D299001CE1AD /* MMCanCacheEraser.h */,
 				C591146A237B3F4400E12FAB /* MMDrawView.h */,
 				C5911469237B3F4400E12FAB /* MMDrawView.m */,
 			);
@@ -319,6 +326,8 @@
 			children = (
 				C5313F02237BCD7F00C2097A /* CALayerRenderer.h */,
 				C5313F03237BCD7F00C2097A /* CALayerRenderer.m */,
+				C59D82342400F054001CE1AD /* CAEraserLayer.h */,
+				C59D82352400F054001CE1AD /* CAEraserLayer.m */,
 				C5C9D3CA23926516005454CD /* CARealtimeEraserLayer.h */,
 				C5C9D3CB23926516005454CD /* CARealtimeEraserLayer.m */,
 				C56CC35423A9F7F300E4FCD9 /* CACachedEraserLayer.h */,
@@ -387,12 +396,14 @@
 				C5111B5323C08592004BAC48 /* MMTouchStream.h in Headers */,
 				C5111B5523C08592004BAC48 /* MMDrawModel.h in Headers */,
 				C5111B5123C08592004BAC48 /* MMPen.h in Headers */,
+				C59D82362400F054001CE1AD /* CAEraserLayer.h in Headers */,
 				C5111B6223C08592004BAC48 /* CANoFadeTiledLayer.h in Headers */,
 				C5111B5A23C08592004BAC48 /* MMSegmentSmoother.h in Headers */,
 				C5111B6523C08592004BAC48 /* DebugRenderer.h in Headers */,
 				C5111B5823C08592004BAC48 /* MMCurveToPathElement.h in Headers */,
 				C5111B6423C08592004BAC48 /* SmartDrawRectRenderer.h in Headers */,
 				C5111B4F23C08592004BAC48 /* MMVector.h in Headers */,
+				C59D82332400D299001CE1AD /* MMCanCacheEraser.h in Headers */,
 				C5111B6623C08592004BAC48 /* MMThumbnailRenderer.h in Headers */,
 				C5EB306223C083EF00A5FE3D /* DrawUI.h in Headers */,
 				C5111B5423C08592004BAC48 /* MMTouchStreamEvent.h in Headers */,
@@ -542,6 +553,7 @@
 				C5111B3923C0856A004BAC48 /* MMDrawModel.m in Sources */,
 				C5111B3423C0856A004BAC48 /* MMTouchVelocityGestureRecognizer.m in Sources */,
 				C5111B4923C0856A004BAC48 /* MMThumbnailRenderer.m in Sources */,
+				C59D82372400F054001CE1AD /* CAEraserLayer.m in Sources */,
 				C5111B4823C0856A004BAC48 /* DebugRenderer.m in Sources */,
 				C5111B3823C0856A004BAC48 /* MMTouchStreamEvent.m in Sources */,
 				C5111B3E23C0856A004BAC48 /* MMSegmentSmoother.m in Sources */,

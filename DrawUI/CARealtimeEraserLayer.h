@@ -6,11 +6,12 @@
 //  Copyright © 2019 Milestone Made. All rights reserved.
 //
 
-#import "CACachedEraserLayer.h"
+#import "CAEraserLayer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CARealtimeEraserLayer : CACachedEraserLayer
+
+@interface CARealtimeEraserLayer : CAEraserLayer
 
 @end
 

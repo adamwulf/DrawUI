@@ -17,9 +17,6 @@
 
 @interface CALayerRenderer () <CALayerDelegate>
 
-/// YES to cache the eraser layer contents to a bitmap, NO to redraw the eraser layer each update
-@property(nonatomic, assign) BOOL useCachedEraserLayerType;
-
 @end
 
 
@@ -29,7 +26,8 @@
     CALayer *_canvasLayer;
 }
 
-@synthesize dynamicWidth;
+@synthesize dynamicWidth = _dynamicWidth;
+@synthesize useCachedEraserLayerType = _useCachedEraserLayerType;
 
 - (instancetype)init
 {
@@ -86,7 +84,7 @@
             // without any ill effect. Pencil layers need to maintain a correct ordering
             // of strokes, but for eraser strokes, order doesn't matter, so if we render
             // an updated finished stroke after the active stroke, there's no harm here
-            CACachedEraserLayer *eraserLayer = [_canvasLayer mask];
+            CAEraserLayer *eraserLayer = [_canvasLayer mask];
 
             if (!eraserLayer) {
                 if (_useCachedEraserLayerType) {
@@ -149,10 +147,15 @@
     } else if ([stroke path]) {
         if (![[stroke tool] color]) {
             // same as above, we don't use a per-stroke eraser layers since order doesn't matter
-            CACachedEraserLayer *eraserLayer = [_canvasLayer mask];
+            CAEraserLayer *eraserLayer = [_canvasLayer mask];
 
             if (!eraserLayer) {
-                eraserLayer = [[CACachedEraserLayer alloc] initWithBounds:[drawView bounds]];
+                if (_useCachedEraserLayerType) {
+                    eraserLayer = [[CACachedEraserLayer alloc] initWithBounds:[drawView bounds]];
+                } else {
+                    eraserLayer = [[CARealtimeEraserLayer alloc] initWithBounds:[drawView bounds]];
+                }
+
                 [eraserLayer setOpaque:NO];
                 [eraserLayer setStrokeColor:[UIColor colorWithWhite:0 alpha:0]];
                 [eraserLayer setLineWidth:10];

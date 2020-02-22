@@ -19,15 +19,9 @@
     CGContextRef _imageContext;
 }
 
-@synthesize fillColor;
-@synthesize strokeColor;
-@synthesize lineWidth;
-
 - (instancetype)initWithBounds:(CGRect)bounds
 {
-    if (self = [super init]) {
-        [self setBounds:bounds];
-
+    if (self = [super initWithBounds:bounds]) {
         _colorSpace = CGColorSpaceCreateDeviceRGB();
         _imageContext = CGBitmapContextCreate(NULL, CGRectGetWidth(bounds), CGRectGetHeight(bounds), 8, 0, _colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast);
 

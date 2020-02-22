@@ -26,6 +26,8 @@ CGFloat const kScale = 4;
 @property(nonatomic, strong) IBOutlet UISegmentedControl *rendererControl;
 @property(nonatomic, strong) IBOutlet UISegmentedControl *scaleControl;
 @property(nonatomic, strong) IBOutlet UISwitch *dynamicWidthSwitch;
+@property(nonatomic, strong) IBOutlet UILabel *cachedEraserLabel;
+@property(nonatomic, strong) IBOutlet UISwitch *cachedEraserSwitch;
 
 @property(nonatomic, strong) MMDrawModel *drawModel;
 @property(nonatomic, strong) MMPen *tool;
@@ -166,15 +168,20 @@ CGFloat const kScale = 4;
         _currentRenderer = [[DebugRenderer alloc] init];
     }
 
+    // enable/disable dynamic width
     [_currentRenderer setDynamicWidth:[[self dynamicWidthSwitch] isOn]];
 
-    [[self drawView] installRenderer:_currentRenderer];
-}
+    // enable disable custom renderer options
+    BOOL cachedEraserVisible = [_currentRenderer conformsToProtocol:@protocol(MMCanCacheEraser)];
 
-- (IBAction)didChangeDynamicWidth:(id)sender
-{
-    // re-render the drawing with updated dynamic width
-    [self didChangeRenderer:[self rendererControl]];
+    [[self cachedEraserLabel] setHidden:!cachedEraserVisible];
+    [[self cachedEraserSwitch] setHidden:!cachedEraserVisible];
+
+    if ([_currentRenderer conformsToProtocol:@protocol(MMCanCacheEraser)]) {
+        [(id<MMCanCacheEraser>)_currentRenderer setUseCachedEraserLayerType:[[self cachedEraserSwitch] isOn]];
+    }
+
+    [[self drawView] installRenderer:_currentRenderer];
 }
 
 - (IBAction)didChangeScale:(id)sender
@@ -201,6 +208,18 @@ CGFloat const kScale = 4;
 - (IBAction)redraw:(id)sender
 {
     [[self drawView] setDrawModel:[[[self drawView] drawModel] copy]];
+}
+
+- (IBAction)didChangeDynamicWidth:(id)sender
+{
+    // re-render the drawing with updated dynamic width
+    [self didChangeRenderer:[self rendererControl]];
+}
+
+- (IBAction)didChangeCachedEraser:(id)sender
+{
+    // we changed our preference for bitmap caching the eraser
+    [self didChangeRenderer:[self rendererControl]];
 }
 
 
