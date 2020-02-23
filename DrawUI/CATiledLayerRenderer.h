@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, assign) BOOL dynamicWidth;
 
+@property(nonatomic, strong) MMDrawModel *drawModel;
+
 @end
 
 NS_ASSUME_NONNULL_END

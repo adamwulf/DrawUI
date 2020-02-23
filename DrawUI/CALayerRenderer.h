@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// YES to cache the eraser layer contents to a bitmap, NO to redraw the eraser layer each update
 @property(nonatomic, assign) BOOL useCachedEraserLayerType;
 
+@property(nonatomic, strong) MMDrawModel *drawModel;
+
 @end
 
 NS_ASSUME_NONNULL_END

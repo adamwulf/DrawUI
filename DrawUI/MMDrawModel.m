@@ -108,6 +108,7 @@
     if (self = [super init]) {
         _version = [[coder decodeObjectOfClass:[NSNumber class] forKey:@"version"] unsignedIntegerValue];
         _strokes = [[coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [MMDrawnStroke class]]] forKey:@"strokes"] mutableCopy] ?: [NSMutableArray array];
+        _touchStream = [[MMTouchStream alloc] init];
     }
     return self;
 }

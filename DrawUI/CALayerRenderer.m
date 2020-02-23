@@ -43,6 +43,13 @@
     return self;
 }
 
+- (void)setDrawModel:(MMDrawModel *)drawModel
+{
+    _drawModel = drawModel;
+
+    [self renderModel:drawModel];
+}
+
 - (void)installIntoView:(UIView *)canvasView
 {
     _strokeLayers = [NSMutableDictionary dictionary];
@@ -229,11 +236,6 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)installWithDrawModel:(MMDrawModel *)drawModel
-{
-    [self renderModel:drawModel];
-}
-
 - (void)uninstall
 {
     [_canvasLayer removeFromSuperlayer];
@@ -248,17 +250,17 @@
 - (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
     [self installIntoView:[self canvasView]];
-    [self installWithDrawModel:newModel];
+    [self setDrawModel:newModel];
 }
 
-- (void)willUpdateModel:(MMDrawModel *)oldModel
+- (void)drawModelWillUpdate:(MMDrawModel *)oldModel
 {
     if (CGRectEqualToRect([_canvasLayer frame], [[[self canvasView] layer] bounds])) {
         [_canvasLayer setFrame:[[[self canvasView] layer] bounds]];
     }
 }
 
-- (void)didUpdateModel:(MMDrawModel *)drawModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
 {
     [self renderModel:drawModel];
 }

@@ -19,14 +19,16 @@
 /// NO for strokes to have uniform width
 @property(nonatomic, assign) BOOL dynamicWidth;
 
-- (void)didUpdateModel:(MMDrawModel *)drawModel;
+/// the MMDrawModel to use for rendering
+@property(nonatomic, strong) MMDrawModel *drawModel;
+
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel;
 
 @optional
 
-- (void)willUpdateModel:(MMDrawModel *)oldModel;
+- (void)drawModelWillUpdate:(MMDrawModel *)oldModel;
 - (void)didUpdateBounds:(CGRect)bounds;
 
-- (void)installWithDrawModel:(MMDrawModel *)drawModel;
 - (void)uninstall;
 
 - (void)willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel;

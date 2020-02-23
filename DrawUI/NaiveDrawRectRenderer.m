@@ -12,9 +12,9 @@
 
 @implementation NaiveDrawRectRenderer
 
-- (void)didUpdateModel:(MMDrawModel *)drawModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
 {
-    [super didUpdateModel:drawModel];
+    [super drawModelDidUpdate:drawModel];
 
     [self setNeedsDisplay];
 }

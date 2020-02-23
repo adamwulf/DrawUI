@@ -14,7 +14,6 @@
 
 @interface SmartDrawRectRenderer ()
 
-@property(nonatomic, strong) MMDrawModel *model;
 @property(nonatomic, strong) CGContextRenderer *ctxRenderer;
 
 @end
@@ -36,8 +35,19 @@
         [[[self trailingAnchor] constraintEqualToAnchor:[canvasView trailingAnchor]] setActive:YES];
         [[[self topAnchor] constraintEqualToAnchor:[canvasView topAnchor]] setActive:YES];
         [[[self bottomAnchor] constraintEqualToAnchor:[canvasView bottomAnchor]] setActive:YES];
+
+        [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     }
     return self;
+}
+
+- (void)setDrawModel:(MMDrawModel *)drawModel
+{
+    _drawModel = drawModel;
+
+    [[self ctxRenderer] setModel:[self drawModel]];
+
+    [self setNeedsDisplay];
 }
 
 - (BOOL)dynamicWidth
@@ -52,20 +62,9 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)installWithDrawModel:(MMDrawModel *)drawModel
-{
-    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-
-    _model = drawModel;
-
-    [[self ctxRenderer] setModel:[self model]];
-
-    [self setNeedsDisplay];
-}
-
 - (void)uninstall
 {
-    _model = nil;
+    _drawModel = nil;
 
     [[self ctxRenderer] setModel:nil];
     [self removeFromSuperview];
@@ -78,13 +77,13 @@
 
 - (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
-    _model = newModel;
+    _drawModel = newModel;
 
-    [[self ctxRenderer] setModel:[self model]];
+    [[self ctxRenderer] setModel:[self drawModel]];
     [self setNeedsDisplay];
 }
 
-- (void)didUpdateModel:(MMDrawModel *)drawModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
 {
     MMDrawnStroke *stroke = [drawModel activeStroke] ?: [[drawModel strokes] lastObject];
 

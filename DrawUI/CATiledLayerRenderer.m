@@ -21,7 +21,6 @@
 
 
 @implementation CATiledLayerRenderer {
-    MMDrawModel *_lastModel;
     CATiledLayer *_tiledLayer;
     UIView *_canvasView;
 }
@@ -45,6 +44,14 @@
     return self;
 }
 
+- (void)setDrawModel:(MMDrawModel *)drawModel
+{
+    _drawModel = drawModel;
+
+    [[self ctxRenderer] setModel:_drawModel];
+    [_tiledLayer setNeedsDisplay];
+}
+
 - (BOOL)dynamicWidth
 {
     return [[self ctxRenderer] dynamicWidth];
@@ -57,18 +64,9 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)installWithDrawModel:(MMDrawModel *)drawModel
-{
-    _lastModel = drawModel;
-
-    [[self ctxRenderer] setModel:_lastModel];
-    [_tiledLayer setNeedsDisplay];
-}
-
 - (void)uninstall
 {
     [_tiledLayer removeFromSuperlayer];
-    [_canvasView removeObserver:self forKeyPath:@"bounds"];
 }
 
 - (void)didUpdateBounds:(CGRect)bounds
@@ -78,13 +76,13 @@
 
 - (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
-    _lastModel = newModel;
+    _drawModel = newModel;
 
-    [[self ctxRenderer] setModel:_lastModel];
+    [[self ctxRenderer] setModel:_drawModel];
     [_tiledLayer setNeedsDisplay];
 }
 
-- (void)didUpdateModel:(MMDrawModel *)drawModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
 {
     MMDrawnStroke *stroke = [drawModel activeStroke] ?: [[drawModel strokes] lastObject];
 

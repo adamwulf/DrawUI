@@ -66,10 +66,7 @@ CGFloat const kScale = 4;
 
     [_allRenderers addObject:[[MMThumbnailRenderer alloc] initWithFrame:[[self view] bounds]]];
 
-    // install thumbnail generation
-    if ([_currentRenderer respondsToSelector:@selector(installWithDrawModel:)]) {
-        [_currentRenderer installWithDrawModel:[self drawModel]];
-    }
+    [[_allRenderers lastObject] setDrawModel:[self drawModel]];
 
     // also install the renderer to the UI
     [self didChangeRenderer:[self rendererControl]];
@@ -134,15 +131,15 @@ CGFloat const kScale = 4;
         case UIGestureRecognizerStateChanged:
         case UIGestureRecognizerStateEnded:
             for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-                if ([renderer respondsToSelector:@selector(willUpdateModel:)]) {
-                    [renderer willUpdateModel:[self drawModel]];
+                if ([renderer respondsToSelector:@selector(drawModelWillUpdate:)]) {
+                    [renderer drawModelWillUpdate:[self drawModel]];
                 }
             }
 
             [[self drawModel] processTouchStreamWithTool:[self tool]];
 
             for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-                [renderer didUpdateModel:[self drawModel]];
+                [renderer drawModelDidUpdate:[self drawModel]];
             }
             break;
         default:
@@ -192,7 +189,7 @@ CGFloat const kScale = 4;
     NSData *data = [NSData dataWithContentsOfURL:url];
     NSError *error;
 
-    _drawModel = [NSKeyedUnarchiver unarchivedObjectOfClass:[MMDrawModel class] fromData:data error:&error];
+    MMDrawModel *drawModel = [NSKeyedUnarchiver unarchivedObjectOfClass:[MMDrawModel class] fromData:data error:&error];
 
     if (error) {
         DebugLog(@"Error Unarchiving: %@", error);
@@ -205,7 +202,7 @@ CGFloat const kScale = 4;
         [self presentViewController:alert animated:YES completion:nil];
     } else {
         // build a new renderer and set its model
-        [self setDrawModel:_drawModel];
+        [self setDrawModel:drawModel];
     }
 }
 
@@ -261,9 +258,7 @@ CGFloat const kScale = 4;
         [(id<MMCanCacheEraser>)_currentRenderer setUseCachedEraserLayerType:[[self cachedEraserSwitch] isOn]];
     }
 
-    if ([_currentRenderer respondsToSelector:@selector(installWithDrawModel:)]) {
-        [_currentRenderer installWithDrawModel:[self drawModel]];
-    }
+    [_currentRenderer setDrawModel:[self drawModel]];
 
     [[self allRenderers] addObject:_currentRenderer];
 }

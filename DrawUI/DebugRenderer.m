@@ -15,7 +15,6 @@
 @interface DebugRenderer ()
 
 @property(nonatomic, strong) UIView *canvasView;
-@property(nonatomic, strong) MMDrawModel *model;
 
 @end
 
@@ -24,7 +23,7 @@
 
 @synthesize dynamicWidth;
 
-- (instancetype)initWithView:(UIView *)canvasView;
+- (instancetype)initWithView:(UIView *)canvasView
 {
     if (self = [super init]) {
         _canvasView = canvasView;
@@ -41,19 +40,19 @@
     return self;
 }
 
-#pragma mark - MMDrawViewRenderer
-
-- (void)installWithDrawModel:(MMDrawModel *)drawModel
+- (void)setDrawModel:(MMDrawModel *)drawModel
 {
-    _model = drawModel;
+    _drawModel = drawModel;
 
     [self setNeedsDisplay];
 }
 
+#pragma mark - MMDrawViewRenderer
+
 - (void)uninstall
 {
     [self removeFromSuperview];
-    _model = nil;
+    _drawModel = nil;
 }
 
 - (void)didUpdateBounds:(CGRect)bounds
@@ -63,13 +62,13 @@
 
 - (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
-    _model = newModel;
+    _drawModel = newModel;
     [self setNeedsDisplay];
 }
 
-- (void)didUpdateModel:(MMDrawModel *)drawModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
 {
-    _model = drawModel;
+    _drawModel = drawModel;
 
     [self setNeedsDisplay];
 }
@@ -98,22 +97,22 @@
 - (void)drawRect:(CGRect)rect
 {
     if ([self dynamicWidth]) {
-        for (MMDrawnStroke *stroke in [[self model] strokes]) {
+        for (MMDrawnStroke *stroke in [[self drawModel] strokes]) {
             [self drawFilledStroke:stroke];
         }
 
-        [self drawFilledStroke:[[self model] activeStroke]];
+        [self drawFilledStroke:[[self drawModel] activeStroke]];
     } else {
         [[UIColor blackColor] setStroke];
 
-        for (MMDrawnStroke *stroke in [[self model] strokes]) {
+        for (MMDrawnStroke *stroke in [[self drawModel] strokes]) {
             UIBezierPath *path = [stroke path];
             [path setLineWidth:2];
 
             [path stroke];
         }
 
-        UIBezierPath *path = [[[self model] activeStroke] path];
+        UIBezierPath *path = [[[self drawModel] activeStroke] path];
         [path setLineWidth:2];
 
         [[UIColor blackColor] setStroke];
