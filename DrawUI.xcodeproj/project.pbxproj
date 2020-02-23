@@ -64,6 +64,8 @@
 		C5111B6423C08592004BAC48 /* SmartDrawRectRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = C5313F08237BD75000C2097A /* SmartDrawRectRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5111B6523C08592004BAC48 /* DebugRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = C5AB076623824AA6007CF251 /* DebugRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5111B6623C08592004BAC48 /* MMThumbnailRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = C578112123A8C1BA00136030 /* MMThumbnailRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C52EB55324025328004AC8CB /* MMTouchStreamGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C52EB55124025328004AC8CB /* MMTouchStreamGestureRecognizer.h */; };
+		C52EB55424025328004AC8CB /* MMTouchStreamGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C52EB55224025328004AC8CB /* MMTouchStreamGestureRecognizer.m */; };
 		C591142F237B3BE800E12FAB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C591142E237B3BE800E12FAB /* AppDelegate.m */; };
 		C5911432237B3BE800E12FAB /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911431237B3BE800E12FAB /* SceneDelegate.m */; };
 		C5911435237B3BE800E12FAB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5911434237B3BE800E12FAB /* ViewController.m */; };
@@ -106,6 +108,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C52EB55124025328004AC8CB /* MMTouchStreamGestureRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMTouchStreamGestureRecognizer.h; sourceTree = "<group>"; };
+		C52EB55224025328004AC8CB /* MMTouchStreamGestureRecognizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMTouchStreamGestureRecognizer.m; sourceTree = "<group>"; };
 		C5313F02237BCD7F00C2097A /* CALayerRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CALayerRenderer.h; sourceTree = "<group>"; };
 		C5313F03237BCD7F00C2097A /* CALayerRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CALayerRenderer.m; sourceTree = "<group>"; };
 		C5313F05237BD3E900C2097A /* NaiveDrawRectRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NaiveDrawRectRenderer.h; sourceTree = "<group>"; };
@@ -366,6 +370,8 @@
 			children = (
 				C5AB06F9237FB493007CF251 /* MMTouchStream.h */,
 				C5AB06FA237FB493007CF251 /* MMTouchStream.m */,
+				C52EB55124025328004AC8CB /* MMTouchStreamGestureRecognizer.h */,
+				C52EB55224025328004AC8CB /* MMTouchStreamGestureRecognizer.m */,
 				C5AB06FC237FB4A3007CF251 /* MMTouchStreamEvent.h */,
 				C59D82382400F300001CE1AD /* MMTouchStreamEvent-Private.h */,
 				C5AB06FD237FB4A3007CF251 /* MMTouchStreamEvent.m */,
@@ -400,6 +406,7 @@
 				C5111B5623C08592004BAC48 /* MMDrawnStroke.h in Headers */,
 				C5111B6123C08592004BAC48 /* CATiledLayerRenderer.h in Headers */,
 				C5111B5323C08592004BAC48 /* MMTouchStream.h in Headers */,
+				C52EB55324025328004AC8CB /* MMTouchStreamGestureRecognizer.h in Headers */,
 				C5111B5523C08592004BAC48 /* MMDrawModel.h in Headers */,
 				C5111B5123C08592004BAC48 /* MMPen.h in Headers */,
 				C59D82362400F054001CE1AD /* CAEraserLayer.h in Headers */,
@@ -545,6 +552,7 @@
 			files = (
 				C5111B4123C0856A004BAC48 /* CARealtimeEraserLayer.m in Sources */,
 				C5111B4223C0856A004BAC48 /* CACachedEraserLayer.m in Sources */,
+				C52EB55424025328004AC8CB /* MMTouchStreamGestureRecognizer.m in Sources */,
 				C5111B4023C0856A004BAC48 /* CALayerRenderer.m in Sources */,
 				C5111B3B23C0856A004BAC48 /* MMAbstractBezierPathElement.m in Sources */,
 				C5111B3C23C0856A004BAC48 /* MMCurveToPathElement.m in Sources */,

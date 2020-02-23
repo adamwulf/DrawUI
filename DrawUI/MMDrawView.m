@@ -14,17 +14,19 @@
 #import "MMDrawnStroke.h"
 #import "MMTouchStream.h"
 #import "MMTouchVelocityGestureRecognizer.h"
+#import "MMTouchStreamGestureRecognizer.h"
 
 
 @interface MMDrawView ()
 
-@property(nonatomic, strong) MMTouchStream *touchStream;
 @property(nonatomic, strong) NSMutableArray<NSObject<MMDrawViewRenderer> *> *renderers;
 
 @end
 
 
-@implementation MMDrawView
+@implementation MMDrawView {
+    MMTouchStreamGestureRecognizer *_touchGesture;
+}
 
 - (instancetype)init
 {
@@ -54,6 +56,7 @@
 {
     _renderers = [NSMutableArray array];
 
+    // re-render whenever our size changes. Some renderers would otherwise stretch to fill the new size
     [self addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
 }
 
@@ -72,7 +75,13 @@
 
 - (void)setDrawModel:(MMDrawModel *)newModel
 {
-    _touchStream = [[MMTouchStream alloc] init];
+    if (_touchGesture) {
+        [self removeGestureRecognizer:_touchGesture];
+    }
+
+    _touchGesture = [[MMTouchStreamGestureRecognizer alloc] initWithTouchStream:[newModel touchStream] target:self action:@selector(touchStreamGesture:)];
+
+    [self addGestureRecognizer:_touchGesture];
 
     for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
         if ([renderer respondsToSelector:@selector(drawView:willReplaceModel:withModel:)]) {
@@ -112,68 +121,27 @@
 
 #pragma mark - Touch Stream
 
-- (void)processTouches:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event isUpdate:(BOOL)isUpdate
+- (void)touchStreamGesture:(MMTouchStreamGestureRecognizer *)gesture
 {
-    for (UITouch *touch in touches) {
-        NSArray<UITouch *> *coalesced = [event coalescedTouchesForTouch:touch];
+    switch ([gesture state]) {
+        case UIGestureRecognizerStateBegan:
+        case UIGestureRecognizerStateChanged:
+        case UIGestureRecognizerStateEnded:
+            for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+                if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+                    [renderer drawView:self willUpdateModel:[self drawModel]];
+                }
+            }
 
-        if (![coalesced count]) {
-            coalesced = @[touch];
-        }
+            [[self drawModel] processTouchStreamWithTool:[self tool]];
 
-        for (UITouch *coalescedTouch in coalesced) {
-            CGFloat velocity = [[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch];
-
-            [_touchStream addEvent:[MMTouchStreamEvent eventWithCoalescedTouch:coalescedTouch touch:touch velocity:velocity isUpdate:isUpdate isPrediction:NO]];
-        }
-
-        NSArray<UITouch *> *predicted = [event predictedTouchesForTouch:touch];
-
-        for (UITouch *predictedTouch in predicted) {
-            CGFloat velocity = [[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch];
-
-            [_touchStream addEvent:[MMTouchStreamEvent eventWithCoalescedTouch:predictedTouch touch:touch velocity:velocity isUpdate:isUpdate isPrediction:YES]];
-        }
+            for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
+                [renderer drawView:self didUpdateModel:[self drawModel]];
+            }
+            break;
+        default:
+            break;
     }
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-            [renderer drawView:self willUpdateModel:[self drawModel]];
-        }
-    }
-
-    [[self drawModel] processTouchStream:[self touchStream] withTool:[self tool]];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        [renderer drawView:self didUpdateModel:[self drawModel]];
-    }
-}
-
-#pragma mark - Touch Events
-
-- (void)touchesEstimatedPropertiesUpdated:(NSSet<UITouch *> *)touches
-{
-    [self processTouches:touches withEvent:nil isUpdate:YES];
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self processTouches:touches withEvent:event isUpdate:NO];
-}
-
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self processTouches:touches withEvent:event isUpdate:NO];
-}
-
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self processTouches:touches withEvent:event isUpdate:NO];
-}
-
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self processTouches:touches withEvent:event isUpdate:NO];
 }
 
 @end

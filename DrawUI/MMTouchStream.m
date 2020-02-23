@@ -7,6 +7,7 @@
 //
 
 #import "MMTouchStream.h"
+#import "MMTouchStreamGestureRecognizer.h"
 
 
 @implementation MMTouchStream {

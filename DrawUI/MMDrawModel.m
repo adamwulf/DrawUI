@@ -12,6 +12,7 @@
 #import "MMAbstractBezierPathElement-Protected.h"
 #import "MMTouchStream.h"
 
+
 @implementation MMDrawModel {
     MMTouchStreamEvent *_lastSeenEvent;
     NSUInteger _version;
@@ -22,19 +23,20 @@
     if (self = [super init]) {
         _version = 0;
         _strokes = [NSMutableArray array];
+        _touchStream = [[MMTouchStream alloc] init];
     }
     return self;
 }
 
-- (void)processTouchStream:(MMTouchStream *)touchStream withTool:(MMPen *)tool
+- (void)processTouchStreamWithTool:(MMPen *)tool
 {
     NSArray<MMTouchStreamEvent *> *eventsToProcess;
 
     // get an array of all the events we need to process this cycle
     if (_lastSeenEvent) {
-        eventsToProcess = [touchStream eventsSinceEvent:_lastSeenEvent];
+        eventsToProcess = [[self touchStream] eventsSinceEvent:_lastSeenEvent];
     } else {
-        eventsToProcess = [touchStream eventsSinceEvent:nil];
+        eventsToProcess = [[self touchStream] eventsSinceEvent:nil];
     }
 
     // increment our version since we're processing new stuff
