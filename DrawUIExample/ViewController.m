@@ -82,19 +82,10 @@ CGFloat const kScale = 4;
 
 - (void)setDrawModel:(MMDrawModel *)newModel
 {
-    for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-        if ([renderer respondsToSelector:@selector(willReplaceModel:withModel:)]) {
-            [renderer willReplaceModel:_drawModel withModel:newModel];
-        }
-    }
-
-    MMDrawModel *oldModel = _drawModel;
     _drawModel = newModel;
 
     for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-        if ([renderer respondsToSelector:@selector(didReplaceModel:withModel:)]) {
-            [renderer didReplaceModel:oldModel withModel:_drawModel];
-        }
+        [renderer setDrawModel:newModel];
     }
 
     [self refreshGestureForModel:[self drawModel]];

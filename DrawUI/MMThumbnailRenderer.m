@@ -58,11 +58,6 @@
     _imageContext = nil;
 }
 
-- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
-{
-    [_ctxRenderer setModel:newModel];
-}
-
 - (void)drawModelDidUpdate:(MMDrawModel *)drawModel
 {
     if ([[drawModel strokes] count] && ![drawModel activeStroke]) {

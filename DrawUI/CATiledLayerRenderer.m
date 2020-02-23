@@ -74,14 +74,6 @@
     [_tiledLayer setFrame:bounds];
 }
 
-- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
-{
-    _drawModel = newModel;
-
-    [[self ctxRenderer] setModel:_drawModel];
-    [_tiledLayer setNeedsDisplay];
-}
-
 - (void)drawModelDidUpdate:(MMDrawModel *)drawModel
 {
     MMDrawnStroke *stroke = [drawModel activeStroke] ?: [[drawModel strokes] lastObject];

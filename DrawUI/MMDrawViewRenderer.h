@@ -31,9 +31,6 @@
 
 - (void)uninstall;
 
-- (void)willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel;
-- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel;
-
 @end
 
 #endif /* MMDrawViewRenderer_h */

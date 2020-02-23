@@ -60,12 +60,6 @@
     [self setNeedsDisplay];
 }
 
-- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
-{
-    _drawModel = newModel;
-    [self setNeedsDisplay];
-}
-
 - (void)drawModelDidUpdate:(MMDrawModel *)drawModel
 {
     _drawModel = drawModel;

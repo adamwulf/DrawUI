@@ -45,6 +45,10 @@
 
 - (void)setDrawModel:(MMDrawModel *)drawModel
 {
+    // reload all of the layers
+    [self uninstallFromSuperview];
+    [self installIntoView:[self canvasView]];
+
     _drawModel = drawModel;
 
     [self renderModel:drawModel];
@@ -240,17 +244,6 @@
 {
     [_canvasLayer removeFromSuperlayer];
     _canvasLayer = nil;
-}
-
-- (void)willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
-{
-    [self uninstallFromSuperview];
-}
-
-- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
-{
-    [self installIntoView:[self canvasView]];
-    [self setDrawModel:newModel];
 }
 
 - (void)drawModelWillUpdate:(MMDrawModel *)oldModel

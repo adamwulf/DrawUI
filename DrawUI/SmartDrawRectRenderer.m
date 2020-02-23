@@ -46,7 +46,6 @@
     _drawModel = drawModel;
 
     [[self ctxRenderer] setModel:[self drawModel]];
-
     [self setNeedsDisplay];
 }
 
@@ -72,14 +71,6 @@
 
 - (void)didUpdateBounds:(CGRect)bounds
 {
-    [self setNeedsDisplay];
-}
-
-- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
-{
-    _drawModel = newModel;
-
-    [[self ctxRenderer] setModel:[self drawModel]];
     [self setNeedsDisplay];
 }
 
