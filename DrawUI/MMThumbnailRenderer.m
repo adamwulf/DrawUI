@@ -51,11 +51,12 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)uninstall
+- (void)invalidate
 {
     CGContextRelease(_imageContext);
     CGColorSpaceRelease(_colorSpace);
     _imageContext = nil;
+    _drawModel = nil;
 }
 
 - (void)drawModelDidUpdate:(MMDrawModel *)drawModel

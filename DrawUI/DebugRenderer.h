@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithView:(UIView *)canvasView;
 
-@property(nonatomic, strong) MMDrawModel *drawModel;
+- (void)drawModelDidUpdateBounds:(CGRect)bounds;
 
 @end
 

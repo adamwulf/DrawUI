@@ -107,8 +107,8 @@ CGFloat const kScale = 4;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UIView *)drawView change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context
 {
     for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-        if ([renderer respondsToSelector:@selector(didUpdateBounds:)]) {
-            [renderer didUpdateBounds:[[self drawView] bounds]];
+        if ([renderer respondsToSelector:@selector(drawModelDidUpdateBounds:)]) {
+            [renderer drawModelDidUpdateBounds:[[self drawView] bounds]];
         }
     }
 }
@@ -218,8 +218,8 @@ CGFloat const kScale = 4;
 - (IBAction)didChangeRenderer:(UISegmentedControl *)segmentedControl
 {
     if (_currentRenderer) {
-        if ([_currentRenderer respondsToSelector:@selector(uninstall)]) {
-            [_currentRenderer uninstall];
+        if ([_currentRenderer respondsToSelector:@selector(invalidate)]) {
+            [_currentRenderer invalidate];
         }
         [[self allRenderers] removeObject:_currentRenderer];
     }

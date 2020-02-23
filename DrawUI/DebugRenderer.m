@@ -21,7 +21,8 @@
 
 @implementation DebugRenderer
 
-@synthesize dynamicWidth;
+@synthesize dynamicWidth = _dynamicWidth;
+@synthesize drawModel = _drawModel;
 
 - (instancetype)initWithView:(UIView *)canvasView
 {
@@ -49,13 +50,13 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)uninstall
+- (void)invalidate
 {
     [self removeFromSuperview];
     _drawModel = nil;
 }
 
-- (void)didUpdateBounds:(CGRect)bounds
+- (void)drawModelDidUpdateBounds:(CGRect)bounds
 {
     [self setNeedsDisplay];
 }

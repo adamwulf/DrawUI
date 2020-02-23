@@ -38,37 +38,33 @@
     if (self = [super init]) {
         _useCachedEraserLayerType = YES;
         _canvasView = canvasView;
-        [self installIntoView:_canvasView];
+        [self reinitializeLayer];
     }
     return self;
 }
 
-- (void)setDrawModel:(MMDrawModel *)drawModel
+- (void)reinitializeLayer
 {
     // reload all of the layers
-    [self uninstallFromSuperview];
-    [self installIntoView:[self canvasView]];
+    [_canvasLayer removeFromSuperlayer];
+    _canvasLayer = nil;
 
-    _drawModel = drawModel;
-
-    [self renderModel:drawModel];
-}
-
-- (void)installIntoView:(UIView *)canvasView
-{
     _strokeLayers = [NSMutableDictionary dictionary];
     _lastRenderedVersion = 0;
     _canvasLayer = [CAPencilLayer layer];
     [_canvasLayer setDelegate:self];
 
-    [[canvasView layer] addSublayer:_canvasLayer];
-    [[canvasView layer] setActions:@{ @"sublayers": [NSNull null] }];
+    [[_canvasView layer] addSublayer:_canvasLayer];
+    [[_canvasView layer] setActions:@{ @"sublayers": [NSNull null] }];
 }
 
-- (void)uninstallFromSuperview
+- (void)setDrawModel:(MMDrawModel *)drawModel
 {
-    [_canvasLayer removeFromSuperlayer];
-    _canvasLayer = nil;
+    [self reinitializeLayer];
+
+    _drawModel = drawModel;
+
+    [self renderModel:drawModel];
 }
 
 #pragma mark - Cache
@@ -240,10 +236,11 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)uninstall
+- (void)invalidate
 {
     [_canvasLayer removeFromSuperlayer];
     _canvasLayer = nil;
+    _drawModel = nil;
 }
 
 - (void)drawModelWillUpdate:(MMDrawModel *)oldModel

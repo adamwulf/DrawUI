@@ -27,9 +27,9 @@
 @optional
 
 - (void)drawModelWillUpdate:(MMDrawModel *)oldModel;
-- (void)didUpdateBounds:(CGRect)bounds;
+- (void)drawModelDidUpdateBounds:(CGRect)bounds;
 
-- (void)uninstall;
+- (void)invalidate;
 
 @end
 

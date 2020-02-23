@@ -25,7 +25,8 @@
     UIView *_canvasView;
 }
 
-@synthesize dynamicWidth;
+@synthesize dynamicWidth = _dynamicWidth;
+@synthesize drawModel = _drawModel;
 
 #pragma mark - Initializer
 
@@ -64,12 +65,14 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)uninstall
+- (void)invalidate
 {
+    _drawModel = nil;
+
     [_tiledLayer removeFromSuperlayer];
 }
 
-- (void)didUpdateBounds:(CGRect)bounds
+- (void)drawModelDidUpdateBounds:(CGRect)bounds
 {
     [_tiledLayer setFrame:bounds];
 }

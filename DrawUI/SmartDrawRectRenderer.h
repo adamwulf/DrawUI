@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, strong) MMDrawModel *drawModel;
 
+- (void)drawModelDidUpdateBounds:(CGRect)bounds;
+
 @end
 
 NS_ASSUME_NONNULL_END
