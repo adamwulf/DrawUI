@@ -72,12 +72,7 @@
     [_tiledLayer removeFromSuperlayer];
 }
 
-- (void)drawModelDidUpdateBounds:(CGRect)bounds
-{
-    [_tiledLayer setFrame:bounds];
-}
-
-- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel withBounds:(CGRect)bounds
 {
     MMDrawnStroke *stroke = [drawModel activeStroke] ?: [[drawModel strokes] lastObject];
 
@@ -89,6 +84,10 @@
         [[self ctxRenderer] setModel:[drawModel copy]];
 
         [_tiledLayer setNeedsDisplayInRect:pathBounds];
+    }
+
+    if (!CGRectEqualToRect([_tiledLayer frame], bounds)) {
+        [_tiledLayer setFrame:bounds];
     }
 }
 

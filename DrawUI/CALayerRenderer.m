@@ -243,15 +243,12 @@
     _drawModel = nil;
 }
 
-- (void)drawModelWillUpdate:(MMDrawModel *)oldModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel withBounds:(CGRect)bounds
 {
-    if (CGRectEqualToRect([_canvasLayer frame], [[[self canvasView] layer] bounds])) {
-        [_canvasLayer setFrame:[[[self canvasView] layer] bounds]];
+    if (CGRectEqualToRect([_canvasLayer frame], bounds)) {
+        [_canvasLayer setFrame:bounds];
     }
-}
 
-- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
-{
     [self renderModel:drawModel];
 }
 

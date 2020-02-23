@@ -75,7 +75,7 @@ CGFloat const kScale = 4;
     _heightConstraint2 = [NSLayoutConstraint constraintWithItem:[_heightConstraint firstItem] attribute:[_heightConstraint firstAttribute] relatedBy:[_heightConstraint relation] toItem:[_heightConstraint secondItem] attribute:[_heightConstraint secondAttribute] multiplier:kScale constant:0];
 
     // re-render whenever our size changes. Some renderers would otherwise stretch to fill the new size
-    [self addObserver:[self drawView] forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
+    [[self drawView] addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 #pragma mark - Refresh Renderers
@@ -108,7 +108,7 @@ CGFloat const kScale = 4;
 {
     for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
         if ([renderer respondsToSelector:@selector(drawModelDidUpdateBounds:)]) {
-            [renderer drawModelDidUpdateBounds:[[self drawView] bounds]];
+            [renderer drawModelDidUpdate:[self drawModel] withBounds:[[self drawView] bounds]];
         }
     }
 }
@@ -121,16 +121,10 @@ CGFloat const kScale = 4;
         case UIGestureRecognizerStateBegan:
         case UIGestureRecognizerStateChanged:
         case UIGestureRecognizerStateEnded:
-            for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-                if ([renderer respondsToSelector:@selector(drawModelWillUpdate:)]) {
-                    [renderer drawModelWillUpdate:[self drawModel]];
-                }
-            }
-
             [[self drawModel] processTouchStreamWithTool:[self tool]];
 
             for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-                [renderer drawModelDidUpdate:[self drawModel]];
+                [renderer drawModelDidUpdate:[self drawModel] withBounds:[[self drawView] bounds]];
             }
             break;
         default:

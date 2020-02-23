@@ -22,12 +22,9 @@
 /// the MMDrawModel to use for rendering
 @property(nonatomic, strong) MMDrawModel *drawModel;
 
-- (void)drawModelDidUpdate:(MMDrawModel *)drawModel;
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel withBounds:(CGRect)bounds;
 
 @optional
-
-- (void)drawModelWillUpdate:(MMDrawModel *)oldModel;
-- (void)drawModelDidUpdateBounds:(CGRect)bounds;
 
 - (void)invalidate;
 

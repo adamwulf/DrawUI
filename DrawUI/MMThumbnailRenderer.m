@@ -59,7 +59,7 @@
     _drawModel = nil;
 }
 
-- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel withBounds:(CGRect)bounds
 {
     if ([[drawModel strokes] count] && ![drawModel activeStroke]) {
         CGRect bounds = CGRectMake(0, 0, _frame.size.width, _frame.size.height);

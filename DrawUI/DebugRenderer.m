@@ -56,12 +56,7 @@
     _drawModel = nil;
 }
 
-- (void)drawModelDidUpdateBounds:(CGRect)bounds
-{
-    [self setNeedsDisplay];
-}
-
-- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel withBounds:(CGRect)bounds
 {
     _drawModel = drawModel;
 

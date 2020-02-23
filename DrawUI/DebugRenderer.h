@@ -17,8 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithView:(UIView *)canvasView;
 
-- (void)drawModelDidUpdateBounds:(CGRect)bounds;
-
 @end
 
 NS_ASSUME_NONNULL_END

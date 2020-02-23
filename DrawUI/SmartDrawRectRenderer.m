@@ -15,6 +15,7 @@
 @interface SmartDrawRectRenderer ()
 
 @property(nonatomic, strong) CGContextRenderer *ctxRenderer;
+@property(nonatomic, assign) CGRect lastBounds;
 
 @end
 
@@ -30,6 +31,7 @@
         [self setOpaque:NO];
 
         _ctxRenderer = [[CGContextRenderer alloc] init];
+        _lastBounds = [canvasView bounds];
 
         [canvasView addSubview:self];
         [[[self leadingAnchor] constraintEqualToAnchor:[canvasView leadingAnchor]] setActive:YES];
@@ -75,7 +77,7 @@
     [self setNeedsDisplay];
 }
 
-- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel withBounds:(CGRect)bounds
 {
     MMDrawnStroke *stroke = [drawModel activeStroke] ?: [[drawModel strokes] lastObject];
 
@@ -86,6 +88,12 @@
         pathBounds = CGRectInset(pathBounds, -kStrokeWidth, -kStrokeWidth);
 
         [self setNeedsDisplayInRect:pathBounds];
+    }
+
+    if (!CGRectEqualToRect(_lastBounds, bounds)) {
+        _lastBounds = bounds;
+
+        [self setNeedsDisplay];
     }
 }
 

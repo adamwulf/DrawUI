@@ -12,9 +12,9 @@
 
 @implementation NaiveDrawRectRenderer
 
-- (void)drawModelDidUpdate:(MMDrawModel *)drawModel
+- (void)drawModelDidUpdate:(MMDrawModel *)drawModel withBounds:(CGRect)bounds
 {
-    [super drawModelDidUpdate:drawModel];
+    [super drawModelDidUpdate:drawModel withBounds:bounds];
 
     [self setNeedsDisplay];
 }
