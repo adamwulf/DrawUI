@@ -61,7 +61,6 @@ CGFloat const kScale = 4;
 
     [[self view] setBackgroundColor:[UIColor colorWithWhite:.8 alpha:1]];
 
-
     [self setDrawModel:[self drawModel]];
 
     [_allRenderers addObject:[[MMThumbnailRenderer alloc] initWithFrame:[[self view] bounds]]];
@@ -230,8 +229,12 @@ CGFloat const kScale = 4;
         _currentRenderer = [[DebugRenderer alloc] initWithView:[self drawView]];
     }
 
+    [[self allRenderers] addObject:_currentRenderer];
+
     // enable/disable dynamic width
-    [_currentRenderer setDynamicWidth:[[self dynamicWidthSwitch] isOn]];
+    for (NSObject<MMDrawViewRenderer> *renderer in [self allRenderers]) {
+        [renderer setDynamicWidth:[[self dynamicWidthSwitch] isOn]];
+    }
 
     // enable disable custom renderer options
     BOOL cachedEraserVisible = [_currentRenderer conformsToProtocol:@protocol(MMCanCacheEraser)];
@@ -244,8 +247,6 @@ CGFloat const kScale = 4;
     }
 
     [_currentRenderer setDrawModel:[self drawModel]];
-
-    [[self allRenderers] addObject:_currentRenderer];
 }
 
 - (IBAction)didChangeScale:(id)sender

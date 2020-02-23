@@ -21,7 +21,7 @@
 
 @implementation MMThumbnailRenderer
 
-@synthesize dynamicWidth;
+@synthesize dynamicWidth = _dynamicWidth;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -35,11 +35,20 @@
 
         // create the bitmap context
 
-        _imageContext = CGBitmapContextCreate(NULL, 400, 400, 8, 0, _colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast);
+        _imageContext = CGBitmapContextCreate(NULL, CGRectGetWidth(_frame), CGRectGetHeight(_frame), 8, 0, _colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast);
 
+        CGAffineTransform flipTransform = CGAffineTransformMake(1, 0, 0, -1, 0, CGRectGetHeight(_frame));
+        CGContextConcatCTM(_imageContext, flipTransform);
         CGContextTranslateCTM(_imageContext, -_frame.origin.x, -_frame.origin.y);
     }
     return self;
+}
+
+- (void)setDynamicWidth:(BOOL)dynamicWidth
+{
+    _dynamicWidth = dynamicWidth;
+
+    [_ctxRenderer setDynamicWidth:dynamicWidth];
 }
 
 - (void)setDrawModel:(MMDrawModel *)drawModel
