@@ -9,22 +9,26 @@
 #import "MMThumbnailRenderer.h"
 #import "CGContextRenderer.h"
 
+
 @interface MMThumbnailRenderer ()
 
 @property(nonatomic, strong) CGContextRenderer *ctxRenderer;
 @property(nonatomic, assign) CGContextRef imageContext;
 @property(nonatomic, assign) CGColorSpaceRef colorSpace;
+@property(nonatomic, assign) CGRect frame;
 @end
+
 
 @implementation MMThumbnailRenderer
 
 @synthesize dynamicWidth;
 
-- (instancetype)init
+- (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super init]) {
         _ctxRenderer = [[CGContextRenderer alloc] init];
         [_ctxRenderer setDrawByDiff:YES];
+        _frame = frame;
     }
     return self;
 }
@@ -38,7 +42,7 @@
     _imageContext = nil;
 }
 
-- (void)installIntoDrawView:(MMDrawView *)drawView
+- (void)installWithDrawModel:(MMDrawModel *)drawModel
 {
     // gradient is always black-white and the mask must be in the gray colorspace
     _colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -47,18 +51,21 @@
 
     _imageContext = CGBitmapContextCreate(NULL, 400, 400, 8, 0, _colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast);
 
-    [_ctxRenderer setModel:[drawView drawModel]];
+    CGContextTranslateCTM(_imageContext, -_frame.origin.x, -_frame.origin.y);
+
+    [_ctxRenderer setModel:drawModel];
 }
 
-- (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
     [_ctxRenderer setModel:newModel];
 }
 
-- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
+- (void)didUpdateModel:(MMDrawModel *)drawModel
 {
     if ([[drawModel strokes] count] && ![drawModel activeStroke]) {
-        [_ctxRenderer drawRect:[drawView bounds] inContext:_imageContext];
+        CGRect bounds = CGRectMake(0, 0, _frame.size.width, _frame.size.height);
+        [_ctxRenderer drawRect:bounds inContext:_imageContext];
 
         CGImageRef theCGImage = CGBitmapContextCreateImage(_imageContext);
 

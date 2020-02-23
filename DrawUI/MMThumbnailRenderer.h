@@ -7,11 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MMDrawView.h"
+#import "MMDrawViewRenderer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+
 @interface MMThumbnailRenderer : NSObject <MMDrawViewRenderer>
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithFrame:(CGRect)frame;
 
 @end
 

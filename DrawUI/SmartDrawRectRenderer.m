@@ -11,6 +11,7 @@
 #import "CGContextRenderer.h"
 #import "Constants.h"
 
+
 @interface SmartDrawRectRenderer ()
 
 @property(nonatomic, strong) MMDrawModel *model;
@@ -18,16 +19,23 @@
 
 @end
 
+
 @implementation SmartDrawRectRenderer
 
 @synthesize dynamicWidth;
 
-- (instancetype)init
+- (instancetype)initWithView:(UIView *)canvasView
 {
     if (self = [super init]) {
         [self setOpaque:NO];
 
         _ctxRenderer = [[CGContextRenderer alloc] init];
+
+        [canvasView addSubview:self];
+        [[[self leadingAnchor] constraintEqualToAnchor:[canvasView leadingAnchor]] setActive:YES];
+        [[[self trailingAnchor] constraintEqualToAnchor:[canvasView trailingAnchor]] setActive:YES];
+        [[[self topAnchor] constraintEqualToAnchor:[canvasView topAnchor]] setActive:YES];
+        [[[self bottomAnchor] constraintEqualToAnchor:[canvasView bottomAnchor]] setActive:YES];
     }
     return self;
 }
@@ -44,23 +52,18 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)installIntoDrawView:(MMDrawView *)drawView
+- (void)installWithDrawModel:(MMDrawModel *)drawModel
 {
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [drawView addSubview:self];
 
-    _model = [drawView drawModel];
+    _model = drawModel;
 
     [[self ctxRenderer] setModel:[self model]];
 
-    [[[self leadingAnchor] constraintEqualToAnchor:[drawView leadingAnchor]] setActive:YES];
-    [[[self trailingAnchor] constraintEqualToAnchor:[drawView trailingAnchor]] setActive:YES];
-    [[[self topAnchor] constraintEqualToAnchor:[drawView topAnchor]] setActive:YES];
-    [[[self bottomAnchor] constraintEqualToAnchor:[drawView bottomAnchor]] setActive:YES];
     [self setNeedsDisplay];
 }
 
-- (void)uninstallFromDrawView:(MMDrawView *)drawView
+- (void)uninstall
 {
     _model = nil;
 
@@ -68,12 +71,12 @@
     [self removeFromSuperview];
 }
 
-- (void)drawView:(MMDrawView *)drawView didUpdateBounds:(CGRect)bounds
+- (void)didUpdateBounds:(CGRect)bounds
 {
     [self setNeedsDisplay];
 }
 
-- (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
     _model = newModel;
 
@@ -81,7 +84,7 @@
     [self setNeedsDisplay];
 }
 
-- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
+- (void)didUpdateModel:(MMDrawModel *)drawModel
 {
     MMDrawnStroke *stroke = [drawModel activeStroke] ?: [[drawModel strokes] lastObject];
 

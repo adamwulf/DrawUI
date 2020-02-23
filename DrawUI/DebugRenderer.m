@@ -8,59 +8,66 @@
 
 #import "DebugRenderer.h"
 #import "MMAbstractBezierPathElement.h"
+#import "MMDrawModel.h"
+#import "MMDrawnStroke.h"
+
 
 @interface DebugRenderer ()
 
+@property(nonatomic, strong) UIView *canvasView;
 @property(nonatomic, strong) MMDrawModel *model;
 
 @end
+
 
 @implementation DebugRenderer
 
 @synthesize dynamicWidth;
 
-- (instancetype)init
+- (instancetype)initWithView:(UIView *)canvasView;
 {
     if (self = [super init]) {
+        _canvasView = canvasView;
+
+        [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [[self canvasView] addSubview:self];
         [self setOpaque:NO];
+
+        [[[self leadingAnchor] constraintEqualToAnchor:[canvasView leadingAnchor]] setActive:YES];
+        [[[self trailingAnchor] constraintEqualToAnchor:[canvasView trailingAnchor]] setActive:YES];
+        [[[self topAnchor] constraintEqualToAnchor:[canvasView topAnchor]] setActive:YES];
+        [[[self bottomAnchor] constraintEqualToAnchor:[canvasView bottomAnchor]] setActive:YES];
     }
     return self;
 }
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)installIntoDrawView:(MMDrawView *)drawView
+- (void)installWithDrawModel:(MMDrawModel *)drawModel
 {
-    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [drawView addSubview:self];
+    _model = drawModel;
 
-    _model = [drawView drawModel];
-
-    [[[self leadingAnchor] constraintEqualToAnchor:[drawView leadingAnchor]] setActive:YES];
-    [[[self trailingAnchor] constraintEqualToAnchor:[drawView trailingAnchor]] setActive:YES];
-    [[[self topAnchor] constraintEqualToAnchor:[drawView topAnchor]] setActive:YES];
-    [[[self bottomAnchor] constraintEqualToAnchor:[drawView bottomAnchor]] setActive:YES];
     [self setNeedsDisplay];
 }
 
-- (void)uninstallFromDrawView:(MMDrawView *)drawView
+- (void)uninstall
 {
     [self removeFromSuperview];
     _model = nil;
 }
 
-- (void)drawView:(MMDrawView *)drawView didUpdateBounds:(CGRect)bounds
+- (void)didUpdateBounds:(CGRect)bounds
 {
     [self setNeedsDisplay];
 }
 
-- (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
     _model = newModel;
     [self setNeedsDisplay];
 }
 
-- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
+- (void)didUpdateModel:(MMDrawModel *)drawModel
 {
     _model = drawModel;
 

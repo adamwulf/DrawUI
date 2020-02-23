@@ -7,11 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MMDrawView.h"
+#import "MMDrawViewRenderer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+
 @interface DebugRenderer : UIView <MMDrawViewRenderer>
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithView:(UIView *)canvasView;
 
 @end
 

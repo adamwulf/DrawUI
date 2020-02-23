@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MMDrawView.h"
 #import "MMCanCacheEraser.h"
+#import "MMDrawViewRenderer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,6 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// The benefit of a realtime eraser is that it can render a predicted path for the eraser, and then update
 /// the path correctly, while the cached eraser will draw faster but will not be able to benefit from predicted touches
 @interface CALayerRenderer : NSObject <MMDrawViewRenderer, MMCanCacheEraser>
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithView:(UIView *)canvasView;
 
 /// YES to cache the eraser layer contents to a bitmap, NO to redraw the eraser layer each update
 @property(nonatomic, assign) BOOL useCachedEraserLayerType;

@@ -7,13 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MMDrawView.h"
+#import "MMDrawViewRenderer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CATiledLayerRenderer : NSObject<MMDrawViewRenderer>
 
-@property (nonatomic, assign) BOOL dynamicWidth;
+@interface CATiledLayerRenderer : NSObject <MMDrawViewRenderer>
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithView:(UIView *)canvasView;
+
+@property(nonatomic, assign) BOOL dynamicWidth;
 
 @end
 

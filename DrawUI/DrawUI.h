@@ -37,7 +37,6 @@ FOUNDATION_EXPORT const unsigned char DrawUIVersionString[];
 
 #import <DrawUI/MMCanCacheEraser.h>
 #import <DrawUI/MMDrawViewRenderer.h>
-#import <DrawUI/MMDrawView.h>
 
 #import <DrawUI/CALayerRenderer.h>
 #import <DrawUI/CARealtimeEraserLayer.h>

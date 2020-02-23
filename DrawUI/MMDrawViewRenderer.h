@@ -9,7 +9,9 @@
 #ifndef MMDrawViewRenderer_h
 #define MMDrawViewRenderer_h
 
-@class MMDrawView, MMPen;
+#import <UIKit/UIKit.h>
+
+@class MMDrawModel, MMPen;
 
 @protocol MMDrawViewRenderer <NSObject>
 
@@ -17,18 +19,18 @@
 /// NO for strokes to have uniform width
 @property(nonatomic, assign) BOOL dynamicWidth;
 
-- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel;
+- (void)didUpdateModel:(MMDrawModel *)drawModel;
 
 @optional
 
-- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel;
-- (void)drawView:(MMDrawView *)drawView didUpdateBounds:(CGRect)bounds;
+- (void)willUpdateModel:(MMDrawModel *)oldModel;
+- (void)didUpdateBounds:(CGRect)bounds;
 
-- (void)installIntoDrawView:(MMDrawView *)drawView;
-- (void)uninstallFromDrawView:(MMDrawView *)drawView;
+- (void)installWithDrawModel:(MMDrawModel *)drawModel;
+- (void)uninstall;
 
-- (void)drawView:(MMDrawView *)drawView willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel;
-- (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel;
+- (void)willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel;
+- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel;
 
 @end
 

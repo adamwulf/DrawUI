@@ -10,7 +10,6 @@
 #import "Constants.h"
 #import "MMDrawnStroke.h"
 #import "MMTouchVelocityGestureRecognizer.h"
-#import "MMDrawView.h"
 #import "MMAbstractBezierPathElement.h"
 #import "MMTouchStreamEvent.h"
 

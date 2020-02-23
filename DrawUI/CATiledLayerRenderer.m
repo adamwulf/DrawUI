@@ -12,26 +12,33 @@
 #import "CGContextRenderer.h"
 #import "Constants.h"
 
+
 @interface CATiledLayerRenderer () <CALayerDelegate>
 
 @property(nonatomic, strong) CGContextRenderer *ctxRenderer;
 
 @end
 
+
 @implementation CATiledLayerRenderer {
     MMDrawModel *_lastModel;
     CATiledLayer *_tiledLayer;
+    UIView *_canvasView;
 }
 
 @synthesize dynamicWidth;
 
 #pragma mark - Initializer
 
-- (instancetype)init
+- (instancetype)initWithView:(UIView *)canvasView
 {
     if (self = [super init]) {
+        _canvasView = canvasView;
         _tiledLayer = [CANoFadeTiledLayer layer];
         [_tiledLayer setDelegate:self];
+
+        [[canvasView layer] addSublayer:_tiledLayer];
+        [_tiledLayer setFrame:[[canvasView layer] bounds]];
 
         _ctxRenderer = [[CGContextRenderer alloc] init];
     }
@@ -50,30 +57,26 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)installIntoDrawView:(MMDrawView *)drawView
+- (void)installWithDrawModel:(MMDrawModel *)drawModel
 {
-    [[drawView layer] addSublayer:_tiledLayer];
-    [_tiledLayer setFrame:[[drawView layer] bounds]];
-
-    _lastModel = [drawView drawModel];
+    _lastModel = drawModel;
 
     [[self ctxRenderer] setModel:_lastModel];
-    [drawView addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
     [_tiledLayer setNeedsDisplay];
 }
 
-- (void)uninstallFromDrawView:(MMDrawView *)drawView
+- (void)uninstall
 {
     [_tiledLayer removeFromSuperlayer];
-    [drawView removeObserver:self forKeyPath:@"bounds"];
+    [_canvasView removeObserver:self forKeyPath:@"bounds"];
 }
 
-- (void)drawView:(MMDrawView *)drawView didUpdateBounds:(CGRect)bounds
+- (void)didUpdateBounds:(CGRect)bounds
 {
-    [_tiledLayer setFrame:[[drawView layer] bounds]];
+    [_tiledLayer setFrame:bounds];
 }
 
-- (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
     _lastModel = newModel;
 
@@ -81,7 +84,7 @@
     [_tiledLayer setNeedsDisplay];
 }
 
-- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
+- (void)didUpdateModel:(MMDrawModel *)drawModel
 {
     MMDrawnStroke *stroke = [drawModel activeStroke] ?: [[drawModel strokes] lastObject];
 

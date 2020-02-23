@@ -7,7 +7,6 @@
 //
 
 #import "MMDrawModel.h"
-#import "MMDrawView.h"
 #import "MMAbstractBezierPathElement.h"
 #import "MMAbstractBezierPathElement-Protected.h"
 #import "MMTouchStream.h"

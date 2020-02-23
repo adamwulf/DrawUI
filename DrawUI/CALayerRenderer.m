@@ -11,11 +11,15 @@
 #import "CARealtimeEraserLayer.h"
 #import "CACachedEraserLayer.h"
 #import "CAPencilLayer.h"
+#import "MMDrawnStroke.h"
+#import "MMDrawModel.h"
 
 #define kUseCachedEraserLayer 1
 
 
 @interface CALayerRenderer () <CALayerDelegate>
+
+@property(nonatomic, strong) UIView *canvasView;
 
 @end
 
@@ -29,14 +33,31 @@
 @synthesize dynamicWidth = _dynamicWidth;
 @synthesize useCachedEraserLayerType = _useCachedEraserLayerType;
 
-- (instancetype)init
+- (instancetype)initWithView:(UIView *)canvasView
 {
     if (self = [super init]) {
-        _strokeLayers = [NSMutableDictionary dictionary];
-        _lastRenderedVersion = 0;
         _useCachedEraserLayerType = YES;
+        _canvasView = canvasView;
+        [self installIntoView:_canvasView];
     }
     return self;
+}
+
+- (void)installIntoView:(UIView *)canvasView
+{
+    _strokeLayers = [NSMutableDictionary dictionary];
+    _lastRenderedVersion = 0;
+    _canvasLayer = [CAPencilLayer layer];
+    [_canvasLayer setDelegate:self];
+
+    [[canvasView layer] addSublayer:_canvasLayer];
+    [[canvasView layer] setActions:@{ @"sublayers": [NSNull null] }];
+}
+
+- (void)uninstallFromSuperview
+{
+    [_canvasLayer removeFromSuperlayer];
+    _canvasLayer = nil;
 }
 
 #pragma mark - Cache
@@ -78,7 +99,7 @@
 
 #pragma mark - Render
 
-- (void)renderStroke:(MMDrawnStroke *)stroke inView:(MMDrawView *)drawView
+- (void)renderStroke:(MMDrawnStroke *)stroke
 {
     if ([self dynamicWidth]) {
         if (![[stroke tool] color]) {
@@ -90,9 +111,9 @@
 
             if (!eraserLayer) {
                 if (_useCachedEraserLayerType) {
-                    eraserLayer = [[CACachedEraserLayer alloc] initWithBounds:[drawView bounds]];
+                    eraserLayer = [[CACachedEraserLayer alloc] initWithBounds:[[self canvasView] bounds]];
                 } else {
-                    eraserLayer = [[CARealtimeEraserLayer alloc] initWithBounds:[drawView bounds]];
+                    eraserLayer = [[CARealtimeEraserLayer alloc] initWithBounds:[[self canvasView] bounds]];
                 }
 
                 [eraserLayer setOpaque:NO];
@@ -101,7 +122,7 @@
                 [_canvasLayer setMask:eraserLayer];
             }
 
-            [eraserLayer setFrame:[drawView bounds]];
+            [eraserLayer setFrame:[[self canvasView] bounds]];
 
             for (MMAbstractBezierPathElement *ele in [stroke segments]) {
                 // Only draw the element if:
@@ -153,9 +174,9 @@
 
             if (!eraserLayer) {
                 if (_useCachedEraserLayerType) {
-                    eraserLayer = [[CACachedEraserLayer alloc] initWithBounds:[drawView bounds]];
+                    eraserLayer = [[CACachedEraserLayer alloc] initWithBounds:[[self canvasView] bounds]];
                 } else {
-                    eraserLayer = [[CARealtimeEraserLayer alloc] initWithBounds:[drawView bounds]];
+                    eraserLayer = [[CARealtimeEraserLayer alloc] initWithBounds:[[self canvasView] bounds]];
                 }
 
                 [eraserLayer setOpaque:NO];
@@ -164,7 +185,7 @@
                 [_canvasLayer setMask:eraserLayer];
             }
 
-            [eraserLayer setFrame:[drawView bounds]];
+            [eraserLayer setFrame:[[self canvasView] bounds]];
             [eraserLayer setPath:[stroke path] forIdentifier:[stroke identifier]];
         } else {
             [self embedPencilLayerIfNecessary];
@@ -183,13 +204,13 @@
     }
 }
 
-- (void)renderModel:(MMDrawModel *)drawModel inView:(MMDrawView *)drawView
+- (void)renderModel:(MMDrawModel *)drawModel
 {
     NSUInteger maxSoFar = _lastRenderedVersion;
 
     for (MMDrawnStroke *stroke in [drawModel strokes]) {
         if ([stroke version] > _lastRenderedVersion) {
-            [self renderStroke:stroke inView:drawView];
+            [self renderStroke:stroke];
 
             maxSoFar = MAX([stroke version], maxSoFar);
         }
@@ -197,7 +218,7 @@
 
     if ([drawModel activeStroke]) {
         if ([[drawModel activeStroke] version] > _lastRenderedVersion) {
-            [self renderStroke:[drawModel activeStroke] inView:drawView];
+            [self renderStroke:[drawModel activeStroke]];
 
             maxSoFar = MAX([[drawModel activeStroke] version], maxSoFar);
         }
@@ -208,45 +229,38 @@
 
 #pragma mark - MMDrawViewRenderer
 
-- (void)installIntoDrawView:(MMDrawView *)drawView
+- (void)installWithDrawModel:(MMDrawModel *)drawModel
 {
-    _strokeLayers = [NSMutableDictionary dictionary];
-    _lastRenderedVersion = 0;
-    _canvasLayer = [CAPencilLayer layer];
-    [_canvasLayer setDelegate:self];
-
-    [[drawView layer] addSublayer:_canvasLayer];
-    [[drawView layer] setActions:@{ @"sublayers": [NSNull null] }];
-
-    [self renderModel:[drawView drawModel] inView:drawView];
+    [self renderModel:drawModel];
 }
 
-- (void)uninstallFromDrawView:(MMDrawView *)drawView
+- (void)uninstall
 {
     [_canvasLayer removeFromSuperlayer];
     _canvasLayer = nil;
 }
 
-- (void)drawView:(MMDrawView *)drawView willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+- (void)willReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
-    [self uninstallFromDrawView:drawView];
+    [self uninstallFromSuperview];
 }
 
-- (void)drawView:(MMDrawView *)drawView didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
+- (void)didReplaceModel:(MMDrawModel *)oldModel withModel:(MMDrawModel *)newModel
 {
-    [self installIntoDrawView:drawView];
+    [self installIntoView:[self canvasView]];
+    [self installWithDrawModel:newModel];
 }
 
-- (void)drawView:(MMDrawView *)drawView willUpdateModel:(MMDrawModel *)oldModel
+- (void)willUpdateModel:(MMDrawModel *)oldModel
 {
-    if (CGRectEqualToRect([_canvasLayer frame], [[drawView layer] bounds])) {
-        [_canvasLayer setFrame:[[drawView layer] bounds]];
+    if (CGRectEqualToRect([_canvasLayer frame], [[[self canvasView] layer] bounds])) {
+        [_canvasLayer setFrame:[[[self canvasView] layer] bounds]];
     }
 }
 
-- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
+- (void)didUpdateModel:(MMDrawModel *)drawModel
 {
-    [self renderModel:drawModel inView:drawView];
+    [self renderModel:drawModel];
 }
 
 #pragma mark - CALayerDelegate

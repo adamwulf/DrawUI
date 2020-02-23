@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "MMDrawView.h"
 #import "MMDrawModel.h"
 #import "DebugRenderer.h"
 #import "CALayerRenderer.h"
@@ -23,7 +22,7 @@ CGFloat const kScale = 4;
 
 @interface ViewController ()
 
-@property(nonatomic, strong) IBOutlet MMDrawView *drawView;
+@property(nonatomic, strong) IBOutlet UIView *drawView;
 @property(nonatomic, strong) IBOutlet UISegmentedControl *rendererControl;
 @property(nonatomic, strong) IBOutlet UISegmentedControl *scaleControl;
 @property(nonatomic, strong) IBOutlet UISwitch *dynamicWidthSwitch;
@@ -65,10 +64,12 @@ CGFloat const kScale = 4;
 
     [self setDrawModel:[self drawModel]];
 
-    [_allRenderers addObject:[[MMThumbnailRenderer alloc] init]];
+    [_allRenderers addObject:[[MMThumbnailRenderer alloc] initWithFrame:[[self view] bounds]]];
 
     // install thumbnail generation
-    [[self drawView] installRenderer:[_allRenderers firstObject]];
+    if ([_currentRenderer respondsToSelector:@selector(installWithDrawModel:)]) {
+        [_currentRenderer installWithDrawModel:[self drawModel]];
+    }
 
     // also install the renderer to the UI
     [self didChangeRenderer:[self rendererControl]];
@@ -85,19 +86,17 @@ CGFloat const kScale = 4;
 - (void)setDrawModel:(MMDrawModel *)newModel
 {
     for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-        if ([renderer respondsToSelector:@selector(drawView:willReplaceModel:withModel:)]) {
-            [renderer drawView:[self drawView] willReplaceModel:_drawModel withModel:newModel];
+        if ([renderer respondsToSelector:@selector(willReplaceModel:withModel:)]) {
+            [renderer willReplaceModel:_drawModel withModel:newModel];
         }
     }
 
     MMDrawModel *oldModel = _drawModel;
     _drawModel = newModel;
 
-    [[self drawView] setDrawModel:_drawModel];
-
     for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-        if ([renderer respondsToSelector:@selector(drawView:didReplaceModel:withModel:)]) {
-            [renderer drawView:[self drawView] didReplaceModel:oldModel withModel:_drawModel];
+        if ([renderer respondsToSelector:@selector(didReplaceModel:withModel:)]) {
+            [renderer didReplaceModel:oldModel withModel:_drawModel];
         }
     }
 
@@ -120,8 +119,8 @@ CGFloat const kScale = 4;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UIView *)drawView change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context
 {
     for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-        if ([renderer respondsToSelector:@selector(drawView:didUpdateBounds:)]) {
-            [renderer drawView:[self drawView] didUpdateBounds:[[self drawView] bounds]];
+        if ([renderer respondsToSelector:@selector(didUpdateBounds:)]) {
+            [renderer didUpdateBounds:[[self drawView] bounds]];
         }
     }
 }
@@ -135,15 +134,15 @@ CGFloat const kScale = 4;
         case UIGestureRecognizerStateChanged:
         case UIGestureRecognizerStateEnded:
             for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-                if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-                    [renderer drawView:[self drawView] willUpdateModel:[self drawModel]];
+                if ([renderer respondsToSelector:@selector(willUpdateModel:)]) {
+                    [renderer willUpdateModel:[self drawModel]];
                 }
             }
 
             [[self drawModel] processTouchStreamWithTool:[self tool]];
 
             for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
-                [renderer drawView:[self drawView] didUpdateModel:[self drawModel]];
+                [renderer didUpdateModel:[self drawModel]];
             }
             break;
         default:
@@ -231,20 +230,22 @@ CGFloat const kScale = 4;
 - (IBAction)didChangeRenderer:(UISegmentedControl *)segmentedControl
 {
     if (_currentRenderer) {
-        [[self drawView] uninstallRenderer:_currentRenderer];
+        if ([_currentRenderer respondsToSelector:@selector(uninstall)]) {
+            [_currentRenderer uninstall];
+        }
         [[self allRenderers] removeObject:_currentRenderer];
     }
 
     if ([segmentedControl selectedSegmentIndex] == 0) {
-        _currentRenderer = [[CALayerRenderer alloc] init];
+        _currentRenderer = [[CALayerRenderer alloc] initWithView:[self drawView]];
     } else if ([segmentedControl selectedSegmentIndex] == 1) {
-        _currentRenderer = [[CATiledLayerRenderer alloc] init];
+        _currentRenderer = [[CATiledLayerRenderer alloc] initWithView:[self drawView]];
     } else if ([segmentedControl selectedSegmentIndex] == 2) {
-        _currentRenderer = [[NaiveDrawRectRenderer alloc] init];
+        _currentRenderer = [[NaiveDrawRectRenderer alloc] initWithView:[self drawView]];
     } else if ([segmentedControl selectedSegmentIndex] == 3) {
-        _currentRenderer = [[SmartDrawRectRenderer alloc] init];
+        _currentRenderer = [[SmartDrawRectRenderer alloc] initWithView:[self drawView]];
     } else if ([segmentedControl selectedSegmentIndex] == 4) {
-        _currentRenderer = [[DebugRenderer alloc] init];
+        _currentRenderer = [[DebugRenderer alloc] initWithView:[self drawView]];
     }
 
     // enable/disable dynamic width
@@ -260,7 +261,10 @@ CGFloat const kScale = 4;
         [(id<MMCanCacheEraser>)_currentRenderer setUseCachedEraserLayerType:[[self cachedEraserSwitch] isOn]];
     }
 
-    [[self drawView] installRenderer:_currentRenderer];
+    if ([_currentRenderer respondsToSelector:@selector(installWithDrawModel:)]) {
+        [_currentRenderer installWithDrawModel:[self drawModel]];
+    }
+
     [[self allRenderers] addObject:_currentRenderer];
 }
 
@@ -287,7 +291,7 @@ CGFloat const kScale = 4;
 
 - (IBAction)redraw:(id)sender
 {
-    [self setDrawModel:[[[self drawView] drawModel] copy]];
+    [self setDrawModel:[[self drawModel] copy]];
 }
 
 - (IBAction)didChangeDynamicWidth:(id)sender

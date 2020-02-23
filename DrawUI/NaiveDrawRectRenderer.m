@@ -9,11 +9,12 @@
 #import "NaiveDrawRectRenderer.h"
 #import "MMAbstractBezierPathElement.h"
 
+
 @implementation NaiveDrawRectRenderer
 
-- (void)drawView:(MMDrawView *)drawView didUpdateModel:(MMDrawModel *)drawModel
+- (void)didUpdateModel:(MMDrawModel *)drawModel
 {
-    [super drawView:drawView didUpdateModel:drawModel];
+    [super didUpdateModel:drawModel];
 
     [self setNeedsDisplay];
 }
