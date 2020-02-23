@@ -9,14 +9,14 @@ The goal is to be able to easily swap out renderers for the same model data, mak
 The following describes how touch input is processed by the DrawUI and rendered on screen.
 
 ### Step 1: User Input
-`MMDrawView` touch methods listen for all of the user's finger or stylus touches. These `touches*:withEvent:` methods might be called faster than
-we can render any previous touches, so all touch information is cached into a `MMTouchStream`. This stream is essentially an array of all input events
-from the user that will eventually be converted into inked lines. Event `touchesEstimatedPropertiesUpdated:` adds new touch events into this 
-stream. Every event in this stream is a `MMTouchStreamEvent` object.
+`MMTouchStreamGestureRecognizer` touch methods listen for all of the user's finger or stylus touches. These `touches*:withEvent:` methods 
+might be called faster than we can render any previous touches, so all touch information is cached into a `MMTouchStream`. This stream is essentially 
+an array of all input events from the user that will eventually be converted into inked lines. Event `touchesEstimatedPropertiesUpdated:` adds new 
+touch events into this  stream. Every event in this stream is a `MMTouchStreamEvent` object.
 
 
 ### Step 2: Ink Model
-The `MMDrawModel` processes the `MMTouchStreamEvent` and converts it into a more structured model repesenting the ink. This is done in `processTouchStream:withTool:` where all unprocessed events from the stream are converted to inked strokes using the input tool.
+The `MMDrawModel` processes the `MMTouchStreamEvent` and converts it into a more structured model repesenting the ink. This is done in `processTouchStreamWithTool:` where all unprocessed events from the stream are converted to inked strokes using the input tool.
 
 To process the data, the `MMDrawModel` will either begin a new stroke for a `UITouchPhaseBegan` event, or will update an existing stroke
 with the data. Each stroke's data is stored in separate `MMDrawnStroke` objects. Each stroke is composed of many `MMAbstractBezierPathElement`
@@ -37,7 +37,7 @@ in a later event. In this case, the model will update the affected stroke to adj
 
 ### Step 3: Render
 
-Multiple renderers can be installed on a single `MMDrawView`. After every touch, the model is updated and renderers are notified of the changes and
+Multiple renderers can process a single `MMDrawModel`. After every touch, the model is updated and renderers are notified of the changes and
 given a chance to update. Some renderers might immediately render the changes (for instance, a background thumbnail generator), while some might
 `setNeedsDisplayInRect:`  for the affected area (see `SmartDrawRectRenderer`).
 
