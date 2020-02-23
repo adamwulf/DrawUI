@@ -16,6 +16,7 @@
 #import "MMTouchStreamEvent.h"
 #import "MMPen.h"
 
+
 @interface MMDrawnStroke ()
 
 @property(nonatomic, strong) NSMutableArray<MMAbstractBezierPathElement *> *segments;
@@ -170,7 +171,7 @@
 
         // cache this element for each of its events. if any update ever comes in
         // for these event ids, then this segment should be updated with any new properties
-        for (MMTouchStreamEvent *eleEvent in [ele events]) {
+        for (MMTouchStreamEvent *eleEvent in elementEvents) {
             if ([eleEvent estimationUpdateIndex]) {
                 [_eventIdToSegment setObject:ele forKey:[eleEvent estimationUpdateIndex]];
             }
@@ -181,6 +182,8 @@
         [_borderPath appendPath:[ele borderPath]];
 
     } else {
+        // we haven't generated enough events to build an element yet. This happens
+        // as the smoother is determining the very first element
         [_waitingEvents addObject:event];
     }
 

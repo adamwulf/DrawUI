@@ -53,6 +53,11 @@
                 [_activeStroke addEvent:event];
             }
         } else {
+            // TODO: It's possible for an update to come in for a previous stroke
+            // after a new stroke has aleady been started. In that case, the
+            // for loop below will never be run to find the correct stroke,
+            // and the isSameTouchAsEvent: will also fail, causing the event
+            // to be lost.
             MMDrawnStroke *strokeForEvent = _activeStroke;
 
             if (!strokeForEvent) {
