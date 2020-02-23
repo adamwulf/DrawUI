@@ -8,31 +8,24 @@
 
 #import "MMTouchStream.h"
 
+
 @implementation MMTouchStream {
-    NSMutableSet *_estimatedIndexes;
     NSMutableArray<MMTouchStreamEvent *> *_events;
 }
 
 - (instancetype)init
 {
     if (self = [super init]) {
-        _estimatedIndexes = [NSMutableSet set];
         _events = [NSMutableArray array];
     }
     return self;
 }
 
-- (MMTouchStreamEvent *)addStreamCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)isUpdate isPrediction:(BOOL)prediction
+#pragma mark - Events
+
+- (void)addEvent:(MMTouchStreamEvent *)touchStreamEvent
 {
-    MMTouchStreamEvent *event = [MMTouchStreamEvent eventWithCoalescedTouch:coalescedTouch touch:touch velocity:velocity isUpdate:isUpdate isPrediction:prediction];
-
-    [_events addObject:event];
-
-    if ([touch estimationUpdateIndex]) {
-        [_estimatedIndexes addObject:[touch estimationUpdateIndex]];
-    }
-
-    return event;
+    [_events addObject:touchStreamEvent];
 }
 
 - (NSArray<MMTouchStreamEvent *> *)eventsSinceEvent:(MMTouchStreamEvent *)event

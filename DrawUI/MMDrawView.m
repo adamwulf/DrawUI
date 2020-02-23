@@ -122,13 +122,17 @@
         }
 
         for (UITouch *coalescedTouch in coalesced) {
-            [_touchStream addStreamCoalescedTouch:coalescedTouch touch:touch velocity:[[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch] isUpdate:isUpdate isPrediction:NO];
+            CGFloat velocity = [[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch];
+
+            [_touchStream addEvent:[MMTouchStreamEvent eventWithCoalescedTouch:coalescedTouch touch:touch velocity:velocity isUpdate:isUpdate isPrediction:NO]];
         }
 
         NSArray<UITouch *> *predicted = [event predictedTouchesForTouch:touch];
 
         for (UITouch *predictedTouch in predicted) {
-            [_touchStream addStreamCoalescedTouch:predictedTouch touch:touch velocity:[[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch] isUpdate:isUpdate isPrediction:YES];
+            CGFloat velocity = [[MMTouchVelocityGestureRecognizer sharedInstance] normalizedVelocityForTouch:touch];
+
+            [_touchStream addEvent:[MMTouchStreamEvent eventWithCoalescedTouch:predictedTouch touch:touch velocity:velocity isUpdate:isUpdate isPrediction:YES]];
         }
     }
 
