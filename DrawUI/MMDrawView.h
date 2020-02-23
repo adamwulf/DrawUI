@@ -12,10 +12,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
 @interface MMDrawView : UIView
 
 @property(nonatomic, strong) MMDrawModel *drawModel;
-@property(nonatomic, strong) MMPen *tool;
 
 - (void)installRenderer:(NSObject<MMDrawViewRenderer> *)renderer;
 - (void)uninstallRenderer:(NSObject<MMDrawViewRenderer> *)renderer;

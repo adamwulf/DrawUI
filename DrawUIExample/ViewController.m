@@ -63,7 +63,6 @@ CGFloat const kScale = 4;
     [[self view] setBackgroundColor:[UIColor colorWithWhite:.8 alpha:1]];
 
 
-    [[self drawView] setTool:[self tool]];
     [self setDrawModel:[self drawModel]];
 
     [_allRenderers addObject:[[MMThumbnailRenderer alloc] init]];
@@ -213,8 +212,6 @@ CGFloat const kScale = 4;
         _tool = [[MMPen alloc] initWithMinSize:20 andMaxSize:20];
         [_tool setColor:nil];
     }
-
-    [[self drawView] setTool:[self tool]];
 }
 
 - (IBAction)didChangeRenderer:(UISegmentedControl *)segmentedControl
