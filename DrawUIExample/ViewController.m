@@ -75,6 +75,9 @@ CGFloat const kScale = 4;
 
     _widthConstraint2 = [NSLayoutConstraint constraintWithItem:[_widthConstraint firstItem] attribute:[_widthConstraint firstAttribute] relatedBy:[_widthConstraint relation] toItem:[_widthConstraint secondItem] attribute:[_widthConstraint secondAttribute] multiplier:kScale constant:0];
     _heightConstraint2 = [NSLayoutConstraint constraintWithItem:[_heightConstraint firstItem] attribute:[_heightConstraint firstAttribute] relatedBy:[_heightConstraint relation] toItem:[_heightConstraint secondItem] attribute:[_heightConstraint secondAttribute] multiplier:kScale constant:0];
+
+    // re-render whenever our size changes. Some renderers would otherwise stretch to fill the new size
+    [self addObserver:[self drawView] forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 #pragma mark - Refresh Renderers
@@ -110,6 +113,17 @@ CGFloat const kScale = 4;
     _touchGesture = [[MMTouchStreamGestureRecognizer alloc] initWithTouchStream:[newModel touchStream] target:self action:@selector(touchStreamGesture:)];
 
     [[self drawView] addGestureRecognizer:_touchGesture];
+}
+
+#pragma mark - Notifications
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UIView *)drawView change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context
+{
+    for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
+        if ([renderer respondsToSelector:@selector(drawView:didUpdateBounds:)]) {
+            [renderer drawView:[self drawView] didUpdateBounds:[[self drawView] bounds]];
+        }
+    }
 }
 
 #pragma mark - Gestures

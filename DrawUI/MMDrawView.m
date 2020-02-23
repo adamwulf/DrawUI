@@ -53,20 +53,6 @@
 - (void)finishInit
 {
     _renderers = [NSMutableArray array];
-
-    // re-render whenever our size changes. Some renderers would otherwise stretch to fill the new size
-    [self addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
-}
-
-#pragma mark - Notifications
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UIView *)drawView change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context
-{
-    for (NSObject<MMDrawViewRenderer> *renderer in [self renderers]) {
-        if ([renderer respondsToSelector:@selector(drawView:didUpdateBounds:)]) {
-            [renderer drawView:self didUpdateBounds:[self bounds]];
-        }
-    }
 }
 
 #pragma mark - Properties
