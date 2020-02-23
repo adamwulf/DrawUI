@@ -16,6 +16,7 @@
 #import "CATiledLayerRenderer.h"
 #import "MMThumbnailRenderer.h"
 #import "MMTouchVelocityGestureRecognizer.h"
+#import "MMTouchStreamGestureRecognizer.h"
 
 CGFloat const kScale = 4;
 
@@ -31,7 +32,10 @@ CGFloat const kScale = 4;
 
 @property(nonatomic, strong) MMDrawModel *drawModel;
 @property(nonatomic, strong) MMPen *tool;
+@property(nonatomic, strong) NSMutableArray<NSObject<MMDrawViewRenderer> *> *allRenderers;
 @property(nonatomic, strong) NSObject<MMDrawViewRenderer> *currentRenderer;
+
+@property(nonatomic, strong) MMTouchStreamGestureRecognizer *touchGesture;
 
 @property(nonatomic, strong) IBOutlet NSLayoutConstraint *widthConstraint;
 @property(nonatomic, strong) IBOutlet NSLayoutConstraint *heightConstraint;
@@ -54,17 +58,18 @@ CGFloat const kScale = 4;
 
     _tool = [[MMPen alloc] initWithMinSize:2 andMaxSize:7];
     _drawModel = [[MMDrawModel alloc] init];
+    _allRenderers = [NSMutableArray array];
 
     [[self view] setBackgroundColor:[UIColor colorWithWhite:.8 alpha:1]];
 
 
     [[self drawView] setTool:[self tool]];
-    [[self drawView] setDrawModel:[self drawModel]];
+    [self setDrawModel:[self drawModel]];
 
-    MMThumbnailRenderer *thumbnailRenderer = [[MMThumbnailRenderer alloc] init];
+    [_allRenderers addObject:[[MMThumbnailRenderer alloc] init]];
 
     // install thumbnail generation
-    [[self drawView] installRenderer:thumbnailRenderer];
+    [[self drawView] installRenderer:[_allRenderers firstObject]];
 
     // also install the renderer to the UI
     [self didChangeRenderer:[self rendererControl]];
@@ -72,6 +77,68 @@ CGFloat const kScale = 4;
     _widthConstraint2 = [NSLayoutConstraint constraintWithItem:[_widthConstraint firstItem] attribute:[_widthConstraint firstAttribute] relatedBy:[_widthConstraint relation] toItem:[_widthConstraint secondItem] attribute:[_widthConstraint secondAttribute] multiplier:kScale constant:0];
     _heightConstraint2 = [NSLayoutConstraint constraintWithItem:[_heightConstraint firstItem] attribute:[_heightConstraint firstAttribute] relatedBy:[_heightConstraint relation] toItem:[_heightConstraint secondItem] attribute:[_heightConstraint secondAttribute] multiplier:kScale constant:0];
 }
+
+#pragma mark - Refresh Renderers
+
+- (void)setDrawModel:(MMDrawModel *)newModel
+{
+    for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
+        if ([renderer respondsToSelector:@selector(drawView:willReplaceModel:withModel:)]) {
+            [renderer drawView:[self drawView] willReplaceModel:_drawModel withModel:newModel];
+        }
+    }
+
+    MMDrawModel *oldModel = _drawModel;
+    _drawModel = newModel;
+
+    [[self drawView] setDrawModel:_drawModel];
+
+    for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
+        if ([renderer respondsToSelector:@selector(drawView:didReplaceModel:withModel:)]) {
+            [renderer drawView:[self drawView] didReplaceModel:oldModel withModel:_drawModel];
+        }
+    }
+
+    [self refreshGestureForModel:[self drawModel]];
+}
+
+- (void)refreshGestureForModel:(MMDrawModel *)newModel
+{
+    if (_touchGesture) {
+        [[self drawView] removeGestureRecognizer:_touchGesture];
+    }
+
+    _touchGesture = [[MMTouchStreamGestureRecognizer alloc] initWithTouchStream:[newModel touchStream] target:self action:@selector(touchStreamGesture:)];
+
+    [[self drawView] addGestureRecognizer:_touchGesture];
+}
+
+#pragma mark - Gestures
+
+- (void)touchStreamGesture:(MMTouchStreamGestureRecognizer *)gesture
+{
+    switch ([gesture state]) {
+        case UIGestureRecognizerStateBegan:
+        case UIGestureRecognizerStateChanged:
+        case UIGestureRecognizerStateEnded:
+            for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
+                if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
+                    [renderer drawView:[self drawView] willUpdateModel:[self drawModel]];
+                }
+            }
+
+            [[self drawModel] processTouchStreamWithTool:[self tool]];
+
+            for (NSObject<MMDrawViewRenderer> *renderer in _allRenderers) {
+                [renderer drawView:[self drawView] didUpdateModel:[self drawModel]];
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - Actions
 
 - (IBAction)saveDrawing:(id)sender
 {
@@ -126,7 +193,7 @@ CGFloat const kScale = 4;
         [self presentViewController:alert animated:YES completion:nil];
     } else {
         // build a new renderer and set its model
-        [[self drawView] setDrawModel:_drawModel];
+        [self setDrawModel:_drawModel];
     }
 }
 
@@ -134,7 +201,7 @@ CGFloat const kScale = 4;
 {
     _drawModel = [[MMDrawModel alloc] init];
 
-    [[self drawView] setDrawModel:[self drawModel]];
+    [self setDrawModel:[self drawModel]];
 }
 
 - (IBAction)changeTool:(UISegmentedControl *)toolPicker
@@ -154,6 +221,7 @@ CGFloat const kScale = 4;
 {
     if (_currentRenderer) {
         [[self drawView] uninstallRenderer:_currentRenderer];
+        [[self allRenderers] removeObject:_currentRenderer];
     }
 
     if ([segmentedControl selectedSegmentIndex] == 0) {
@@ -182,6 +250,7 @@ CGFloat const kScale = 4;
     }
 
     [[self drawView] installRenderer:_currentRenderer];
+    [[self allRenderers] addObject:_currentRenderer];
 }
 
 - (IBAction)didChangeScale:(id)sender
@@ -207,7 +276,7 @@ CGFloat const kScale = 4;
 
 - (IBAction)redraw:(id)sender
 {
-    [[self drawView] setDrawModel:[[[self drawView] drawModel] copy]];
+    [self setDrawModel:[[[self drawView] drawModel] copy]];
 }
 
 - (IBAction)didChangeDynamicWidth:(id)sender

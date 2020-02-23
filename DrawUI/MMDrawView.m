@@ -24,9 +24,7 @@
 @end
 
 
-@implementation MMDrawView {
-    MMTouchStreamGestureRecognizer *_touchGesture;
-}
+@implementation MMDrawView
 
 - (instancetype)init
 {
@@ -73,32 +71,6 @@
 
 #pragma mark - Properties
 
-- (void)setDrawModel:(MMDrawModel *)newModel
-{
-    if (_touchGesture) {
-        [self removeGestureRecognizer:_touchGesture];
-    }
-
-    _touchGesture = [[MMTouchStreamGestureRecognizer alloc] initWithTouchStream:[newModel touchStream] target:self action:@selector(touchStreamGesture:)];
-
-    [self addGestureRecognizer:_touchGesture];
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        if ([renderer respondsToSelector:@selector(drawView:willReplaceModel:withModel:)]) {
-            [renderer drawView:self willReplaceModel:_drawModel withModel:newModel];
-        }
-    }
-
-    MMDrawModel *oldModel = _drawModel;
-    _drawModel = newModel;
-
-    for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-        if ([renderer respondsToSelector:@selector(drawView:didReplaceModel:withModel:)]) {
-            [renderer drawView:self didReplaceModel:oldModel withModel:_drawModel];
-        }
-    }
-}
-
 - (void)uninstallRenderer:(NSObject<MMDrawViewRenderer> *)renderer
 {
     if ([_renderers containsObject:renderer]) {
@@ -116,31 +88,6 @@
 
     if ([renderer respondsToSelector:@selector(installIntoDrawView:)]) {
         [renderer installIntoDrawView:self];
-    }
-}
-
-#pragma mark - Touch Stream
-
-- (void)touchStreamGesture:(MMTouchStreamGestureRecognizer *)gesture
-{
-    switch ([gesture state]) {
-        case UIGestureRecognizerStateBegan:
-        case UIGestureRecognizerStateChanged:
-        case UIGestureRecognizerStateEnded:
-            for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-                if ([renderer respondsToSelector:@selector(drawView:willUpdateModel:)]) {
-                    [renderer drawView:self willUpdateModel:[self drawModel]];
-                }
-            }
-
-            [[self drawModel] processTouchStreamWithTool:[self tool]];
-
-            for (NSObject<MMDrawViewRenderer> *renderer in _renderers) {
-                [renderer drawView:self didUpdateModel:[self drawModel]];
-            }
-            break;
-        default:
-            break;
     }
 }
 
