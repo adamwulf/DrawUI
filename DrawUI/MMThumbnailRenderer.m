@@ -70,15 +70,19 @@
 
 - (void)drawModelDidUpdate:(MMDrawModel *)drawModel withBounds:(CGRect)bounds
 {
-    if ([[drawModel strokes] count] && ![drawModel activeStroke]) {
-        CGRect bounds = CGRectMake(0, 0, _frame.size.width, _frame.size.height);
-        [_ctxRenderer drawRect:bounds inContext:_imageContext];
+    @autoreleasepool {
+        if ([[drawModel strokes] count] && ![drawModel activeStroke]) {
+            CGRect bounds = CGRectMake(0, 0, _frame.size.width, _frame.size.height);
+            [_ctxRenderer drawRect:bounds inContext:_imageContext];
 
-        CGImageRef theCGImage = CGBitmapContextCreateImage(_imageContext);
+            CGImageRef theCGImage = CGBitmapContextCreateImage(_imageContext);
 
-        UIImage *img = [[UIImage alloc] initWithCGImage:theCGImage];
+            UIImage *img = [[UIImage alloc] initWithCGImage:theCGImage];
 
-        [UIImagePNGRepresentation(img) writeToFile:[NSString stringWithFormat:@"/Users/adamwulf/Downloads/%@.png", @(random())] atomically:YES];
+            [UIImagePNGRepresentation(img) writeToFile:[NSString stringWithFormat:@"/Users/adamwulf/Downloads/%@.png", @(random())] atomically:YES];
+
+            CGImageRelease(theCGImage);
+        }
     }
 }
 

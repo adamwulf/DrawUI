@@ -16,11 +16,12 @@
 #define kDivideStepBy 1.5
 #define kAbsoluteMinWidth 0.5
 
+
 @implementation MMCurveToPathElement {
     CGRect _boundsCache;
     // cache the hash, since it's expenseive to calculate
     NSUInteger _hashCache;
-    CGFloat _subBezierlengthCache[1000];
+    CGFloat *_subBezierlengthCache;
     CGFloat _length;
     UIBezierPath *_borderPath;
 }
@@ -47,6 +48,7 @@
         _hashCache = prime * _hashCache + _ctrl2.y;
 
         _boundsCache.origin = CGPointNotFound;
+        _subBezierlengthCache = nil;
     }
     return self;
 }
@@ -219,6 +221,10 @@
     // include the first dot in the stroke.
     BOOL isFirstElementInStroke = [self followsMoveTo];
 
+    if (!_subBezierlengthCache) {
+        _subBezierlengthCache = calloc(sizeof(CGFloat), 1000);
+    }
+
     //
     // calculate points along the curve that are realStepSize
     // length along the curve. since this is fairly intensive for
@@ -260,6 +266,14 @@
         return [NSString stringWithFormat:@"[Line from: %f,%f  to: %f,%f]", [self startPoint].x, [self startPoint].y, _curveTo.x, _curveTo.y];
     } else {
         return [NSString stringWithFormat:@"[Curve from: %f,%f  to: %f,%f]", [self startPoint].x, [self startPoint].y, _curveTo.x, _curveTo.y];
+    }
+}
+
+- (void)dealloc
+{
+    if (_subBezierlengthCache) {
+        free(_subBezierlengthCache);
+        _subBezierlengthCache = nil;
     }
 }
 
