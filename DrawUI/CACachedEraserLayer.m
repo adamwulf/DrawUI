@@ -57,6 +57,18 @@
 {
     [_pathMap setObject:path forKey:identifier];
 
+    // First, release the old contents, as CGBitmapContextCreateImage
+    // might be created the image with copy-on-write. this way we can
+    // save memory in that case
+    CGImageRef previousContent = (__bridge CGImageRef)([self contents]);
+    [self setContents:nil];
+
+    if (previousContent) {
+        // release previous image
+        CGImageRelease(previousContent);
+    }
+
+    // generate new contents
     UIGraphicsPushContext(_imageContext);
     CGContextSetBlendMode(_imageContext, kCGBlendModeSourceIn);
 
@@ -80,16 +92,10 @@
 
     CGContextSetBlendMode(_imageContext, kCGBlendModeNormal);
 
+    // update our mask
     CGImageRef output = CGBitmapContextCreateImage(_imageContext);
 
-    CGImageRef previousContent = (__bridge CGImageRef)([self contents]);
-
     [self setContents:(__bridge id)output];
-
-    if (previousContent) {
-        // release previous image
-        CGImageRelease(previousContent);
-    }
 
     UIGraphicsPopContext();
 }

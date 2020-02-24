@@ -88,6 +88,9 @@
     return layer;
 }
 
+// TODO: when embedding into a new pencil layer, the previous CACachedEraserLayer
+// can close its bitmap context, which would save memory. this would cut the memory
+// cost of these layers in half, as only the final bitmap image would need to be preserved.
 - (void)embedPencilLayerIfNecessary
 {
     if ([_canvasLayer mask]) {
@@ -131,6 +134,9 @@
 
             [eraserLayer setFrame:[[self canvasView] bounds]];
 
+            // TODO: future optimization is to tell the eraser layer when all new strokes
+            // have been written for it to rasterize its mask. This way it's not wasting time
+            // generating images that it doesn't need.
             for (MMAbstractBezierPathElement *ele in [stroke segments]) {
                 // Only draw the element if:
                 // 1. we're using realtime eraser (which will update predicted strokes)

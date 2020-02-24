@@ -457,6 +457,7 @@
 			buildConfigurationList = C5EB306723C083EF00A5FE3D /* Build configuration list for PBXNativeTarget "DrawUI" */;
 			buildPhases = (
 				C5EB305923C083EF00A5FE3D /* Headers */,
+				C59F0F9C2403976700B1DD77 /* warn TODO */,
 				C5EB305A23C083EF00A5FE3D /* Sources */,
 				C5EB305B23C083EF00A5FE3D /* Frameworks */,
 				C5EB305C23C083EF00A5FE3D /* Resources */,
@@ -526,6 +527,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C59F0F9C2403976700B1DD77 /* warn TODO */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "warn TODO";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "KEYWORDS=\"TODO:|FIXME:|DevTeam:|XXX:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C5911426237B3BE700E12FAB /* Sources */ = {
