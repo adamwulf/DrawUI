@@ -140,6 +140,7 @@
         _nextElement = [coder decodeObjectOfClasses:[NSSet setWithObject:[MMAbstractBezierPathElement class]] forKey:@"nextElement"];
         _renderVersion = [coder decodeIntegerForKey:@"renderVersion"];
         _updated = [coder decodeBoolForKey:@"updated"];
+        _version = [coder decodeIntegerForKey:@"version"];
     }
     return self;
 }
@@ -153,6 +154,7 @@
     [coder encodeObject:_nextElement forKey:@"nextElement"];
     [coder encodeInteger:_renderVersion forKey:@"renderVersion"];
     [coder encodeBool:_updated forKey:@"updated"];
+    [coder encodeInteger:_version forKey:@"version"];
 }
 
 #pragma mark - NSCopying
