@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17132" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="ipad10_5" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17105"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hCH-MI-fjg">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8bC-Xf-vdC" userLabel="Canvas View">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mAN-n8-hdg">
-                                <rect key="frame" x="57.5" y="64" width="299" height="32"/>
+                                <rect key="frame" x="267.5" y="20" width="299" height="32"/>
                                 <segments>
                                     <segment title="Layer"/>
                                     <segment title="Tiled"/>
@@ -33,7 +35,7 @@
                                 </connections>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="q3A-K4-Td9">
-                                <rect key="frame" x="148.5" y="103" width="117" height="32"/>
+                                <rect key="frame" x="358.5" y="59" width="117" height="32"/>
                                 <segments>
                                     <segment title="Pen"/>
                                     <segment title="Eraser"/>
@@ -43,7 +45,7 @@
                                 </connections>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="g1e-vI-1Kq">
-                                <rect key="frame" x="135.5" y="144" width="143" height="32"/>
+                                <rect key="frame" x="345.5" y="100" width="143" height="32"/>
                                 <segments>
                                     <segment title="1x"/>
                                     <segment title="4x fr"/>
@@ -54,59 +56,60 @@
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dynamic Width" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LPI-RW-yhx">
-                                <rect key="frame" x="118.5" y="185" width="117" height="21"/>
+                                <rect key="frame" x="329" y="141" width="116" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rvr-s9-kom">
-                                <rect key="frame" x="243.5" y="180" width="51" height="31"/>
+                                <rect key="frame" x="453" y="136" width="51" height="31"/>
                                 <connections>
                                     <action selector="didChangeDynamicWidth:" destination="BYZ-38-t0r" eventType="valueChanged" id="2Wu-Dn-Ek0"/>
                                 </connections>
                             </switch>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eb7-G4-t2s">
-                                <rect key="frame" x="302" y="217" width="92" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eb7-G4-t2s">
+                                <rect key="frame" x="722" y="173" width="92" height="30"/>
                                 <state key="normal" title="Force Render"/>
                                 <connections>
                                     <action selector="redraw:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AT3-VS-Jad"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cached Eraser" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcF-v6-IPM">
-                                <rect key="frame" x="224.5" y="260" width="112.5" height="21"/>
+                                <rect key="frame" x="645.5" y="216" width="111.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SWs-QI-XJl">
-                                <rect key="frame" x="345" y="255" width="51" height="31"/>
+                                <rect key="frame" x="765" y="211" width="51" height="31"/>
                                 <connections>
                                     <action selector="didChangeCachedEraser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="egv-27-e6W"/>
                                 </connections>
                             </switch>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGc-JQ-sPN">
-                                <rect key="frame" x="360" y="103" width="34" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGc-JQ-sPN">
+                                <rect key="frame" x="780" y="59" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="saveDrawing:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZUp-Ex-VDr"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgP-0b-fFA">
-                                <rect key="frame" x="360" y="141" width="34" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgP-0b-fFA">
+                                <rect key="frame" x="780" y="97" width="34" height="30"/>
                                 <state key="normal" title="Load"/>
                                 <connections>
                                     <action selector="loadDrawing:" destination="BYZ-38-t0r" eventType="touchUpInside" id="78w-QX-eA5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-Q1-DTY">
-                                <rect key="frame" x="358" y="179" width="36" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-Q1-DTY">
+                                <rect key="frame" x="778" y="135" width="36" height="30"/>
                                 <state key="normal" title="Clear"/>
                                 <connections>
                                     <action selector="clearDrawing:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KOi-fR-CkO"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="D7O-VW-3Ez"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="eb7-G4-t2s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7O-VW-3Ez" secondAttribute="leading" symbolic="YES" id="4d7-GE-Xyy"/>
                             <constraint firstItem="eb7-G4-t2s" firstAttribute="top" secondItem="ba4-Q1-DTY" secondAttribute="bottom" constant="8" id="5uT-vQ-TVn"/>
@@ -140,7 +143,6 @@
                             <constraint firstItem="LPI-RW-yhx" firstAttribute="top" secondItem="g1e-vI-1Kq" secondAttribute="bottom" constant="10" id="vTW-4e-sqx"/>
                             <constraint firstItem="mAN-n8-hdg" firstAttribute="top" secondItem="D7O-VW-3Ez" secondAttribute="top" constant="20" id="w9i-rE-NjD"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="D7O-VW-3Ez"/>
                     </view>
                     <connections>
                         <outlet property="cachedEraserLabel" destination="xcF-v6-IPM" id="82C-Rk-sgI"/>
@@ -159,4 +161,9 @@
             <point key="canvasLocation" x="-4" y="70"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
