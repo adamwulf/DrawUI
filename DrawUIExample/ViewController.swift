@@ -55,7 +55,7 @@ public class ViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-//        view.addGestureRecognizer(TouchVelocityGestureRecognizer.sharedInstance)
+        view.addGestureRecognizer(TouchVelocityGestureRecognizer.sharedInstance)
 
         guard
             let wFirstItem = widthConstraint.firstItem,
@@ -86,7 +86,7 @@ public class ViewController: UIViewController {
                                                     target: self,
                                                     action: #selector(touchStream(gesture:)))
 
-//        drawView.addGestureRecognizer(touchGesture)
+        drawView.addGestureRecognizer(touchGesture)
 
         observer = drawView.observe(\.bounds) { [weak self] (_, _) in
             guard let self = self else { return }
@@ -127,7 +127,21 @@ extension ViewController {
 // MARK: - Actions
 extension ViewController {
     @IBAction func saveDrawing(_ button: UIButton) {
-        // TODO: save to Documents folder
+        let localDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let drawingURL = localDirectoryURL.appendingPathComponent("drawing.dat")
+
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: drawModel, requiringSecureCoding: true)
+            try data.write(to: drawingURL)
+
+            let alert = UIAlertController(title: "Saved!", message: "The drawing is saved", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        } catch {
+            let alert = UIAlertController(title: "Error Saving Data", message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
     }
     @IBAction func loadDrawing(_ button: UIButton) {
         // TODO: load from Documents folder
