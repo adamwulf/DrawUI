@@ -144,7 +144,15 @@ extension ViewController {
         }
     }
     @IBAction func loadDrawing(_ button: UIButton) {
-        // TODO: load from Documents folder
+        let localDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let drawingURL = localDirectoryURL.appendingPathComponent("drawing.dat")
+
+        do {
+            let data = try Data(contentsOf: drawingURL)
+            let drawModel = NSKeyedUnarchiver.unarchivedObject(ofClass: DrawModel, from: data)
+        } catch {
+
+        }
     }
     @IBAction func clearDrawing(_ button: UIButton) {
         drawModel = DrawModel()
