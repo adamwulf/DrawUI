@@ -41,21 +41,15 @@ class TouchStreamEvent {
     // MARK: - Computed Properties
 
     var expectsLocationUpdate: Bool {
-        get {
-            return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.location)
-        }
+        return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.location)
     }
 
     var expectsForceUpdate: Bool {
-        get {
-            return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.force)
-        }
+        return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.force)
     }
 
     var expectsAzimuthUpdate: Bool {
-        get {
-            return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.azimuth)
-        }
+        return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.azimuth)
     }
 //    + (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update isPrediction:(BOOL)prediction
 
