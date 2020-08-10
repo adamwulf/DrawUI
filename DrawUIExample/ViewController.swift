@@ -149,7 +149,7 @@ extension ViewController {
 
         do {
             let data = try Data(contentsOf: drawingURL)
-            let drawModel = NSKeyedUnarchiver.unarchivedObject(ofClass: DrawModel, from: data)
+            let drawModel = try NSKeyedUnarchiver.unarchivedObject(ofClass: DrawModel.self, from: data)
         } catch {
 
         }

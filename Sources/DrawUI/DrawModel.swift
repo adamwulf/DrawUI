@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class DrawModel: NSSecureCoding {
+public class DrawModel: NSObject, NSSecureCoding {
 
     // MARK: - Init
 
@@ -15,7 +15,7 @@ public class DrawModel: NSSecureCoding {
     private var strokes: [Any] // TODO: make generic for Stroke
     public private(set) var touchStream: TouchStream
 
-    required public init() {
+    required public override init() {
         version = 0
         strokes = []
         touchStream = TouchStream()
