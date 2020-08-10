@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class DrawModel: NSObject, NSSecureCoding {
+public class DrawModel {
 
     // MARK: - Init
 
@@ -15,7 +15,7 @@ public class DrawModel: NSObject, NSSecureCoding {
     private var strokes: [Any] // TODO: make generic for Stroke
     public private(set) var touchStream: TouchStream
 
-    required public override init() {
+    init() {
         version = 0
         strokes = []
         touchStream = TouchStream()
@@ -23,21 +23,6 @@ public class DrawModel: NSObject, NSSecureCoding {
 
     public func processTouchStream(with tool: Pen) {
         // TODO: implement processTouchStream()
-    }
-
-    // MARK: - NSSecureCoding
-
-    public private(set) static var supportsSecureCoding: Bool = true
-    public func encode(with coder: NSCoder) {
-        coder.encode(version, forKey: "version")
-        coder.encode(strokes, forKey: "strokes")
-    }
-
-    required public init?(coder: NSCoder) {
-        version = coder.decodeInteger(forKey: "version")
-        // TODO: implement `strokes` and static type properly
-        strokes = coder.decodeObject(of: [NSArray.self, NSObject.self], forKey: "strokes") as? [NSObject] ?? []
-        touchStream = TouchStream()
     }
 }
 

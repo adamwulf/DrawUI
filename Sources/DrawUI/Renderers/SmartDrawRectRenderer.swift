@@ -19,7 +19,6 @@ public class SmartDrawRectRenderer: UIView, DrawViewRenderer {
     }
 
     required init?(coder: NSCoder) {
-        dynamicWidth = coder.decodeBool(forKey: "dynamicWidth")
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
 }

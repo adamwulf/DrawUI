@@ -28,6 +28,7 @@ public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecogni
 }
 
 // MARK: - UIGestureRecognizer (Delegate)
+
 extension TouchStreamGestureRecognizer {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                                   shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {

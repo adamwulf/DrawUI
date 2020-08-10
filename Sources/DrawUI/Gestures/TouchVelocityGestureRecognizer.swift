@@ -9,6 +9,9 @@ import UIKit
 
 public class TouchVelocityGestureRecognizer: UIGestureRecognizer, UIGestureRecognizerDelegate {
 
+    static var MIN: CGFloat = 20
+    static var MAX: CGFloat = 800
+
     public static var sharedInstance = TouchVelocityGestureRecognizer()
 
     private init() {
@@ -25,6 +28,7 @@ public class TouchVelocityGestureRecognizer: UIGestureRecognizer, UIGestureRecog
 }
 
 // MARK: - UIGestureRecognizer (Delegate)
+
 extension TouchVelocityGestureRecognizer {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                                   shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
