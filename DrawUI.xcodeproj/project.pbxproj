@@ -32,6 +32,8 @@
 		C5A04B8A24E25F660031C328 /* TouchStreamEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A04B8824E25F660031C328 /* TouchStreamEvent.swift */; };
 		C5A04B8B24E25F660031C328 /* TouchStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A04B8924E25F660031C328 /* TouchStream.swift */; };
 		C5A04B8E24E25F7F0031C328 /* DrawnStroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A04B8D24E25F7F0031C328 /* DrawnStroke.swift */; };
+		C5A04B9024E2620D0031C328 /* SegmentSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A04B8F24E2620D0031C328 /* SegmentSmoother.swift */; };
+		C5A04B9224E263970031C328 /* PathElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A04B9124E263970031C328 /* PathElement.swift */; };
 		OBJ_22 /* DrawUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* DrawUI.swift */; };
 		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_40 /* DrawUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* DrawUITests.swift */; };
@@ -96,6 +98,8 @@
 		C5A04B8824E25F660031C328 /* TouchStreamEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchStreamEvent.swift; sourceTree = "<group>"; };
 		C5A04B8924E25F660031C328 /* TouchStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchStream.swift; sourceTree = "<group>"; };
 		C5A04B8D24E25F7F0031C328 /* DrawnStroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawnStroke.swift; sourceTree = "<group>"; };
+		C5A04B8F24E2620D0031C328 /* SegmentSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentSmoother.swift; sourceTree = "<group>"; };
+		C5A04B9124E263970031C328 /* PathElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathElement.swift; sourceTree = "<group>"; };
 		"DrawUI::DrawUI::Product" /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DrawUI::DrawUITests::Product" /* DrawUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = DrawUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_12 /* DrawUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawUITests.swift; sourceTree = "<group>"; };
@@ -213,6 +217,8 @@
 			isa = PBXGroup;
 			children = (
 				C5A04B8D24E25F7F0031C328 /* DrawnStroke.swift */,
+				C5A04B8F24E2620D0031C328 /* SegmentSmoother.swift */,
+				C5A04B9124E263970031C328 /* PathElement.swift */,
 			);
 			path = "Path Helpers";
 			sourceTree = "<group>";
@@ -463,11 +469,13 @@
 				C592447924A94A0400B52D3D /* Array+Extensions.swift in Sources */,
 				C592448124A950B100B52D3D /* NaiveDrawRectRenderer.swift in Sources */,
 				C537772F24A93C1B00E516F0 /* DrawModel.swift in Sources */,
+				C5A04B9224E263970031C328 /* PathElement.swift in Sources */,
 				C537773124A93D7000E516F0 /* TouchStreamGestureRecognizer.swift in Sources */,
 				C54AF32D24A93F1D00C0AE15 /* TouchVelocityGestureRecognizer.swift in Sources */,
 				C592447D24A94FA600B52D3D /* CATiledLayerRenderer.swift in Sources */,
 				C5A04B8B24E25F660031C328 /* TouchStream.swift in Sources */,
 				C5A04B8A24E25F660031C328 /* TouchStreamEvent.swift in Sources */,
+				C5A04B9024E2620D0031C328 /* SegmentSmoother.swift in Sources */,
 				C537772B24A93BA700E516F0 /* Pen.swift in Sources */,
 				OBJ_22 /* DrawUI.swift in Sources */,
 				C592447F24A94FE400B52D3D /* SmartDrawRectRenderer.swift in Sources */,
