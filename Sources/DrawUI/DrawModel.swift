@@ -15,7 +15,7 @@ public class DrawModel {
     private var strokes: [Any] // TODO: make generic for Stroke
     public private(set) var touchStream: TouchStream
 
-    init() {
+    public init() {
         version = 0
         strokes = []
         touchStream = TouchStream()

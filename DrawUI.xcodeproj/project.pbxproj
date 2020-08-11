@@ -1,0 +1,937 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C537770E24A9374500E516F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C537770D24A9374500E516F0 /* AppDelegate.swift */; };
+		C537771024A9374500E516F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C537770F24A9374500E516F0 /* SceneDelegate.swift */; };
+		C537771224A9374500E516F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C537771124A9374500E516F0 /* ViewController.swift */; };
+		C537771724A9374600E516F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C537771624A9374600E516F0 /* Assets.xcassets */; };
+		C537771A24A9374600E516F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C537771824A9374600E516F0 /* LaunchScreen.storyboard */; };
+		C537772224A9374E00E516F0 /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "DrawUI::DrawUI::Product" /* DrawUI.framework */; };
+		C537772924A93A8300E516F0 /* DrawViewRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C537772824A93A8300E516F0 /* DrawViewRenderer.swift */; };
+		C537772B24A93BA700E516F0 /* Pen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C537772A24A93BA700E516F0 /* Pen.swift */; };
+		C537772F24A93C1B00E516F0 /* DrawModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C537772E24A93C1B00E516F0 /* DrawModel.swift */; };
+		C537773124A93D7000E516F0 /* TouchStreamGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C537773024A93D7000E516F0 /* TouchStreamGestureRecognizer.swift */; };
+		C537773424A93E7500E516F0 /* ThumbnailRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C537773324A93E7500E516F0 /* ThumbnailRenderer.swift */; };
+		C54AF32D24A93F1D00C0AE15 /* TouchVelocityGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54AF32C24A93F1D00C0AE15 /* TouchVelocityGestureRecognizer.swift */; };
+		C566DF7524A9589500B0730C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C537771324A9374500E516F0 /* Main.storyboard */; };
+		C566DF7924A95A9400B0730C /* DrawUI.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = "DrawUI::DrawUI::Product" /* DrawUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C592447924A94A0400B52D3D /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592447824A94A0400B52D3D /* Array+Extensions.swift */; };
+		C592447B24A94E9400B52D3D /* CALayerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592447A24A94E9400B52D3D /* CALayerRenderer.swift */; };
+		C592447D24A94FA600B52D3D /* CATiledLayerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592447C24A94FA600B52D3D /* CATiledLayerRenderer.swift */; };
+		C592447F24A94FE400B52D3D /* SmartDrawRectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592447E24A94FE400B52D3D /* SmartDrawRectRenderer.swift */; };
+		C592448124A950B100B52D3D /* NaiveDrawRectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592448024A950B100B52D3D /* NaiveDrawRectRenderer.swift */; };
+		C592448324A950DC00B52D3D /* DebugRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592448224A950DC00B52D3D /* DebugRenderer.swift */; };
+		C592448524A951E200B52D3D /* CanCacheEraser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592448424A951E200B52D3D /* CanCacheEraser.swift */; };
+		C5A04B8624E25F400031C328 /* UITouch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A04B8524E25F400031C328 /* UITouch+Extensions.swift */; };
+		C5A04B8A24E25F660031C328 /* TouchStreamEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A04B8824E25F660031C328 /* TouchStreamEvent.swift */; };
+		C5A04B8B24E25F660031C328 /* TouchStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A04B8924E25F660031C328 /* TouchStream.swift */; };
+		C5A04B8E24E25F7F0031C328 /* DrawnStroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A04B8D24E25F7F0031C328 /* DrawnStroke.swift */; };
+		OBJ_22 /* DrawUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* DrawUI.swift */; };
+		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_40 /* DrawUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* DrawUITests.swift */; };
+		OBJ_41 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
+		OBJ_43 /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "DrawUI::DrawUI::Product" /* DrawUI.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C537770524A935D500E516F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "DrawUI::DrawUI";
+			remoteInfo = DrawUI;
+		};
+		C537771F24A9374B00E516F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "DrawUI::DrawUI";
+			remoteInfo = DrawUI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C566DF7824A95A8B00B0730C /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C566DF7924A95A9400B0730C /* DrawUI.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C537770B24A9374500E516F0 /* DrawUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C537770D24A9374500E516F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C537770F24A9374500E516F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		C537771124A9374500E516F0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C537771424A9374500E516F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C537771624A9374600E516F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C537771924A9374600E516F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C537771B24A9374600E516F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C537772824A93A8300E516F0 /* DrawViewRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewRenderer.swift; sourceTree = "<group>"; };
+		C537772A24A93BA700E516F0 /* Pen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pen.swift; sourceTree = "<group>"; };
+		C537772E24A93C1B00E516F0 /* DrawModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawModel.swift; sourceTree = "<group>"; };
+		C537773024A93D7000E516F0 /* TouchStreamGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchStreamGestureRecognizer.swift; sourceTree = "<group>"; };
+		C537773324A93E7500E516F0 /* ThumbnailRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailRenderer.swift; sourceTree = "<group>"; };
+		C54AF32C24A93F1D00C0AE15 /* TouchVelocityGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchVelocityGestureRecognizer.swift; sourceTree = "<group>"; };
+		C592447824A94A0400B52D3D /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
+		C592447A24A94E9400B52D3D /* CALayerRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayerRenderer.swift; sourceTree = "<group>"; };
+		C592447C24A94FA600B52D3D /* CATiledLayerRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CATiledLayerRenderer.swift; sourceTree = "<group>"; };
+		C592447E24A94FE400B52D3D /* SmartDrawRectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartDrawRectRenderer.swift; sourceTree = "<group>"; };
+		C592448024A950B100B52D3D /* NaiveDrawRectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveDrawRectRenderer.swift; sourceTree = "<group>"; };
+		C592448224A950DC00B52D3D /* DebugRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugRenderer.swift; sourceTree = "<group>"; };
+		C592448424A951E200B52D3D /* CanCacheEraser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanCacheEraser.swift; sourceTree = "<group>"; };
+		C5A04B8524E25F400031C328 /* UITouch+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITouch+Extensions.swift"; sourceTree = "<group>"; };
+		C5A04B8824E25F660031C328 /* TouchStreamEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchStreamEvent.swift; sourceTree = "<group>"; };
+		C5A04B8924E25F660031C328 /* TouchStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchStream.swift; sourceTree = "<group>"; };
+		C5A04B8D24E25F7F0031C328 /* DrawnStroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawnStroke.swift; sourceTree = "<group>"; };
+		"DrawUI::DrawUI::Product" /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"DrawUI::DrawUITests::Product" /* DrawUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = DrawUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_12 /* DrawUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawUITests.swift; sourceTree = "<group>"; };
+		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
+		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		OBJ_9 /* DrawUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawUI.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C537770824A9374500E516F0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C537772224A9374E00E516F0 /* DrawUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_23 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_43 /* DrawUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C537770C24A9374500E516F0 /* DrawUIExample */ = {
+			isa = PBXGroup;
+			children = (
+				C537770D24A9374500E516F0 /* AppDelegate.swift */,
+				C537770F24A9374500E516F0 /* SceneDelegate.swift */,
+				C537771124A9374500E516F0 /* ViewController.swift */,
+				C537771324A9374500E516F0 /* Main.storyboard */,
+				C537771624A9374600E516F0 /* Assets.xcassets */,
+				C537771824A9374600E516F0 /* LaunchScreen.storyboard */,
+				C537771B24A9374600E516F0 /* Info.plist */,
+			);
+			path = DrawUIExample;
+			sourceTree = "<group>";
+		};
+		C537772124A9374E00E516F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C537772624A9393400E516F0 /* DrawUI */ = {
+			isa = PBXGroup;
+			children = (
+				C5A04B8724E25F660031C328 /* Touch Stream */,
+				C592447724A949F600B52D3D /* Extensions */,
+				C54AF32B24A93F1500C0AE15 /* Gestures */,
+				C537773224A93E6E00E516F0 /* Renderers */,
+				C5A04B8C24E25F7F0031C328 /* Path Helpers */,
+				OBJ_9 /* DrawUI.swift */,
+				C537772A24A93BA700E516F0 /* Pen.swift */,
+				C537772E24A93C1B00E516F0 /* DrawModel.swift */,
+			);
+			path = DrawUI;
+			sourceTree = "<group>";
+		};
+		C537773224A93E6E00E516F0 /* Renderers */ = {
+			isa = PBXGroup;
+			children = (
+				C537772824A93A8300E516F0 /* DrawViewRenderer.swift */,
+				C592447A24A94E9400B52D3D /* CALayerRenderer.swift */,
+				C592447C24A94FA600B52D3D /* CATiledLayerRenderer.swift */,
+				C592447E24A94FE400B52D3D /* SmartDrawRectRenderer.swift */,
+				C592448024A950B100B52D3D /* NaiveDrawRectRenderer.swift */,
+				C592448224A950DC00B52D3D /* DebugRenderer.swift */,
+				C537773324A93E7500E516F0 /* ThumbnailRenderer.swift */,
+				C592448424A951E200B52D3D /* CanCacheEraser.swift */,
+			);
+			path = Renderers;
+			sourceTree = "<group>";
+		};
+		C54AF32B24A93F1500C0AE15 /* Gestures */ = {
+			isa = PBXGroup;
+			children = (
+				C54AF32C24A93F1D00C0AE15 /* TouchVelocityGestureRecognizer.swift */,
+				C537773024A93D7000E516F0 /* TouchStreamGestureRecognizer.swift */,
+			);
+			path = Gestures;
+			sourceTree = "<group>";
+		};
+		C592447724A949F600B52D3D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C5A04B8524E25F400031C328 /* UITouch+Extensions.swift */,
+				C592447824A94A0400B52D3D /* Array+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C5A04B8724E25F660031C328 /* Touch Stream */ = {
+			isa = PBXGroup;
+			children = (
+				C5A04B8824E25F660031C328 /* TouchStreamEvent.swift */,
+				C5A04B8924E25F660031C328 /* TouchStream.swift */,
+			);
+			path = "Touch Stream";
+			sourceTree = "<group>";
+		};
+		C5A04B8C24E25F7F0031C328 /* Path Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C5A04B8D24E25F7F0031C328 /* DrawnStroke.swift */,
+			);
+			path = "Path Helpers";
+			sourceTree = "<group>";
+		};
+		OBJ_10 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_11 /* DrawUITests */,
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_11 /* DrawUITests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_12 /* DrawUITests.swift */,
+				OBJ_13 /* XCTestManifests.swift */,
+			);
+			name = DrawUITests;
+			path = Tests/DrawUITests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_14 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"DrawUI::DrawUITests::Product" /* DrawUITests.xctest */,
+				"DrawUI::DrawUI::Product" /* DrawUI.framework */,
+				C537770B24A9374500E516F0 /* DrawUIExample.app */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		OBJ_5 = {
+			isa = PBXGroup;
+			children = (
+				OBJ_6 /* Package.swift */,
+				OBJ_7 /* Sources */,
+				OBJ_10 /* Tests */,
+				C537770C24A9374500E516F0 /* DrawUIExample */,
+				OBJ_14 /* Products */,
+				C537772124A9374E00E516F0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C537772624A9393400E516F0 /* DrawUI */,
+			);
+			path = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C537770A24A9374500E516F0 /* DrawUIExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C537771C24A9374600E516F0 /* Build configuration list for PBXNativeTarget "DrawUIExample" */;
+			buildPhases = (
+				C537770724A9374500E516F0 /* Sources */,
+				C537770824A9374500E516F0 /* Frameworks */,
+				C537770924A9374500E516F0 /* Resources */,
+				C566DF7824A95A8B00B0730C /* Copy Frameworks */,
+				C537772324A9381500E516F0 /* Show TODO Warnings */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C537772024A9374B00E516F0 /* PBXTargetDependency */,
+			);
+			name = DrawUIExample;
+			productName = DrawUIExample;
+			productReference = C537770B24A9374500E516F0 /* DrawUIExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		"DrawUI::DrawUI" /* DrawUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_18 /* Build configuration list for PBXNativeTarget "DrawUI" */;
+			buildPhases = (
+				OBJ_21 /* Sources */,
+				C537772724A93A0400E516F0 /* Swift Lint */,
+				OBJ_23 /* Frameworks */,
+				C537772424A9382700E516F0 /* Show TODO Warnings */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DrawUI;
+			productName = DrawUI;
+			productReference = "DrawUI::DrawUI::Product" /* DrawUI.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"DrawUI::DrawUITests" /* DrawUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_36 /* Build configuration list for PBXNativeTarget "DrawUITests" */;
+			buildPhases = (
+				OBJ_39 /* Sources */,
+				OBJ_42 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_44 /* PBXTargetDependency */,
+			);
+			name = DrawUITests;
+			productName = DrawUITests;
+			productReference = "DrawUI::DrawUITests::Product" /* DrawUITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		"DrawUI::SwiftPMPackageDescription" /* DrawUIPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_25 /* Build configuration list for PBXNativeTarget "DrawUIPackageDescription" */;
+			buildPhases = (
+				OBJ_28 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DrawUIPackageDescription;
+			productName = DrawUIPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		OBJ_1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 9999;
+				LastSwiftUpdateCheck = 1150;
+				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+					C537770A24A9374500E516F0 = {
+						CreatedOnToolsVersion = 11.5;
+						DevelopmentTeam = MU27A4SCKC;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "DrawUI" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = OBJ_5;
+			productRefGroup = OBJ_14 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"DrawUI::DrawUI" /* DrawUI */,
+				"DrawUI::SwiftPMPackageDescription" /* DrawUIPackageDescription */,
+				"DrawUI::DrawUITests" /* DrawUITests */,
+				C537770A24A9374500E516F0 /* DrawUIExample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C537770924A9374500E516F0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C566DF7524A9589500B0730C /* Main.storyboard in Resources */,
+				C537771A24A9374600E516F0 /* LaunchScreen.storyboard in Resources */,
+				C537771724A9374600E516F0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C537772324A9381500E516F0 /* Show TODO Warnings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Show TODO Warnings";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 \\\n    | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" \\\n    | perl -p -e \"s/($TAGS)/ warning: \\$1/\"\n";
+		};
+		C537772424A9382700E516F0 /* Show TODO Warnings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Show TODO Warnings";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 \\\n    | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" \\\n    | perl -p -e \"s/($TAGS)/ warning: \\$1/\"\n";
+		};
+		C537772724A93A0400E516F0 /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nif which swiftlint >/dev/null; then\nswiftlint --config \"$SRCROOT/.swiftlint.yml\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C537770724A9374500E516F0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C537771224A9374500E516F0 /* ViewController.swift in Sources */,
+				C537770E24A9374500E516F0 /* AppDelegate.swift in Sources */,
+				C537771024A9374500E516F0 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				C592447924A94A0400B52D3D /* Array+Extensions.swift in Sources */,
+				C592448124A950B100B52D3D /* NaiveDrawRectRenderer.swift in Sources */,
+				C537772F24A93C1B00E516F0 /* DrawModel.swift in Sources */,
+				C537773124A93D7000E516F0 /* TouchStreamGestureRecognizer.swift in Sources */,
+				C54AF32D24A93F1D00C0AE15 /* TouchVelocityGestureRecognizer.swift in Sources */,
+				C592447D24A94FA600B52D3D /* CATiledLayerRenderer.swift in Sources */,
+				C5A04B8B24E25F660031C328 /* TouchStream.swift in Sources */,
+				C5A04B8A24E25F660031C328 /* TouchStreamEvent.swift in Sources */,
+				C537772B24A93BA700E516F0 /* Pen.swift in Sources */,
+				OBJ_22 /* DrawUI.swift in Sources */,
+				C592447F24A94FE400B52D3D /* SmartDrawRectRenderer.swift in Sources */,
+				C537772924A93A8300E516F0 /* DrawViewRenderer.swift in Sources */,
+				C5A04B8E24E25F7F0031C328 /* DrawnStroke.swift in Sources */,
+				C592448524A951E200B52D3D /* CanCacheEraser.swift in Sources */,
+				C592447B24A94E9400B52D3D /* CALayerRenderer.swift in Sources */,
+				C592448324A950DC00B52D3D /* DebugRenderer.swift in Sources */,
+				C537773424A93E7500E516F0 /* ThumbnailRenderer.swift in Sources */,
+				C5A04B8624E25F400031C328 /* UITouch+Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_29 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_40 /* DrawUITests.swift in Sources */,
+				OBJ_41 /* XCTestManifests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C537772024A9374B00E516F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "DrawUI::DrawUI" /* DrawUI */;
+			targetProxy = C537771F24A9374B00E516F0 /* PBXContainerItemProxy */;
+		};
+		OBJ_44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "DrawUI::DrawUI" /* DrawUI */;
+			targetProxy = C537770524A935D500E516F0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C537771324A9374500E516F0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C537771424A9374500E516F0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C537771824A9374600E516F0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C537771924A9374600E516F0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C537771D24A9374600E516F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MU27A4SCKC;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = DrawUIExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.milestonemade.DrawUIExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C537771E24A9374600E516F0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = MU27A4SCKC;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = DrawUIExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.milestonemade.DrawUIExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		OBJ_19 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = DrawUI.xcodeproj/DrawUI_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = DrawUI;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DrawUI;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = DrawUI.xcodeproj/DrawUI_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = DrawUI;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DrawUI;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		OBJ_26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.2.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.2.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		OBJ_3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+		OBJ_37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = DrawUI.xcodeproj/DrawUITests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DrawUITests;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = DrawUI.xcodeproj/DrawUITests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DrawUITests;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		OBJ_4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C537771C24A9374600E516F0 /* Build configuration list for PBXNativeTarget "DrawUIExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C537771D24A9374600E516F0 /* Debug */,
+				C537771E24A9374600E516F0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_18 /* Build configuration list for PBXNativeTarget "DrawUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_19 /* Debug */,
+				OBJ_20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_2 /* Build configuration list for PBXProject "DrawUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_3 /* Debug */,
+				OBJ_4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_25 /* Build configuration list for PBXNativeTarget "DrawUIPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_26 /* Debug */,
+				OBJ_27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_36 /* Build configuration list for PBXNativeTarget "DrawUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_37 /* Debug */,
+				OBJ_38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = OBJ_1 /* Project object */;
+}
