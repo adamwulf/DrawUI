@@ -10,13 +10,13 @@ import DrawUI
 
 class ViewController: UIViewController {
 
-    let touchStream: TouchStream
+    var touchStream: EventStream
     var debugView: DebugView? {
         return view as? DebugView
     }
 
     required init?(coder: NSCoder) {
-        touchStream = TouchStream()
+        touchStream = TouchEventStream()
 
         super.init(coder: coder)
 
@@ -32,8 +32,8 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: TouchStreamDelegate {
-    func touchStreamChanged(_ touchStream: TouchStream) {
+extension ViewController: EventStreamDelegate {
+    func touchStreamChanged(_ touchStream: EventStream) {
         debugView?.setNeedsDisplay()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  TouchStreamEvent.swift
+//  TouchEvent.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/10/20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class TouchStreamEvent {
+public class TouchEvent {
 
     /// A completely unique identifier per event, even for events built from
     /// the same touch or coalescedTouch
@@ -50,7 +50,6 @@ public class TouchStreamEvent {
     public var expectsAzimuthUpdate: Bool {
         return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.azimuth)
     }
-//    + (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch isUpdate:(BOOL)update isPrediction:(BOOL)prediction
 
     convenience init(coalescedTouch: UITouch, touch: UITouch, isUpdate: Bool, isPrediction: Bool) {
         self.init(identifier: UUID.init().uuidString,
@@ -114,7 +113,17 @@ public class TouchStreamEvent {
         self.view = view
     }
 
-    public func isSameTouchAs(event: TouchStreamEvent) -> Bool {
+    public func isSameTouchAs(event: TouchEvent) -> Bool {
         return touchIdentifier == event.touchIdentifier
+    }
+}
+
+extension TouchEvent: Hashable {
+    public static func == (lhs: TouchEvent, rhs: TouchEvent) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
     }
 }

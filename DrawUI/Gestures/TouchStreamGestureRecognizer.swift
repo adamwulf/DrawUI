@@ -9,10 +9,10 @@ import UIKit
 
 public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecognizerDelegate {
 
-    weak var touchStream: TouchStream?
+    weak var touchStream: TouchEventStream?
     var activeTouches: Set<UITouch>
 
-    public init(touchStream: TouchStream, target: Any?, action: Selector?) {
+    public init(touchStream: TouchEventStream, target: Any?, action: Selector?) {
         self.touchStream = touchStream
         self.activeTouches = Set()
 
@@ -41,13 +41,13 @@ public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecogni
             }
 
             for coalescedTouch in coalesced {
-                touchStream?.add(event: TouchStreamEvent(coalescedTouch: coalescedTouch, touch: touch, isUpdate: isUpdate, isPrediction: false))
+                touchStream?.add(event: TouchEvent(coalescedTouch: coalescedTouch, touch: touch, isUpdate: isUpdate, isPrediction: false))
             }
 
             let predicted = event?.predictedTouches(for: touch) ?? []
 
             for predictedTouch in predicted {
-                touchStream?.add(event: TouchStreamEvent(coalescedTouch: predictedTouch, touch: touch, isUpdate: isUpdate, isPrediction: true))
+                touchStream?.add(event: TouchEvent(coalescedTouch: predictedTouch, touch: touch, isUpdate: isUpdate, isPrediction: true))
             }
         }
     }
