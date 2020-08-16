@@ -8,10 +8,13 @@
 import UIKit
 
 // Processes events for mutiple touches
-public class TouchesEventStream: GestureEventStream {
+public class TouchesEventStream: EventStream {
     // MARK: - Private
-    public private(set) var events: [TouchEvent] = []
-    public private(set) var eventsPerTouch: [String: [TouchEvent]] = [:]
+    private var recentEvents: [TouchEvent] = []
+    private var processedEvents: [TouchEvent] = []
+    public var events: [TouchEvent] {
+        return processedEvents + recentEvents
+    }
     private var lazyGesture: TouchStreamGestureRecognizer?
 
     public init() {
@@ -22,9 +25,8 @@ public class TouchesEventStream: GestureEventStream {
         delegate?.touchStreamChanged(self)
     }
 
-    // MARK: - EventStream
+    // MARK: - GestureEventStream
 
-    // MARK: - Public
     public var gesture: UIGestureRecognizer {
         lazyGesture = lazyGesture ?? TouchStreamGestureRecognizer(touchStream: self, target: self, action: #selector(streamChanged(_:)))
         return lazyGesture!
@@ -32,29 +34,17 @@ public class TouchesEventStream: GestureEventStream {
 
     public weak var delegate: EventStreamDelegate?
 
-    public func add(event: TouchEvent) {
-        events.append(event)
+    // MARK: - EventStream
 
-        if eventsPerTouch[event.touchIdentifier] != nil {
-            eventsPerTouch[event.touchIdentifier]?.append(event)
-        } else {
-            eventsPerTouch[event.touchIdentifier] = [event]
-        }
+    public func add(event: TouchEvent) {
+        recentEvents.append(event)
     }
 
-    public func eventsSince(event: TouchEvent?) -> [TouchEvent] {
-        guard let event = event else { return events }
-
-        let loc = events.lastIndex { (e) -> Bool in
-            return e === event
+    public func process() -> [TouchEvent] {
+        processedEvents.append(contentsOf: recentEvents)
+        defer {
+            recentEvents.removeAll()
         }
-
-        guard let index = loc else { return events }
-
-        if index < events.count - 1 {
-            return Array(events.suffix(from: index + 1))
-        } else {
-            return []
-        }
+        return recentEvents
     }
 }
