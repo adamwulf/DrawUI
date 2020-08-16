@@ -16,6 +16,13 @@ public class TouchEvent {
     /// An identifier unique to the touch that created this event. Events with the same
     /// touch will also have the same touchIdentifier
     public let touchIdentifier: String
+    public var pointIdentifier: String {
+        if let estimationUpdateIndex = estimationUpdateIndex {
+            return touchIdentifier + ":\(estimationUpdateIndex)"
+        } else {
+            return touchIdentifier + ":" + identifier
+        }
+    }
     public let timestamp: TimeInterval
     public let type: UITouch.TouchType
     public let phase: UITouch.Phase

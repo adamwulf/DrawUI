@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C580259C24E9E1150043130D /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* Stroke.swift */; };
+		C580259F24E9E1C10043130D /* Strokes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* Strokes.swift */; };
+		C58025A124E9E3F90043130D /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025A024E9E3F90043130D /* StrokePoint.swift */; };
 		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159B924E9AF3600B52B4B /* TouchEvent.swift */; };
 		C5C159BC24E9AF3600B52B4B /* TouchesEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159BA24E9AF3600B52B4B /* TouchesEventStream.swift */; };
@@ -49,6 +52,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C580259B24E9E1150043130D /* Stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
+		C580259E24E9E1C10043130D /* Strokes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strokes.swift; sourceTree = "<group>"; };
+		C58025A024E9E3F90043130D /* StrokePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
 		C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C159B124E9AF1C00B52B4B /* DrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawUI.h; sourceTree = "<group>"; };
 		C5C159B224E9AF1C00B52B4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,6 +121,9 @@
 				C5C159D924E9AF7300B52B4B /* Extensions */,
 				C5C159BA24E9AF3600B52B4B /* TouchesEventStream.swift */,
 				C5C159B924E9AF3600B52B4B /* TouchEvent.swift */,
+				C580259E24E9E1C10043130D /* Strokes.swift */,
+				C580259B24E9E1150043130D /* Stroke.swift */,
+				C58025A024E9E3F90043130D /* StrokePoint.swift */,
 				C5C159B124E9AF1C00B52B4B /* DrawUI.h */,
 				C5C159B224E9AF1C00B52B4B /* Info.plist */,
 			);
@@ -284,9 +293,12 @@
 				C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */,
 				C5C159EE24E9C8D100B52B4B /* EventStream.swift in Sources */,
 				C5C159E224E9B2F800B52B4B /* TouchStreamGestureRecognizer.swift in Sources */,
+				C580259F24E9E1C10043130D /* Strokes.swift in Sources */,
+				C58025A124E9E3F90043130D /* StrokePoint.swift in Sources */,
 				C5C159DC24E9AF8100B52B4B /* UITouch+Extensions.swift in Sources */,
 				C5C159BC24E9AF3600B52B4B /* TouchesEventStream.swift in Sources */,
 				C5C159DD24E9AF8100B52B4B /* Array+Extensions.swift in Sources */,
+				C580259C24E9E1150043130D /* Stroke.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

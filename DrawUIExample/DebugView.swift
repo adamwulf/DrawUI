@@ -10,30 +10,23 @@ import DrawUI
 
 class DebugView: UIView {
     var touchStream: EventStream?
+    let strokes: Strokes
 
     override init(frame: CGRect) {
+        strokes = Strokes()
         super.init(frame: frame)
-        clearsContextBeforeDrawing = false
     }
 
     required init?(coder: NSCoder) {
+        strokes = Strokes()
         super.init(coder: coder)
-        clearsContextBeforeDrawing = false
     }
 
     override func draw(_ rect: CGRect) {
         let updatedEvents = touchStream?.process()
-        let updatedEventsPerTouch = updatedEvents?.reduce([:], { (result, event) -> [String: [TouchEvent]] in
-            var result = result
-            if result[event.touchIdentifier] != nil {
-                result[event.touchIdentifier]?.append(event)
-            } else {
-                result[event.touchIdentifier] = [event]
-            }
-            return result
-        }) ?? [:]
+        strokes.add(touchEvents: updatedEvents ?? [])
 
-        for event in updatedEvents ?? [] {
+        for event in touchStream?.events ?? [] {
             var radius: CGFloat = 2
             if event.isUpdate {
                 radius = 1
@@ -56,23 +49,13 @@ class DebugView: UIView {
 
         UIColor.red.setStroke()
 
-        for touchIdentifier in updatedEventsPerTouch.keys {
-
-        }
-
-        for (_, events) in updatedEventsPerTouch {
-            var previousEvent: TouchEvent?
+        for stroke in strokes.strokes {
             let path = UIBezierPath()
-            path.lineWidth = 0.5
-            for event in events {
-                if !event.expectsUpdate,
-                   !event.isPrediction {
-                    if previousEvent != nil {
-                        path.addLine(to: event.location)
-                    } else {
-                        path.move(to: event.location)
-                    }
-                    previousEvent = event
+            for point in stroke.points {
+                if point.event.phase == .began {
+                    path.move(to: point.event.location)
+                } else {
+                    path.addLine(to: point.event.location)
                 }
             }
             path.stroke()
