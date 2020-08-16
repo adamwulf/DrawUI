@@ -13,11 +13,12 @@ class DebugView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        clearsContextBeforeDrawing = false
+        clearsContextBeforeDrawing = false
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        clearsContextBeforeDrawing = false
     }
 
     override func draw(_ rect: CGRect) {
@@ -64,7 +65,8 @@ class DebugView: UIView {
             let path = UIBezierPath()
             path.lineWidth = 0.5
             for event in events {
-                if !event.expectsUpdate {
+                if !event.expectsUpdate,
+                   !event.isPrediction {
                     if previousEvent != nil {
                         path.addLine(to: event.location)
                     } else {
