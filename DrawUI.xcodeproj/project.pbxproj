@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159B924E9AF3600B52B4B /* TouchEvent.swift */; };
-		C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159BA24E9AF3600B52B4B /* TouchEventStream.swift */; };
+		C5C159BC24E9AF3600B52B4B /* TouchesEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159BA24E9AF3600B52B4B /* TouchesEventStream.swift */; };
 		C5C159C424E9AF4E00B52B4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159C324E9AF4E00B52B4B /* AppDelegate.swift */; };
 		C5C159C624E9AF4E00B52B4B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159C524E9AF4E00B52B4B /* SceneDelegate.swift */; };
 		C5C159C824E9AF4E00B52B4B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159C724E9AF4E00B52B4B /* ViewController.swift */; };
@@ -23,6 +23,7 @@
 		C5C159E224E9B2F800B52B4B /* TouchStreamGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159E124E9B2F800B52B4B /* TouchStreamGestureRecognizer.swift */; };
 		C5C159E724E9BC6500B52B4B /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159E624E9BC6500B52B4B /* DebugView.swift */; };
 		C5C159EE24E9C8D100B52B4B /* EventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159ED24E9C8D100B52B4B /* EventStream.swift */; };
+		C5C159F024E9CFF900B52B4B /* TouchEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159EF24E9CFF900B52B4B /* TouchEventStream.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +54,7 @@
 		C5C159B124E9AF1C00B52B4B /* DrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawUI.h; sourceTree = "<group>"; };
 		C5C159B224E9AF1C00B52B4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5C159B924E9AF3600B52B4B /* TouchEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchEvent.swift; sourceTree = "<group>"; };
-		C5C159BA24E9AF3600B52B4B /* TouchEventStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchEventStream.swift; sourceTree = "<group>"; };
+		C5C159BA24E9AF3600B52B4B /* TouchesEventStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchesEventStream.swift; sourceTree = "<group>"; };
 		C5C159C124E9AF4E00B52B4B /* DrawUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C159C324E9AF4E00B52B4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5C159C524E9AF4E00B52B4B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +68,7 @@
 		C5C159E124E9B2F800B52B4B /* TouchStreamGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchStreamGestureRecognizer.swift; sourceTree = "<group>"; };
 		C5C159E624E9BC6500B52B4B /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
 		C5C159ED24E9C8D100B52B4B /* EventStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStream.swift; sourceTree = "<group>"; };
+		C5C159EF24E9CFF900B52B4B /* TouchEventStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchEventStream.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +115,8 @@
 				C5C159EC24E9C8C400B52B4B /* Protocols */,
 				C5C159E024E9B2F000B52B4B /* Gestures */,
 				C5C159D924E9AF7300B52B4B /* Extensions */,
-				C5C159BA24E9AF3600B52B4B /* TouchEventStream.swift */,
+				C5C159BA24E9AF3600B52B4B /* TouchesEventStream.swift */,
+				C5C159EF24E9CFF900B52B4B /* TouchEventStream.swift */,
 				C5C159B924E9AF3600B52B4B /* TouchEvent.swift */,
 				C5C159B124E9AF1C00B52B4B /* DrawUI.h */,
 				C5C159B224E9AF1C00B52B4B /* Info.plist */,
@@ -285,7 +288,8 @@
 				C5C159EE24E9C8D100B52B4B /* EventStream.swift in Sources */,
 				C5C159E224E9B2F800B52B4B /* TouchStreamGestureRecognizer.swift in Sources */,
 				C5C159DC24E9AF8100B52B4B /* UITouch+Extensions.swift in Sources */,
-				C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */,
+				C5C159F024E9CFF900B52B4B /* TouchEventStream.swift in Sources */,
+				C5C159BC24E9AF3600B52B4B /* TouchesEventStream.swift in Sources */,
 				C5C159DD24E9AF8100B52B4B /* Array+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

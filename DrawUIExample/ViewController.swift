@@ -10,14 +10,16 @@ import DrawUI
 
 class ViewController: UIViewController {
 
+    let touchStreamGesture: UIGestureRecognizer
     var touchStream: EventStream
     var debugView: DebugView? {
         return view as? DebugView
     }
 
     required init?(coder: NSCoder) {
-        touchStream = TouchEventStream()
-
+        let touchStream = TouchesEventStream()
+        touchStreamGesture = touchStream.gesture
+        self.touchStream = touchStream
         super.init(coder: coder)
 
         touchStream.delegate = self
@@ -28,7 +30,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         debugView?.touchStream = touchStream
-        debugView?.addGestureRecognizer(touchStream.gesture)
+        debugView?.addGestureRecognizer(touchStreamGesture)
     }
 }
 
@@ -37,4 +39,3 @@ extension ViewController: EventStreamDelegate {
         debugView?.setNeedsDisplay()
     }
 }
-

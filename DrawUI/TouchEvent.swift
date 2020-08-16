@@ -51,6 +51,10 @@ public class TouchEvent {
         return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.azimuth)
     }
 
+    public var expectsUpdate: Bool {
+        return expectsForceUpdate || expectsAzimuthUpdate || expectsLocationUpdate
+    }
+
     convenience init(coalescedTouch: UITouch, touch: UITouch, isUpdate: Bool, isPrediction: Bool) {
         self.init(identifier: UUID.init().uuidString,
                   touchIdentifier: touch.identifer,
