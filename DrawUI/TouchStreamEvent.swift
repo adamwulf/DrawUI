@@ -7,53 +7,52 @@
 
 import UIKit
 
-class TouchStreamEvent {
+public class TouchStreamEvent {
 
     /// A completely unique identifier per event, even for events built from
     /// the same touch or coalescedTouch
-    let identifier: String
+    public let identifier: String
 
     /// An identifier unique to the touch that created this event. Events with the same
     /// touch will also have the same touchIdentifier
-    let touchIdentifier: String
-    let timestamp: TimeInterval
-    let type: UITouch.TouchType
-    let phase: UITouch.Phase
-    let force: CGFloat
-    let maximumPossibleForce: CGFloat
-    let altitudeAngle: CGFloat
-    let azimuthUnitVector: CGVector
-    let azimuth: CGFloat
-    let velocity: CGFloat
-    let majorRadius: CGFloat
-    let majorRadiusTolerance: CGFloat
-    let location: CGPoint
-    let estimationUpdateIndex: NSNumber?
-    let estimatedProperties: UITouch.Properties
-    let estimatedPropertiesExpectingUpdates: UITouch.Properties
-    let isUpdate: Bool
-    let isPrediction: Bool
+    public let touchIdentifier: String
+    public let timestamp: TimeInterval
+    public let type: UITouch.TouchType
+    public let phase: UITouch.Phase
+    public let force: CGFloat
+    public let maximumPossibleForce: CGFloat
+    public let altitudeAngle: CGFloat
+    public let azimuthUnitVector: CGVector
+    public let azimuth: CGFloat
+    public let majorRadius: CGFloat
+    public let majorRadiusTolerance: CGFloat
+    public let location: CGPoint
+    public let estimationUpdateIndex: NSNumber?
+    public let estimatedProperties: UITouch.Properties
+    public let estimatedPropertiesExpectingUpdates: UITouch.Properties
+    public let isUpdate: Bool
+    public let isPrediction: Bool
 
     // MARK: - Non-coded properties
 
-    let view: UIView?
+    public let view: UIView?
 
     // MARK: - Computed Properties
 
-    var expectsLocationUpdate: Bool {
+    public var expectsLocationUpdate: Bool {
         return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.location)
     }
 
-    var expectsForceUpdate: Bool {
+    public var expectsForceUpdate: Bool {
         return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.force)
     }
 
-    var expectsAzimuthUpdate: Bool {
+    public var expectsAzimuthUpdate: Bool {
         return estimatedPropertiesExpectingUpdates.contains(UITouch.Properties.azimuth)
     }
-//    + (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch velocity:(CGFloat)velocity isUpdate:(BOOL)update isPrediction:(BOOL)prediction
+//    + (MMTouchStreamEvent *)eventWithCoalescedTouch:(UITouch *)coalescedTouch touch:(UITouch *)touch isUpdate:(BOOL)update isPrediction:(BOOL)prediction
 
-    convenience init(coalescedTouch: UITouch, touch: UITouch, velocity: CGFloat, isUpdate: Bool, isPrediction: Bool) {
+    convenience init(coalescedTouch: UITouch, touch: UITouch, isUpdate: Bool, isPrediction: Bool) {
         self.init(identifier: UUID.init().uuidString,
                   touchIdentifier: touch.identifer,
                   timestamp: coalescedTouch.timestamp,
@@ -64,7 +63,6 @@ class TouchStreamEvent {
                   altitudeAngle: coalescedTouch.altitudeAngle,
                   azimuthUnitVector: coalescedTouch.azimuthUnitVector(in: coalescedTouch.view),
                   azimuth: coalescedTouch.azimuthAngle(in: coalescedTouch.view),
-                  velocity: velocity,
                   majorRadius: coalescedTouch.majorRadius,
                   majorRadiusTolerance: coalescedTouch.majorRadiusTolerance,
                   location: coalescedTouch.location(in: coalescedTouch.view),
@@ -86,7 +84,6 @@ class TouchStreamEvent {
          altitudeAngle: CGFloat,
          azimuthUnitVector: CGVector,
          azimuth: CGFloat,
-         velocity: CGFloat,
          majorRadius: CGFloat,
          majorRadiusTolerance: CGFloat,
          location: CGPoint,
@@ -106,7 +103,6 @@ class TouchStreamEvent {
         self.altitudeAngle = altitudeAngle
         self.azimuthUnitVector = azimuthUnitVector
         self.azimuth = azimuth
-        self.velocity = velocity
         self.majorRadius = majorRadius
         self.majorRadiusTolerance = majorRadiusTolerance
         self.location = location
@@ -118,7 +114,7 @@ class TouchStreamEvent {
         self.view = view
     }
 
-    func isSameTouchAs(event: TouchStreamEvent) -> Bool {
+    public func isSameTouchAs(event: TouchStreamEvent) -> Bool {
         return touchIdentifier == event.touchIdentifier
     }
 }
