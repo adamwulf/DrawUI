@@ -26,8 +26,8 @@ class DrawUITests: XCTestCase {
                                     phase: .began,
                                     location: CGPoint(x: 100, y: 100),
                                     estimationUpdateIndex: NSNumber(1),
-                                    estimatedProperties: UITouch.Properties.location,
-                                    estimatedPropertiesExpectingUpdates: UITouch.Properties.location,
+                                    estimatedProperties: .location,
+                                    estimatedPropertiesExpectingUpdates: .location,
                                     isUpdate: false,
                                     isPrediction: false)
         let predictedTouch = TouchEvent(touchIdentifier: touchId,
@@ -43,6 +43,22 @@ class DrawUITests: XCTestCase {
                                       location: CGPoint(x: 110, y: 120),
                                       estimationUpdateIndex: NSNumber(1),
                                       estimatedProperties: UITouch.Properties(rawValue: 0),
+                                      estimatedPropertiesExpectingUpdates: UITouch.Properties(rawValue: 0),
+                                      isUpdate: true,
+                                      isPrediction: false)
+        let lastTouch = TouchEvent(touchIdentifier: touchId,
+                                   phase: .ended,
+                                   location: CGPoint(x: 200, y: 100),
+                                   estimationUpdateIndex: NSNumber(2),
+                                   estimatedProperties: .location,
+                                   estimatedPropertiesExpectingUpdates: .location,
+                                   isUpdate: false,
+                                   isPrediction: false)
+        let lastUpdatedTouch = TouchEvent(touchIdentifier: touchId,
+                                      phase: .ended,
+                                      location: CGPoint(x: 220, y: 120),
+                                      estimationUpdateIndex: NSNumber(2),
+                                      estimatedProperties: .location,
                                       estimatedPropertiesExpectingUpdates: UITouch.Properties(rawValue: 0),
                                       isUpdate: true,
                                       isPrediction: false)
@@ -71,6 +87,38 @@ class DrawUITests: XCTestCase {
             XCTAssertEqual(indexSet.last!, 1)
             XCTAssertEqual(stroke.points.first!.event.location, CGPoint(x: 110, y: 120))
             XCTAssert(!stroke.points.first!.expectsUpdate)
+        } else {
+            XCTFail()
+        }
+
+        let delta3 = strokes.add(touchEvents: [lastTouch])
+
+        XCTAssertEqual(delta3.count, 1)
+        if case .updatedStroke(let stroke, let indexSet) = delta3.first {
+            XCTAssertEqual(stroke.points.count, 2)
+            XCTAssertEqual(indexSet.count, 1)
+            XCTAssertEqual(indexSet.first!, 1)
+            XCTAssertEqual(stroke.points.last!.event.location, CGPoint(x: 200, y: 100))
+            XCTAssert(stroke.points.last!.expectsUpdate)
+        } else {
+            XCTFail()
+        }
+
+        let delta4 = strokes.add(touchEvents: [lastUpdatedTouch])
+
+        XCTAssertEqual(delta4.count, 2)
+        if case .updatedStroke(let stroke, let indexSet) = delta4.first {
+            XCTAssertEqual(stroke.points.count, 2)
+            XCTAssertEqual(indexSet.count, 1)
+            XCTAssertEqual(indexSet.first!, 1)
+            XCTAssertEqual(stroke.points.last!.event.location, CGPoint(x: 220, y: 120))
+            XCTAssert(!stroke.points.last!.expectsUpdate)
+        } else {
+            XCTFail()
+        }
+
+        if case .completedStroke(let stroke) = delta4.last {
+            XCTAssertTrue(stroke.isComplete)
         } else {
             XCTFail()
         }
