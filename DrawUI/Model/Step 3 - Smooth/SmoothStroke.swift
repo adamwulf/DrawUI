@@ -21,6 +21,10 @@ public class SmoothStroke {
         self.points = stroke.points.map({ SmoothStrokePoint(point: $0) })
     }
 
+    // TODO:
+    // for smoothing, perhaps have an object that can either smooth a SmoothStrokePoint array
+    // or can smooth [SmoothStrokePoint] and IndexSet, returning ([SmoothStrokePoint], IndexSet).
+    // then these can be chained together or even reordered
     func update(with stroke: Stroke, indexSet: IndexSet) -> IndexSet {
         for index in indexSet {
             if index < stroke.points.count {
