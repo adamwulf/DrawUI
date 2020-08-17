@@ -10,22 +10,9 @@ import DrawUI
 
 class DebugView: UIView {
     var touchStream: EventStream?
-    let strokes: Strokes
-
-    override init(frame: CGRect) {
-        strokes = Strokes()
-        super.init(frame: frame)
-    }
-
-    required init?(coder: NSCoder) {
-        strokes = Strokes()
-        super.init(coder: coder)
-    }
+    var strokes: Strokes?
 
     override func draw(_ rect: CGRect) {
-        let updatedEvents = touchStream?.process()
-        strokes.add(touchEvents: updatedEvents ?? [])
-
         for event in touchStream?.events ?? [] {
             var radius: CGFloat = 2
             if event.isUpdate {
@@ -49,7 +36,7 @@ class DebugView: UIView {
 
         UIColor.red.setStroke()
 
-        for stroke in strokes.strokes {
+        for stroke in strokes?.strokes ?? [] {
             let path = UIBezierPath()
             for point in stroke.points {
                 if point.event.phase == .began {

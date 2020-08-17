@@ -117,6 +117,7 @@
 			children = (
 				C580259E24E9E1C10043130D /* Strokes.swift */,
 				C580259B24E9E1150043130D /* Stroke.swift */,
+				C58025A024E9E3F90043130D /* StrokePoint.swift */,
 			);
 			path = "Step 2 - Coalesce";
 			sourceTree = "<group>";
@@ -147,7 +148,6 @@
 				C5C159E024E9B2F000B52B4B /* Gestures */,
 				C5C159D924E9AF7300B52B4B /* Extensions */,
 				C58025A224EA26BB0043130D /* Model */,
-				C58025A024E9E3F90043130D /* StrokePoint.swift */,
 				C5C159B124E9AF1C00B52B4B /* DrawUI.h */,
 				C5C159B224E9AF1C00B52B4B /* Info.plist */,
 			);

@@ -8,14 +8,23 @@
 import Foundation
 
 public class Stroke {
-    var touchIdentifier: String
+    // MARK: - Public Properties
+    public private(set) var touchIdentifier: String
+    public var points: [StrokePoint] {
+        return confirmedPoints + predictedPoints
+    }
 
-    public private(set) var points: [StrokePoint]
+    // MARK: - Private Properties
+    private var confirmedPoints: [StrokePoint]
+    private var predictedPoints: [StrokePoint]
     private var touchToPoint: [String: StrokePoint]
+
+    // MARK: - Init
 
     init?(touchEvents: [TouchEvent]) {
         guard touchEvents.count > 0 else { return nil }
-        self.points = []
+        self.confirmedPoints = []
+        self.predictedPoints = []
         self.touchToPoint = [:]
         self.touchIdentifier = touchEvents.first!.touchIdentifier
         add(touchEvents: touchEvents)
@@ -25,10 +34,18 @@ public class Stroke {
         for event in touchEvents {
             if touchToPoint[event.pointIdentifier] != nil {
                 touchToPoint[event.pointIdentifier]?.add(event: event)
+            } else if event.isPrediction {
+                let prediction = StrokePoint(event: event)
+                predictedPoints.append(prediction)
+            } else if let point = predictedPoints.first {
+                point.add(event: event)
+                predictedPoints.removeFirst()
+                touchToPoint[event.pointIdentifier] = point
+                confirmedPoints.append(point)
             } else {
                 let point = StrokePoint(event: event)
                 touchToPoint[event.pointIdentifier] = point
-                points.append(point)
+                confirmedPoints.append(point)
             }
         }
     }
