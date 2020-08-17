@@ -37,6 +37,7 @@ extension ViewController: StrokesDelegate {
 
         print("updates: \(updates)")
 
+        debugView?.add(deltas: deltas)
         debugView?.setNeedsDisplay()
     }
 }
