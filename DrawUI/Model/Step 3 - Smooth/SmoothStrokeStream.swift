@@ -36,7 +36,9 @@ public class SmoothStrokeStream {
     public var gesture: UIGestureRecognizer {
         return strokeStream.gesture
     }
-
+    public var touchStream: TouchesEventStream {
+        return strokeStream.touchStream
+    }
     public let strokeStream = StrokeStream()
 
     public init() {

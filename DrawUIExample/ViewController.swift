@@ -10,13 +10,13 @@ import DrawUI
 
 class ViewController: UIViewController {
 
-    let strokes: StrokeStream
+    let strokes: SmoothStrokeStream
     var debugView: DebugView? {
         return view as? DebugView
     }
 
     required init?(coder: NSCoder) {
-        self.strokes = StrokeStream()
+        self.strokes = SmoothStrokeStream()
         super.init(coder: coder)
 
         strokes.delegate = self
@@ -31,8 +31,8 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: StrokeStreamDelegate {
-    func strokesChanged(_ strokes: StrokeStream, deltas: [StrokeStream.Delta]) {
+extension ViewController: SmoothStrokeStreamDelegate {
+    func strokesChanged(_ strokes: SmoothStrokeStream, deltas: [SmoothStrokeStream.Delta]) {
         let updates = deltas.map({ $0.rawString })
 
         print("updates: \(updates)")

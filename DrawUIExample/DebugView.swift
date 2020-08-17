@@ -9,10 +9,10 @@ import UIKit
 import DrawUI
 
 class DebugView: UIView {
-    var strokes: StrokeStream?
-    private var deltas: [StrokeStream.Delta]?
+    var strokes: SmoothStrokeStream?
+    private var deltas: [SmoothStrokeStream.Delta]?
 
-    func add(deltas: [StrokeStream.Delta]) {
+    func add(deltas: [SmoothStrokeStream.Delta]) {
         if self.deltas == nil {
             self.deltas = []
         }
@@ -56,7 +56,7 @@ class DebugView: UIView {
         }
 
         if let deltas = deltas {
-            func draw(stroke: Stroke, indexSet: IndexSet?) {
+            func draw(stroke: SmoothStroke, indexSet: IndexSet?) {
                 UIColor.red.setStroke()
                 if let indexSet = indexSet {
                     for index in indexSet {
@@ -87,9 +87,9 @@ class DebugView: UIView {
 
             for delta in deltas {
                 switch delta {
-                case .addedStroke(let stroke):
+                case .addedSmoothStroke(let stroke):
                     draw(stroke: stroke, indexSet: nil)
-                case .updatedStroke(let stroke, let indexSet):
+                case .updatedSmoothStroke(let stroke, let indexSet):
                     draw(stroke: stroke, indexSet: indexSet)
                 default:
                     break
