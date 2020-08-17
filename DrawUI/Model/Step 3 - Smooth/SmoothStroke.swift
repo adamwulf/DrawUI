@@ -12,19 +12,29 @@ public class SmoothStroke {
     public var touchIdentifier: String {
         return stroke.touchIdentifier
     }
-    public var points: [SmoothStrokePoint] {
-        // TODO: cache and smooth these points
-        return stroke.points.map({ SmoothStrokePoint(point: $0) })
-    }
+    public var points: [SmoothStrokePoint]
 
     private var stroke: Stroke
 
     init(stroke: Stroke) {
         self.stroke = stroke
+        self.points = stroke.points.map({ SmoothStrokePoint(point: $0) })
     }
 
     func update(with stroke: Stroke, indexSet: IndexSet) -> IndexSet {
-        // TODO: smooth the stroke when it updates
-        return IndexSet()
+        for index in indexSet {
+            if index < stroke.points.count {
+                if index < points.count {
+                    points[index].location = stroke.points[index].event.location
+                } else if index == points.count {
+                    points.append(SmoothStrokePoint(point: stroke.points[index]))
+                } else {
+                    assertionFailure("Attempting to modify a point that doesn't yet exist. maybe an update is out of order?")
+                }
+            } else {
+                points.remove(at: index)
+            }
+        }
+        return indexSet
     }
 }
