@@ -11,6 +11,16 @@ import DrawUI
 class DrawUITests: XCTestCase {
 
     func testExample() throws {
+        // Input:
+        // event batch 1 contains:
+        //     a) a point expecting a location update
+        //     b) a predicted point
+        // event batch 2 contains:
+        //     a) an update to the (a) point above
+        //
+        // since a new point event didn't arrive for the prediction,
+        // that point is removed. its index is included in the IndexSet
+        // of modified points.
         let touchId = UUID().uuidString
         let startTouch = TouchEvent(touchIdentifier: touchId,
                                     phase: .began,
