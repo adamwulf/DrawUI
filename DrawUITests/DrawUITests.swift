@@ -17,6 +17,10 @@ class DrawUITests: XCTestCase {
         //     b) a predicted point
         // event batch 2 contains:
         //     a) an update to the (a) point above
+        // event batch 3 contains:
+        //     a) a .ended point expecting an update (the stroke should not be complete yet)
+        // event batch 4 contains:
+        //     a) the location update for (a) above, completing the stroke
         //
         // since a new point event didn't arrive for the prediction,
         // that point is removed. its index is included in the IndexSet
@@ -100,6 +104,7 @@ class DrawUITests: XCTestCase {
             XCTAssertEqual(indexSet.first!, 1)
             XCTAssertEqual(stroke.points.last!.event.location, CGPoint(x: 200, y: 100))
             XCTAssert(stroke.points.last!.expectsUpdate)
+            XCTAssertFalse(stroke.isComplete)
         } else {
             XCTFail()
         }
@@ -113,6 +118,7 @@ class DrawUITests: XCTestCase {
             XCTAssertEqual(indexSet.first!, 1)
             XCTAssertEqual(stroke.points.last!.event.location, CGPoint(x: 220, y: 120))
             XCTAssert(!stroke.points.last!.expectsUpdate)
+            XCTAssertTrue(stroke.isComplete)
         } else {
             XCTFail()
         }
