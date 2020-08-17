@@ -9,11 +9,10 @@ import UIKit
 import DrawUI
 
 class DebugView: UIView {
-    var touchStream: EventStream?
     var strokes: Strokes?
 
     override func draw(_ rect: CGRect) {
-        for event in touchStream?.events ?? [] {
+        for event in strokes?.touchStream.events ?? [] {
             var radius: CGFloat = 2
             if event.isUpdate {
                 radius = 1

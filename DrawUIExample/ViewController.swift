@@ -10,21 +10,16 @@ import DrawUI
 
 class ViewController: UIViewController {
 
-    let touchStreamGesture: UIGestureRecognizer
-    let touchStream: EventStream
     let strokes: Strokes
     var debugView: DebugView? {
         return view as? DebugView
     }
 
     required init?(coder: NSCoder) {
-        let touchStream = TouchesEventStream()
-        touchStreamGesture = touchStream.gesture
         self.strokes = Strokes()
-        self.touchStream = touchStream
         super.init(coder: coder)
 
-        touchStream.delegate = self
+        strokes.delegate = self
     }
 
     override func viewDidLoad() {
@@ -32,15 +27,13 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         debugView?.strokes = strokes
-        debugView?.touchStream = touchStream
-        debugView?.addGestureRecognizer(touchStreamGesture)
+        debugView?.addGestureRecognizer(strokes.gesture)
     }
 }
 
-extension ViewController: EventStreamDelegate {
-    func touchStreamChanged(_ touchStream: EventStream) {
-        let updatedEvents = touchStream.process()
-        let updates = strokes.add(touchEvents: updatedEvents).map({ $0.rawString })
+extension ViewController: StrokesDelegate {
+    func strokesChanged(_ strokes: Strokes, deltas: [Strokes.Delta]) {
+        let updates = deltas.map({ $0.rawString })
 
         print("updates: \(updates)")
 

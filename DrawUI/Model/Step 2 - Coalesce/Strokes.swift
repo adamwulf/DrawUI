@@ -5,7 +5,11 @@
 //  Created by Adam Wulf on 8/16/20.
 //
 
-import Foundation
+import UIKit
+
+public protocol StrokesDelegate: class {
+    func strokesChanged(_ strokes: Strokes, deltas: [Strokes.Delta])
+}
 
 public class Strokes {
 
@@ -28,10 +32,17 @@ public class Strokes {
 
     public private(set) var strokes: [Stroke]
     public private(set) var touchToStroke: [String: Stroke]
+    public weak var delegate: StrokesDelegate?
+    public var gesture: UIGestureRecognizer {
+        return touchStream.gesture
+    }
+
+    public let touchStream = TouchesEventStream()
 
     public init() {
         touchToStroke = [:]
         strokes = []
+        touchStream.delegate = self
     }
 
     @discardableResult
@@ -63,5 +74,14 @@ public class Strokes {
         }
 
         return deltas
+    }
+}
+
+extension Strokes: EventStreamDelegate {
+    public func touchStreamChanged(_ touchStream: EventStream) {
+        let updatedEvents = touchStream.process()
+        let updates = self.add(touchEvents: updatedEvents)
+
+        delegate?.strokesChanged(self, deltas: updates)
     }
 }
