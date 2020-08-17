@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C580259C24E9E1150043130D /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* Stroke.swift */; };
-		C580259F24E9E1C10043130D /* Strokes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* Strokes.swift */; };
+		C580259F24E9E1C10043130D /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* StrokeStream.swift */; };
 		C58025A124E9E3F90043130D /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025A024E9E3F90043130D /* StrokePoint.swift */; };
 		C58025AC24EA3F150043130D /* DrawUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025AB24EA3F150043130D /* DrawUITests.swift */; };
 		C58025AE24EA3F150043130D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */; };
@@ -62,7 +62,7 @@
 
 /* Begin PBXFileReference section */
 		C580259B24E9E1150043130D /* Stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
-		C580259E24E9E1C10043130D /* Strokes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strokes.swift; sourceTree = "<group>"; };
+		C580259E24E9E1C10043130D /* StrokeStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeStream.swift; sourceTree = "<group>"; };
 		C58025A024E9E3F90043130D /* StrokePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
 		C58025A924EA3F150043130D /* DrawUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58025AB24EA3F150043130D /* DrawUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawUITests.swift; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 		C58025A424EA26DA0043130D /* Step 2 - Coalesce */ = {
 			isa = PBXGroup;
 			children = (
-				C580259E24E9E1C10043130D /* Strokes.swift */,
+				C580259E24E9E1C10043130D /* StrokeStream.swift */,
 				C580259B24E9E1150043130D /* Stroke.swift */,
 				C58025A024E9E3F90043130D /* StrokePoint.swift */,
 			);
@@ -385,7 +385,7 @@
 				C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */,
 				C5C159EE24E9C8D100B52B4B /* EventStream.swift in Sources */,
 				C5C159E224E9B2F800B52B4B /* TouchStreamGestureRecognizer.swift in Sources */,
-				C580259F24E9E1C10043130D /* Strokes.swift in Sources */,
+				C580259F24E9E1C10043130D /* StrokeStream.swift in Sources */,
 				C58025A124E9E3F90043130D /* StrokePoint.swift in Sources */,
 				C5C159DC24E9AF8100B52B4B /* UITouch+Extensions.swift in Sources */,
 				C5C159BC24E9AF3600B52B4B /* TouchesEventStream.swift in Sources */,

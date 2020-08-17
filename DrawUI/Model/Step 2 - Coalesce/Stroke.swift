@@ -24,16 +24,16 @@ public class Stroke {
     private var predictedPoints: [StrokePoint]
 
     private var expectingUpdate: [String]
-    private var touchToPoint: [String: StrokePoint]
-    private var touchToIndex: [String: Int]
+    private var eventToPoint: [PointIdentifier: StrokePoint]
+    private var eventToIndex: [PointIdentifier: Int]
 
     // MARK: - Init
     init?(touchEvents: [TouchEvent]) {
         guard touchEvents.count > 0 else { return nil }
         self.confirmedPoints = []
         self.predictedPoints = []
-        self.touchToPoint = [:]
-        self.touchToIndex = [:]
+        self.eventToPoint = [:]
+        self.eventToIndex = [:]
         self.expectingUpdate = []
         self.touchIdentifier = touchEvents.first!.touchIdentifier
         add(touchEvents: touchEvents)
@@ -45,9 +45,9 @@ public class Stroke {
         var consumable = predictedPoints
         predictedPoints = []
         for event in touchEvents {
-            if touchToPoint[event.pointIdentifier] != nil,
-               let index = touchToIndex[event.pointIdentifier] {
-                touchToPoint[event.pointIdentifier]?.add(event: event)
+            if eventToPoint[event.pointIdentifier] != nil,
+               let index = eventToIndex[event.pointIdentifier] {
+                eventToPoint[event.pointIdentifier]?.add(event: event)
                 if !event.expectsUpdate {
                     expectingUpdate.remove(object: event.pointIdentifier)
                 }
@@ -56,7 +56,7 @@ public class Stroke {
                 let prediction = StrokePoint(event: event)
                 predictedPoints.append(prediction)
                 let index = confirmedPoints.count + predictedPoints.count - 1
-                touchToIndex[event.pointIdentifier] = index
+                eventToIndex[event.pointIdentifier] = index
                 indexSet.insert(index)
             } else if
                 let point = consumable.first {
@@ -65,20 +65,20 @@ public class Stroke {
                 }
                 point.add(event: event)
                 consumable.removeFirst()
-                touchToPoint[event.pointIdentifier] = point
+                eventToPoint[event.pointIdentifier] = point
                 confirmedPoints.append(point)
                 let index = confirmedPoints.count - 1
-                touchToIndex[event.pointIdentifier] = index
+                eventToIndex[event.pointIdentifier] = index
                 indexSet.insert(index)
             } else {
                 if event.expectsUpdate {
                     expectingUpdate.append(event.pointIdentifier)
                 }
                 let point = StrokePoint(event: event)
-                touchToPoint[event.pointIdentifier] = point
+                eventToPoint[event.pointIdentifier] = point
                 confirmedPoints.append(point)
                 let index = confirmedPoints.count - 1
-                touchToIndex[event.pointIdentifier] = index
+                eventToIndex[event.pointIdentifier] = index
                 indexSet.insert(index)
             }
         }

@@ -9,10 +9,10 @@ import UIKit
 import DrawUI
 
 class DebugView: UIView {
-    var strokes: Strokes?
-    private var deltas: [Strokes.Delta]?
+    var strokes: StrokeStream?
+    private var deltas: [StrokeStream.Delta]?
 
-    func add(deltas: [Strokes.Delta]) {
+    func add(deltas: [StrokeStream.Delta]) {
         if self.deltas == nil {
             self.deltas = []
         }

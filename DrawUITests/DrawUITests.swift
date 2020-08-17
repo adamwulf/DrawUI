@@ -25,11 +25,11 @@ class DrawUITests: XCTestCase {
         // since a new point event didn't arrive for the prediction,
         // that point is removed. its index is included in the IndexSet
         // of modified points.
-        let touchId = UUID().uuidString
+        let touchId: UITouchIdentifier = UUID().uuidString
         let startTouch = TouchEvent(touchIdentifier: touchId,
                                     phase: .began,
                                     location: CGPoint(x: 100, y: 100),
-                                    estimationUpdateIndex: NSNumber(1),
+                                    estimationUpdateIndex: EstimationUpdateIndex(1),
                                     estimatedProperties: .location,
                                     estimatedPropertiesExpectingUpdates: .location,
                                     isUpdate: false,
@@ -45,7 +45,7 @@ class DrawUITests: XCTestCase {
         let updatedTouch = TouchEvent(touchIdentifier: touchId,
                                       phase: .began,
                                       location: CGPoint(x: 110, y: 120),
-                                      estimationUpdateIndex: NSNumber(1),
+                                      estimationUpdateIndex: EstimationUpdateIndex(1),
                                       estimatedProperties: UITouch.Properties(rawValue: 0),
                                       estimatedPropertiesExpectingUpdates: UITouch.Properties(rawValue: 0),
                                       isUpdate: true,
@@ -53,7 +53,7 @@ class DrawUITests: XCTestCase {
         let lastTouch = TouchEvent(touchIdentifier: touchId,
                                    phase: .ended,
                                    location: CGPoint(x: 200, y: 100),
-                                   estimationUpdateIndex: NSNumber(2),
+                                   estimationUpdateIndex: EstimationUpdateIndex(2),
                                    estimatedProperties: .location,
                                    estimatedPropertiesExpectingUpdates: .location,
                                    isUpdate: false,
@@ -61,13 +61,13 @@ class DrawUITests: XCTestCase {
         let lastUpdatedTouch = TouchEvent(touchIdentifier: touchId,
                                       phase: .ended,
                                       location: CGPoint(x: 220, y: 120),
-                                      estimationUpdateIndex: NSNumber(2),
+                                      estimationUpdateIndex: EstimationUpdateIndex(2),
                                       estimatedProperties: .location,
                                       estimatedPropertiesExpectingUpdates: UITouch.Properties(rawValue: 0),
                                       isUpdate: true,
                                       isPrediction: false)
 
-        let strokes = Strokes()
+        let strokes = StrokeStream()
         let delta1 = strokes.add(touchEvents: [startTouch, predictedTouch])
 
         XCTAssertEqual(delta1.count, 1)

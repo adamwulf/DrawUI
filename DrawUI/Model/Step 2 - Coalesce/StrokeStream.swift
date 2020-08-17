@@ -1,5 +1,5 @@
 //
-//  Strokes.swift
+//  StrokeStream.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-public protocol StrokesDelegate: class {
-    func strokesChanged(_ strokes: Strokes, deltas: [Strokes.Delta])
+public protocol StrokeStreamDelegate: class {
+    func strokesChanged(_ strokes: StrokeStream, deltas: [StrokeStream.Delta])
 }
 
-public class Strokes {
+public class StrokeStream {
 
     public enum Delta {
         case addedStroke(stroke: Stroke)
@@ -31,8 +31,8 @@ public class Strokes {
     }
 
     public private(set) var strokes: [Stroke]
-    public private(set) var touchToStroke: [String: Stroke]
-    public weak var delegate: StrokesDelegate?
+    public private(set) var touchToStroke: [UITouchIdentifier: Stroke]
+    public weak var delegate: StrokeStreamDelegate?
     public var gesture: UIGestureRecognizer {
         return touchStream.gesture
     }
@@ -77,7 +77,7 @@ public class Strokes {
     }
 }
 
-extension Strokes: EventStreamDelegate {
+extension StrokeStream: EventStreamDelegate {
     public func touchStreamChanged(_ touchStream: EventStream) {
         let updatedEvents = touchStream.process()
         let updates = self.add(touchEvents: updatedEvents)

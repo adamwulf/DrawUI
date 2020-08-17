@@ -7,16 +7,20 @@
 
 import UIKit
 
+public typealias TouchEventIdentifier = String
+public typealias PointIdentifier = String
+public typealias EstimationUpdateIndex = NSNumber
+
 public class TouchEvent {
 
     /// A completely unique identifier per event, even for events built from
     /// the same touch or coalescedTouch
-    public let identifier: String
+    public let identifier: TouchEventIdentifier
 
     /// An identifier unique to the touch that created this event. Events with the same
     /// touch will also have the same touchIdentifier
-    public let touchIdentifier: String
-    public var pointIdentifier: String {
+    public let touchIdentifier: UITouchIdentifier
+    public var pointIdentifier: PointIdentifier {
         if let estimationUpdateIndex = estimationUpdateIndex {
             return touchIdentifier + ":\(estimationUpdateIndex)"
         } else {
@@ -34,7 +38,7 @@ public class TouchEvent {
     public let majorRadius: CGFloat
     public let majorRadiusTolerance: CGFloat
     public let location: CGPoint
-    public let estimationUpdateIndex: NSNumber?
+    public let estimationUpdateIndex: EstimationUpdateIndex?
     public let estimatedProperties: UITouch.Properties
     public let estimatedPropertiesExpectingUpdates: UITouch.Properties
     public let isUpdate: Bool
@@ -84,8 +88,8 @@ public class TouchEvent {
                   in: coalescedTouch.view)
     }
 
-    public init(identifier: String,
-         touchIdentifier: String,
+    public init(identifier: TouchEventIdentifier,
+         touchIdentifier: UITouchIdentifier,
          timestamp: TimeInterval,
          type: UITouch.TouchType,
          phase: UITouch.Phase,
@@ -97,7 +101,7 @@ public class TouchEvent {
          majorRadius: CGFloat,
          majorRadiusTolerance: CGFloat,
          location: CGPoint,
-         estimationUpdateIndex: NSNumber?,
+         estimationUpdateIndex: EstimationUpdateIndex?,
          estimatedProperties: UITouch.Properties,
          estimatedPropertiesExpectingUpdates: UITouch.Properties,
          isUpdate: Bool,
@@ -124,12 +128,12 @@ public class TouchEvent {
         self.view = view
     }
 
-    public convenience init(touchIdentifier: String,
+    public convenience init(touchIdentifier: UITouchIdentifier,
                      type: UITouch.TouchType = .direct,
                      phase: UITouch.Phase,
                      force: CGFloat = 1,
                      location: CGPoint,
-                     estimationUpdateIndex: NSNumber? = nil,
+                     estimationUpdateIndex: EstimationUpdateIndex? = nil,
                      estimatedProperties: UITouch.Properties,
                      estimatedPropertiesExpectingUpdates: UITouch.Properties,
                      isUpdate: Bool,

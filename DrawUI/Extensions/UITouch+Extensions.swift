@@ -9,9 +9,10 @@ import UIKit
 import ObjectiveC
 
 private var TOUCH_IDENTIFIER: UInt8 = 0
+public typealias UITouchIdentifier = String
 
 extension UITouch {
-    var identifer: String {
+    var identifer: UITouchIdentifier {
         if let identifier = objc_getAssociatedObject(self, &TOUCH_IDENTIFIER) as? String {
             return identifier
         } else {
