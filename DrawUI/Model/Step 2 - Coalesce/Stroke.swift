@@ -42,6 +42,8 @@ public class Stroke {
     @discardableResult
     func add(touchEvents: [TouchEvent]) -> IndexSet {
         var indexSet = IndexSet()
+        var consumable = predictedPoints
+        predictedPoints = []
         for event in touchEvents {
             if touchToPoint[event.pointIdentifier] != nil,
                let index = touchToIndex[event.identifier] {
@@ -57,12 +59,12 @@ public class Stroke {
                 touchToIndex[event.identifier] = index
                 indexSet.insert(index)
             } else if
-                let point = predictedPoints.first {
+                let point = consumable.first {
                 if event.expectsUpdate {
                     expectingUpdate.append(event.pointIdentifier)
                 }
                 point.add(event: event)
-                predictedPoints.removeFirst()
+                consumable.removeFirst()
                 touchToPoint[event.pointIdentifier] = point
                 confirmedPoints.append(point)
                 let index = confirmedPoints.count - 1
@@ -80,6 +82,14 @@ public class Stroke {
                 indexSet.insert(index)
             }
         }
+
+        // we might have started with more prodicted touches than we were able to consume
+        // in that case, mark the now-out-of-bounds indexes as modified since those points
+        // were deleted
+        for (index, _) in consumable.enumerated() {
+            indexSet.insert(confirmedPoints.count + predictedPoints.count + index)
+        }
+
         return indexSet
     }
 }
