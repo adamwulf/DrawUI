@@ -10,6 +10,8 @@
 		C580259C24E9E1150043130D /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* Stroke.swift */; };
 		C580259F24E9E1C10043130D /* Strokes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* Strokes.swift */; };
 		C58025A124E9E3F90043130D /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025A024E9E3F90043130D /* StrokePoint.swift */; };
+		C58025AC24EA3F150043130D /* DrawUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025AB24EA3F150043130D /* DrawUITests.swift */; };
+		C58025AE24EA3F150043130D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */; };
 		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159B924E9AF3600B52B4B /* TouchEvent.swift */; };
 		C5C159BC24E9AF3600B52B4B /* TouchesEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159BA24E9AF3600B52B4B /* TouchesEventStream.swift */; };
@@ -29,6 +31,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C58025AF24EA3F150043130D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5C159A524E9AF1C00B52B4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C5C159AD24E9AF1C00B52B4B;
+			remoteInfo = DrawUI;
+		};
 		C5C159D524E9AF5E00B52B4B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C5C159A524E9AF1C00B52B4B /* Project object */;
@@ -55,6 +64,9 @@
 		C580259B24E9E1150043130D /* Stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
 		C580259E24E9E1C10043130D /* Strokes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strokes.swift; sourceTree = "<group>"; };
 		C58025A024E9E3F90043130D /* StrokePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
+		C58025A924EA3F150043130D /* DrawUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C58025AB24EA3F150043130D /* DrawUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawUITests.swift; sourceTree = "<group>"; };
+		C58025AD24EA3F150043130D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C159B124E9AF1C00B52B4B /* DrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawUI.h; sourceTree = "<group>"; };
 		C5C159B224E9AF1C00B52B4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,6 +88,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C58025A624EA3F150043130D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C58025AE24EA3F150043130D /* DrawUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5C159AB24E9AF1C00B52B4B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -122,10 +142,20 @@
 			path = "Step 2 - Coalesce";
 			sourceTree = "<group>";
 		};
+		C58025AA24EA3F150043130D /* DrawUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C58025AB24EA3F150043130D /* DrawUITests.swift */,
+				C58025AD24EA3F150043130D /* Info.plist */,
+			);
+			path = DrawUITests;
+			sourceTree = "<group>";
+		};
 		C5C159A424E9AF1C00B52B4B = {
 			isa = PBXGroup;
 			children = (
 				C5C159B024E9AF1C00B52B4B /* DrawUI */,
+				C58025AA24EA3F150043130D /* DrawUITests */,
 				C5C159C224E9AF4E00B52B4B /* DrawUIExample */,
 				C5C159AF24E9AF1C00B52B4B /* Products */,
 				C5C159D724E9AF6100B52B4B /* Frameworks */,
@@ -137,6 +167,7 @@
 			children = (
 				C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */,
 				C5C159C124E9AF4E00B52B4B /* DrawUIExample.app */,
+				C58025A924EA3F150043130D /* DrawUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -215,6 +246,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		C58025A824EA3F150043130D /* DrawUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C58025B324EA3F150043130D /* Build configuration list for PBXNativeTarget "DrawUITests" */;
+			buildPhases = (
+				C58025A524EA3F150043130D /* Sources */,
+				C58025A624EA3F150043130D /* Frameworks */,
+				C58025A724EA3F150043130D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C58025B024EA3F150043130D /* PBXTargetDependency */,
+			);
+			name = DrawUITests;
+			productName = DrawUITests;
+			productReference = C58025A924EA3F150043130D /* DrawUITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C5C159AD24E9AF1C00B52B4B /* DrawUI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C5C159B624E9AF1C00B52B4B /* Build configuration list for PBXNativeTarget "DrawUI" */;
@@ -261,6 +310,9 @@
 				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
+					C58025A824EA3F150043130D = {
+						CreatedOnToolsVersion = 12.0;
+					};
 					C5C159AD24E9AF1C00B52B4B = {
 						CreatedOnToolsVersion = 12.0;
 						LastSwiftMigration = 1200;
@@ -284,12 +336,20 @@
 			projectRoot = "";
 			targets = (
 				C5C159AD24E9AF1C00B52B4B /* DrawUI */,
+				C58025A824EA3F150043130D /* DrawUITests */,
 				C5C159C024E9AF4E00B52B4B /* DrawUIExample */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C58025A724EA3F150043130D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5C159AC24E9AF1C00B52B4B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -310,6 +370,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C58025A524EA3F150043130D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C58025AC24EA3F150043130D /* DrawUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5C159AA24E9AF1C00B52B4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -340,6 +408,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C58025B024EA3F150043130D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C5C159AD24E9AF1C00B52B4B /* DrawUI */;
+			targetProxy = C58025AF24EA3F150043130D /* PBXContainerItemProxy */;
+		};
 		C5C159D624E9AF5E00B52B4B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C5C159AD24E9AF1C00B52B4B /* DrawUI */;
@@ -367,6 +440,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C58025B124EA3F150043130D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MU27A4SCKC;
+				INFOPLIST_FILE = DrawUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.milestonemade.DrawUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C58025B224EA3F150043130D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MU27A4SCKC;
+				INFOPLIST_FILE = DrawUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.milestonemade.DrawUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		C5C159B424E9AF1C00B52B4B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -581,6 +690,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C58025B324EA3F150043130D /* Build configuration list for PBXNativeTarget "DrawUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C58025B124EA3F150043130D /* Debug */,
+				C58025B224EA3F150043130D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C5C159A824E9AF1C00B52B4B /* Build configuration list for PBXProject "DrawUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

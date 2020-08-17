@@ -62,7 +62,7 @@ public class TouchEvent {
         return expectsForceUpdate || expectsAzimuthUpdate || expectsLocationUpdate
     }
 
-    convenience init(coalescedTouch: UITouch, touch: UITouch, isUpdate: Bool, isPrediction: Bool) {
+    public convenience init(coalescedTouch: UITouch, touch: UITouch, isUpdate: Bool, isPrediction: Bool) {
         self.init(identifier: UUID.init().uuidString,
                   touchIdentifier: touch.identifer,
                   timestamp: coalescedTouch.timestamp,
@@ -84,7 +84,7 @@ public class TouchEvent {
                   in: coalescedTouch.view)
     }
 
-    init(identifier: String,
+    public init(identifier: String,
          touchIdentifier: String,
          timestamp: TimeInterval,
          type: UITouch.TouchType,
@@ -122,6 +122,37 @@ public class TouchEvent {
         self.isUpdate = isUpdate
         self.isPrediction = isPrediction
         self.view = view
+    }
+
+    public convenience init(touchIdentifier: String,
+                     type: UITouch.TouchType = .direct,
+                     phase: UITouch.Phase,
+                     force: CGFloat = 1,
+                     location: CGPoint,
+                     estimationUpdateIndex: NSNumber? = nil,
+                     estimatedProperties: UITouch.Properties,
+                     estimatedPropertiesExpectingUpdates: UITouch.Properties,
+                     isUpdate: Bool,
+                     isPrediction: Bool) {
+        self.init(identifier: UUID().uuidString,
+             touchIdentifier: touchIdentifier,
+             timestamp: Date().timeIntervalSinceReferenceDate,
+             type: type,
+             phase: phase,
+             force: force,
+             maximumPossibleForce: 1,
+             altitudeAngle: 0,
+             azimuthUnitVector: CGVector.zero,
+             azimuth: 0,
+             majorRadius: 1,
+             majorRadiusTolerance: 1,
+             location: location,
+             estimationUpdateIndex: estimationUpdateIndex,
+             estimatedProperties: estimatedProperties,
+             estimatedPropertiesExpectingUpdates: estimatedPropertiesExpectingUpdates,
+             isUpdate: isUpdate,
+             isPrediction: isPrediction,
+             in: nil)
     }
 
     public func isSameTouchAs(event: TouchEvent) -> Bool {
