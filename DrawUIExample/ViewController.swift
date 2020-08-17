@@ -40,7 +40,9 @@ class ViewController: UIViewController {
 extension ViewController: EventStreamDelegate {
     func touchStreamChanged(_ touchStream: EventStream) {
         let updatedEvents = touchStream.process()
-        strokes.add(touchEvents: updatedEvents)
+        let updates = strokes.add(touchEvents: updatedEvents).map({ $0.rawString })
+
+        print("updates: \(updates)")
 
         debugView?.setNeedsDisplay()
     }

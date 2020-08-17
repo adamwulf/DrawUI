@@ -13,6 +13,9 @@ public class StrokePoint {
     public var event: TouchEvent {
         return events.last!
     }
+    public var expectsUpdate: Bool {
+        return self.event.isPrediction || self.event.expectsUpdate
+    }
 
     init(event: TouchEvent) {
         events = [event]
