@@ -94,6 +94,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C58025A224EA26BB0043130D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C58025A324EA26C40043130D /* Step 1 - Touch */,
+				C58025A424EA26DA0043130D /* Step 2 - Coalesce */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C58025A324EA26C40043130D /* Step 1 - Touch */ = {
+			isa = PBXGroup;
+			children = (
+				C5C159BA24E9AF3600B52B4B /* TouchesEventStream.swift */,
+				C5C159B924E9AF3600B52B4B /* TouchEvent.swift */,
+			);
+			path = "Step 1 - Touch";
+			sourceTree = "<group>";
+		};
+		C58025A424EA26DA0043130D /* Step 2 - Coalesce */ = {
+			isa = PBXGroup;
+			children = (
+				C580259E24E9E1C10043130D /* Strokes.swift */,
+				C580259B24E9E1150043130D /* Stroke.swift */,
+			);
+			path = "Step 2 - Coalesce";
+			sourceTree = "<group>";
+		};
 		C5C159A424E9AF1C00B52B4B = {
 			isa = PBXGroup;
 			children = (
@@ -119,10 +146,7 @@
 				C5C159EC24E9C8C400B52B4B /* Protocols */,
 				C5C159E024E9B2F000B52B4B /* Gestures */,
 				C5C159D924E9AF7300B52B4B /* Extensions */,
-				C5C159BA24E9AF3600B52B4B /* TouchesEventStream.swift */,
-				C5C159B924E9AF3600B52B4B /* TouchEvent.swift */,
-				C580259E24E9E1C10043130D /* Strokes.swift */,
-				C580259B24E9E1150043130D /* Stroke.swift */,
+				C58025A224EA26BB0043130D /* Model */,
 				C58025A024E9E3F90043130D /* StrokePoint.swift */,
 				C5C159B124E9AF1C00B52B4B /* DrawUI.h */,
 				C5C159B224E9AF1C00B52B4B /* Info.plist */,
