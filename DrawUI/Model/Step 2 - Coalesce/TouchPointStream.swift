@@ -7,43 +7,33 @@
 
 import UIKit
 
-public protocol TouchPointStreamDelegate: class {
-    func strokesChanged(_ strokes: [OrderedTouchPoints], deltas: [TouchPointStream.Delta])
-}
-
 public class TouchPointStream {
 
     public enum Delta {
-        case addedStroke(stroke: OrderedTouchPoints)
-        case updatedStroke(stroke: OrderedTouchPoints, updatedIndexes: IndexSet)
-        case completedStroke(stroke: OrderedTouchPoints)
+        case addedTouchPoints(stroke: OrderedTouchPoints)
+        case updatedTouchPoints(stroke: OrderedTouchPoints, updatedIndexes: IndexSet)
+        case completedTouchPoints(stroke: OrderedTouchPoints)
 
         public var rawString: String {
             switch self {
-            case .addedStroke(let stroke):
-                return "addedStroke(\(stroke.touchIdentifier))"
-            case .updatedStroke(let stroke, let indexSet):
-                return "updatedStroke(\(stroke.touchIdentifier), \(indexSet)"
-            case .completedStroke(let stroke):
-                return "completedStroke(\(stroke.touchIdentifier))"
+            case .addedTouchPoints(let stroke):
+                return "addedTouchPoints(\(stroke.touchIdentifier))"
+            case .updatedTouchPoints(let stroke, let indexSet):
+                return "updatedTouchPoints(\(stroke.touchIdentifier), \(indexSet)"
+            case .completedTouchPoints(let stroke):
+                return "completedTouchPoints(\(stroke.touchIdentifier))"
             }
         }
     }
 
     private var touchToStroke: [UITouchIdentifier: OrderedTouchPoints]
 
+    public var onChange: ((_ strokes: [OrderedTouchPoints], _ deltas: [TouchPointStream.Delta]) -> Void)?
     public private(set) var strokes: [OrderedTouchPoints]
-    public weak var delegate: TouchPointStreamDelegate?
-    public var gesture: UIGestureRecognizer {
-        return touchStream.gesture
-    }
-
-    public let touchStream = TouchEventStream()
 
     public init() {
         touchToStroke = [:]
         strokes = []
-        touchStream.delegate = self
     }
 
     @discardableResult
@@ -62,27 +52,19 @@ public class TouchPointStream {
         for (touchIdentifier, events) in updatedEventsPerTouch {
             if let stroke = touchToStroke[touchIdentifier] {
                 let updatedIndexes = stroke.add(touchEvents: events)
-                deltas.append(.updatedStroke(stroke: stroke, updatedIndexes: updatedIndexes))
+                deltas.append(.updatedTouchPoints(stroke: stroke, updatedIndexes: updatedIndexes))
                 if stroke.isComplete {
-                    deltas.append(.completedStroke(stroke: stroke))
+                    deltas.append(.completedTouchPoints(stroke: stroke))
                 }
             } else if let touchIdentifier = events.first?.touchIdentifier,
                       let stroke = OrderedTouchPoints(touchEvents: events) {
                 touchToStroke[touchIdentifier] = stroke
                 strokes.append(stroke)
-                deltas.append(.addedStroke(stroke: stroke))
+                deltas.append(.addedTouchPoints(stroke: stroke))
             }
         }
 
+        onChange?(strokes, deltas)
         return deltas
-    }
-}
-
-extension TouchPointStream: TouchEventStreamDelegate {
-    public func touchStreamChanged(_ touchStream: TouchEventStream) {
-        let updatedEvents = touchStream.process()
-        let updates = self.add(touchEvents: updatedEvents)
-
-        delegate?.strokesChanged(strokes, deltas: updates)
     }
 }

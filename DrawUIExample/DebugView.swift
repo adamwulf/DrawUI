@@ -9,10 +9,10 @@ import UIKit
 import DrawUI
 
 class DebugView: UIView {
-    var strokes: [OrderedTouchPoints] = []
-    private var deltas: [TouchPointStream.Delta]?
+    var strokes: [Stroke] = []
+    private var deltas: [StrokeStream.Delta]?
 
-    func add(deltas: [TouchPointStream.Delta]) {
+    func add(deltas: [StrokeStream.Delta]) {
         if self.deltas == nil {
             self.deltas = []
         }
@@ -21,7 +21,7 @@ class DebugView: UIView {
 
     override func draw(_ rect: CGRect) {
         for stroke in strokes {
-            for event in stroke.points.flatMap({ $0.events }) {
+            for event in stroke.points.flatMap({ $0.touchPoint.events }) {
                 var radius: CGFloat = 2
                 if event.isUpdate {
                     radius = 1
@@ -56,7 +56,7 @@ class DebugView: UIView {
         }
 
         if let deltas = deltas {
-            func draw(stroke: OrderedTouchPoints, indexSet: IndexSet?) {
+            func draw(stroke: Stroke, indexSet: IndexSet?) {
                 UIColor.red.setStroke()
                 if let indexSet = indexSet {
                     for index in indexSet {
@@ -87,10 +87,10 @@ class DebugView: UIView {
 
             for delta in deltas {
                 switch delta {
-                case .addedStroke(let stroke):
-                    draw(stroke: stroke, indexSet: nil)
-                case .updatedStroke(let stroke, let indexSet):
-                    draw(stroke: stroke, indexSet: indexSet)
+                case .addedStroke(let index):
+                    draw(stroke: strokes[index], indexSet: nil)
+                case .updatedStroke(let index, let indexSet):
+                    draw(stroke: strokes[index], indexSet: indexSet)
                 default:
                     break
                 }

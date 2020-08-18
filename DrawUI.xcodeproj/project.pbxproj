@@ -10,6 +10,8 @@
 		C559CBFB24EB9489006D263C /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF824EB9489006D263C /* StrokePoint.swift */; };
 		C559CBFC24EB9489006D263C /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* StrokeStream.swift */; };
 		C559CBFD24EB9489006D263C /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFA24EB9489006D263C /* Stroke.swift */; };
+		C559CC0024EB9ABE006D263C /* SavitzkyGolay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFF24EB9ABE006D263C /* SavitzkyGolay.swift */; };
+		C559CC0224EB9ACA006D263C /* DouglasPeucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0124EB9ACA006D263C /* DouglasPeucker.swift */; };
 		C580259C24E9E1150043130D /* OrderedTouchPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* OrderedTouchPoints.swift */; };
 		C580259F24E9E1C10043130D /* TouchPointStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* TouchPointStream.swift */; };
 		C58025A124E9E3F90043130D /* TouchPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025A024E9E3F90043130D /* TouchPoint.swift */; };
@@ -66,6 +68,8 @@
 		C559CBF824EB9489006D263C /* StrokePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* StrokeStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeStream.swift; sourceTree = "<group>"; };
 		C559CBFA24EB9489006D263C /* Stroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
+		C559CBFF24EB9ABE006D263C /* SavitzkyGolay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavitzkyGolay.swift; sourceTree = "<group>"; };
+		C559CC0124EB9ACA006D263C /* DouglasPeucker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DouglasPeucker.swift; sourceTree = "<group>"; };
 		C580259B24E9E1150043130D /* OrderedTouchPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedTouchPoints.swift; sourceTree = "<group>"; };
 		C580259E24E9E1C10043130D /* TouchPointStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPointStream.swift; sourceTree = "<group>"; };
 		C58025A024E9E3F90043130D /* TouchPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPoint.swift; sourceTree = "<group>"; };
@@ -118,6 +122,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C559CBFE24EB9AAF006D263C /* Smoothing Filters */ = {
+			isa = PBXGroup;
+			children = (
+				C559CBFF24EB9ABE006D263C /* SavitzkyGolay.swift */,
+				C559CC0124EB9ACA006D263C /* DouglasPeucker.swift */,
+			);
+			path = "Smoothing Filters";
+			sourceTree = "<group>";
+		};
 		C58025A224EA26BB0043130D /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +206,7 @@
 				C5C159E024E9B2F000B52B4B /* Gestures */,
 				C5C159D924E9AF7300B52B4B /* Extensions */,
 				C58025A224EA26BB0043130D /* Model */,
+				C559CBFE24EB9AAF006D263C /* Smoothing Filters */,
 				C5C159B124E9AF1C00B52B4B /* DrawUI.h */,
 				C5C159B224E9AF1C00B52B4B /* Info.plist */,
 			);
@@ -389,12 +403,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */,
+				C559CC0224EB9ACA006D263C /* DouglasPeucker.swift in Sources */,
 				C5C159E224E9B2F800B52B4B /* TouchStreamGestureRecognizer.swift in Sources */,
 				C580259F24E9E1C10043130D /* TouchPointStream.swift in Sources */,
 				C58025A124E9E3F90043130D /* TouchPoint.swift in Sources */,
 				C5C159DC24E9AF8100B52B4B /* UITouch+Extensions.swift in Sources */,
 				C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */,
 				C559CBFB24EB9489006D263C /* StrokePoint.swift in Sources */,
+				C559CC0024EB9ABE006D263C /* SavitzkyGolay.swift in Sources */,
 				C5C159DD24E9AF8100B52B4B /* Array+Extensions.swift in Sources */,
 				C580259C24E9E1150043130D /* OrderedTouchPoints.swift in Sources */,
 				C559CBFD24EB9489006D263C /* Stroke.swift in Sources */,

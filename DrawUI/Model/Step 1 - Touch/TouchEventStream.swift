@@ -7,36 +7,37 @@
 
 import UIKit
 
-public protocol TouchEventStreamDelegate: class {
-    func touchStreamChanged(_ touchStream: TouchEventStream)
-}
-
 // Processes events for mutiple touches
 public class TouchEventStream {
     // MARK: - Private
     private var recentEvents: [TouchEvent] = []
     private var processedEvents: [TouchEvent] = []
+
+    // MARK: - Public
+    public var onChange: ((_ eventStream: TouchEventStream) -> Void)? {
+        didSet {
+            print("did set")
+        }
+    }
     public var events: [TouchEvent] {
         return processedEvents + recentEvents
     }
-    private var lazyGesture: TouchStreamGestureRecognizer?
 
     public init() {
         // noop
     }
 
     @objc func streamChanged(_ gesture: TouchStreamGestureRecognizer) {
-        delegate?.touchStreamChanged(self)
+        onChange?(self)
     }
 
     // MARK: - GestureEventStream
 
+    private var lazyGesture: TouchStreamGestureRecognizer?
     public var gesture: UIGestureRecognizer {
         lazyGesture = lazyGesture ?? TouchStreamGestureRecognizer(touchStream: self, target: self, action: #selector(streamChanged(_:)))
         return lazyGesture!
     }
-
-    public weak var delegate: TouchEventStreamDelegate?
 
     // MARK: - TouchEventStream
 
