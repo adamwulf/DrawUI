@@ -1,5 +1,5 @@
 //
-//  StrokeStream.swift
+//  TouchPointStream.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -7,16 +7,16 @@
 
 import UIKit
 
-public protocol StrokeStreamDelegate: class {
-    func strokesChanged(_ strokes: StrokeStream, deltas: [StrokeStream.Delta])
+public protocol TouchPointStreamDelegate: class {
+    func strokesChanged(_ strokes: [OrderedTouchPoints], deltas: [TouchPointStream.Delta])
 }
 
-public class StrokeStream {
+public class TouchPointStream {
 
     public enum Delta {
-        case addedStroke(stroke: Stroke)
-        case updatedStroke(stroke: Stroke, updatedIndexes: IndexSet)
-        case completedStroke(stroke: Stroke)
+        case addedStroke(stroke: OrderedTouchPoints)
+        case updatedStroke(stroke: OrderedTouchPoints, updatedIndexes: IndexSet)
+        case completedStroke(stroke: OrderedTouchPoints)
 
         public var rawString: String {
             switch self {
@@ -30,14 +30,15 @@ public class StrokeStream {
         }
     }
 
-    public private(set) var strokes: [Stroke]
-    public private(set) var touchToStroke: [UITouchIdentifier: Stroke]
-    public weak var delegate: StrokeStreamDelegate?
+    private var touchToStroke: [UITouchIdentifier: OrderedTouchPoints]
+
+    public private(set) var strokes: [OrderedTouchPoints]
+    public weak var delegate: TouchPointStreamDelegate?
     public var gesture: UIGestureRecognizer {
         return touchStream.gesture
     }
 
-    public let touchStream = TouchesEventStream()
+    public let touchStream = TouchEventStream()
 
     public init() {
         touchToStroke = [:]
@@ -66,7 +67,7 @@ public class StrokeStream {
                     deltas.append(.completedStroke(stroke: stroke))
                 }
             } else if let touchIdentifier = events.first?.touchIdentifier,
-                      let stroke = Stroke(touchEvents: events) {
+                      let stroke = OrderedTouchPoints(touchEvents: events) {
                 touchToStroke[touchIdentifier] = stroke
                 strokes.append(stroke)
                 deltas.append(.addedStroke(stroke: stroke))
@@ -77,11 +78,11 @@ public class StrokeStream {
     }
 }
 
-extension StrokeStream: EventStreamDelegate {
-    public func touchStreamChanged(_ touchStream: EventStream) {
+extension TouchPointStream: TouchEventStreamDelegate {
+    public func touchStreamChanged(_ touchStream: TouchEventStream) {
         let updatedEvents = touchStream.process()
         let updates = self.add(touchEvents: updatedEvents)
 
-        delegate?.strokesChanged(self, deltas: updates)
+        delegate?.strokesChanged(strokes, deltas: updates)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  TouchesEventStream.swift
+//  TouchEventStream.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 6/28/20.
@@ -7,8 +7,12 @@
 
 import UIKit
 
+public protocol TouchEventStreamDelegate: class {
+    func touchStreamChanged(_ touchStream: TouchEventStream)
+}
+
 // Processes events for mutiple touches
-public class TouchesEventStream: EventStream {
+public class TouchEventStream {
     // MARK: - Private
     private var recentEvents: [TouchEvent] = []
     private var processedEvents: [TouchEvent] = []
@@ -32,9 +36,9 @@ public class TouchesEventStream: EventStream {
         return lazyGesture!
     }
 
-    public weak var delegate: EventStreamDelegate?
+    public weak var delegate: TouchEventStreamDelegate?
 
-    // MARK: - EventStream
+    // MARK: - TouchEventStream
 
     public func add(event: TouchEvent) {
         recentEvents.append(event)

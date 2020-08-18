@@ -31,15 +31,15 @@ public class SmoothStrokeStream {
     }
 
     public private(set) var strokes: [SmoothStroke]
-    public private(set) var strokeToStroke: [Stroke: SmoothStroke]
+    public private(set) var strokeToStroke: [OrderedTouchPoints: SmoothStroke]
     public weak var delegate: SmoothStrokeStreamDelegate?
     public var gesture: UIGestureRecognizer {
         return strokeStream.gesture
     }
-    public var touchStream: TouchesEventStream {
+    public var touchStream: TouchEventStream {
         return strokeStream.touchStream
     }
-    public let strokeStream = StrokeStream()
+    public let strokeStream = TouchPointStream()
 
     public init() {
         strokeToStroke = [:]
@@ -48,7 +48,7 @@ public class SmoothStrokeStream {
     }
 
     @discardableResult
-    public func add(touchEvents: [StrokeStream.Delta]) -> [Delta] {
+    public func add(touchEvents: [TouchPointStream.Delta]) -> [Delta] {
         var deltas: [Delta] = []
 
         for delta in touchEvents {
@@ -75,8 +75,8 @@ public class SmoothStrokeStream {
     }
 }
 
-extension SmoothStrokeStream: StrokeStreamDelegate {
-    public func strokesChanged(_ strokes: StrokeStream, deltas: [StrokeStream.Delta]) {
+extension SmoothStrokeStream: TouchPointStreamDelegate {
+    public func strokesChanged(_ strokes: [OrderedTouchPoints], deltas: [TouchPointStream.Delta]) {
         // TODO: update the smooth strokes given the updates to the underlying strokes
         let updates = self.add(touchEvents: deltas)
 

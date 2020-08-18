@@ -10,13 +10,13 @@ import DrawUI
 
 class ViewController: UIViewController {
 
-    let strokes: SmoothStrokeStream
+    let strokes: TouchPointStream
     var debugView: DebugView? {
         return view as? DebugView
     }
 
     required init?(coder: NSCoder) {
-        self.strokes = SmoothStrokeStream()
+        self.strokes = TouchPointStream()
         super.init(coder: coder)
 
         strokes.delegate = self
@@ -26,17 +26,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 
-        debugView?.strokes = strokes
         debugView?.addGestureRecognizer(strokes.gesture)
     }
 }
 
-extension ViewController: SmoothStrokeStreamDelegate {
-    func strokesChanged(_ strokes: SmoothStrokeStream, deltas: [SmoothStrokeStream.Delta]) {
+extension ViewController: TouchPointStreamDelegate {
+    func strokesChanged(_ strokes: [OrderedTouchPoints], deltas: [TouchPointStream.Delta]) {
         let updates = deltas.map({ $0.rawString })
 
         print("updates: \(updates)")
 
+        debugView?.strokes = strokes
         debugView?.add(deltas: deltas)
         debugView?.setNeedsDisplay()
     }

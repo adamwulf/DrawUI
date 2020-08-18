@@ -9,7 +9,7 @@ import UIKit
 
 public class SmoothStrokePoint {
 
-    private var point: StrokePoint
+    private var point: TouchPoint
     public var event: TouchEvent {
         return point.event
     }
@@ -19,7 +19,7 @@ public class SmoothStrokePoint {
 
     public var location: CGPoint
 
-    init(point: StrokePoint) {
+    init(point: TouchPoint) {
         self.point = point
         self.location = point.event.location
     }

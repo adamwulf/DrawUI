@@ -1,5 +1,5 @@
 //
-//  Stroke.swift
+//  OrderedTouchPoints.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-public class Stroke {
+public class OrderedTouchPoints {
 
     // MARK: - Public Properties
     public private(set) var touchIdentifier: String
-    public var points: [StrokePoint] {
+    public var points: [TouchPoint] {
         return confirmedPoints + predictedPoints
     }
     public var isComplete: Bool {
@@ -20,11 +20,10 @@ public class Stroke {
     }
 
     // MARK: - Private Properties
-    private var confirmedPoints: [StrokePoint]
-    private var predictedPoints: [StrokePoint]
-
+    private var confirmedPoints: [TouchPoint]
+    private var predictedPoints: [TouchPoint]
     private var expectingUpdate: [String]
-    private var eventToPoint: [PointIdentifier: StrokePoint]
+    private var eventToPoint: [PointIdentifier: TouchPoint]
     private var eventToIndex: [PointIdentifier: Int]
 
     // MARK: - Init
@@ -53,7 +52,7 @@ public class Stroke {
                 }
                 indexSet.insert(index)
             } else if event.isPrediction {
-                let prediction = StrokePoint(event: event)
+                let prediction = TouchPoint(event: event)
                 predictedPoints.append(prediction)
                 let index = confirmedPoints.count + predictedPoints.count - 1
                 eventToIndex[event.pointIdentifier] = index
@@ -74,7 +73,7 @@ public class Stroke {
                 if event.expectsUpdate {
                     expectingUpdate.append(event.pointIdentifier)
                 }
-                let point = StrokePoint(event: event)
+                let point = TouchPoint(event: event)
                 eventToPoint[event.pointIdentifier] = point
                 confirmedPoints.append(point)
                 let index = confirmedPoints.count - 1
@@ -94,8 +93,8 @@ public class Stroke {
     }
 }
 
-extension Stroke: Hashable {
-    public static func == (lhs: Stroke, rhs: Stroke) -> Bool {
+extension OrderedTouchPoints: Hashable {
+    public static func == (lhs: OrderedTouchPoints, rhs: OrderedTouchPoints) -> Bool {
         return lhs.touchIdentifier == rhs.touchIdentifier
     }
 

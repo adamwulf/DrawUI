@@ -1,5 +1,5 @@
 //
-//  StrokePoint.swift
+//  TouchPoint.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.

@@ -9,10 +9,10 @@ import UIKit
 import DrawUI
 
 class DebugView: UIView {
-    var strokes: SmoothStrokeStream?
-    private var deltas: [SmoothStrokeStream.Delta]?
+    var strokes: [OrderedTouchPoints] = []
+    private var deltas: [TouchPointStream.Delta]?
 
-    func add(deltas: [SmoothStrokeStream.Delta]) {
+    func add(deltas: [TouchPointStream.Delta]) {
         if self.deltas == nil {
             self.deltas = []
         }
@@ -20,30 +20,30 @@ class DebugView: UIView {
     }
 
     override func draw(_ rect: CGRect) {
-        for event in strokes?.touchStream.events ?? [] {
-            var radius: CGFloat = 2
-            if event.isUpdate {
-                radius = 1
-                if !event.expectsUpdate {
-                    UIColor.red.setFill()
+        for stroke in strokes {
+            for event in stroke.points.flatMap({ $0.events }) {
+                var radius: CGFloat = 2
+                if event.isUpdate {
+                    radius = 1
+                    if !event.expectsUpdate {
+                        UIColor.red.setFill()
+                    } else {
+                        UIColor.green.setFill()
+                    }
+                } else if event.isPrediction {
+                    UIColor.blue.setFill()
                 } else {
-                    UIColor.green.setFill()
+                    if !event.expectsUpdate {
+                        UIColor.red.setFill()
+                    } else {
+                        UIColor.green.setFill()
+                    }
                 }
-            } else if event.isPrediction {
-                UIColor.blue.setFill()
-            } else {
-                if !event.expectsUpdate {
-                    UIColor.red.setFill()
-                } else {
-                    UIColor.green.setFill()
-                }
+                UIBezierPath(ovalIn: CGRect(origin: event.location, size: CGSize.zero).insetBy(dx: -radius, dy: -radius)).fill()
             }
-            UIBezierPath(ovalIn: CGRect(origin: event.location, size: CGSize.zero).insetBy(dx: -radius, dy: -radius)).fill()
-        }
 
-        UIColor.red.setStroke()
+            UIColor.red.setStroke()
 
-        for stroke in strokes?.strokes ?? [] {
             let path = UIBezierPath()
             for point in stroke.points {
                 if point.event.phase == .began {
@@ -56,7 +56,7 @@ class DebugView: UIView {
         }
 
         if let deltas = deltas {
-            func draw(stroke: SmoothStroke, indexSet: IndexSet?) {
+            func draw(stroke: OrderedTouchPoints, indexSet: IndexSet?) {
                 UIColor.red.setStroke()
                 if let indexSet = indexSet {
                     for index in indexSet {
@@ -87,9 +87,9 @@ class DebugView: UIView {
 
             for delta in deltas {
                 switch delta {
-                case .addedSmoothStroke(let stroke):
+                case .addedStroke(let stroke):
                     draw(stroke: stroke, indexSet: nil)
-                case .updatedSmoothStroke(let stroke, let indexSet):
+                case .updatedStroke(let stroke, let indexSet):
                     draw(stroke: stroke, indexSet: indexSet)
                 default:
                     break
