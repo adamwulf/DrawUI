@@ -7,6 +7,9 @@
 
 import Foundation
 
+// Also, some future smoothing algorithm ideas:
+// https://en.wikipedia.org/wiki/Smoothing
+
 protocol SmoothingFilter {
     func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta])
 }

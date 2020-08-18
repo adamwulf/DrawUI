@@ -13,6 +13,7 @@
 		C559CC0024EB9ABE006D263C /* SavitzkyGolay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFF24EB9ABE006D263C /* SavitzkyGolay.swift */; };
 		C559CC0224EB9ACA006D263C /* DouglasPeucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0124EB9ACA006D263C /* DouglasPeucker.swift */; };
 		C559CC0424EBA39F006D263C /* SmoothingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0324EBA39F006D263C /* SmoothingFilter.swift */; };
+		C559CC0724EBA6C0006D263C /* PointDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0624EBA6C0006D263C /* PointDistance.swift */; };
 		C580259C24E9E1150043130D /* OrderedTouchPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* OrderedTouchPoints.swift */; };
 		C580259F24E9E1C10043130D /* TouchPointStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* TouchPointStream.swift */; };
 		C58025A124E9E3F90043130D /* TouchPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025A024E9E3F90043130D /* TouchPoint.swift */; };
@@ -72,6 +73,7 @@
 		C559CBFF24EB9ABE006D263C /* SavitzkyGolay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavitzkyGolay.swift; sourceTree = "<group>"; };
 		C559CC0124EB9ACA006D263C /* DouglasPeucker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DouglasPeucker.swift; sourceTree = "<group>"; };
 		C559CC0324EBA39F006D263C /* SmoothingFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmoothingFilter.swift; sourceTree = "<group>"; };
+		C559CC0624EBA6C0006D263C /* PointDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointDistance.swift; sourceTree = "<group>"; };
 		C580259B24E9E1150043130D /* OrderedTouchPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedTouchPoints.swift; sourceTree = "<group>"; };
 		C580259E24E9E1C10043130D /* TouchPointStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPointStream.swift; sourceTree = "<group>"; };
 		C58025A024E9E3F90043130D /* TouchPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPoint.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				C559CC0324EBA39F006D263C /* SmoothingFilter.swift */,
 				C559CBFF24EB9ABE006D263C /* SavitzkyGolay.swift */,
 				C559CC0124EB9ACA006D263C /* DouglasPeucker.swift */,
+				C559CC0624EBA6C0006D263C /* PointDistance.swift */,
 			);
 			path = "Smoothing Filters";
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 				C559CC0224EB9ACA006D263C /* DouglasPeucker.swift in Sources */,
 				C5C159E224E9B2F800B52B4B /* TouchStreamGestureRecognizer.swift in Sources */,
 				C580259F24E9E1C10043130D /* TouchPointStream.swift in Sources */,
+				C559CC0724EBA6C0006D263C /* PointDistance.swift in Sources */,
 				C58025A124E9E3F90043130D /* TouchPoint.swift in Sources */,
 				C5C159DC24E9AF8100B52B4B /* UITouch+Extensions.swift in Sources */,
 				C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */,
