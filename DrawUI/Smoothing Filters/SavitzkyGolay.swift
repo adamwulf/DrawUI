@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+class SavitzkyGolay: SmoothingFilter {
+    func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta]) {
+        return (strokes: strokes, deltas: deltas)
+    }
+}

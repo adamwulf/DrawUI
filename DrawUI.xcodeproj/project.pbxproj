@@ -12,6 +12,7 @@
 		C559CBFD24EB9489006D263C /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFA24EB9489006D263C /* Stroke.swift */; };
 		C559CC0024EB9ABE006D263C /* SavitzkyGolay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFF24EB9ABE006D263C /* SavitzkyGolay.swift */; };
 		C559CC0224EB9ACA006D263C /* DouglasPeucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0124EB9ACA006D263C /* DouglasPeucker.swift */; };
+		C559CC0424EBA39F006D263C /* SmoothingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0324EBA39F006D263C /* SmoothingFilter.swift */; };
 		C580259C24E9E1150043130D /* OrderedTouchPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* OrderedTouchPoints.swift */; };
 		C580259F24E9E1C10043130D /* TouchPointStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* TouchPointStream.swift */; };
 		C58025A124E9E3F90043130D /* TouchPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025A024E9E3F90043130D /* TouchPoint.swift */; };
@@ -70,6 +71,7 @@
 		C559CBFA24EB9489006D263C /* Stroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
 		C559CBFF24EB9ABE006D263C /* SavitzkyGolay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavitzkyGolay.swift; sourceTree = "<group>"; };
 		C559CC0124EB9ACA006D263C /* DouglasPeucker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DouglasPeucker.swift; sourceTree = "<group>"; };
+		C559CC0324EBA39F006D263C /* SmoothingFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmoothingFilter.swift; sourceTree = "<group>"; };
 		C580259B24E9E1150043130D /* OrderedTouchPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedTouchPoints.swift; sourceTree = "<group>"; };
 		C580259E24E9E1C10043130D /* TouchPointStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPointStream.swift; sourceTree = "<group>"; };
 		C58025A024E9E3F90043130D /* TouchPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPoint.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 		C559CBFE24EB9AAF006D263C /* Smoothing Filters */ = {
 			isa = PBXGroup;
 			children = (
+				C559CC0324EBA39F006D263C /* SmoothingFilter.swift */,
 				C559CBFF24EB9ABE006D263C /* SavitzkyGolay.swift */,
 				C559CC0124EB9ACA006D263C /* DouglasPeucker.swift */,
 			);
@@ -289,6 +292,7 @@
 			buildConfigurationList = C5C159B624E9AF1C00B52B4B /* Build configuration list for PBXNativeTarget "DrawUI" */;
 			buildPhases = (
 				C5C159A924E9AF1C00B52B4B /* Headers */,
+				C559CC0524EBA414006D263C /* SwiftLint */,
 				C5C159AA24E9AF1C00B52B4B /* Sources */,
 				C5C159AB24E9AF1C00B52B4B /* Frameworks */,
 				C5C159AC24E9AF1C00B52B4B /* Resources */,
@@ -389,6 +393,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C559CC0524EBA414006D263C /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nif which swiftlint >/dev/null; then\nswiftlint --config \"$SRCROOT/.swiftlint.yml\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C58025A524EA3F150043130D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -410,6 +435,7 @@
 				C5C159DC24E9AF8100B52B4B /* UITouch+Extensions.swift in Sources */,
 				C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */,
 				C559CBFB24EB9489006D263C /* StrokePoint.swift in Sources */,
+				C559CC0424EBA39F006D263C /* SmoothingFilter.swift in Sources */,
 				C559CC0024EB9ABE006D263C /* SavitzkyGolay.swift in Sources */,
 				C5C159DD24E9AF8100B52B4B /* Array+Extensions.swift in Sources */,
 				C580259C24E9E1150043130D /* OrderedTouchPoints.swift in Sources */,

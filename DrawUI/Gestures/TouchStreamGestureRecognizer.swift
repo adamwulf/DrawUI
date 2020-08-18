@@ -36,7 +36,7 @@ public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecogni
         for touch in touches {
             var coalesced = event?.coalescedTouches(for: touch) ?? [touch]
 
-            if coalesced.count == 0 {
+            if coalesced.isEmpty {
                 coalesced = [touch]
             }
 
@@ -76,10 +76,10 @@ public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecogni
         super.touchesEnded(touches, with: event)
         process(touches: touches, with: event, isUpdate: false)
 
-        if activeTouches.count > 0 {
-            state = .changed
-        } else {
+        if activeTouches.isEmpty {
             state = .ended
+        } else {
+            state = .changed
         }
     }
 
@@ -89,10 +89,10 @@ public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecogni
         super.touchesCancelled(touches, with: event)
         process(touches: touches, with: event, isUpdate: false)
 
-        if activeTouches.count > 0 {
-            state = .changed
-        } else {
+        if activeTouches.isEmpty {
             state = .ended
+        } else {
+            state = .changed
         }
     }
 }

@@ -67,7 +67,6 @@ public class StrokeStream {
                 if let smoothStroke = strokeToStroke[stroke] {
                     deltas.append(.completedSmoothStroke(stroke: smoothStroke))
                 }
-                break
             }
         }
 

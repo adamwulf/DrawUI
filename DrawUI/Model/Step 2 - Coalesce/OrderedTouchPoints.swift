@@ -28,7 +28,7 @@ public class OrderedTouchPoints {
 
     // MARK: - Init
     init?(touchEvents: [TouchEvent]) {
-        guard touchEvents.count > 0 else { return nil }
+        guard !touchEvents.isEmpty else { return nil }
         self.confirmedPoints = []
         self.predictedPoints = []
         self.eventToPoint = [:]
@@ -85,7 +85,7 @@ public class OrderedTouchPoints {
         // we might have started with more prodicted touches than we were able to consume
         // in that case, mark the now-out-of-bounds indexes as modified since those points
         // were deleted
-        for (index, _) in consumable.enumerated() {
+        for index in consumable.indices {
             indexSet.insert(confirmedPoints.count + predictedPoints.count + index)
         }
 

@@ -56,7 +56,6 @@ public class StrokeStream {
                 if let index = otpToIndex[stroke] {
                     deltas.append(.completedStroke(stroke: index))
                 }
-                break
             }
         }
 
