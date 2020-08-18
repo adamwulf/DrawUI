@@ -7,32 +7,32 @@
 
 import UIKit
 
-public protocol SmoothStrokeStreamDelegate: class {
-    func strokesChanged(_ strokes: StrokeStream, deltas: [StrokeStream.Delta])
+public protocol StrokeStreamDelegate: class {
+    func strokesChanged(_ strokes: [Stroke], deltas: [StrokeStream.Delta])
 }
 
 public class StrokeStream {
 
     public enum Delta {
-        case addedSmoothStroke(stroke: Stroke)
-        case updatedSmoothStroke(stroke: Stroke, updatedIndexes: IndexSet)
-        case completedSmoothStroke(stroke: Stroke)
+        case addedSmoothStroke(stroke: Int)
+        case updatedSmoothStroke(stroke: Int, updatedIndexes: IndexSet)
+        case completedSmoothStroke(stroke: Int)
 
         public var rawString: String {
             switch self {
             case .addedSmoothStroke(let stroke):
-                return "addedSmoothStroke(\(stroke.touchIdentifier))"
+                return "addedSmoothStroke(\(stroke))"
             case .updatedSmoothStroke(let stroke, let indexSet):
-                return "updatedSmoothStroke(\(stroke.touchIdentifier), \(indexSet)"
+                return "updatedSmoothStroke(\(stroke), \(indexSet)"
             case .completedSmoothStroke(let stroke):
-                return "completedSmoothStroke(\(stroke.touchIdentifier))"
+                return "completedSmoothStroke(\(stroke))"
             }
         }
     }
 
     public private(set) var strokes: [Stroke]
-    public private(set) var strokeToStroke: [OrderedTouchPoints: Stroke]
-    public weak var delegate: SmoothStrokeStreamDelegate?
+    public private(set) var otpToIndex: [OrderedTouchPoints: Int]
+    public weak var delegate: StrokeStreamDelegate?
     public var gesture: UIGestureRecognizer {
         return strokeStream.gesture
     }
@@ -42,7 +42,7 @@ public class StrokeStream {
     public let strokeStream = TouchPointStream()
 
     public init() {
-        strokeToStroke = [:]
+        otpToIndex = [:]
         strokes = []
         strokeStream.delegate = self
     }
@@ -54,18 +54,19 @@ public class StrokeStream {
         for delta in touchEvents {
             switch delta {
             case .addedStroke(let stroke):
-                let smoothStroke = Stroke(stroke: stroke)
-                strokeToStroke[stroke] = smoothStroke
+                let smoothStroke = Stroke(touchPoints: stroke)
+                let index = strokes.count
+                otpToIndex[stroke] = index
                 strokes.append(smoothStroke)
-                deltas.append(.addedSmoothStroke(stroke: smoothStroke))
+                deltas.append(.addedSmoothStroke(stroke: index))
             case .updatedStroke(let stroke, let indexSet):
-                if let smoothStroke = strokeToStroke[stroke] {
-                    let updates = smoothStroke.update(with: stroke, indexSet: indexSet)
-                    deltas.append(.updatedSmoothStroke(stroke: smoothStroke, updatedIndexes: updates))
+                if let index = otpToIndex[stroke] {
+                    let updates = strokes[index].update(with: stroke, indexSet: indexSet)
+                    deltas.append(.updatedSmoothStroke(stroke: index, updatedIndexes: updates))
                 }
             case .completedStroke(let stroke):
-                if let smoothStroke = strokeToStroke[stroke] {
-                    deltas.append(.completedSmoothStroke(stroke: smoothStroke))
+                if let index = otpToIndex[stroke] {
+                    deltas.append(.completedSmoothStroke(stroke: index))
                 }
                 break
             }
@@ -80,6 +81,6 @@ extension StrokeStream: TouchPointStreamDelegate {
         // TODO: update the smooth strokes given the updates to the underlying strokes
         let updates = self.add(touchEvents: deltas)
 
-        self.delegate?.strokesChanged(self, deltas: updates)
+        self.delegate?.strokesChanged(self.strokes, deltas: updates)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  SmoothStrokePoint.swift
+//  StrokePoint.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/17/20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class SmoothStrokePoint {
+public class StrokePoint {
 
     private var point: TouchPoint
     public var event: TouchEvent {
