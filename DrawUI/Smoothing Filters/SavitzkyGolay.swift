@@ -12,25 +12,74 @@ import UIKit
 /// Coefficients are calculated with the algorithm from https://dekalogblog.blogspot.com/2013/09/savitzky-golay-filter-convolution.html
 /// Values were confirmed against the coefficients listed at http://www.statistics4u.info/fundstat_eng/cc_savgol_coeff.html
 public class SavitzkyGolay: SmoothingFilter {
+
+    private let deriv = 0 // 0 is smooth, 1 is first derivative, etc
+    private let order = 3
+    private var m = 2
+    public var window: Int {
+        get { return m }
+        set { m = max(2, newValue) }
+    }
+
     public init () {
-        for m in 2...12 {
-            // for a window of 2*m+1 points ( from p[-m] => p[m],
-            // the coefficents for p[0]...p[m] or p[0]...p[-m] are given
-            // for a cubic curve
-            print("\(m)")
-            for windowPos in -m ... m {
-                let term = 0 // coefficients to adjust p[0] when looking at p[-m] ... p[m]
-                let order = 3 // cubic curve
-                print("  \(windowPos): \(weight(term, windowPos, m, order, 0))")
-            }
-        }
     }
 
     func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta]) {
 
-        // TODO: use coefficients to smooth all points
+        // TODO: cache the output smooth strokes so that we can use the same result next time
+        // and update it with the incoming delta. allow for clearing cache so that the smooth
+        // strokes can be recalculated at will.
+        //
+        // add unit tests
 
-        return (strokes: strokes, deltas: deltas)
+        var outStrokes = strokes
+        var outDeltas: [StrokeStream.Delta] = []
+        for delta in deltas {
+            switch delta {
+            case .addedStroke:
+                outDeltas.append(delta)
+            case .completedStroke:
+                outDeltas.append(delta)
+            case .updatedStroke(let strokeIndex, let indexes):
+                let updatedIndexes = smoothStroke(stroke: &outStrokes[strokeIndex], at: indexes)
+                outDeltas.append(.updatedStroke(stroke: strokeIndex, updatedIndexes: updatedIndexes))
+            }
+        }
+
+        return (strokes: outStrokes, deltas: outDeltas)
+    }
+
+    @discardableResult
+    func smoothStroke(stroke: inout Stroke, at indexes: IndexSet?) -> IndexSet {
+        let outIndexes = { () -> IndexSet in
+            if let indexes = indexes {
+                var outIndexes = IndexSet()
+                for pIndex in indexes {
+                    for i in pIndex - m ... pIndex + m {
+                        outIndexes.insert(i)
+                    }
+                }
+                return outIndexes
+            }
+            return IndexSet(stroke.points.indices)
+        }()
+
+        for pIndex in outIndexes {
+            let pCurr = stroke.points[pIndex]
+            let m = min(min(window, pIndex), stroke.points.count - 1 - pIndex)
+
+            if m >= 2 {
+                var p = CGPoint.zero
+                for windowPos in pIndex - m ... pIndex + m {
+                    let coef = weight(0, windowPos, m, order, deriv)
+                    p.x += coef * pCurr.location.x
+                    p.y += coef * pCurr.location.y
+                }
+                stroke.points[pIndex].location = p
+            }
+        }
+
+        return outIndexes
     }
 
     // MARK: - Coefficients
@@ -79,5 +128,20 @@ public class SavitzkyGolay: SmoothingFilter {
         }
 
         return sum
+    }
+
+    func testCoeff() {
+        for m in 2...12 {
+            // for a window of 2*m+1 points ( from p[-m] => p[m],
+            // the coefficents for p[0]...p[m] or p[0]...p[-m] are given
+            // for a cubic curve
+            print("\(m)")
+            for windowPos in -m ... m {
+                let term = 0 // coefficients to adjust p[0] when looking at p[-m] ... p[m]
+                let order = 3 // cubic curve
+                print("  \(windowPos): \(weight(term, windowPos, m, order, deriv))")
+            }
+        }
+
     }
 }
