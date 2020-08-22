@@ -66,7 +66,7 @@ public class TouchEvent {
         return expectsForceUpdate || expectsAzimuthUpdate || expectsLocationUpdate
     }
 
-    public convenience init(coalescedTouch: UITouch, touch: UITouch, isUpdate: Bool, isPrediction: Bool) {
+    public convenience init(coalescedTouch: UITouch, touch: UITouch, in view: UIView, isUpdate: Bool, isPrediction: Bool) {
         self.init(identifier: UUID.init().uuidString,
                   touchIdentifier: touch.identifer,
                   timestamp: coalescedTouch.timestamp,
@@ -75,17 +75,17 @@ public class TouchEvent {
                   force: coalescedTouch.force,
                   maximumPossibleForce: coalescedTouch.maximumPossibleForce,
                   altitudeAngle: coalescedTouch.altitudeAngle,
-                  azimuthUnitVector: coalescedTouch.azimuthUnitVector(in: coalescedTouch.view),
-                  azimuth: coalescedTouch.azimuthAngle(in: coalescedTouch.view),
+                  azimuthUnitVector: coalescedTouch.azimuthUnitVector(in: view),
+                  azimuth: coalescedTouch.azimuthAngle(in: view),
                   majorRadius: coalescedTouch.majorRadius,
                   majorRadiusTolerance: coalescedTouch.majorRadiusTolerance,
-                  location: coalescedTouch.location(in: coalescedTouch.view),
+                  location: coalescedTouch.location(in: view),
                   estimationUpdateIndex: coalescedTouch.estimationUpdateIndex,
                   estimatedProperties: coalescedTouch.estimatedProperties,
                   estimatedPropertiesExpectingUpdates: coalescedTouch.estimatedPropertiesExpectingUpdates,
                   isUpdate: isUpdate,
                   isPrediction: isPrediction,
-                  in: coalescedTouch.view)
+                  in: view)
     }
 
     public init(identifier: TouchEventIdentifier,

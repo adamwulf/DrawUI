@@ -33,6 +33,8 @@ public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecogni
     }
 
     func process(touches: Set<UITouch>, with event: UIEvent?, isUpdate: Bool) {
+        guard let view = view else { return }
+
         for touch in touches {
             var coalesced = event?.coalescedTouches(for: touch) ?? [touch]
 
@@ -41,13 +43,21 @@ public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecogni
             }
 
             for coalescedTouch in coalesced {
-                touchStream?.add(event: TouchEvent(coalescedTouch: coalescedTouch, touch: touch, isUpdate: isUpdate, isPrediction: false))
+                touchStream?.add(event: TouchEvent(coalescedTouch: coalescedTouch,
+                                                   touch: touch,
+                                                   in: view,
+                                                   isUpdate: isUpdate,
+                                                   isPrediction: false))
             }
 
             let predicted = event?.predictedTouches(for: touch) ?? []
 
             for predictedTouch in predicted {
-                touchStream?.add(event: TouchEvent(coalescedTouch: predictedTouch, touch: touch, isUpdate: isUpdate, isPrediction: true))
+                touchStream?.add(event: TouchEvent(coalescedTouch: predictedTouch,
+                                                   touch: touch,
+                                                   in: view,
+                                                   isUpdate: isUpdate,
+                                                   isPrediction: true))
             }
         }
     }

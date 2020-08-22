@@ -9,7 +9,8 @@ import UIKit
 import DrawUI
 
 class DebugView: UIView {
-    var strokes: [Stroke] = []
+    var originalStrokes: [Stroke] = []
+    var smoothStrokes: [Stroke] = []
     private var deltas: [StrokeStream.Delta]?
 
     func add(deltas: [StrokeStream.Delta]) {
@@ -20,7 +21,7 @@ class DebugView: UIView {
     }
 
     override func draw(_ rect: CGRect) {
-        for stroke in strokes {
+        for stroke in originalStrokes {
             for event in stroke.points.flatMap({ $0.touchPoint.events }) {
                 var radius: CGFloat = 2
                 if event.isUpdate {
@@ -47,9 +48,23 @@ class DebugView: UIView {
             let path = UIBezierPath()
             for point in stroke.points {
                 if point.event.phase == .began {
-                    path.move(to: point.event.location)
+                    path.move(to: point.location)
                 } else {
-                    path.addLine(to: point.event.location)
+                    path.addLine(to: point.location)
+                }
+            }
+            path.stroke()
+        }
+
+        for stroke in smoothStrokes {
+            UIColor.green.setStroke()
+
+            let path = UIBezierPath()
+            for point in stroke.points {
+                if point.event.phase == .began {
+                    path.move(to: point.location)
+                } else {
+                    path.addLine(to: point.location)
                 }
             }
             path.stroke()
@@ -88,9 +103,9 @@ class DebugView: UIView {
             for delta in deltas {
                 switch delta {
                 case .addedStroke(let index):
-                    draw(stroke: strokes[index], indexSet: nil)
+                    draw(stroke: originalStrokes[index], indexSet: nil)
                 case .updatedStroke(let index, let indexSet):
-                    draw(stroke: strokes[index], indexSet: indexSet)
+                    draw(stroke: originalStrokes[index], indexSet: indexSet)
                 default:
                     break
                 }

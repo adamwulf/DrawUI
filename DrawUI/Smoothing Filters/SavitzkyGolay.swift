@@ -18,13 +18,49 @@ public class SavitzkyGolay: SmoothingFilter {
     private var m = 2
     public var window: Int {
         get { return m }
-        set { m = max(2, newValue) }
+        set {
+            m = max(2, newValue)
+            // TODO: clear caches
+        }
     }
 
     public init () {
     }
 
-    func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta]) {
+    public func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta]) {
+        var outStrokes = strokes
+        var outDeltas: [StrokeStream.Delta] = []
+
+        func smooth(strokeIdx: Int) {
+            for pIndex in 0 ..< outStrokes[strokeIdx].points.count {
+                let minWin = min(min(window, pIndex), outStrokes[strokeIdx].points.count - 1 - pIndex)
+
+                if minWin > 1 {
+                    var outPoint = CGPoint.zero
+                    for windowPos in -minWin ... minWin {
+                        let wght = weight(0, windowPos, minWin, order, deriv)
+                        outPoint.x += wght * strokes[strokeIdx].points[pIndex + windowPos].location.x
+                        outPoint.y += wght * strokes[strokeIdx].points[pIndex + windowPos].location.y
+                    }
+                    print("\(outStrokes[strokeIdx].points[pIndex].location) => \(outPoint)")
+                    outStrokes[strokeIdx].points[pIndex].location = outPoint
+                }
+            }
+        }
+
+        // Temporary non-cached non-optimized smoothing
+        // simply treat every stroke as brand new and smooth the entire set
+        for strokeIdx in 0 ..< strokes.count {
+            smooth(strokeIdx: strokeIdx)
+            outDeltas.append(.addedStroke(stroke: strokeIdx))
+        }
+
+        return (outStrokes, outDeltas)
+    }
+
+    // TODO: optimize the smoothing to cache stroke state and only re-smooth when required
+    func optimized_smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta]) {
+        var outStrokes = strokes
 
         // TODO: cache the output smooth strokes so that we can use the same result next time
         // and update it with the incoming delta. allow for clearing cache so that the smooth
@@ -32,7 +68,6 @@ public class SavitzkyGolay: SmoothingFilter {
         //
         // add unit tests
 
-        var outStrokes = strokes
         var outDeltas: [StrokeStream.Delta] = []
         for delta in deltas {
             switch delta {
