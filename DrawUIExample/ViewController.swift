@@ -51,6 +51,26 @@ class ViewController: UIViewController {
         slider.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         slider.widthAnchor.constraint(equalToConstant: 250).isActive = true
 
+        let strenSlider = UISlider()
+        strenSlider.translatesAutoresizingMaskIntoConstraints = false
+        strenSlider.minimumValue = 0
+        strenSlider.maximumValue = 1
+        strenSlider.value = 1
+        strenSlider.addAction(UIAction(handler: { [weak self] (_) in
+            self?.savitzkyGolay.strength = CGFloat(strenSlider.value)
+
+            if let original = self?.debugView.originalStrokes,
+               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
+                self?.debugView.smoothStrokes = smooth
+            }
+            self?.debugView.setNeedsDisplay()
+        }), for: .valueChanged)
+        view.addSubview(strenSlider)
+
+        strenSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 400).isActive = true
+        strenSlider.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
+        strenSlider.widthAnchor.constraint(equalToConstant: 250).isActive = true
+
         eventStream.onChange = { [weak self] (eventStream) in
             guard let self = self else { return }
             let updatedEvents = eventStream.process()
@@ -62,6 +82,8 @@ class ViewController: UIViewController {
         strokeStream.onChange = { [weak self] (strokes, deltas) in
             guard let self = self else { return }
             let updates = deltas.map({ $0.rawString })
+
+            print("updates: \(updates)")
 
             self.debugView?.originalStrokes = strokes
             self.debugView?.smoothStrokes = self.savitzkyGolay.smooth(strokes: strokes, deltas: deltas).strokes

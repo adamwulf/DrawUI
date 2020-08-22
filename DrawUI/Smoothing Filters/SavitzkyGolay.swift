@@ -23,6 +23,7 @@ public class SavitzkyGolay: SmoothingFilter {
             // TODO: clear caches
         }
     }
+    public var strength: CGFloat = 1
 
     public init () {
     }
@@ -42,8 +43,9 @@ public class SavitzkyGolay: SmoothingFilter {
                         outPoint.x += wght * strokes[strokeIdx].points[pIndex + windowPos].location.x
                         outPoint.y += wght * strokes[strokeIdx].points[pIndex + windowPos].location.y
                     }
-                    print("\(outStrokes[strokeIdx].points[pIndex].location) => \(outPoint)")
-                    outStrokes[strokeIdx].points[pIndex].location = outPoint
+                    let origPoint = outStrokes[strokeIdx].points[pIndex].location
+
+                    outStrokes[strokeIdx].points[pIndex].location = origPoint * CGFloat(1 - strength) + outPoint * strength
                 }
             }
         }
