@@ -55,48 +55,53 @@ public class OrderedTouchPoints {
                     expectingUpdate.remove(object: event.pointIdentifier)
                 }
                 indexSet.insert(index)
-            } else if
-                event.isPrediction,
-                let prediction = consumable.first {
-                // This event is a prediction, and we can reuse one of the points from the previous predictions
-                // consume a prediction and reuse it
-                prediction.add(event: event)
-                consumable.removeFirst()
-                predictedPoints.append(prediction)
-                let index = confirmedPoints.count + predictedPoints.count - 1
-                eventToIndex[event.pointIdentifier] = index
-                indexSet.insert(index)
             } else if event.isPrediction {
-                // The event is a prediction, and we're out of consumable previous predicted points, so create a new point
-                let prediction = TouchPoint(event: event)
-                predictedPoints.append(prediction)
-                let index = confirmedPoints.count + predictedPoints.count - 1
-                eventToIndex[event.pointIdentifier] = index
-                indexSet.insert(index)
-            } else if let point = consumable.first {
-                // The event is a new confirmed points, consume a previous prediction if possible and update it to the now
-                // confirmed point.
-                if event.expectsUpdate {
-                    expectingUpdate.append(event.pointIdentifier)
+                // The event is a prediction. Attempt to consume a previous prediction and reuse a Point object,
+                // otherwise create a new Point and add to the predictions array
+                if let prediction = consumable.first {
+                    // This event is a prediction, and we can reuse one of the points from the previous predictions
+                    // consume a prediction and reuse it
+                    prediction.add(event: event)
+                    consumable.removeFirst()
+                    predictedPoints.append(prediction)
+                    let index = confirmedPoints.count + predictedPoints.count - 1
+                    eventToIndex[event.pointIdentifier] = index
+                    indexSet.insert(index)
+                } else {
+                    // The event is a prediction, and we're out of consumable previous predicted points, so create a new point
+                    let prediction = TouchPoint(event: event)
+                    predictedPoints.append(prediction)
+                    let index = confirmedPoints.count + predictedPoints.count - 1
+                    eventToIndex[event.pointIdentifier] = index
+                    indexSet.insert(index)
                 }
-                point.add(event: event)
-                consumable.removeFirst()
-                eventToPoint[event.pointIdentifier] = point
-                confirmedPoints.append(point)
-                let index = confirmedPoints.count - 1
-                eventToIndex[event.pointIdentifier] = index
-                indexSet.insert(index)
             } else {
-                // We are out of consumable points, so create a new point for this event
-                if event.expectsUpdate {
-                    expectingUpdate.append(event.pointIdentifier)
+                // The event is a normal confirmed user event. Attempt to re-use a consumable point, or create a new Point
+                if let point = consumable.first {
+                    // The event is a new confirmed points, consume a previous prediction if possible and update it to the now
+                    // confirmed point.
+                    if event.expectsUpdate {
+                        expectingUpdate.append(event.pointIdentifier)
+                    }
+                    point.add(event: event)
+                    consumable.removeFirst()
+                    eventToPoint[event.pointIdentifier] = point
+                    confirmedPoints.append(point)
+                    let index = confirmedPoints.count - 1
+                    eventToIndex[event.pointIdentifier] = index
+                    indexSet.insert(index)
+                } else {
+                    // We are out of consumable points, so create a new point for this event
+                    if event.expectsUpdate {
+                        expectingUpdate.append(event.pointIdentifier)
+                    }
+                    let point = TouchPoint(event: event)
+                    eventToPoint[event.pointIdentifier] = point
+                    confirmedPoints.append(point)
+                    let index = confirmedPoints.count - 1
+                    eventToIndex[event.pointIdentifier] = index
+                    indexSet.insert(index)
                 }
-                let point = TouchPoint(event: event)
-                eventToPoint[event.pointIdentifier] = point
-                confirmedPoints.append(point)
-                let index = confirmedPoints.count - 1
-                eventToIndex[event.pointIdentifier] = index
-                indexSet.insert(index)
             }
         }
 

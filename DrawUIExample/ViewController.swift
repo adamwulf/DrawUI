@@ -81,10 +81,6 @@ class ViewController: UIViewController {
         }
         strokeStream.onChange = { [weak self] (strokes, deltas) in
             guard let self = self else { return }
-            let updates = deltas.map({ $0.rawString })
-
-            print("updates: \(updates)")
-
             self.debugView?.originalStrokes = strokes
             self.debugView?.smoothStrokes = self.savitzkyGolay.smooth(strokes: strokes, deltas: deltas).strokes
             self.debugView?.add(deltas: deltas)
