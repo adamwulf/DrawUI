@@ -7,6 +7,7 @@
 
 import UIKit
 import DrawUI
+import QuickTableViewController
 
 class ViewController: UIViewController {
 
@@ -28,6 +29,8 @@ class ViewController: UIViewController {
 
         setupSliders()
 
+        setupTable()
+
         debugView.layer.borderWidth = 1
         debugView.layer.borderColor = UIColor.black.cgColor
 
@@ -48,6 +51,53 @@ class ViewController: UIViewController {
         }
 
         debugView?.addGestureRecognizer(eventStream.gesture)
+    }
+
+    private func setupTable() {
+        let settings = QuickTableViewController()
+        let nav = UINavigationController(rootViewController: settings)
+        nav.navigationBar.barStyle = .default
+
+        settings.tableView.contentInset = UIEdgeInsets(top: -40, left: 0, bottom: 0, right: 0)
+        settings.navigationItem.title = "Settings"
+        settings.tableContents = [
+            Section(title: "Switch", rows: [
+                SwitchRow(text: "Setting 1", switchValue: true, action: { _ in }),
+                SwitchRow(text: "Setting 2", switchValue: false, action: { _ in })
+            ]),
+
+            Section(title: "Sliders", rows: [
+                SliderRow(text: "Slider 1", sliderValue: 1, action: { (row) in
+                    print("\(row)")
+                })
+            ]),
+
+            Section(title: "Tap Action", rows: [
+                TapActionRow(text: "Tap action", action: { _ in })
+            ]),
+
+            Section(title: "Navigation", rows: [
+                NavigationRow(text: "CellStyle.default", detailText: .none, icon: .named("gear")),
+                NavigationRow(text: "CellStyle", detailText: .subtitle(".subtitle"), icon: .named("globe")),
+                NavigationRow(text: "CellStyle", detailText: .value1(".value1"), icon: .named("time"), action: { _ in }),
+                NavigationRow(text: "CellStyle", detailText: .value2(".value2"))
+            ], footer: "UITableViewCellStyle.Value2 hides the image view."),
+
+            RadioSection(title: "Radio Buttons", options: [
+                OptionRow(text: "Option 1", isSelected: true, action: { _ in }),
+                OptionRow(text: "Option 2", isSelected: false, action: { _ in }),
+                OptionRow(text: "Option 3", isSelected: false, action: { _ in })
+            ], footer: "See RadioSection for more details.")
+        ]
+
+        addChild(nav)
+        nav.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(nav.view)
+
+        nav.view.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        nav.view.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        nav.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
+        nav.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
     }
 
     private func setupSliders() {

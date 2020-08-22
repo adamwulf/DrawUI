@@ -1,0 +1,15 @@
+//
+//  SliderRowCompatible.swift
+//  DrawUIExample
+//
+//  Created by Adam Wulf on 8/22/20.
+//
+
+import UIKit
+import QuickTableViewController
+
+/// This protocol defines the compatible interface of a `SwitchRow` regardless of its associated cell type.
+public protocol SliderRowCompatible: Row, RowStyle {
+  /// The state of the switch.
+  var sliderValue: Float { get set }
+}
