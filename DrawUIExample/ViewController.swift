@@ -26,8 +26,31 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupSliders()
+
         debugView.layer.borderWidth = 1
         debugView.layer.borderColor = UIColor.black.cgColor
+
+        eventStream.onChange = { [weak self] (eventStream) in
+            guard let self = self else { return }
+            let updatedEvents = eventStream.process()
+            self.pointStream.add(touchEvents: updatedEvents)
+        }
+        pointStream.onChange = { [weak self] (strokes, deltas) in
+            self?.strokeStream.add(touchEvents: deltas)
+        }
+        strokeStream.onChange = { [weak self] (strokes, deltas) in
+            guard let self = self else { return }
+            self.debugView?.originalStrokes = strokes
+            self.debugView?.smoothStrokes = self.savitzkyGolay.smooth(strokes: strokes, deltas: deltas).strokes
+            self.debugView?.add(deltas: deltas)
+            self.debugView?.setNeedsDisplay()
+        }
+
+        debugView?.addGestureRecognizer(eventStream.gesture)
+    }
+
+    private func setupSliders() {
 
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
@@ -70,23 +93,5 @@ class ViewController: UIViewController {
         strenSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 400).isActive = true
         strenSlider.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         strenSlider.widthAnchor.constraint(equalToConstant: 250).isActive = true
-
-        eventStream.onChange = { [weak self] (eventStream) in
-            guard let self = self else { return }
-            let updatedEvents = eventStream.process()
-            self.pointStream.add(touchEvents: updatedEvents)
-        }
-        pointStream.onChange = { [weak self] (strokes, deltas) in
-            self?.strokeStream.add(touchEvents: deltas)
-        }
-        strokeStream.onChange = { [weak self] (strokes, deltas) in
-            guard let self = self else { return }
-            self.debugView?.originalStrokes = strokes
-            self.debugView?.smoothStrokes = self.savitzkyGolay.smooth(strokes: strokes, deltas: deltas).strokes
-            self.debugView?.add(deltas: deltas)
-            self.debugView?.setNeedsDisplay()
-        }
-
-        debugView?.addGestureRecognizer(eventStream.gesture)
     }
 }
