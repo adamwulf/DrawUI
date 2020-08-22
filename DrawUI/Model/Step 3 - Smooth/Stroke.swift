@@ -30,7 +30,7 @@ public struct Stroke {
                     assertionFailure("Attempting to modify a point that doesn't yet exist. maybe an update is out of order?")
                 }
             } else {
-                points.removeLast()
+                points.remove(at: index)
             }
         }
         return indexSet
