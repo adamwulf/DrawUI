@@ -54,7 +54,7 @@ class ViewController: UIViewController {
     }
 
     private func setupTable() {
-        let settings = QuickTableViewController()
+        let settings = SettingsViewController()
         let nav = UINavigationController(rootViewController: settings)
         nav.navigationBar.barStyle = .default
 
@@ -67,9 +67,20 @@ class ViewController: UIViewController {
             ]),
 
             Section(title: "Sliders", rows: [
-                SliderRow(text: "Slider 1", sliderValue: 1, action: { (row) in
-                    print("\(row)")
-                })
+                SliderRow(text: "Slider 1",
+                          detailText: .subtitle("detail"),
+                          sliderMin: 1,
+                          sliderMax: 12,
+                          sliderValue: 1,
+                          validate: { (value) -> Float in
+                            return value.rounded()
+                          }, customization: { (cell, row) in
+                            guard let row = row as? SliderRowCompatible else { return }
+                            cell.detailTextLabel?.text = "val: \(row.sliderValue)"
+                          }, action: { (row) in
+                            guard let row = row as? SliderRowCompatible else { return }
+                            print("updated val: \(row.sliderValue)")
+                          })
             ]),
 
             Section(title: "Tap Action", rows: [

@@ -8,85 +8,69 @@
 import UIKit
 import QuickTableViewController
 
-/// The `SliderCellDelegate` protocol allows the adopting delegate to respond to the UI interaction. Not available on tvOS.
-@available(tvOS, unavailable, message: "SliderCellDelegate is not available on tvOS.")
 public protocol SliderCellDelegate: class {
-  /// Tells the delegate that the Slider control is toggled.
-  func sliderCell(_ cell: SliderCell, didUpdateSlider value: Float)
+    /// Tells the delegate that the Slider control is toggled.
+    func sliderCell(_ cell: SliderCell, didUpdateSlider value: Float)
 }
 
 /// A `UITableViewCell` subclass that shows a `UISlider` as the `accessoryView`.
 open class SliderCell: UITableViewCell, Configurable {
 
-  #if os(iOS)
+    public private(set) lazy var sliderControl: UISlider = {
+        let control = UISlider()
+        control.addTarget(self, action: #selector(SliderCell.didUpdateSlider(_:)), for: .valueChanged)
+        return control
+    }()
 
-  /// A `UISlider` as the `accessoryView`. Not available on tvOS.
-  @available(tvOS, unavailable, message: "sliderControl is not available on tvOS.")
-  public private(set) lazy var sliderControl: UISlider = {
-    let control = UISlider()
-    control.addTarget(self, action: #selector(SliderCell.didUpdateSlider(_:)), for: .valueChanged)
-    return control
-  }()
+    open weak var delegate: SliderCellDelegate?
 
-  #endif
+    // MARK: - Initializer
 
-  /// The slider cell's delegate object, which should conform to `SliderCellDelegate`. Not available on tvOS.
-  @available(tvOS, unavailable, message: "SliderCellDelegate is not available on tvOS.")
-  open weak var delegate: SliderCellDelegate?
+    /**
+     Overrides `UITableViewCell`'s designated initializer.
 
-  // MARK: - Initializer
+     - parameter style:           A constant indicating a cell style.
+     - parameter reuseIdentifier: A string used to identify the cell object if it is to be reused for drawing multiple rows of a table view.
 
-  /**
-   Overrides `UITableViewCell`'s designated initializer.
+     - returns: An initialized `SliderCell` object.
+     */
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setUpAppearance()
+    }
 
-   - parameter style:           A constant indicating a cell style.
-   - parameter reuseIdentifier: A string used to identify the cell object if it is to be reused for drawing multiple rows of a table view.
+    /**
+     Overrides the designated initializer that returns an object initialized from data in a given unarchiver.
 
-   - returns: An initialized `SliderCell` object.
-   */
-  public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
-    setUpAppearance()
-  }
+     - parameter aDecoder: An unarchiver object.
 
-  /**
-   Overrides the designated initializer that returns an object initialized from data in a given unarchiver.
+     - returns: `self`, initialized using the data in decoder.
+     */
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setUpAppearance()
+    }
 
-   - parameter aDecoder: An unarchiver object.
+    // MARK: - Configurable
 
-   - returns: `self`, initialized using the data in decoder.
-   */
-  public required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    setUpAppearance()
-  }
+    /// Set up the slider control (iOS) with the provided row.
+    open func configure(with row: Row & RowStyle) {
+        if let row = row as? SliderRowCompatible {
+            sliderControl.minimumValue = row.sliderMin
+            sliderControl.maximumValue = row.sliderMax
+            sliderControl.value = row.sliderValue
+        }
+        accessoryView = sliderControl
+    }
 
-  // MARK: - Configurable
+    // MARK: - Private
 
-  /// Set up the slider control (iOS) or accessory type (tvOS) with the provided row.
-  open func configure(with row: Row & RowStyle) {
-    #if os(iOS)
-      if let row = row as? SliderRowCompatible {
-        sliderControl.value = row.sliderValue
-      }
-      accessoryView = sliderControl
-    #elseif os(tvOS)
-      accessoryView = nil
-      accessoryType = row.accessoryType
-    #endif
-  }
+    @objc private func didUpdateSlider(_ sender: UISlider) {
+        delegate?.sliderCell(self, didUpdateSlider: sender.value)
+    }
 
-  // MARK: - Private
-
-  @available(tvOS, unavailable, message: "UISlider is not available on tvOS.")
-  @objc
-  private func didUpdateSlider(_ sender: UISlider) {
-    delegate?.sliderCell(self, didUpdateSlider: sender.value)
-  }
-
-  private func setUpAppearance() {
-    textLabel?.numberOfLines = 0
-    detailTextLabel?.numberOfLines = 0
-  }
-
+    private func setUpAppearance() {
+        textLabel?.numberOfLines = 0
+        detailTextLabel?.numberOfLines = 0
+    }
 }
