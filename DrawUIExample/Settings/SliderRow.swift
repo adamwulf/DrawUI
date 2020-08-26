@@ -33,7 +33,16 @@ open class SliderRow<T: SliderCell>: SliderRowCompatible, Equatable {
         self.icon = icon
         self.validate = validate
         self.action = action
-        self.customize = customization
+        self.customize = { (cell, row) in
+            guard
+                let row = row as? SliderRowCompatible,
+                let cell = cell as? SliderCell
+            else {
+                return
+            }
+            customization?(cell, row)
+            cell.enabled = row.enabled
+        }
         self.value = sliderValue
     }
 
@@ -42,6 +51,7 @@ open class SliderRow<T: SliderCell>: SliderRowCompatible, Equatable {
     public var validate: ((Float) -> Float)?
     public var sliderMin: Float
     public var sliderMax: Float
+    public var enabled: Bool = true
 
     /// The state of the slider.
     private var value: Float = 0

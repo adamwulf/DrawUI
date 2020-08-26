@@ -23,6 +23,16 @@ open class SliderCell: UITableViewCell, Configurable {
     }()
 
     open weak var delegate: SliderCellDelegate?
+    public var enabled: Bool = true {
+        didSet {
+            if enabled != oldValue {
+                isUserInteractionEnabled = enabled
+                contentView.alpha = enabled ? 1.0 : 0.5
+                sliderControl.tintColor = enabled ? nil : UIColor.lightGray
+                sliderControl.alpha = enabled ? 1.0 : 0.5
+            }
+        }
+    }
 
     // MARK: - Initializer
 
@@ -61,6 +71,12 @@ open class SliderCell: UITableViewCell, Configurable {
             sliderControl.value = row.sliderValue
         }
         accessoryView = sliderControl
+    }
+
+    override public func prepareForReuse() {
+        super.prepareForReuse()
+
+        enabled = true
     }
 
     // MARK: - Private

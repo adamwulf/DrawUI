@@ -18,7 +18,6 @@ class SettingsViewController: QuickTableViewController {
     }
 }
 
-#if os(iOS)
 extension SettingsViewController: SliderCellDelegate {
 
     // MARK: - SliderCellDelegate
@@ -35,6 +34,4 @@ extension SettingsViewController: SliderCellDelegate {
         cell.sliderControl.value = row.sliderValue
         row.customize?(cell, row)
     }
-
 }
-#endif

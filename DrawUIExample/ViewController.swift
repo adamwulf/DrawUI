@@ -30,9 +30,6 @@ class ViewController: UIViewController {
 
         setupTable()
 
-        debugView.layer.borderWidth = 1
-        debugView.layer.borderColor = UIColor.black.cgColor
-
         eventStream.onChange = { [weak self] (eventStream) in
             guard let self = self else { return }
             let updatedEvents = eventStream.process()
@@ -70,6 +67,7 @@ class ViewController: UIViewController {
                         self?.debugView.smoothStrokes = smooth
                     }
                     self?.debugView.setNeedsDisplay()
+                    settings.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
                 }),
                 SliderRow(text: "Window Size",
                           detailText: .value1(""),
@@ -78,9 +76,10 @@ class ViewController: UIViewController {
                           sliderValue: 1,
                           validate: { (value) -> Float in
                             return value.rounded()
-                          }, customization: { (cell, row) in
+                          }, customization: { [weak self] (cell, row) in
                             guard let row = row as? SliderRowCompatible else { return }
-                            cell.detailTextLabel?.text = "\(row.sliderValue)"
+                            cell.detailTextLabel?.text = String(format: "%d", Int(row.sliderValue))
+                            row.enabled = self?.savitzkyGolay.enabled ?? true
                           }, action: { [weak self] (row) in
                             guard let row = row as? SliderRowCompatible else { return }
                             let intVal = Int(row.sliderValue.rounded())
@@ -97,9 +96,10 @@ class ViewController: UIViewController {
                           sliderMin: 0,
                           sliderMax: 1,
                           sliderValue: 1,
-                          customization: { (cell, row) in
+                          customization: { [weak self] (cell, row) in
                             guard let row = row as? SliderRowCompatible else { return }
                             cell.detailTextLabel?.text = String(format: "%d%%", Int((row.sliderValue * 100).rounded()))
+                            row.enabled = self?.savitzkyGolay.enabled ?? true
                           }, action: { [weak self] (row) in
                             guard let row = row as? SliderRowCompatible else { return }
                             self?.savitzkyGolay.strength = CGFloat(row.sliderValue)

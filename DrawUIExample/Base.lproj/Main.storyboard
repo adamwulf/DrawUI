@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ws6-cd-wAk" customClass="DebugView" customModule="DrawUIExample" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="120" width="414" height="776"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <viewLayoutGuide key="safeArea" id="wof-Dh-4Ni"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
@@ -27,7 +27,7 @@
                         <constraints>
                             <constraint firstItem="Ws6-cd-wAk" firstAttribute="trailing" secondItem="cda-CR-GYy" secondAttribute="trailing" id="Kc9-qJ-X5o"/>
                             <constraint firstAttribute="bottom" secondItem="Ws6-cd-wAk" secondAttribute="bottom" id="Rfl-sO-gjQ"/>
-                            <constraint firstItem="Ws6-cd-wAk" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="120" id="YUR-Vh-Kp1"/>
+                            <constraint firstItem="Ws6-cd-wAk" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="YUR-Vh-Kp1"/>
                             <constraint firstItem="Ws6-cd-wAk" firstAttribute="leading" secondItem="cda-CR-GYy" secondAttribute="leading" id="wcS-Ts-44T"/>
                         </constraints>
                     </view>

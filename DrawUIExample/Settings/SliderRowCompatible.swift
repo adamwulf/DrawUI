@@ -15,4 +15,5 @@ public protocol SliderRowCompatible: Row, RowStyle {
     var sliderValue: Float { get set }
     var sliderMin: Float { get }
     var sliderMax: Float { get }
+    var enabled: Bool { get set }
 }
