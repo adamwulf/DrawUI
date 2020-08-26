@@ -54,6 +54,14 @@ class ViewController: UIViewController {
         let nav = UINavigationController(rootViewController: settings)
         nav.navigationBar.barStyle = .default
 
+        let resmoothAndRedraw = { [weak self] in
+            if let original = self?.debugView.originalStrokes,
+               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
+                self?.debugView.smoothStrokes = smooth
+            }
+            self?.debugView.setNeedsDisplay()
+        }
+
         settings.tableView.contentInset = UIEdgeInsets(top: -40, left: 0, bottom: 0, right: 0)
         settings.navigationItem.title = "Settings"
         settings.tableContents = [
@@ -71,44 +79,29 @@ class ViewController: UIViewController {
                 }),
                 SliderRow(text: "Window Size",
                           detailText: .value1(""),
-                          sliderMin: 1,
-                          sliderMax: 12,
-                          sliderValue: 1,
-                          validate: { (value) -> Float in
-                            return value.rounded()
-                          }, customization: { [weak self] (cell, row) in
-                            guard let row = row as? SliderRowCompatible else { return }
+                          value: (min: 1, max: 12, val: 1),
+                          validate: { $0.rounded() },
+                          customization: { [weak self] (cell, row) in
                             cell.detailTextLabel?.text = String(format: "%d", Int(row.sliderValue))
                             row.enabled = self?.savitzkyGolay.enabled ?? true
-                          }, action: { [weak self] (row) in
-                            guard let row = row as? SliderRowCompatible else { return }
+                          },
+                          action: { [weak self] (row) in
                             let intVal = Int(row.sliderValue.rounded())
                             self?.savitzkyGolay.window = intVal
 
-                            if let original = self?.debugView.originalStrokes,
-                               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
-                                self?.debugView.smoothStrokes = smooth
-                            }
-                            self?.debugView.setNeedsDisplay()
+                            resmoothAndRedraw()
                           }),
                 SliderRow(text: "Strength",
                           detailText: .value1(""),
-                          sliderMin: 0,
-                          sliderMax: 1,
-                          sliderValue: 1,
+                          value: (min: 0, max: 1, val: 1),
                           customization: { [weak self] (cell, row) in
-                            guard let row = row as? SliderRowCompatible else { return }
                             cell.detailTextLabel?.text = String(format: "%d%%", Int((row.sliderValue * 100).rounded()))
                             row.enabled = self?.savitzkyGolay.enabled ?? true
-                          }, action: { [weak self] (row) in
-                            guard let row = row as? SliderRowCompatible else { return }
+                          },
+                          action: { [weak self] (row) in
                             self?.savitzkyGolay.strength = CGFloat(row.sliderValue)
 
-                            if let original = self?.debugView.originalStrokes,
-                               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
-                                self?.debugView.smoothStrokes = smooth
-                            }
-                            self?.debugView.setNeedsDisplay()
+                            resmoothAndRedraw()
                           })
             ])
         ]

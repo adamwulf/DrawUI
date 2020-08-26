@@ -31,6 +31,10 @@ open class SliderCell: UITableViewCell, Configurable {
                 sliderControl.tintColor = enabled ? nil : UIColor.lightGray
                 sliderControl.alpha = enabled ? 1.0 : 0.5
             }
+            func foobar(fumble: (min: Float, max: Float, vaL: Float) = (1, 1, 1)) {
+                print("\(fumble)")
+            }
+            foobar()
         }
     }
 

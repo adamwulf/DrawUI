@@ -4,6 +4,7 @@
 //
 //  Created by Adam Wulf on 8/22/20.
 //
+// swiftlint:disable large_tuple
 
 import UIKit
 import QuickTableViewController
@@ -18,21 +19,22 @@ open class SliderRow<T: SliderCell>: SliderRowCompatible, Equatable {
     public init(
         text: String,
         detailText: DetailText? = nil,
-        sliderMin: Float = 0,
-        sliderMax: Float = 1,
-        sliderValue: Float,
+        value: (min: Float, max: Float, val: Float) = (0, 1, 1),
         icon: Icon? = nil,
         validate: ((Float) -> Float)? = nil,
-        customization: ((UITableViewCell, Row & RowStyle) -> Void)? = nil,
-        action: ((Row) -> Void)?
+        customization: ((SliderCell, SliderRowCompatible) -> Void)? = nil,
+        action: ((SliderRowCompatible) -> Void)?
     ) {
         self.text = text
         self.detailText = detailText
-        self.sliderMin = sliderMin
-        self.sliderMax = sliderMax
+        self.sliderMin = value.min
+        self.sliderMax = value.max
         self.icon = icon
         self.validate = validate
-        self.action = action
+        self.action = { (row: Row) in
+            guard let row = row as? SliderRowCompatible else { return }
+            action?(row)
+        }
         self.customize = { (cell, row) in
             guard
                 let row = row as? SliderRowCompatible,
@@ -43,7 +45,7 @@ open class SliderRow<T: SliderCell>: SliderRowCompatible, Equatable {
             customization?(cell, row)
             cell.enabled = row.enabled
         }
-        self.value = sliderValue
+        self.value = value.val
     }
 
     // MARK: - SliderRowCompatible
