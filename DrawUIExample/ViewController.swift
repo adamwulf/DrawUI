@@ -14,8 +14,9 @@ class ViewController: UIViewController {
     let eventStream: TouchEventStream
     let pointStream: TouchPointStream
     let strokeStream: StrokeStream
-    let savitzkyGolay = SavitzkyGolay()
     @IBOutlet var debugView: DebugView!
+
+    let savitzkyGolay = SavitzkyGolay()
 
     required init?(coder: NSCoder) {
         eventStream = TouchEventStream()
@@ -26,8 +27,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupSliders()
 
         setupTable()
 
@@ -61,14 +60,19 @@ class ViewController: UIViewController {
         settings.tableView.contentInset = UIEdgeInsets(top: -40, left: 0, bottom: 0, right: 0)
         settings.navigationItem.title = "Settings"
         settings.tableContents = [
-            Section(title: "Switch", rows: [
-                SwitchRow(text: "Setting 1", switchValue: true, action: { _ in }),
-                SwitchRow(text: "Setting 2", switchValue: false, action: { _ in })
-            ]),
+            Section(title: "Savitzky-Golay", rows: [
+                SwitchRow(text: "Enabled", switchValue: savitzkyGolay.enabled, action: { [weak self] row in
+                    guard let row = row as? SwitchRowCompatible else { return }
+                    self?.savitzkyGolay.enabled = row.switchValue
 
-            Section(title: "Sliders", rows: [
-                SliderRow(text: "Slider 1",
-                          detailText: .subtitle("detail"),
+                    if let original = self?.debugView.originalStrokes,
+                       let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
+                        self?.debugView.smoothStrokes = smooth
+                    }
+                    self?.debugView.setNeedsDisplay()
+                }),
+                SliderRow(text: "Window Size",
+                          detailText: .value1(""),
                           sliderMin: 1,
                           sliderMax: 12,
                           sliderValue: 1,
@@ -76,29 +80,37 @@ class ViewController: UIViewController {
                             return value.rounded()
                           }, customization: { (cell, row) in
                             guard let row = row as? SliderRowCompatible else { return }
-                            cell.detailTextLabel?.text = "val: \(row.sliderValue)"
-                          }, action: { (row) in
+                            cell.detailTextLabel?.text = "\(row.sliderValue)"
+                          }, action: { [weak self] (row) in
                             guard let row = row as? SliderRowCompatible else { return }
-                            print("updated val: \(row.sliderValue)")
+                            let intVal = Int(row.sliderValue.rounded())
+                            self?.savitzkyGolay.window = intVal
+
+                            if let original = self?.debugView.originalStrokes,
+                               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
+                                self?.debugView.smoothStrokes = smooth
+                            }
+                            self?.debugView.setNeedsDisplay()
+                          }),
+                SliderRow(text: "Strength",
+                          detailText: .value1(""),
+                          sliderMin: 0,
+                          sliderMax: 1,
+                          sliderValue: 1,
+                          customization: { (cell, row) in
+                            guard let row = row as? SliderRowCompatible else { return }
+                            cell.detailTextLabel?.text = String(format: "%d%%", Int((row.sliderValue * 100).rounded()))
+                          }, action: { [weak self] (row) in
+                            guard let row = row as? SliderRowCompatible else { return }
+                            self?.savitzkyGolay.strength = CGFloat(row.sliderValue)
+
+                            if let original = self?.debugView.originalStrokes,
+                               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
+                                self?.debugView.smoothStrokes = smooth
+                            }
+                            self?.debugView.setNeedsDisplay()
                           })
-            ]),
-
-            Section(title: "Tap Action", rows: [
-                TapActionRow(text: "Tap action", action: { _ in })
-            ]),
-
-            Section(title: "Navigation", rows: [
-                NavigationRow(text: "CellStyle.default", detailText: .none, icon: .named("gear")),
-                NavigationRow(text: "CellStyle", detailText: .subtitle(".subtitle"), icon: .named("globe")),
-                NavigationRow(text: "CellStyle", detailText: .value1(".value1"), icon: .named("time"), action: { _ in }),
-                NavigationRow(text: "CellStyle", detailText: .value2(".value2"))
-            ], footer: "UITableViewCellStyle.Value2 hides the image view."),
-
-            RadioSection(title: "Radio Buttons", options: [
-                OptionRow(text: "Option 1", isSelected: true, action: { _ in }),
-                OptionRow(text: "Option 2", isSelected: false, action: { _ in }),
-                OptionRow(text: "Option 3", isSelected: false, action: { _ in })
-            ], footer: "See RadioSection for more details.")
+            ])
         ]
 
         addChild(nav)
@@ -109,50 +121,5 @@ class ViewController: UIViewController {
         nav.view.heightAnchor.constraint(equalToConstant: 300).isActive = true
         nav.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
         nav.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
-    }
-
-    private func setupSliders() {
-
-        let slider = UISlider()
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.minimumValue = 1
-        slider.maximumValue = 12
-        slider.value = 1
-        slider.addAction(UIAction(handler: { [weak self] (_) in
-            let intVal = Int(slider.value.rounded())
-            self?.savitzkyGolay.window = intVal
-            slider.value = Float(intVal)
-
-            if let original = self?.debugView.originalStrokes,
-               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
-                self?.debugView.smoothStrokes = smooth
-            }
-            self?.debugView.setNeedsDisplay()
-        }), for: .valueChanged)
-        view.addSubview(slider)
-
-        slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        slider.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
-        slider.widthAnchor.constraint(equalToConstant: 250).isActive = true
-
-        let strenSlider = UISlider()
-        strenSlider.translatesAutoresizingMaskIntoConstraints = false
-        strenSlider.minimumValue = 0
-        strenSlider.maximumValue = 1
-        strenSlider.value = 1
-        strenSlider.addAction(UIAction(handler: { [weak self] (_) in
-            self?.savitzkyGolay.strength = CGFloat(strenSlider.value)
-
-            if let original = self?.debugView.originalStrokes,
-               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
-                self?.debugView.smoothStrokes = smooth
-            }
-            self?.debugView.setNeedsDisplay()
-        }), for: .valueChanged)
-        view.addSubview(strenSlider)
-
-        strenSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 400).isActive = true
-        strenSlider.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
-        strenSlider.widthAnchor.constraint(equalToConstant: 250).isActive = true
     }
 }

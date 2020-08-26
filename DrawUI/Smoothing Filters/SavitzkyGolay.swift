@@ -16,6 +16,7 @@ public class SavitzkyGolay: SmoothingFilter {
     private let deriv = 0 // 0 is smooth, 1 is first derivative, etc
     private let order = 3
     private var m = 2
+    public var enabled: Bool = true
     public var window: Int {
         get { return m }
         set {
@@ -29,6 +30,7 @@ public class SavitzkyGolay: SmoothingFilter {
     }
 
     public func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta]) {
+        guard enabled else { return (strokes, deltas) }
         var outStrokes = strokes
         var outDeltas: [StrokeStream.Delta] = []
 

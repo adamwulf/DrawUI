@@ -20,7 +20,7 @@ class SettingsViewController: QuickTableViewController {
 
 #if os(iOS)
 extension SettingsViewController: SliderCellDelegate {
-    
+
     // MARK: - SliderCellDelegate
 
     open func sliderCell(_ cell: SliderCell, didUpdateSlider value: Float) {

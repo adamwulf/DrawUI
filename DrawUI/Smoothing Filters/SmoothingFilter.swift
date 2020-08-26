@@ -11,5 +11,6 @@ import Foundation
 // https://en.wikipedia.org/wiki/Smoothing
 
 protocol SmoothingFilter {
+    var enabled: Bool { get set }
     func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta])
 }

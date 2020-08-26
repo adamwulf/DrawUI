@@ -96,7 +96,7 @@ open class SliderRow<T: SliderCell>: SliderRowCompatible, Equatable {
 
     /// The additional customization during cell configuration.
     public let customize: ((UITableViewCell, Row & RowStyle) -> Void)?
-    
+
     // MARK: - Equatable
 
     /// Returns true iff `lhs` and `rhs` have equal titles, detail texts, slider values, and icons.
