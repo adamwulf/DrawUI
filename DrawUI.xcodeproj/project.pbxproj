@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C507F3E125041786001A7821 /* SavitzkyGolaySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E025041786001A7821 /* SavitzkyGolaySection.swift */; };
 		C559CBFB24EB9489006D263C /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF824EB9489006D263C /* StrokePoint.swift */; };
 		C559CBFC24EB9489006D263C /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* StrokeStream.swift */; };
 		C559CBFD24EB9489006D263C /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFA24EB9489006D263C /* Stroke.swift */; };
@@ -73,6 +74,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C507F3E025041786001A7821 /* SavitzkyGolaySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavitzkyGolaySection.swift; sourceTree = "<group>"; };
 		C559CBF824EB9489006D263C /* StrokePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* StrokeStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeStream.swift; sourceTree = "<group>"; };
 		C559CBFA24EB9489006D263C /* Stroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				C594308C24F1B4560097D52B /* SliderRow.swift */,
 				C594308E24F1B46D0097D52B /* SliderCell.swift */,
 				C594309324F376A90097D52B /* SettingsViewController.swift */,
+				C507F3E025041786001A7821 /* SavitzkyGolaySection.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 			files = (
 				C5C159E724E9BC6500B52B4B /* DebugView.swift in Sources */,
 				C594308F24F1B46D0097D52B /* SliderCell.swift in Sources */,
+				C507F3E125041786001A7821 /* SavitzkyGolaySection.swift in Sources */,
 				C5C159C824E9AF4E00B52B4B /* ViewController.swift in Sources */,
 				C5C159C424E9AF4E00B52B4B /* AppDelegate.swift in Sources */,
 				C594308D24F1B4560097D52B /* SliderRow.swift in Sources */,

@@ -62,48 +62,19 @@ class ViewController: UIViewController {
             self?.debugView.setNeedsDisplay()
         }
 
+        let savitzkyGolaySection = SavitzkyGolaySection(savitzkyGolay: savitzkyGolay, didToggleEnabled: { [weak self] in
+            if let original = self?.debugView.originalStrokes,
+               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
+                self?.debugView.smoothStrokes = smooth
+            }
+            self?.debugView.setNeedsDisplay()
+            settings.tableView.reloadSections(IndexSet(0 ..< settings.tableView.numberOfSections), with: .fade)
+        }, didChangeSettings: resmoothAndRedraw)
+
         settings.tableView.contentInset = UIEdgeInsets(top: -40, left: 0, bottom: 0, right: 0)
         settings.navigationItem.title = "Settings"
         settings.tableContents = [
-            Section(title: "Savitzky-Golay", rows: [
-                SwitchRow(text: "Enabled", switchValue: savitzkyGolay.enabled, action: { [weak self] row in
-                    guard let row = row as? SwitchRowCompatible else { return }
-                    self?.savitzkyGolay.enabled = row.switchValue
-
-                    if let original = self?.debugView.originalStrokes,
-                       let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
-                        self?.debugView.smoothStrokes = smooth
-                    }
-                    self?.debugView.setNeedsDisplay()
-                    settings.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
-                }),
-                SliderRow(text: "Window Size",
-                          detailText: .value1(""),
-                          value: (min: 1, max: 12, val: 1),
-                          validate: { $0.rounded() },
-                          customization: { [weak self] (cell, row) in
-                            cell.detailTextLabel?.text = String(format: "%d", Int(row.sliderValue))
-                            row.enabled = self?.savitzkyGolay.enabled ?? true
-                          },
-                          action: { [weak self] (row) in
-                            let intVal = Int(row.sliderValue.rounded())
-                            self?.savitzkyGolay.window = intVal
-
-                            resmoothAndRedraw()
-                          }),
-                SliderRow(text: "Strength",
-                          detailText: .value1(""),
-                          value: (min: 0, max: 1, val: 1),
-                          customization: { [weak self] (cell, row) in
-                            cell.detailTextLabel?.text = String(format: "%d%%", Int((row.sliderValue * 100).rounded()))
-                            row.enabled = self?.savitzkyGolay.enabled ?? true
-                          },
-                          action: { [weak self] (row) in
-                            self?.savitzkyGolay.strength = CGFloat(row.sliderValue)
-
-                            resmoothAndRedraw()
-                          })
-            ])
+            savitzkyGolaySection
         ]
 
         addChild(nav)
