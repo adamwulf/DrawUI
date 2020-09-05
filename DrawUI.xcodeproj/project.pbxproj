@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C507F3E125041786001A7821 /* SavitzkyGolaySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E025041786001A7821 /* SavitzkyGolaySection.swift */; };
+		C507F3E325041E0B001A7821 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E225041E0B001A7821 /* Clamping.swift */; };
 		C559CBFB24EB9489006D263C /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF824EB9489006D263C /* StrokePoint.swift */; };
 		C559CBFC24EB9489006D263C /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* StrokeStream.swift */; };
 		C559CBFD24EB9489006D263C /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFA24EB9489006D263C /* Stroke.swift */; };
@@ -75,6 +76,7 @@
 
 /* Begin PBXFileReference section */
 		C507F3E025041786001A7821 /* SavitzkyGolaySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavitzkyGolaySection.swift; sourceTree = "<group>"; };
+		C507F3E225041E0B001A7821 /* Clamping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
 		C559CBF824EB9489006D263C /* StrokePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* StrokeStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeStream.swift; sourceTree = "<group>"; };
 		C559CBFA24EB9489006D263C /* Stroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				C5C159DB24E9AF8100B52B4B /* Array+Extensions.swift */,
 				C594308124F0E3640097D52B /* CGPoint+Extensions.swift */,
 				C5C159DA24E9AF8100B52B4B /* UITouch+Extensions.swift */,
+				C507F3E225041E0B001A7821 /* Clamping.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C507F3E325041E0B001A7821 /* Clamping.swift in Sources */,
 				C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */,
 				C559CC0224EB9ACA006D263C /* DouglasPeucker.swift in Sources */,
 				C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */,

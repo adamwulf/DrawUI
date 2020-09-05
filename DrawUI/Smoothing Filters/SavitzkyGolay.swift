@@ -13,20 +13,24 @@ import UIKit
 /// Values were confirmed against the coefficients listed at http://www.statistics4u.info/fundstat_eng/cc_savgol_coeff.html
 public class SavitzkyGolay: SmoothingFilter {
 
-    private let deriv = 0 // 0 is smooth, 1 is first derivative, etc
-    private let order = 3
-    private var m = 2
-    public var enabled: Bool = true
-    public var window: Int {
-        get { return m }
-        set {
-            m = max(2, newValue)
-            // TODO: clear caches
+    private let deriv: Int // 0 is smooth, 1 is first derivative, etc
+    private let order: Int
+    public var enabled: Bool = true {
+        didSet {
+            clearCaches()
         }
     }
-    public var strength: CGFloat = 1
+    @Clamping(2...12) public var window: Int = 2 {
+        didSet {
+            clearCaches()
+        }
+    }
+    @Clamping(0...1) public var strength: CGFloat = 1
 
     public init () {
+        strength = 1
+        deriv = 0
+        order = 3
     }
 
     public func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta]) {
@@ -88,13 +92,15 @@ public class SavitzkyGolay: SmoothingFilter {
         return (strokes: outStrokes, deltas: outDeltas)
     }
 
+    // MARK: - Private
+
     @discardableResult
-    func smoothStroke(stroke: inout Stroke, at indexes: IndexSet?) -> IndexSet {
+    private func smoothStroke(stroke: inout Stroke, at indexes: IndexSet?) -> IndexSet {
         let outIndexes = { () -> IndexSet in
             if let indexes = indexes {
                 var outIndexes = IndexSet()
                 for pIndex in indexes {
-                    for i in pIndex - m ... pIndex + m {
+                    for i in pIndex - window ... pIndex + window {
                         outIndexes.insert(i)
                     }
                 }
@@ -121,10 +127,15 @@ public class SavitzkyGolay: SmoothingFilter {
         return outIndexes
     }
 
+    private func clearCaches() {
+        // clear all of our caches, a setting has changed so all of our smoothed curves are now entirely out of date
+        // and we'll need to resmooth the entire corpus of strokes next time.
+    }
+
     // MARK: - Coefficients
 
     /// calculates the generalised factorial (a)(a-1)...(a-b+1)
-    func genFact(_ a: Int, _ b: Int) -> CGFloat {
+    private func genFact(_ a: Int, _ b: Int) -> CGFloat {
         var gf: CGFloat = 1.0
 
         for jj in (a - b + 1) ..< (a + 1) {
@@ -135,7 +146,7 @@ public class SavitzkyGolay: SmoothingFilter {
 
     /// Calculates the Gram Polynomial ( s = 0 ), or its s'th
     /// derivative evaluated at i, order k, over 2m + 1 points
-    func gramPoly(_ index: Int, _ window: Int, _ order: Int, _ derivative: Int) -> CGFloat {
+    private func gramPoly(_ index: Int, _ window: Int, _ order: Int, _ derivative: Int) -> CGFloat {
         var gp_val: CGFloat
 
         if order > 0 {
@@ -158,7 +169,7 @@ public class SavitzkyGolay: SmoothingFilter {
 
     /// calculates the weight of the i'th data point for the t'th Least-square
     /// point of the s'th derivative, over 2m + 1 points, order n
-    func weight(_ index: Int, _ windowLoc: Int, _ windowSize: Int, _ order: Int, _ derivative: Int) -> CGFloat {
+    private func weight(_ index: Int, _ windowLoc: Int, _ windowSize: Int, _ order: Int, _ derivative: Int) -> CGFloat {
         var sum: CGFloat = 0.0
 
         for k in 0 ..< order + 1 {
@@ -169,7 +180,7 @@ public class SavitzkyGolay: SmoothingFilter {
         return sum
     }
 
-    func testCoeff() {
+    private func testCoeff() {
         for m in 2...12 {
             // for a window of 2*m+1 points ( from p[-m] => p[m],
             // the coefficents for p[0]...p[m] or p[0]...p[-m] are given

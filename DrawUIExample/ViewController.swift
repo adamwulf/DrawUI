@@ -54,22 +54,20 @@ class ViewController: UIViewController {
         let nav = UINavigationController(rootViewController: settings)
         nav.navigationBar.barStyle = .default
 
-        let resmoothAndRedraw = { [weak self] in
-            if let original = self?.debugView.originalStrokes,
+        let resmoothEverything = { [weak self] in
+            // If any of the settings have changed or been reenabled, etc.
+            if let original = self?.strokeStream.strokes,
                let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
                 self?.debugView.smoothStrokes = smooth
             }
             self?.debugView.setNeedsDisplay()
         }
 
-        let savitzkyGolaySection = SavitzkyGolaySection(savitzkyGolay: savitzkyGolay, didToggleEnabled: { [weak self] in
-            if let original = self?.debugView.originalStrokes,
-               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
-                self?.debugView.smoothStrokes = smooth
-            }
-            self?.debugView.setNeedsDisplay()
+        let savitzkyGolaySection = SavitzkyGolaySection(savitzkyGolay: savitzkyGolay, didToggleEnabled: { () in
+            resmoothEverything()
+            // The setting has also been enabled/disabled, so reload all of the rows to reflect their new state
             settings.tableView.reloadSections(IndexSet(0 ..< settings.tableView.numberOfSections), with: .fade)
-        }, didChangeSettings: resmoothAndRedraw)
+        }, didChangeSettings: resmoothEverything)
 
         settings.tableView.contentInset = UIEdgeInsets(top: -40, left: 0, bottom: 0, right: 0)
         settings.navigationItem.title = "Settings"
