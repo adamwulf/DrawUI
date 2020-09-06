@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C507F3E325041E0B001A7821 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E225041E0B001A7821 /* Clamping.swift */; };
-		C507F3EB2504AA7C001A7821 /* XLForm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C507F3EA2504AA75001A7821 /* XLForm.framework */; };
 		C507F3F2250554AD001A7821 /* Former in Frameworks */ = {isa = PBXBuildFile; productRef = C507F3F1250554AD001A7821 /* Former */; };
 		C559CBFB24EB9489006D263C /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF824EB9489006D263C /* StrokePoint.swift */; };
 		C559CBFC24EB9489006D263C /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* StrokeStream.swift */; };
@@ -42,20 +41,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C507F3E92504AA75001A7821 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C507F3E52504AA75001A7821 /* XLForm.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E267FD201BE8048900F86B42;
-			remoteInfo = XLForm;
-		};
-		C507F3EE2504AACA001A7821 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C507F3E52504AA75001A7821 /* XLForm.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E267FD1F1BE8048900F86B42;
-			remoteInfo = XLForm;
-		};
 		C58025AF24EA3F150043130D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C5C159A524E9AF1C00B52B4B /* Project object */;
@@ -87,7 +72,6 @@
 
 /* Begin PBXFileReference section */
 		C507F3E225041E0B001A7821 /* Clamping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
-		C507F3E52504AA75001A7821 /* XLForm.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XLForm.xcodeproj; path = Contributed/XLForm/XLForm.xcodeproj; sourceTree = "<group>"; };
 		C559CBF824EB9489006D263C /* StrokePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* StrokeStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeStream.swift; sourceTree = "<group>"; };
 		C559CBFA24EB9489006D263C /* Stroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
@@ -142,7 +126,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C507F3EB2504AA7C001A7821 /* XLForm.framework in Frameworks */,
 				C5C159D824E9AF6100B52B4B /* DrawUI.framework in Frameworks */,
 				C507F3F2250554AD001A7821 /* Former in Frameworks */,
 			);
@@ -154,17 +137,8 @@
 		C507F3E42504AA68001A7821 /* Contributed */ = {
 			isa = PBXGroup;
 			children = (
-				C507F3E52504AA75001A7821 /* XLForm.xcodeproj */,
 			);
 			name = Contributed;
-			sourceTree = "<group>";
-		};
-		C507F3E62504AA75001A7821 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C507F3EA2504AA75001A7821 /* XLForm.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		C559CBFE24EB9AAF006D263C /* Smoothing Filters */ = {
@@ -374,7 +348,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				C507F3EF2504AACA001A7821 /* PBXTargetDependency */,
 				C5C159D624E9AF5E00B52B4B /* PBXTargetDependency */,
 			);
 			name = DrawUIExample;
@@ -420,12 +393,6 @@
 			);
 			productRefGroup = C5C159AF24E9AF1C00B52B4B /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C507F3E62504AA75001A7821 /* Products */;
-					ProjectRef = C507F3E52504AA75001A7821 /* XLForm.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C5C159AD24E9AF1C00B52B4B /* DrawUI */,
@@ -434,16 +401,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		C507F3EA2504AA75001A7821 /* XLForm.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = XLForm.framework;
-			remoteRef = C507F3E92504AA75001A7821 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C58025A724EA3F150043130D /* Resources */ = {
@@ -541,11 +498,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C507F3EF2504AACA001A7821 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = XLForm;
-			targetProxy = C507F3EE2504AACA001A7821 /* PBXContainerItemProxy */;
-		};
 		C58025B024EA3F150043130D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C5C159AD24E9AF1C00B52B4B /* DrawUI */;

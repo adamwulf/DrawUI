@@ -20,7 +20,7 @@ public class SavitzkyGolay: SmoothingFilter {
             clearCaches()
         }
     }
-    @Clamping(2...12) public var window: Int = 2 {
+    @Clamping(2...6) public var window: Int = 2 {
         didSet {
             clearCaches()
         }

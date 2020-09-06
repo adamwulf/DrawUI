@@ -7,7 +7,7 @@
 
 import UIKit
 import DrawUI
-import XLForm
+import Former
 
 class ViewController: UIViewController {
 

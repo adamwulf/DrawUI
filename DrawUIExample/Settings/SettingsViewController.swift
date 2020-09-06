@@ -6,72 +6,52 @@
 //
 
 import UIKit
-import XLForm
+import Former
 import DrawUI
 
-protocol SettingsViewControllerDelegate {
+protocol SettingsViewControllerDelegate: class {
     func didChange(savitzkyGolay: SavitzkyGolay)
 }
 
-class SettingsViewController: XLFormViewController {
+class SettingsViewController: FormViewController {
 
-    fileprivate struct Tags {
-        static let Switch = "switch"
-        static let Slider = "slider"
-    }
-
-    var delegate: SettingsViewControllerDelegate?
     var savitzkyGolay: SavitzkyGolay?
+    var delegate: SettingsViewControllerDelegate?
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        initializeForm()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        initializeForm()
-    }
-
-    // MARK: Helpers
-
-    func initializeForm() {
-        let form: XLFormDescriptor
-        var section: XLFormSectionDescriptor
-        var row: XLFormRowDescriptor
-
-        form = XLFormDescriptor(title: "Text Fields")
-        form.assignFirstResponderOnShow = true
-
-        section = XLFormSectionDescriptor.formSection(withTitle: "Other Cells")
-        section.footerTitle = "OthersFormViewController.swift"
-        form.addFormSection(section)
-
-        section.addFormRow(XLFormRowDescriptor(tag: Tags.Switch, rowType: XLFormRowDescriptorTypeBooleanSwitch, title: "Switch"))
-
-        row = XLFormRowDescriptor(tag: Tags.Slider, rowType: XLFormRowDescriptorTypeSlider, title: "Slider")
-        row.value = 2
-        row.cellConfigAtConfigure["slider.maximumValue"] = 12
-        row.cellConfigAtConfigure["slider.minimumValue"] = 2
-        row.cellConfigAtConfigure["steps"] = 10
-        row.disabled = NSPredicate(format: "$\(Tags.Switch).value == 0")
-        row.onChangeBlock = { [weak self] oldValue, newValue, _ in
-            guard let newValue = newValue as? Int,
-                  let self = self,
-                  let savitzkyGolay = self.savitzkyGolay
-            else { return }
-            let message = "New value: \(newValue)"
-            savitzkyGolay.window = newValue
-            if let oldValue = oldValue as? Int,
-               oldValue != newValue {
-                row.value = savitzkyGolay.window
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let labelRow = LabelRowFormer<FormLabelCell>()
+            .configure { row in
+                row.text = "Label Cell"
+            }.onSelected { _ in
+                // Do Something
             }
-            row.title = "Slider: \(savitzkyGolay.window)"
-            print(message)
-            self.delegate?.didChange(savitzkyGolay: savitzkyGolay)
+        let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell, Int> {
+            $0.titleLabel.text = "Inline Picker Cell"
+        }.configure { row in
+            row.pickerItems = (1...5).map {
+                InlinePickerItem(title: "Option\($0)", value: Int($0))
+            }
+        }.onValueChanged { _ in
+            // Do Something
         }
-        section.addFormRow(row)
-
-        self.form = form
+        let sliderRow = SliderRowFormer<FormSliderCell> {
+            $0.titleLabel.text = "Inline Slider Cell"
+            $0.formSlider().minimumValue = 1
+            $0.formSlider().maximumValue = 12
+        }.configure { (row) in
+            guard let savitzkyGolay = savitzkyGolay else { return }
+            row.value = Float(savitzkyGolay.window)
+        }.adjustedValueFromValue { (value) -> Float in
+            guard let savitzkyGolay = self.savitzkyGolay else { return value }
+            savitzkyGolay.window = Int(value.rounded())
+            return Float(savitzkyGolay.window)
+        }
+        let header = LabelViewFormer<FormLabelHeaderView> { view in
+            view.titleLabel.text = "Label Header"
+        }
+        let section = SectionFormer(rowFormer: labelRow, inlinePickerRow, sliderRow)
+            .set(headerViewFormer: header)
+        former.append(sectionFormer: section)
     }
 }
