@@ -3,12 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C507F3E125041786001A7821 /* SavitzkyGolaySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E025041786001A7821 /* SavitzkyGolaySection.swift */; };
 		C507F3E325041E0B001A7821 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E225041E0B001A7821 /* Clamping.swift */; };
+		C507F3EB2504AA7C001A7821 /* XLForm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C507F3EA2504AA75001A7821 /* XLForm.framework */; };
 		C559CBFB24EB9489006D263C /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF824EB9489006D263C /* StrokePoint.swift */; };
 		C559CBFC24EB9489006D263C /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* StrokeStream.swift */; };
 		C559CBFD24EB9489006D263C /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFA24EB9489006D263C /* Stroke.swift */; };
@@ -22,10 +22,6 @@
 		C58025AC24EA3F150043130D /* DrawUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025AB24EA3F150043130D /* DrawUITests.swift */; };
 		C58025AE24EA3F150043130D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */; };
 		C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594308124F0E3640097D52B /* CGPoint+Extensions.swift */; };
-		C594308824F1B1CC0097D52B /* QuickTableViewController in Frameworks */ = {isa = PBXBuildFile; productRef = C594308724F1B1CC0097D52B /* QuickTableViewController */; };
-		C594308A24F1B41E0097D52B /* SliderRowCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594308924F1B41E0097D52B /* SliderRowCompatible.swift */; };
-		C594308D24F1B4560097D52B /* SliderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594308C24F1B4560097D52B /* SliderRow.swift */; };
-		C594308F24F1B46D0097D52B /* SliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594308E24F1B46D0097D52B /* SliderCell.swift */; };
 		C594309424F376A90097D52B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594309324F376A90097D52B /* SettingsViewController.swift */; };
 		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159B924E9AF3600B52B4B /* TouchEvent.swift */; };
@@ -45,6 +41,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C507F3E92504AA75001A7821 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C507F3E52504AA75001A7821 /* XLForm.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E267FD201BE8048900F86B42;
+			remoteInfo = XLForm;
+		};
+		C507F3EE2504AACA001A7821 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C507F3E52504AA75001A7821 /* XLForm.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E267FD1F1BE8048900F86B42;
+			remoteInfo = XLForm;
+		};
 		C58025AF24EA3F150043130D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C5C159A524E9AF1C00B52B4B /* Project object */;
@@ -75,8 +85,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C507F3E025041786001A7821 /* SavitzkyGolaySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavitzkyGolaySection.swift; sourceTree = "<group>"; };
 		C507F3E225041E0B001A7821 /* Clamping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
+		C507F3E52504AA75001A7821 /* XLForm.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XLForm.xcodeproj; path = Contributed/XLForm/XLForm.xcodeproj; sourceTree = "<group>"; };
 		C559CBF824EB9489006D263C /* StrokePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* StrokeStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeStream.swift; sourceTree = "<group>"; };
 		C559CBFA24EB9489006D263C /* Stroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
@@ -91,9 +101,6 @@
 		C58025AB24EA3F150043130D /* DrawUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawUITests.swift; sourceTree = "<group>"; };
 		C58025AD24EA3F150043130D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C594308124F0E3640097D52B /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
-		C594308924F1B41E0097D52B /* SliderRowCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderRowCompatible.swift; sourceTree = "<group>"; };
-		C594308C24F1B4560097D52B /* SliderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderRow.swift; sourceTree = "<group>"; };
-		C594308E24F1B46D0097D52B /* SliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCell.swift; sourceTree = "<group>"; };
 		C594309324F376A90097D52B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C159B124E9AF1C00B52B4B /* DrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawUI.h; sourceTree = "<group>"; };
@@ -134,7 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C594308824F1B1CC0097D52B /* QuickTableViewController in Frameworks */,
+				C507F3EB2504AA7C001A7821 /* XLForm.framework in Frameworks */,
 				C5C159D824E9AF6100B52B4B /* DrawUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +149,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C507F3E42504AA68001A7821 /* Contributed */ = {
+			isa = PBXGroup;
+			children = (
+				C507F3E52504AA75001A7821 /* XLForm.xcodeproj */,
+			);
+			name = Contributed;
+			sourceTree = "<group>";
+		};
+		C507F3E62504AA75001A7821 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C507F3EA2504AA75001A7821 /* XLForm.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C559CBFE24EB9AAF006D263C /* Smoothing Filters */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,11 +227,7 @@
 		C594308B24F1B4350097D52B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				C594308924F1B41E0097D52B /* SliderRowCompatible.swift */,
-				C594308C24F1B4560097D52B /* SliderRow.swift */,
-				C594308E24F1B46D0097D52B /* SliderCell.swift */,
 				C594309324F376A90097D52B /* SettingsViewController.swift */,
-				C507F3E025041786001A7821 /* SavitzkyGolaySection.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -219,6 +238,7 @@
 				C5C159B024E9AF1C00B52B4B /* DrawUI */,
 				C58025AA24EA3F150043130D /* DrawUITests */,
 				C5C159C224E9AF4E00B52B4B /* DrawUIExample */,
+				C507F3E42504AA68001A7821 /* Contributed */,
 				C5C159AF24E9AF1C00B52B4B /* Products */,
 				C5C159D724E9AF6100B52B4B /* Frameworks */,
 			);
@@ -352,11 +372,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				C507F3EF2504AACA001A7821 /* PBXTargetDependency */,
 				C5C159D624E9AF5E00B52B4B /* PBXTargetDependency */,
 			);
 			name = DrawUIExample;
 			packageProductDependencies = (
-				C594308724F1B1CC0097D52B /* QuickTableViewController */,
 			);
 			productName = DrawUIExample;
 			productReference = C5C159C124E9AF4E00B52B4B /* DrawUIExample.app */;
@@ -393,10 +413,15 @@
 			);
 			mainGroup = C5C159A424E9AF1C00B52B4B;
 			packageReferences = (
-				C594308624F1B1CC0097D52B /* XCRemoteSwiftPackageReference "QuickTableViewController" */,
 			);
 			productRefGroup = C5C159AF24E9AF1C00B52B4B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C507F3E62504AA75001A7821 /* Products */;
+					ProjectRef = C507F3E52504AA75001A7821 /* XLForm.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C5C159AD24E9AF1C00B52B4B /* DrawUI */,
@@ -405,6 +430,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C507F3EA2504AA75001A7821 /* XLForm.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = XLForm.framework;
+			remoteRef = C507F3E92504AA75001A7821 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C58025A724EA3F150043130D /* Resources */ = {
@@ -492,12 +527,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5C159E724E9BC6500B52B4B /* DebugView.swift in Sources */,
-				C594308F24F1B46D0097D52B /* SliderCell.swift in Sources */,
-				C507F3E125041786001A7821 /* SavitzkyGolaySection.swift in Sources */,
 				C5C159C824E9AF4E00B52B4B /* ViewController.swift in Sources */,
 				C5C159C424E9AF4E00B52B4B /* AppDelegate.swift in Sources */,
-				C594308D24F1B4560097D52B /* SliderRow.swift in Sources */,
-				C594308A24F1B41E0097D52B /* SliderRowCompatible.swift in Sources */,
 				C5C159C624E9AF4E00B52B4B /* SceneDelegate.swift in Sources */,
 				C594309424F376A90097D52B /* SettingsViewController.swift in Sources */,
 			);
@@ -506,6 +537,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C507F3EF2504AACA001A7821 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XLForm;
+			targetProxy = C507F3EE2504AACA001A7821 /* PBXContainerItemProxy */;
+		};
 		C58025B024EA3F150043130D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C5C159AD24E9AF1C00B52B4B /* DrawUI */;
@@ -825,25 +861,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		C594308624F1B1CC0097D52B /* XCRemoteSwiftPackageReference "QuickTableViewController" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bcylin/QuickTableViewController.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.4;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C594308724F1B1CC0097D52B /* QuickTableViewController */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C594308624F1B1CC0097D52B /* XCRemoteSwiftPackageReference "QuickTableViewController" */;
-			productName = QuickTableViewController;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C5C159A524E9AF1C00B52B4B /* Project object */;
 }

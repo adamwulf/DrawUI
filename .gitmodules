@@ -1,0 +1,3 @@
+[submodule "Contributed/XLForm"]
+	path = Contributed/XLForm
+	url = git@github.com:xmartlabs/XLForm.git
