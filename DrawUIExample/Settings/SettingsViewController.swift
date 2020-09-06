@@ -7,6 +7,11 @@
 
 import UIKit
 import XLForm
+import DrawUI
+
+protocol SettingsViewControllerDelegate {
+    func didChange(savitzkyGolay: SavitzkyGolay)
+}
 
 class SettingsViewController: XLFormViewController {
 
@@ -14,6 +19,9 @@ class SettingsViewController: XLFormViewController {
         static let Switch = "switch"
         static let Slider = "slider"
     }
+
+    var delegate: SettingsViewControllerDelegate?
+    var savitzkyGolay: SavitzkyGolay?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -47,10 +55,20 @@ class SettingsViewController: XLFormViewController {
         row.cellConfigAtConfigure["slider.minimumValue"] = 2
         row.cellConfigAtConfigure["steps"] = 10
         row.disabled = NSPredicate(format: "$\(Tags.Switch).value == 0")
-        row.onChangeBlock = { oldValue, newValue, _ in
-            let noValue = "No Value"
-            let message = "Old value: \(oldValue ?? noValue), New value: \(newValue ?? noValue)"
+        row.onChangeBlock = { [weak self] oldValue, newValue, _ in
+            guard let newValue = newValue as? Int,
+                  let self = self,
+                  let savitzkyGolay = self.savitzkyGolay
+            else { return }
+            let message = "New value: \(newValue)"
+            savitzkyGolay.window = newValue
+            if let oldValue = oldValue as? Int,
+               oldValue != newValue {
+                row.value = savitzkyGolay.window
+            }
+            row.title = "Slider: \(savitzkyGolay.window)"
             print(message)
+            self.delegate?.didChange(savitzkyGolay: savitzkyGolay)
         }
         section.addFormRow(row)
 

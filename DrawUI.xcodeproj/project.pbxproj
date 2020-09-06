@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		C507F3E325041E0B001A7821 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E225041E0B001A7821 /* Clamping.swift */; };
 		C507F3EB2504AA7C001A7821 /* XLForm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C507F3EA2504AA75001A7821 /* XLForm.framework */; };
+		C507F3F2250554AD001A7821 /* Former in Frameworks */ = {isa = PBXBuildFile; productRef = C507F3F1250554AD001A7821 /* Former */; };
 		C559CBFB24EB9489006D263C /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF824EB9489006D263C /* StrokePoint.swift */; };
 		C559CBFC24EB9489006D263C /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* StrokeStream.swift */; };
 		C559CBFD24EB9489006D263C /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFA24EB9489006D263C /* Stroke.swift */; };
@@ -143,6 +144,7 @@
 			files = (
 				C507F3EB2504AA7C001A7821 /* XLForm.framework in Frameworks */,
 				C5C159D824E9AF6100B52B4B /* DrawUI.framework in Frameworks */,
+				C507F3F2250554AD001A7821 /* Former in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +379,7 @@
 			);
 			name = DrawUIExample;
 			packageProductDependencies = (
+				C507F3F1250554AD001A7821 /* Former */,
 			);
 			productName = DrawUIExample;
 			productReference = C5C159C124E9AF4E00B52B4B /* DrawUIExample.app */;
@@ -413,6 +416,7 @@
 			);
 			mainGroup = C5C159A424E9AF1C00B52B4B;
 			packageReferences = (
+				C507F3F0250554AD001A7821 /* XCRemoteSwiftPackageReference "Former" */,
 			);
 			productRefGroup = C5C159AF24E9AF1C00B52B4B /* Products */;
 			projectDirPath = "";
@@ -861,6 +865,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C507F3F0250554AD001A7821 /* XCRemoteSwiftPackageReference "Former" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ra1028/Former.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C507F3F1250554AD001A7821 /* Former */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C507F3F0250554AD001A7821 /* XCRemoteSwiftPackageReference "Former" */;
+			productName = Former;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C5C159A524E9AF1C00B52B4B /* Project object */;
 }

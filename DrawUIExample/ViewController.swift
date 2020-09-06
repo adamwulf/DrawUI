@@ -51,17 +51,10 @@ class ViewController: UIViewController {
 
     private func setupTable() {
         let settings = SettingsViewController()
+        settings.delegate = self
+        settings.savitzkyGolay = savitzkyGolay
         let nav = UINavigationController(rootViewController: settings)
         nav.navigationBar.barStyle = .default
-
-        let resmoothEverything = { [weak self] in
-            // If any of the settings have changed or been reenabled, etc.
-            if let original = self?.strokeStream.strokes,
-               let smooth = self?.savitzkyGolay.smooth(strokes: original, deltas: []).strokes {
-                self?.debugView.smoothStrokes = smooth
-            }
-            self?.debugView.setNeedsDisplay()
-        }
 
 //        let savitzkyGolaySection = SavitzkyGolaySection(savitzkyGolay: savitzkyGolay, didToggleEnabled: { () in
 //            resmoothEverything()
@@ -80,5 +73,20 @@ class ViewController: UIViewController {
         nav.view.heightAnchor.constraint(equalToConstant: 300).isActive = true
         nav.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
         nav.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+    }
+}
+
+extension ViewController: SettingsViewControllerDelegate {
+
+    func resmoothEverything() {
+        // If any of the settings have changed or been reenabled, etc.
+        let original = strokeStream.strokes
+        let smooth = savitzkyGolay.smooth(strokes: original, deltas: []).strokes
+        debugView.smoothStrokes = smooth
+        debugView.setNeedsDisplay()
+    }
+
+    func didChange(savitzkyGolay: SavitzkyGolay) {
+        resmoothEverything()
     }
 }
