@@ -23,6 +23,29 @@ class SettingsViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let predictionRow = SwitchRowFormer<FormSwitchCell> {
+            $0.titleLabel.text = "Allow Prediction"
+        }.configure { _ in
+            // noop
+        }.onSwitchChanged { _ in
+            // noop
+        }
+
+        let touchTypeRow = SegmentedRowFormer<FormSegmentedCell> {
+            $0.titleLabel.text = "Events"
+        }.onSegmentSelected { _, _ in
+            // noop
+        }.configure { (row) in
+            row.segmentTitles = ["Touch", "Pencil", "Both"]
+            row.selectedIndex = 2
+        }
+
+        let section = SectionFormer(rowFormer: predictionRow, touchTypeRow)
+            .set(headerViewFormer: LabelViewFormer<FormLabelHeaderView>().configure { (view) in
+                view.text = "Touch Events"
+            })
+        former.append(sectionFormer: section)
+
         let savitzkyGolayRow = LabelRowFormer<FormLabelCell>()
             .configure { row in
                 row.text = "Savitzky-Golay"
@@ -30,6 +53,7 @@ class SettingsViewController: FormViewController {
                 guard let self = self else { return }
                 let settings = SavitzkyGolayViewController()
                 settings.savitzkyGolay = self.savitzkyGolay
+                settings.delegate = self
                 self.navigationController?.pushViewController(settings, animated: true)
             }.onUpdate { (row) in
                 guard let savitzkyGolay = self.savitzkyGolay else { return }
@@ -47,6 +71,7 @@ class SettingsViewController: FormViewController {
                 guard let self = self else { return }
                 let settings = DouglasPeuckerViewController()
                 settings.douglasPeucker = self.douglasPeucker
+                settings.delegate = self
                 self.navigationController?.pushViewController(settings, animated: true)
             }.onUpdate { (row) in
                 guard let douglasPeucker = self.douglasPeucker else { return }
@@ -64,6 +89,7 @@ class SettingsViewController: FormViewController {
                 guard let self = self else { return }
                 let settings = PointDinstanceViewController()
                 settings.pointDistance = self.pointDinstance
+                settings.delegate = self
                 self.navigationController?.pushViewController(settings, animated: true)
             }.onUpdate { (row) in
                 guard let pointDinstance = self.pointDinstance else { return }
@@ -74,8 +100,11 @@ class SettingsViewController: FormViewController {
                 }
             }
 
-        let section = SectionFormer(rowFormer: savitzkyGolayRow, douglasPeuckerRow, pointDinstanceRow)
-        former.append(sectionFormer: section)
+        let smoothingSection = SectionFormer(rowFormer: savitzkyGolayRow, douglasPeuckerRow, pointDinstanceRow)
+            .set(headerViewFormer: LabelViewFormer<FormLabelHeaderView>().configure { (view) in
+                view.text = "Smoothing"
+            })
+        former.append(sectionFormer: smoothingSection)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -83,5 +112,11 @@ class SettingsViewController: FormViewController {
 
         self.former.reload()
         tableView.reloadData()
+    }
+}
+
+extension SettingsViewController: SettingsViewControllerDelegate {
+    func didChangeSettings() {
+        delegate?.didChangeSettings()
     }
 }
