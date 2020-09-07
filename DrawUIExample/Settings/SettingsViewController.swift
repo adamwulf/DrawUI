@@ -20,24 +20,10 @@ class SettingsViewController: FormViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let labelRow = LabelRowFormer<FormLabelCell>()
-            .configure { row in
-                row.text = "Label Cell"
-            }.onSelected { _ in
-                // Do Something
-            }
-        let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell, Int> {
-            $0.titleLabel.text = "Inline Picker Cell"
-        }.configure { row in
-            row.pickerItems = (1...5).map {
-                InlinePickerItem(title: "Option\($0)", value: Int($0))
-            }
-        }.onValueChanged { _ in
-            // Do Something
-        }
-        let sliderRow = SliderRowFormer<FormSliderCell> {
-            $0.titleLabel.text = "Inline Slider Cell"
-            $0.formSlider().minimumValue = 1
+
+        let windowSliderRow = SliderRowFormer<FormSliderCell> {
+            $0.titleLabel.text = "Window"
+            $0.formSlider().minimumValue = 2
             $0.formSlider().maximumValue = 12
         }.configure { (row) in
             guard let savitzkyGolay = savitzkyGolay else { return }
@@ -45,12 +31,31 @@ class SettingsViewController: FormViewController {
         }.adjustedValueFromValue { (value) -> Float in
             guard let savitzkyGolay = self.savitzkyGolay else { return value }
             savitzkyGolay.window = Int(value.rounded())
+            self.delegate?.didChange(savitzkyGolay: savitzkyGolay)
             return Float(savitzkyGolay.window)
+        }.displayTextFromValue { (value) -> String in
+            return "\(Int(value))"
         }
-        let header = LabelViewFormer<FormLabelHeaderView> { view in
-            view.titleLabel.text = "Label Header"
+        let strengthSliderRow = SliderRowFormer<FormSliderCell> {
+            $0.titleLabel.text = "Strength"
+            $0.formSlider().minimumValue = 0
+            $0.formSlider().maximumValue = 1
+        }.configure { (row) in
+            guard let savitzkyGolay = savitzkyGolay else { return }
+            row.value = Float(savitzkyGolay.strength)
+        }.adjustedValueFromValue { (value) -> Float in
+            guard let savitzkyGolay = self.savitzkyGolay else { return value }
+            savitzkyGolay.strength = CGFloat(value)
+            self.delegate?.didChange(savitzkyGolay: savitzkyGolay)
+            return Float(savitzkyGolay.strength)
+        }.displayTextFromValue { (value) -> String in
+            return "\(Int((value * 100).rounded()))%"
         }
-        let section = SectionFormer(rowFormer: labelRow, inlinePickerRow, sliderRow)
+
+        let header = LabelViewFormer<FormLabelHeaderView>().configure { (view) in
+            view.text = "Savitzky-Golay"
+        }
+        let section = SectionFormer(rowFormer: windowSliderRow, strengthSliderRow)
             .set(headerViewFormer: header)
         former.append(sectionFormer: section)
     }
