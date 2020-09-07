@@ -11,7 +11,7 @@ import Foundation
 /// https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
 class DouglasPeucker: SmoothingFilter {
     public var enabled: Bool = true
-    func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta]) {
-        return (strokes: strokes, deltas: deltas)
+    func smooth(input: StrokeStream.Output) -> StrokeStream.Output {
+        return input
     }
 }

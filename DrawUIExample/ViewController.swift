@@ -33,8 +33,8 @@ class ViewController: UIViewController {
         eventStream.eventStreamChanged = { [weak self] (updatedEvents) in
             guard let self = self else { return }
             let pointOutput = self.pointStream.add(touchEvents: updatedEvents)
-            let strokeOutput = self.strokeStream.add(touchEvents: pointOutput.deltas)
-            let smoothOutput = self.savitzkyGolay.smooth(strokes: strokeOutput.strokes, deltas: strokeOutput.deltas)
+            let strokeOutput = self.strokeStream.add(touchPoints: pointOutput.strokePoints, touchEvents: pointOutput.deltas)
+            let smoothOutput = self.savitzkyGolay.smooth(input: strokeOutput)
 
             self.debugView?.originalStrokes = strokeOutput.strokes
             self.debugView?.smoothStrokes = smoothOutput.strokes
@@ -69,8 +69,8 @@ extension ViewController: SettingsViewControllerDelegate {
 
     private func resmoothEverything() {
         // If any of the settings have changed or been reenabled, etc.
-        let original = strokeStream.strokes
-        let smooth = savitzkyGolay.smooth(strokes: original, deltas: []).strokes
+        let original: StrokeStream.Output = (strokes: strokeStream.strokes, deltas: [])
+        let smooth = savitzkyGolay.smooth(input: original).strokes
         debugView.smoothStrokes = smooth
         debugView.setNeedsDisplay()
     }

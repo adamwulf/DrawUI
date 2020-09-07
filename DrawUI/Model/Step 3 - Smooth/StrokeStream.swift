@@ -9,6 +9,8 @@ import UIKit
 
 public class StrokeStream {
 
+    public typealias Output = (strokes: [Stroke], deltas: [Delta])
+
     public enum Delta {
         case addedStroke(stroke: Int)
         case updatedStroke(stroke: Int, updatedIndexes: IndexSet)
@@ -35,7 +37,7 @@ public class StrokeStream {
     }
 
     @discardableResult
-    public func add(touchEvents: [TouchPointStream.Delta]) -> (strokes: [Stroke], deltas: [Delta]) {
+    public func add(touchPoints: [OrderedTouchPoints], touchEvents: [TouchPointStream.Delta]) -> Output {
         var deltas: [Delta] = []
 
         for delta in touchEvents {

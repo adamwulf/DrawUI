@@ -9,6 +9,8 @@ import UIKit
 
 public class TouchPointStream {
 
+    public typealias Output = (strokePoints: [OrderedTouchPoints], deltas: [Delta])
+
     public enum Delta {
         case addedTouchPoints(stroke: OrderedTouchPoints)
         case updatedTouchPoints(stroke: OrderedTouchPoints, updatedIndexes: IndexSet)
@@ -36,7 +38,7 @@ public class TouchPointStream {
     }
 
     @discardableResult
-    public func add(touchEvents: [TouchEvent]) -> (strokes: [OrderedTouchPoints], deltas: [Delta]) {
+    public func add(touchEvents: [TouchEvent]) -> Output {
         var deltas: [Delta] = []
         let updatedEventsPerTouch = touchEvents.reduce([:], { (result, event) -> [String: [TouchEvent]] in
             var result = result

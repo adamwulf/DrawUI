@@ -33,9 +33,9 @@ public class SavitzkyGolay: SmoothingFilter {
         order = 3
     }
 
-    public func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta]) {
-        guard enabled else { return (strokes, deltas) }
-        var outStrokes = strokes
+    public func smooth(input: StrokeStream.Output) -> StrokeStream.Output {
+        guard enabled else { return input }
+        var outStrokes = input.strokes
         var outDeltas: [StrokeStream.Delta] = []
 
         func smooth(strokeIdx: Int) {
@@ -46,8 +46,8 @@ public class SavitzkyGolay: SmoothingFilter {
                     var outPoint = CGPoint.zero
                     for windowPos in -minWin ... minWin {
                         let wght = weight(0, windowPos, minWin, order, deriv)
-                        outPoint.x += wght * strokes[strokeIdx].points[pIndex + windowPos].location.x
-                        outPoint.y += wght * strokes[strokeIdx].points[pIndex + windowPos].location.y
+                        outPoint.x += wght * input.strokes[strokeIdx].points[pIndex + windowPos].location.x
+                        outPoint.y += wght * input.strokes[strokeIdx].points[pIndex + windowPos].location.y
                     }
                     let origPoint = outStrokes[strokeIdx].points[pIndex].location
 
@@ -58,7 +58,7 @@ public class SavitzkyGolay: SmoothingFilter {
 
         // Temporary non-cached non-optimized smoothing
         // simply treat every stroke as brand new and smooth the entire set
-        for strokeIdx in 0 ..< strokes.count {
+        for strokeIdx in 0 ..< input.strokes.count {
             smooth(strokeIdx: strokeIdx)
             outDeltas.append(.addedStroke(stroke: strokeIdx))
         }

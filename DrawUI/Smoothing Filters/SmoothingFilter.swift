@@ -12,5 +12,5 @@ import Foundation
 
 public protocol SmoothingFilter {
     var enabled: Bool { get set }
-    func smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta])
+    func smooth(input: StrokeStream.Output) -> StrokeStream.Output
 }
