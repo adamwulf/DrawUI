@@ -30,19 +30,15 @@ class ViewController: UIViewController {
 
         setupTable()
 
-        eventStream.onChange = { [weak self] (eventStream) in
+        eventStream.eventStreamChanged = { [weak self] (updatedEvents) in
             guard let self = self else { return }
-            let updatedEvents = eventStream.process()
-            self.pointStream.add(touchEvents: updatedEvents)
-        }
-        pointStream.onChange = { [weak self] (strokes, deltas) in
-            self?.strokeStream.add(touchEvents: deltas)
-        }
-        strokeStream.onChange = { [weak self] (strokes, deltas) in
-            guard let self = self else { return }
-            self.debugView?.originalStrokes = strokes
-            self.debugView?.smoothStrokes = self.savitzkyGolay.smooth(strokes: strokes, deltas: deltas).strokes
-            self.debugView?.add(deltas: deltas)
+            let pointOutput = self.pointStream.add(touchEvents: updatedEvents)
+            let strokeOutput = self.strokeStream.add(touchEvents: pointOutput.deltas)
+            let smoothOutput = self.savitzkyGolay.smooth(strokes: strokeOutput.strokes, deltas: strokeOutput.deltas)
+
+            self.debugView?.originalStrokes = strokeOutput.strokes
+            self.debugView?.smoothStrokes = smoothOutput.strokes
+            self.debugView?.add(deltas: strokeOutput.deltas)
             self.debugView?.setNeedsDisplay()
         }
 
@@ -56,13 +52,6 @@ class ViewController: UIViewController {
         let nav = UINavigationController(rootViewController: settings)
         nav.navigationBar.barStyle = .default
 
-//        let savitzkyGolaySection = SavitzkyGolaySection(savitzkyGolay: savitzkyGolay, didToggleEnabled: { () in
-//            resmoothEverything()
-//            // The setting has also been enabled/disabled, so reload all of the rows to reflect their new state
-//            settings.tableView.reloadSections(IndexSet(0 ..< settings.tableView.numberOfSections), with: .fade)
-//        }, didChangeSettings: resmoothEverything)
-//
-//        settings.tableView.contentInset = UIEdgeInsets(top: -40, left: 0, bottom: 0, right: 0)
         settings.navigationItem.title = "Settings"
 
         addChild(nav)
@@ -78,7 +67,7 @@ class ViewController: UIViewController {
 
 extension ViewController: SettingsViewControllerDelegate {
 
-    func resmoothEverything() {
+    private func resmoothEverything() {
         // If any of the settings have changed or been reenabled, etc.
         let original = strokeStream.strokes
         let smooth = savitzkyGolay.smooth(strokes: original, deltas: []).strokes

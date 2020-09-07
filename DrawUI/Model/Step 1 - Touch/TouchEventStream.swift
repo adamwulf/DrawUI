@@ -14,7 +14,7 @@ public class TouchEventStream {
     private var processedEvents: [TouchEvent] = []
 
     // MARK: - Public
-    public var onChange: ((_ eventStream: TouchEventStream) -> Void)? {
+    public var eventStreamChanged: ((_ events: [TouchEvent]) -> Void)? {
         didSet {
             print("did set")
         }
@@ -28,7 +28,7 @@ public class TouchEventStream {
     }
 
     @objc func streamChanged(_ gesture: TouchStreamGestureRecognizer) {
-        onChange?(self)
+        eventStreamChanged?(self.process())
     }
 
     // MARK: - GestureEventStream
@@ -45,7 +45,7 @@ public class TouchEventStream {
         recentEvents.append(event)
     }
 
-    public func process() -> [TouchEvent] {
+    private func process() -> [TouchEvent] {
         processedEvents.append(contentsOf: recentEvents)
         defer {
             recentEvents.removeAll()

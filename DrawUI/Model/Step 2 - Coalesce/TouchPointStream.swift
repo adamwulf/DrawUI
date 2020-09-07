@@ -28,7 +28,6 @@ public class TouchPointStream {
 
     private var touchToStroke: [UITouchIdentifier: OrderedTouchPoints]
 
-    public var onChange: ((_ strokes: [OrderedTouchPoints], _ deltas: [TouchPointStream.Delta]) -> Void)?
     public private(set) var strokes: [OrderedTouchPoints]
 
     public init() {
@@ -37,7 +36,7 @@ public class TouchPointStream {
     }
 
     @discardableResult
-    public func add(touchEvents: [TouchEvent]) -> [Delta] {
+    public func add(touchEvents: [TouchEvent]) -> (strokes: [OrderedTouchPoints], deltas: [Delta]) {
         var deltas: [Delta] = []
         let updatedEventsPerTouch = touchEvents.reduce([:], { (result, event) -> [String: [TouchEvent]] in
             var result = result
@@ -64,7 +63,6 @@ public class TouchPointStream {
             }
         }
 
-        onChange?(strokes, deltas)
-        return deltas
+        return (strokes, deltas)
     }
 }

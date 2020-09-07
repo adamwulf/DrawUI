@@ -26,7 +26,6 @@ public class StrokeStream {
         }
     }
 
-    public var onChange: ((_ strokes: [Stroke], _ deltas: [StrokeStream.Delta]) -> Void)?
     public private(set) var strokes: [Stroke]
     public private(set) var otpToIndex: [OrderedTouchPoints: Int]
 
@@ -36,7 +35,7 @@ public class StrokeStream {
     }
 
     @discardableResult
-    public func add(touchEvents: [TouchPointStream.Delta]) -> [Delta] {
+    public func add(touchEvents: [TouchPointStream.Delta]) -> (strokes: [Stroke], deltas: [Delta]) {
         var deltas: [Delta] = []
 
         for delta in touchEvents {
@@ -59,7 +58,6 @@ public class StrokeStream {
             }
         }
 
-        onChange?(strokes, deltas)
-        return deltas
+        return (strokes, deltas)
     }
 }
