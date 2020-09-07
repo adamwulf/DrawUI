@@ -21,7 +21,7 @@ class SettingsViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let windowSliderRow = SliderRowFormer<FormSliderCell> {
+        let windowSliderRow = EnabledSliderRowFormer<FormSliderCell> {
             $0.titleLabel.text = "Window"
             $0.formSlider().minimumValue = 2
             $0.formSlider().maximumValue = 12
@@ -35,8 +35,11 @@ class SettingsViewController: FormViewController {
             return Float(savitzkyGolay.window)
         }.displayTextFromValue { (value) -> String in
             return "\(Int(value))"
+        }.update { (row) in
+            guard let savitzkyGolay = self.savitzkyGolay else { return }
+            row.enabled = savitzkyGolay.enabled
         }
-        let strengthSliderRow = SliderRowFormer<FormSliderCell> {
+        let strengthSliderRow = EnabledSliderRowFormer<FormSliderCell> {
             $0.titleLabel.text = "Strength"
             $0.formSlider().minimumValue = 0
             $0.formSlider().maximumValue = 1
@@ -50,12 +53,27 @@ class SettingsViewController: FormViewController {
             return Float(savitzkyGolay.strength)
         }.displayTextFromValue { (value) -> String in
             return "\(Int((value * 100).rounded()))%"
+        }.update { (row) in
+            guard let savitzkyGolay = self.savitzkyGolay else { return }
+            row.enabled = savitzkyGolay.enabled
+        }
+
+        let enabledRow = SwitchRowFormer<FormSwitchCell> {
+            $0.titleLabel.text = "Enabled"
+        }.configure { (row) in
+            guard let savitzkyGolay = savitzkyGolay else { return }
+            row.switched = savitzkyGolay.enabled
+        }.onSwitchChanged { (toggle) in
+            guard let savitzkyGolay = self.savitzkyGolay else { return }
+            savitzkyGolay.enabled = toggle
+            windowSliderRow.enabled = toggle
+            strengthSliderRow.enabled = toggle
         }
 
         let header = LabelViewFormer<FormLabelHeaderView>().configure { (view) in
             view.text = "Savitzky-Golay"
         }
-        let section = SectionFormer(rowFormer: windowSliderRow, strengthSliderRow)
+        let section = SectionFormer(rowFormer: enabledRow, windowSliderRow, strengthSliderRow)
             .set(headerViewFormer: header)
         former.append(sectionFormer: section)
     }
