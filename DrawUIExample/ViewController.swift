@@ -51,6 +51,8 @@ class ViewController: UIViewController {
         let settings = SettingsViewController()
         settings.delegate = self
         settings.savitzkyGolay = savitzkyGolay
+        settings.douglasPeucker = douglasPeucker
+        settings.pointDinstance = pointDinstance
         let nav = UINavigationController(rootViewController: settings)
         nav.navigationBar.barStyle = .default
 

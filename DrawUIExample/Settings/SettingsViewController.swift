@@ -16,6 +16,8 @@ protocol SettingsViewControllerDelegate: class {
 class SettingsViewController: FormViewController {
 
     var savitzkyGolay: SavitzkyGolay?
+    var douglasPeucker: DouglasPeucker?
+    var pointDinstance: PointDistance?
     var delegate: SettingsViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -23,7 +25,7 @@ class SettingsViewController: FormViewController {
 
         let savitzkyGolayRow = LabelRowFormer<FormLabelCell>()
             .configure { row in
-                row.text = "Savitzky Golay"
+                row.text = "Savitzky-Golay"
             }.onSelected { [weak self] _ in
                 guard let self = self else { return }
                 let settings = SavitzkyGolayViewController()
@@ -38,7 +40,41 @@ class SettingsViewController: FormViewController {
                 }
             }
 
-        let section = SectionFormer(rowFormer: savitzkyGolayRow)
+        let douglasPeuckerRow = LabelRowFormer<FormLabelCell>()
+            .configure { row in
+                row.text = "Douglas-Peucker"
+            }.onSelected { [weak self] _ in
+                guard let self = self else { return }
+                let settings = DouglasPeuckerViewController()
+                settings.douglasPeucker = self.douglasPeucker
+                self.navigationController?.pushViewController(settings, animated: true)
+            }.onUpdate { (row) in
+                guard let douglasPeucker = self.douglasPeucker else { return }
+                if douglasPeucker.enabled {
+                    row.subText = "Enabled"
+                } else {
+                    row.subText = "Disabled"
+                }
+            }
+
+        let pointDinstanceRow = LabelRowFormer<FormLabelCell>()
+            .configure { row in
+                row.text = "Point Distance"
+            }.onSelected { [weak self] _ in
+                guard let self = self else { return }
+                let settings = PointDinstanceViewController()
+                settings.pointDistance = self.pointDinstance
+                self.navigationController?.pushViewController(settings, animated: true)
+            }.onUpdate { (row) in
+                guard let pointDinstance = self.pointDinstance else { return }
+                if pointDinstance.enabled {
+                    row.subText = "Enabled"
+                } else {
+                    row.subText = "Disabled"
+                }
+            }
+
+        let section = SectionFormer(rowFormer: savitzkyGolayRow, douglasPeuckerRow, pointDinstanceRow)
         former.append(sectionFormer: section)
     }
 
