@@ -2,7 +2,7 @@
 //  SettingsViewController.swift
 //  DrawUIExample
 //
-//  Created by Adam Wulf on 8/23/20.
+//  Created by Adam Wulf on 9/6/20.
 //
 
 import UIKit
@@ -21,63 +21,31 @@ class SettingsViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let windowSliderRow = EnabledSliderRowFormer<FormSliderCell> {
-            $0.titleLabel.text = "Window"
-            $0.formSlider().minimumValue = 2
-            $0.formSlider().maximumValue = 12
-        }.configure { (row) in
-            guard let savitzkyGolay = savitzkyGolay else { return }
-            row.value = Float(savitzkyGolay.window)
-        }.adjustedValueFromValue { (value) -> Float in
-            guard let savitzkyGolay = self.savitzkyGolay else { return value }
-            savitzkyGolay.window = Int(value.rounded())
-            return Float(savitzkyGolay.window)
-        }.displayTextFromValue { (value) -> String in
-            return "\(Int(value))"
-        }.update { (row) in
-            guard let savitzkyGolay = self.savitzkyGolay else { return }
-            row.enabled = savitzkyGolay.enabled
-        }.onValueChanged { _ in
-            self.delegate?.didChangeSettings()
-        }
-        let strengthSliderRow = EnabledSliderRowFormer<FormSliderCell> {
-            $0.titleLabel.text = "Strength"
-            $0.formSlider().minimumValue = 0
-            $0.formSlider().maximumValue = 1
-        }.configure { (row) in
-            guard let savitzkyGolay = savitzkyGolay else { return }
-            row.value = Float(savitzkyGolay.strength)
-        }.adjustedValueFromValue { (value) -> Float in
-            guard let savitzkyGolay = self.savitzkyGolay else { return value }
-            savitzkyGolay.strength = CGFloat(value)
-            return Float(savitzkyGolay.strength)
-        }.displayTextFromValue { (value) -> String in
-            return "\(Int((value * 100).rounded()))%"
-        }.update { (row) in
-            guard let savitzkyGolay = self.savitzkyGolay else { return }
-            row.enabled = savitzkyGolay.enabled
-        }.onValueChanged { _ in
-            self.delegate?.didChangeSettings()
-        }
+        let savitzkyGolayRow = LabelRowFormer<FormLabelCell>()
+            .configure { row in
+                row.text = "Savitzky Golay"
+            }.onSelected { [weak self] _ in
+                guard let self = self else { return }
+                let settings = SavitzkyGolayViewController()
+                settings.savitzkyGolay = self.savitzkyGolay
+                self.navigationController?.pushViewController(settings, animated: true)
+            }.onUpdate { (row) in
+                guard let savitzkyGolay = self.savitzkyGolay else { return }
+                if savitzkyGolay.enabled {
+                    row.subText = "W: \(savitzkyGolay.window), S: \(Int((savitzkyGolay.strength * 100).rounded()))%"
+                } else {
+                    row.subText = "Disabled"
+                }
+            }
 
-        let enabledRow = SwitchRowFormer<FormSwitchCell> {
-            $0.titleLabel.text = "Enabled"
-        }.configure { (row) in
-            guard let savitzkyGolay = savitzkyGolay else { return }
-            row.switched = savitzkyGolay.enabled
-        }.onSwitchChanged { (toggle) in
-            guard let savitzkyGolay = self.savitzkyGolay else { return }
-            savitzkyGolay.enabled = toggle
-            windowSliderRow.enabled = toggle
-            strengthSliderRow.enabled = toggle
-            self.delegate?.didChangeSettings()
-        }
-
-        let header = LabelViewFormer<FormLabelHeaderView>().configure { (view) in
-            view.text = "Savitzky-Golay"
-        }
-        let section = SectionFormer(rowFormer: enabledRow, windowSliderRow, strengthSliderRow)
-            .set(headerViewFormer: header)
+        let section = SectionFormer(rowFormer: savitzkyGolayRow)
         former.append(sectionFormer: section)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.former.reload()
+        tableView.reloadData()
     }
 }
