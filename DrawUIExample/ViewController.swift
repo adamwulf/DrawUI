@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     @IBOutlet var debugView: DebugView!
 
     let savitzkyGolay = SavitzkyGolay()
+    let douglasPeucker = DouglasPeucker()
+    let pointDinstance = PointDistance()
 
     required init?(coder: NSCoder) {
         eventStream = TouchEventStream()
@@ -75,7 +77,7 @@ extension ViewController: SettingsViewControllerDelegate {
         debugView.setNeedsDisplay()
     }
 
-    func didChange(savitzkyGolay: SavitzkyGolay) {
+    func didChangeSettings() {
         resmoothEverything()
     }
 }

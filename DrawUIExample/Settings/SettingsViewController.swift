@@ -10,7 +10,7 @@ import Former
 import DrawUI
 
 protocol SettingsViewControllerDelegate: class {
-    func didChange(savitzkyGolay: SavitzkyGolay)
+    func didChangeSettings()
 }
 
 class SettingsViewController: FormViewController {
@@ -31,13 +31,14 @@ class SettingsViewController: FormViewController {
         }.adjustedValueFromValue { (value) -> Float in
             guard let savitzkyGolay = self.savitzkyGolay else { return value }
             savitzkyGolay.window = Int(value.rounded())
-            self.delegate?.didChange(savitzkyGolay: savitzkyGolay)
             return Float(savitzkyGolay.window)
         }.displayTextFromValue { (value) -> String in
             return "\(Int(value))"
         }.update { (row) in
             guard let savitzkyGolay = self.savitzkyGolay else { return }
             row.enabled = savitzkyGolay.enabled
+        }.onValueChanged { _ in
+            self.delegate?.didChangeSettings()
         }
         let strengthSliderRow = EnabledSliderRowFormer<FormSliderCell> {
             $0.titleLabel.text = "Strength"
@@ -49,13 +50,14 @@ class SettingsViewController: FormViewController {
         }.adjustedValueFromValue { (value) -> Float in
             guard let savitzkyGolay = self.savitzkyGolay else { return value }
             savitzkyGolay.strength = CGFloat(value)
-            self.delegate?.didChange(savitzkyGolay: savitzkyGolay)
             return Float(savitzkyGolay.strength)
         }.displayTextFromValue { (value) -> String in
             return "\(Int((value * 100).rounded()))%"
         }.update { (row) in
             guard let savitzkyGolay = self.savitzkyGolay else { return }
             row.enabled = savitzkyGolay.enabled
+        }.onValueChanged { _ in
+            self.delegate?.didChangeSettings()
         }
 
         let enabledRow = SwitchRowFormer<FormSwitchCell> {
@@ -68,6 +70,7 @@ class SettingsViewController: FormViewController {
             savitzkyGolay.enabled = toggle
             windowSliderRow.enabled = toggle
             strengthSliderRow.enabled = toggle
+            self.delegate?.didChangeSettings()
         }
 
         let header = LabelViewFormer<FormLabelHeaderView>().configure { (view) in
