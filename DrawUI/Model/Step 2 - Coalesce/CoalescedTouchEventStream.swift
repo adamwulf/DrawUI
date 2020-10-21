@@ -1,5 +1,5 @@
 //
-//  TouchPointStream.swift
+//  CoalescedTouchEventStream.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -9,14 +9,14 @@ import UIKit
 
 /// Input: An array of touch events from one or more touches representing one or more strokes.
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
-public class TouchPointStream {
+public class CoalescedTouchEventStream {
 
-    public typealias Output = (strokePoints: [OrderedTouchPoints], deltas: [Delta])
+    public typealias Output = (strokePoints: [CoalescedTouchEvents], deltas: [Delta])
 
     public enum Delta {
-        case addedTouchPoints(stroke: OrderedTouchPoints)
-        case updatedTouchPoints(stroke: OrderedTouchPoints, updatedIndexes: IndexSet)
-        case completedTouchPoints(stroke: OrderedTouchPoints)
+        case addedTouchPoints(stroke: CoalescedTouchEvents)
+        case updatedTouchPoints(stroke: CoalescedTouchEvents, updatedIndexes: IndexSet)
+        case completedTouchPoints(stroke: CoalescedTouchEvents)
 
         public var rawString: String {
             switch self {
@@ -30,9 +30,9 @@ public class TouchPointStream {
         }
     }
 
-    private var touchToStroke: [UITouchIdentifier: OrderedTouchPoints]
+    private var touchToStroke: [UITouchIdentifier: CoalescedTouchEvents]
 
-    public private(set) var strokes: [OrderedTouchPoints]
+    public private(set) var strokes: [CoalescedTouchEvents]
 
     public init() {
         touchToStroke = [:]
@@ -60,7 +60,7 @@ public class TouchPointStream {
                     deltas.append(.completedTouchPoints(stroke: stroke))
                 }
             } else if let touchIdentifier = events.first?.touchIdentifier,
-                      let stroke = OrderedTouchPoints(touchEvents: events) {
+                      let stroke = CoalescedTouchEvents(touchEvents: events) {
                 touchToStroke[touchIdentifier] = stroke
                 strokes.append(stroke)
                 deltas.append(.addedTouchPoints(stroke: stroke))

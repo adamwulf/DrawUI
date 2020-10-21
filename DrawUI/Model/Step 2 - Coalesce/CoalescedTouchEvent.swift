@@ -1,5 +1,5 @@
 //
-//  TouchPoint.swift
+//  CoalescedTouchEvent.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class TouchPoint {
+public class CoalescedTouchEvent {
 
     public private(set) var events: [TouchEvent]
     public var event: TouchEvent {

@@ -29,7 +29,7 @@ public class StrokeStream {
     }
 
     public private(set) var strokes: [Stroke]
-    public private(set) var otpToIndex: [OrderedTouchPoints: Int]
+    public private(set) var otpToIndex: [CoalescedTouchEvents: Int]
 
     public init() {
         otpToIndex = [:]
@@ -37,7 +37,7 @@ public class StrokeStream {
     }
 
     @discardableResult
-    public func add(input: TouchPointStream.Output) -> Output {
+    public func add(input: CoalescedTouchEventStream.Output) -> Output {
         let touchEvents = input.deltas
         var deltas: [Delta] = []
 

@@ -67,7 +67,7 @@ class DrawUITests: XCTestCase {
                                       isUpdate: true,
                                       isPrediction: false)
 
-        let strokes = TouchPointStream()
+        let strokes = CoalescedTouchEventStream()
         let delta1 = strokes.add(touchEvents: [startTouch, predictedTouch])
 
         XCTAssertEqual(delta1.count, 1)
