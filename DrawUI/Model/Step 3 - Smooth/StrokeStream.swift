@@ -37,7 +37,8 @@ public class StrokeStream {
     }
 
     @discardableResult
-    public func add(touchPoints: [OrderedTouchPoints], touchEvents: [TouchPointStream.Delta]) -> Output {
+    public func add(input: TouchPointStream.Output) -> Output {
+        let touchEvents = input.deltas
         var deltas: [Delta] = []
 
         for delta in touchEvents {

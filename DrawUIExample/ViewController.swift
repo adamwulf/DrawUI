@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         eventStream.eventStreamChanged = { [weak self] (updatedEvents) in
             guard let self = self else { return }
             let pointOutput = self.pointStream.add(touchEvents: updatedEvents)
-            let strokeOutput = self.strokeStream.add(touchPoints: pointOutput.strokePoints, touchEvents: pointOutput.deltas)
+            let strokeOutput = self.strokeStream.add(input: pointOutput)
             let smoothOutput = self.savitzkyGolay.smooth(input: strokeOutput)
 
             self.debugView?.originalStrokes = strokeOutput.strokes
