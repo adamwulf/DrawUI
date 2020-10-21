@@ -7,6 +7,17 @@
 
 import Foundation
 
+/// Input: a stream of touch events that match our `touchIdentifier`
+/// Output: coalesce all of the touch events into defined points along the stroke
+///
+/// The touch events may come in any order, and many events may represent the same
+/// touch location, ie, a predicted touch has been updated to a final location, even though
+/// other events have been added since then.
+///
+/// This will take a strea of events: [a1, a2, b1, a3, b2, c1] and will coalesce events for
+/// the same point, so that it can output a series of points [A, B, C]
+///
+/// The output points also know if they are predicted, expecting updates, or is finished
 public class OrderedTouchPoints {
 
     // MARK: - Public Properties

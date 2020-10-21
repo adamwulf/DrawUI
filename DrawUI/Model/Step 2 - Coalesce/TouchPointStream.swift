@@ -7,6 +7,8 @@
 
 import UIKit
 
+/// Input: An array of touch events from one or more touches representing one or more strokes.
+/// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
 public class TouchPointStream {
 
     public typealias Output = (strokePoints: [OrderedTouchPoints], deltas: [Delta])
