@@ -18,7 +18,7 @@ class ViewController: UIViewController {
 
     let savitzkyGolay = SavitzkyGolay()
     let douglasPeucker = DouglasPeucker()
-    let pointDinstance = PointDistance()
+    let pointDistance = PointDistance()
 
     required init?(coder: NSCoder) {
         eventStream = TouchEventStream()
@@ -36,7 +36,9 @@ class ViewController: UIViewController {
             guard let self = self else { return }
             let pointOutput = self.pointStream.process(touchEvents: updatedEvents)
             let strokeOutput = self.strokeStream.process(input: pointOutput)
-            let smoothOutput = self.savitzkyGolay.smooth(input: strokeOutput)
+            let douglasPeuckerOutput = self.douglasPeucker.smooth(input: strokeOutput)
+            let pointDistanceOutput = self.pointDistance.smooth(input: douglasPeuckerOutput)
+            let smoothOutput = self.savitzkyGolay.smooth(input: pointDistanceOutput)
 
             self.debugView?.originalStrokes = strokeOutput.strokes
             self.debugView?.smoothStrokes = smoothOutput.strokes
@@ -52,7 +54,7 @@ class ViewController: UIViewController {
         settings.delegate = self
         settings.savitzkyGolay = savitzkyGolay
         settings.douglasPeucker = douglasPeucker
-        settings.pointDinstance = pointDinstance
+        settings.pointDistance = pointDistance
         let nav = UINavigationController(rootViewController: settings)
         nav.navigationBar.barStyle = .default
 

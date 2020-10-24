@@ -17,7 +17,7 @@ class SettingsViewController: FormViewController {
 
     var savitzkyGolay: SavitzkyGolay?
     var douglasPeucker: DouglasPeucker?
-    var pointDinstance: PointDistance?
+    var pointDistance: PointDistance?
     var delegate: SettingsViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -28,7 +28,8 @@ class SettingsViewController: FormViewController {
         }.configure { _ in
             // noop
         }.onSwitchChanged { _ in
-            // noop
+            // TODO: implement prediction toggle
+            assertionFailure("To be implemented")
         }
 
         let touchTypeRow = SegmentedRowFormer<FormSegmentedCell> {
@@ -88,11 +89,11 @@ class SettingsViewController: FormViewController {
             }.onSelected { [weak self] _ in
                 guard let self = self else { return }
                 let settings = PointDinstanceViewController()
-                settings.pointDistance = self.pointDinstance
+                settings.pointDistance = self.pointDistance
                 settings.delegate = self
                 self.navigationController?.pushViewController(settings, animated: true)
             }.onUpdate { (row) in
-                guard let pointDinstance = self.pointDinstance else { return }
+                guard let pointDinstance = self.pointDistance else { return }
                 if pointDinstance.enabled {
                     row.subText = "Enabled"
                 } else {
