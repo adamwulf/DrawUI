@@ -36,9 +36,9 @@ class ViewController: UIViewController {
             guard let self = self else { return }
             let pointOutput = self.pointStream.process(touchEvents: updatedEvents)
             let strokeOutput = self.strokeStream.process(input: pointOutput)
-            let douglasPeuckerOutput = self.douglasPeucker.smooth(input: strokeOutput)
-            let pointDistanceOutput = self.pointDistance.smooth(input: douglasPeuckerOutput)
-            let smoothOutput = self.savitzkyGolay.smooth(input: pointDistanceOutput)
+            let douglasPeuckerOutput = self.douglasPeucker.process(input: strokeOutput)
+            let pointDistanceOutput = self.pointDistance.process(input: douglasPeuckerOutput)
+            let smoothOutput = self.savitzkyGolay.process(input: pointDistanceOutput)
 
             self.debugView?.originalStrokes = strokeOutput.strokes
             self.debugView?.smoothStrokes = smoothOutput.strokes
@@ -75,9 +75,11 @@ extension ViewController: SettingsViewControllerDelegate {
 
     private func resmoothEverything() {
         // If any of the settings have changed or been reenabled, etc.
-        let original: StrokeStream.Output = (strokes: strokeStream.strokes, deltas: [])
-        let smooth = savitzkyGolay.smooth(input: original).strokes
-        debugView.smoothStrokes = smooth
+        let originalOutput: StrokeStream.Output = (strokes: strokeStream.strokes, deltas: [])
+        let douglasPeuckerOutput = self.douglasPeucker.process(input: originalOutput)
+        let pointDistanceOutput = self.pointDistance.process(input: douglasPeuckerOutput)
+        let smoothOutput = self.savitzkyGolay.process(input: pointDistanceOutput)
+        debugView.smoothStrokes = smoothOutput.strokes
         debugView.setNeedsDisplay()
     }
 

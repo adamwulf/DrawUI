@@ -8,13 +8,16 @@
 import Foundation
 
 /// Removes points from `strokes` that are within a minimum distance of each other
-public class PointDistance: SmoothingFilter {
+public class PointDistance: StrokeFilter {
     public var enabled: Bool = true
 
     public init () {
     }
 
-    public func smooth(input: StrokeStream.Output) -> StrokeStream.Output {
+    public func process(input: StrokeStream.Output) -> StrokeStream.Output {
+        guard enabled else { return input }
+
+        // TODO: implement filtering a stroke's points by their distance
         return input
     }
 }
