@@ -12,13 +12,10 @@ public class TouchEventStream {
     // MARK: - Private
     private var recentEvents: [TouchEvent] = []
     private var processedEvents: [TouchEvent] = []
+    private var lazyGesture: TouchStreamGestureRecognizer?
 
     // MARK: - Public
-    public var eventStreamChanged: ((_ events: [TouchEvent]) -> Void)? {
-        didSet {
-            print("did set")
-        }
-    }
+    public var eventStreamChanged: ((_ events: [TouchEvent]) -> Void)?
     public var events: [TouchEvent] {
         return processedEvents + recentEvents
     }
@@ -35,17 +32,15 @@ public class TouchEventStream {
 
     // MARK: - GestureEventStream
 
-    private var lazyGesture: TouchStreamGestureRecognizer?
     public var gesture: UIGestureRecognizer {
-        lazyGesture = lazyGesture ?? TouchStreamGestureRecognizer(touchStream: self, target: self, action: #selector(gestureDidTouch(_:)))
+        lazyGesture = lazyGesture ?? TouchStreamGestureRecognizer(target: self, action: #selector(gestureDidTouch(_:)))
+        lazyGesture?.callback = { [weak self] touchEvents in
+            self?.recentEvents.append(contentsOf: touchEvents)
+        }
         return lazyGesture!
     }
 
     // MARK: - TouchEventStream
-
-    public func add(event: TouchEvent) {
-        recentEvents.append(event)
-    }
 
     private func process() -> [TouchEvent] {
         processedEvents.append(contentsOf: recentEvents)

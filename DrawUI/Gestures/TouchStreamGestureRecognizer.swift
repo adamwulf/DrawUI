@@ -9,11 +9,13 @@ import UIKit
 
 public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecognizerDelegate {
 
-    private weak var touchStream: TouchEventStream?
+    // MARK: - Private
+    public var callback: (([TouchEvent]) -> Void)?
     private var activeTouches: Set<UITouch>
 
-    public init(touchStream: TouchEventStream, target: Any?, action: Selector?) {
-        self.touchStream = touchStream
+    // MARK: - Init
+
+    public override init(target: Any?, action: Selector?) {
         self.activeTouches = Set()
 
         super.init(target: target, action: action)
@@ -24,16 +26,12 @@ public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecogni
         delegate = self
     }
 
-    public override func canBePrevented(by preventingGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return false
-    }
+    // MARK: - Process Touch Events
 
-    public override func shouldBeRequiredToFail(by otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return false
-    }
-
-    func process(touches: Set<UITouch>, with event: UIEvent?, isUpdate: Bool) {
+    private func process(touches: Set<UITouch>, with event: UIEvent?, isUpdate: Bool) {
         guard let view = view else { return }
+
+        var allTouchEvents: [TouchEvent] = []
 
         for touch in touches {
             var coalesced = event?.coalescedTouches(for: touch) ?? [touch]
@@ -43,23 +41,35 @@ public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecogni
             }
 
             for coalescedTouch in coalesced {
-                touchStream?.add(event: TouchEvent(coalescedTouch: coalescedTouch,
-                                                   touch: touch,
-                                                   in: view,
-                                                   isUpdate: isUpdate,
-                                                   isPrediction: false))
+                allTouchEvents.append(TouchEvent(coalescedTouch: coalescedTouch,
+                                                 touch: touch,
+                                                 in: view,
+                                                 isUpdate: isUpdate,
+                                                 isPrediction: false))
             }
 
             let predicted = event?.predictedTouches(for: touch) ?? []
 
             for predictedTouch in predicted {
-                touchStream?.add(event: TouchEvent(coalescedTouch: predictedTouch,
-                                                   touch: touch,
-                                                   in: view,
-                                                   isUpdate: isUpdate,
-                                                   isPrediction: true))
+                allTouchEvents.append(TouchEvent(coalescedTouch: predictedTouch,
+                                                 touch: touch,
+                                                 in: view,
+                                                 isUpdate: isUpdate,
+                                                 isPrediction: true))
             }
         }
+
+        callback?(allTouchEvents)
+    }
+
+    // MARK: - UIGestureRecognizer
+
+    public override func canBePrevented(by preventingGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+
+    public override func shouldBeRequiredToFail(by otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
 
     public override func touchesEstimatedPropertiesUpdated(_ touches: Set<UITouch>) {
