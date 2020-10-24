@@ -68,10 +68,10 @@ class DrawUITests: XCTestCase {
                                       isPrediction: false)
 
         let strokes = TouchPointStream()
-        let delta1 = strokes.add(touchEvents: [startTouch, predictedTouch])
+        let delta1 = strokes.process(touchEvents: [startTouch, predictedTouch]).deltas
 
         XCTAssertEqual(delta1.count, 1)
-        if case .addedStroke(let stroke) = delta1.first {
+        if case .addedTouchPoints(let stroke) = delta1.first {
             XCTAssertEqual(stroke.points.count, 2)
             XCTAssertEqual(stroke.points.first!.event.location, CGPoint(x: 100, y: 100))
             XCTAssertEqual(stroke.points.last!.event.location, CGPoint(x: 200, y: 100))
@@ -81,10 +81,10 @@ class DrawUITests: XCTestCase {
             XCTFail()
         }
 
-        let delta2 = strokes.add(touchEvents: [updatedTouch])
+        let delta2 = strokes.process(touchEvents: [updatedTouch]).deltas
 
         XCTAssertEqual(delta2.count, 1)
-        if case .updatedStroke(let stroke, let indexSet) = delta2.first {
+        if case .updatedTouchPoints(let stroke, let indexSet) = delta2.first {
             XCTAssertEqual(stroke.points.count, 1)
             XCTAssertEqual(indexSet.count, 2)
             XCTAssertEqual(indexSet.first!, 0)
@@ -95,10 +95,10 @@ class DrawUITests: XCTestCase {
             XCTFail()
         }
 
-        let delta3 = strokes.add(touchEvents: [lastTouch])
+        let delta3 = strokes.process(touchEvents: [lastTouch]).deltas
 
         XCTAssertEqual(delta3.count, 1)
-        if case .updatedStroke(let stroke, let indexSet) = delta3.first {
+        if case .updatedTouchPoints(let stroke, let indexSet) = delta3.first {
             XCTAssertEqual(stroke.points.count, 2)
             XCTAssertEqual(indexSet.count, 1)
             XCTAssertEqual(indexSet.first!, 1)
@@ -109,10 +109,10 @@ class DrawUITests: XCTestCase {
             XCTFail()
         }
 
-        let delta4 = strokes.add(touchEvents: [lastUpdatedTouch])
+        let delta4 = strokes.process(touchEvents: [lastUpdatedTouch]).deltas
 
         XCTAssertEqual(delta4.count, 2)
-        if case .updatedStroke(let stroke, let indexSet) = delta4.first {
+        if case .updatedTouchPoints(let stroke, let indexSet) = delta4.first {
             XCTAssertEqual(stroke.points.count, 2)
             XCTAssertEqual(indexSet.count, 1)
             XCTAssertEqual(indexSet.first!, 1)
@@ -123,7 +123,7 @@ class DrawUITests: XCTestCase {
             XCTFail()
         }
 
-        if case .completedStroke(let stroke) = delta4.last {
+        if case .completedTouchPoints(let stroke) = delta4.last {
             XCTAssertTrue(stroke.isComplete)
         } else {
             XCTFail()
