@@ -1,5 +1,5 @@
 //
-//  TouchStreamGestureRecognizer.swift
+//  TouchEventGestureRecognizer.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecognizerDelegate {
+public class TouchEventGestureRecognizer: UIGestureRecognizer, UIGestureRecognizerDelegate {
 
     // MARK: - Private
     public var callback: (([TouchEvent]) -> Void)?
@@ -119,7 +119,7 @@ public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecogni
 
 // MARK: - UIGestureRecognizer (Delegate)
 
-extension TouchStreamGestureRecognizer {
+extension TouchEventGestureRecognizer {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                                   shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
