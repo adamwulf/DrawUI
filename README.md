@@ -1,4 +1,5 @@
 # DrawUI
+
 Draw UI is an inking framework for iOS. The goals are:
 
 1. Low CPU overhead
@@ -29,6 +30,7 @@ At each of the points in the above pipeline, you have the opportunity to modify 
 
 It's very likely that one of DrawUI's renderers will be sufficient for your needs, but if not, you have the option of modifying DrawUI's behavior at whatever level of detail you need.
 
+
 ### 3. Easy to integrate
 
 To get started:
@@ -39,3 +41,34 @@ To get started:
 ### 4. Multiple rendering methods
 
 DrawUI includes multiple rendering methods. Many are unoptimized reference renderers, like `DebugView`. Others are highly optimized renderers. Most involve rendering the ink to the screen, though some are included to generate image or PDF contents.
+
+
+## TODO
+
+### Smoothing:
+
+- [ ] SmoothStroke model for generating fixed-width UIBezierPaths
+- [ ] SmoothStroke model for generating variable-width UIBezierPaths
+
+
+### Renderers:
+
+The below should also implement undo/redo
+
+- [ ] Basic CGContext rendering
+       - with and without background image
+- [ ] naive DrawRect
+- [ ] smarter DrawRect
+- [ ] CAShapeLayer
+- [ ] CAShapeLayer with flattened cache 
+- [ ] SceneKit (git@github.com:adamwulf/SKDraw.git)
+
+
+### Filters:
+
+- [x] Implement naive SavitzkyGolay smoothing
+- [ ] Implement optimized SavitzkyGolay smoothing
+- [ ] Implement naive DouglasPeucker filtering
+- [ ] Implement optimized DouglasPeucker filtering
+- [ ] Implement naive DistanceThinning filtering
+- [ ] Implement optimized DistanceThinning filtering

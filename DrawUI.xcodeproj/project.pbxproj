@@ -13,6 +13,7 @@
 		C507F3F82505EF59001A7821 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3F72505EF59001A7821 /* SettingsViewController.swift */; };
 		C507F3FA2505F4A0001A7821 /* DouglasPeuckerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3F92505F4A0001A7821 /* DouglasPeuckerViewController.swift */; };
 		C507F3FC2505F58C001A7821 /* PointDinstanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3FB2505F58C001A7821 /* PointDinstanceViewController.swift */; };
+		C53651B72544CC7F00FA25A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C53651B62544CC7E00FA25A4 /* README.md */; };
 		C559CBFB24EB9489006D263C /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF824EB9489006D263C /* StrokePoint.swift */; };
 		C559CBFC24EB9489006D263C /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* StrokeStream.swift */; };
 		C559CBFD24EB9489006D263C /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFA24EB9489006D263C /* Stroke.swift */; };
@@ -80,6 +81,7 @@
 		C507F3F72505EF59001A7821 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C507F3F92505F4A0001A7821 /* DouglasPeuckerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DouglasPeuckerViewController.swift; sourceTree = "<group>"; };
 		C507F3FB2505F58C001A7821 /* PointDinstanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointDinstanceViewController.swift; sourceTree = "<group>"; };
+		C53651B62544CC7E00FA25A4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		C559CBF824EB9489006D263C /* StrokePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* StrokeStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeStream.swift; sourceTree = "<group>"; };
 		C559CBFA24EB9489006D263C /* Stroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 		C5C159B024E9AF1C00B52B4B /* DrawUI */ = {
 			isa = PBXGroup;
 			children = (
+				C53651B62544CC7E00FA25A4 /* README.md */,
 				C5C159E024E9B2F000B52B4B /* Gestures */,
 				C5C159D924E9AF7300B52B4B /* Extensions */,
 				C58025A224EA26BB0043130D /* Model */,
@@ -418,6 +421,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C53651B72544CC7F00FA25A4 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
