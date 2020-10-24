@@ -43,7 +43,18 @@ To get started:
 DrawUI includes multiple rendering methods. Many are unoptimized reference renderers, like `DebugView`. Others are highly optimized renderers. Most involve rendering the ink to the screen, though some are included to generate image or PDF contents.
 
 
+
+
 ## TODO
+
+Next steps:
+
+1. Create UIBezierPath cubic smoothing
+2. implement CGContextRenderer
+3. Implement a UIView that uses the context renderer for its drawing
+4. implement background rendering to image
+5. implement background rendering to vector PDF
+
 
 ### Smoothing:
 
