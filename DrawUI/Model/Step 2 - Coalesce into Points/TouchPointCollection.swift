@@ -1,5 +1,5 @@
 //
-//  TouchPoints.swift
+//  TouchPointCollection.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -18,7 +18,7 @@ import Foundation
 /// the same point, so that it can output a series of points [A, B, C]
 ///
 /// The output points also know if they are predicted, expecting updates, or is finished
-public class TouchPoints {
+public class TouchPointCollection {
 
     // MARK: - Public Properties
     public private(set) var touchIdentifier: String
@@ -51,6 +51,7 @@ public class TouchPoints {
 
     @discardableResult
     func add(touchEvents: [TouchEvent]) -> IndexSet {
+        assert(!isComplete, "Cannot add events to a complete pointCollection")
         var indexSet = IndexSet()
         var consumable = predictedPoints
         predictedPoints = []
@@ -127,8 +128,8 @@ public class TouchPoints {
     }
 }
 
-extension TouchPoints: Hashable {
-    public static func == (lhs: TouchPoints, rhs: TouchPoints) -> Bool {
+extension TouchPointCollection: Hashable {
+    public static func == (lhs: TouchPointCollection, rhs: TouchPointCollection) -> Bool {
         return lhs.touchIdentifier == rhs.touchIdentifier
     }
 

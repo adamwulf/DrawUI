@@ -13,13 +13,13 @@ public struct Stroke {
     public let touchIdentifier: String
     public var points: [StrokePoint]
 
-    init(touchPoints: TouchPoints) {
+    init(touchPoints: TouchPointCollection) {
         isComplete = touchPoints.isComplete
         touchIdentifier = touchPoints.touchIdentifier
         points = touchPoints.points.map({ StrokePoint(touchPoint: $0) })
     }
 
-    mutating func update(with stroke: TouchPoints, indexSet: IndexSet) -> IndexSet {
+    mutating func update(with stroke: TouchPointCollection, indexSet: IndexSet) -> IndexSet {
         for index in indexSet {
             if index < stroke.points.count {
                 if index < points.count {

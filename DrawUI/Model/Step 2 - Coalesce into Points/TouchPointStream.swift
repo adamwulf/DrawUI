@@ -11,36 +11,36 @@ import UIKit
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
 public class TouchPointStream {
 
-    public typealias Output = (strokePoints: [TouchPoints], deltas: [Delta])
+    public typealias Output = (pointCollections: [TouchPointCollection], deltas: [Delta])
 
     public enum Delta {
-        case addedTouchPoints(stroke: TouchPoints)
-        case updatedTouchPoints(stroke: TouchPoints, updatedIndexes: IndexSet)
-        case completedTouchPoints(stroke: TouchPoints)
+        case addedTouchPoints(pointCollection: TouchPointCollection)
+        case updatedTouchPoints(pointCollection: TouchPointCollection, updatedIndexes: IndexSet)
+        case completedTouchPoints(pointCollection: TouchPointCollection)
 
         public var rawString: String {
             switch self {
-            case .addedTouchPoints(let stroke):
-                return "addedTouchPoints(\(stroke.touchIdentifier))"
-            case .updatedTouchPoints(let stroke, let indexSet):
-                return "updatedTouchPoints(\(stroke.touchIdentifier), \(indexSet)"
-            case .completedTouchPoints(let stroke):
-                return "completedTouchPoints(\(stroke.touchIdentifier))"
+            case .addedTouchPoints(let pointCollection):
+                return "addedTouchPoints(\(pointCollection.touchIdentifier))"
+            case .updatedTouchPoints(let pointCollection, let indexSet):
+                return "updatedTouchPoints(\(pointCollection.touchIdentifier), \(indexSet)"
+            case .completedTouchPoints(let pointCollection):
+                return "completedTouchPoints(\(pointCollection.touchIdentifier))"
             }
         }
     }
 
-    private var touchToStroke: [UITouchIdentifier: TouchPoints]
+    private var touchToPointCollection: [UITouchIdentifier: TouchPointCollection]
 
-    public private(set) var strokes: [TouchPoints]
+    public private(set) var pointCollections: [TouchPointCollection]
 
     public init() {
-        touchToStroke = [:]
-        strokes = []
+        touchToPointCollection = [:]
+        pointCollections = []
     }
 
     @discardableResult
-    public func add(touchEvents: [TouchEvent]) -> Output {
+    public func process(touchEvents: [TouchEvent]) -> Output {
         var deltas: [Delta] = []
         let updatedEventsPerTouch = touchEvents.reduce([:], { (result, event) -> [String: [TouchEvent]] in
             var result = result
@@ -53,20 +53,20 @@ public class TouchPointStream {
         })
 
         for (touchIdentifier, events) in updatedEventsPerTouch {
-            if let stroke = touchToStroke[touchIdentifier] {
-                let updatedIndexes = stroke.add(touchEvents: events)
-                deltas.append(.updatedTouchPoints(stroke: stroke, updatedIndexes: updatedIndexes))
-                if stroke.isComplete {
-                    deltas.append(.completedTouchPoints(stroke: stroke))
+            if let pointCollection = touchToPointCollection[touchIdentifier] {
+                let updatedIndexes = pointCollection.add(touchEvents: events)
+                deltas.append(.updatedTouchPoints(pointCollection: pointCollection, updatedIndexes: updatedIndexes))
+                if pointCollection.isComplete {
+                    deltas.append(.completedTouchPoints(pointCollection: pointCollection))
                 }
             } else if let touchIdentifier = events.first?.touchIdentifier,
-                      let stroke = TouchPoints(touchEvents: events) {
-                touchToStroke[touchIdentifier] = stroke
-                strokes.append(stroke)
-                deltas.append(.addedTouchPoints(stroke: stroke))
+                      let pointCollection = TouchPointCollection(touchEvents: events) {
+                touchToPointCollection[touchIdentifier] = pointCollection
+                pointCollections.append(pointCollection)
+                deltas.append(.addedTouchPoints(pointCollection: pointCollection))
             }
         }
 
-        return (strokes, deltas)
+        return (pointCollections, deltas)
     }
 }

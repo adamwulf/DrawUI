@@ -29,7 +29,7 @@ public class StrokeStream {
     }
 
     public private(set) var strokes: [Stroke]
-    public private(set) var otpToIndex: [TouchPoints: Int]
+    public private(set) var otpToIndex: [TouchPointCollection: Int]
 
     public init() {
         otpToIndex = [:]
@@ -37,25 +37,25 @@ public class StrokeStream {
     }
 
     @discardableResult
-    public func add(input: TouchPointStream.Output) -> Output {
-        let touchEvents = input.deltas
+    public func process(input: TouchPointStream.Output) -> Output {
+        let pointCollectionDeltas = input.deltas
         var deltas: [Delta] = []
 
-        for delta in touchEvents {
+        for delta in pointCollectionDeltas {
             switch delta {
-            case .addedTouchPoints(let stroke):
-                let smoothStroke = Stroke(touchPoints: stroke)
+            case .addedTouchPoints(let pointCollection):
+                let smoothStroke = Stroke(touchPoints: pointCollection)
                 let index = strokes.count
-                otpToIndex[stroke] = index
+                otpToIndex[pointCollection] = index
                 strokes.append(smoothStroke)
                 deltas.append(.addedStroke(stroke: index))
-            case .updatedTouchPoints(let stroke, let indexSet):
-                if let index = otpToIndex[stroke] {
-                    let updates = strokes[index].update(with: stroke, indexSet: indexSet)
+            case .updatedTouchPoints(let pointCollection, let indexSet):
+                if let index = otpToIndex[pointCollection] {
+                    let updates = strokes[index].update(with: pointCollection, indexSet: indexSet)
                     deltas.append(.updatedStroke(stroke: index, updatedIndexes: updates))
                 }
-            case .completedTouchPoints(let stroke):
-                if let index = otpToIndex[stroke] {
+            case .completedTouchPoints(let pointCollection):
+                if let index = otpToIndex[pointCollection] {
                     deltas.append(.completedStroke(stroke: index))
                 }
             }
