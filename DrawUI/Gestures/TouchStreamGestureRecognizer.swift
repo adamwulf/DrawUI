@@ -9,8 +9,8 @@ import UIKit
 
 public class TouchStreamGestureRecognizer: UIGestureRecognizer, UIGestureRecognizerDelegate {
 
-    weak var touchStream: TouchEventStream?
-    var activeTouches: Set<UITouch>
+    private weak var touchStream: TouchEventStream?
+    private var activeTouches: Set<UITouch>
 
     public init(touchStream: TouchEventStream, target: Any?, action: Selector?) {
         self.touchStream = touchStream

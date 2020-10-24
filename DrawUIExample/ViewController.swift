@@ -12,7 +12,7 @@ import Former
 class ViewController: UIViewController {
 
     let eventStream: TouchEventStream
-    let pointStream: CoalescedTouchEventStream
+    let pointStream: TouchPointStream
     let strokeStream: StrokeStream
     @IBOutlet var debugView: DebugView!
 
@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
     required init?(coder: NSCoder) {
         eventStream = TouchEventStream()
-        pointStream = CoalescedTouchEventStream()
+        pointStream = TouchPointStream()
         strokeStream = StrokeStream()
         super.init(coder: coder)
     }

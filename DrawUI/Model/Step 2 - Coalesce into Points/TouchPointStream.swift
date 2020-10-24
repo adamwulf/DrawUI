@@ -1,5 +1,5 @@
 //
-//  CoalescedTouchEventStream.swift
+//  TouchPointStream.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -9,14 +9,14 @@ import UIKit
 
 /// Input: An array of touch events from one or more touches representing one or more strokes.
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
-public class CoalescedTouchEventStream {
+public class TouchPointStream {
 
-    public typealias Output = (strokePoints: [CoalescedTouchEvents], deltas: [Delta])
+    public typealias Output = (strokePoints: [TouchPoints], deltas: [Delta])
 
     public enum Delta {
-        case addedTouchPoints(stroke: CoalescedTouchEvents)
-        case updatedTouchPoints(stroke: CoalescedTouchEvents, updatedIndexes: IndexSet)
-        case completedTouchPoints(stroke: CoalescedTouchEvents)
+        case addedTouchPoints(stroke: TouchPoints)
+        case updatedTouchPoints(stroke: TouchPoints, updatedIndexes: IndexSet)
+        case completedTouchPoints(stroke: TouchPoints)
 
         public var rawString: String {
             switch self {
@@ -30,9 +30,9 @@ public class CoalescedTouchEventStream {
         }
     }
 
-    private var touchToStroke: [UITouchIdentifier: CoalescedTouchEvents]
+    private var touchToStroke: [UITouchIdentifier: TouchPoints]
 
-    public private(set) var strokes: [CoalescedTouchEvents]
+    public private(set) var strokes: [TouchPoints]
 
     public init() {
         touchToStroke = [:]
@@ -60,7 +60,7 @@ public class CoalescedTouchEventStream {
                     deltas.append(.completedTouchPoints(stroke: stroke))
                 }
             } else if let touchIdentifier = events.first?.touchIdentifier,
-                      let stroke = CoalescedTouchEvents(touchEvents: events) {
+                      let stroke = TouchPoints(touchEvents: events) {
                 touchToStroke[touchIdentifier] = stroke
                 strokes.append(stroke)
                 deltas.append(.addedTouchPoints(stroke: stroke))

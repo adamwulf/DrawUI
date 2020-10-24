@@ -1,5 +1,5 @@
 //
-//  CoalescedTouchEvents.swift
+//  TouchPoints.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -18,11 +18,11 @@ import Foundation
 /// the same point, so that it can output a series of points [A, B, C]
 ///
 /// The output points also know if they are predicted, expecting updates, or is finished
-public class CoalescedTouchEvents {
+public class TouchPoints {
 
     // MARK: - Public Properties
     public private(set) var touchIdentifier: String
-    public var points: [CoalescedTouchEvent] {
+    public var points: [TouchPoint] {
         return confirmedPoints + predictedPoints
     }
     public var isComplete: Bool {
@@ -31,10 +31,10 @@ public class CoalescedTouchEvents {
     }
 
     // MARK: - Private Properties
-    private var confirmedPoints: [CoalescedTouchEvent]
-    private var predictedPoints: [CoalescedTouchEvent]
+    private var confirmedPoints: [TouchPoint]
+    private var predictedPoints: [TouchPoint]
     private var expectingUpdate: [String]
-    private var eventToPoint: [PointIdentifier: CoalescedTouchEvent]
+    private var eventToPoint: [PointIdentifier: TouchPoint]
     private var eventToIndex: [PointIdentifier: Int]
 
     // MARK: - Init
@@ -80,7 +80,7 @@ public class CoalescedTouchEvents {
                     indexSet.insert(index)
                 } else {
                     // The event is a prediction, and we're out of consumable previous predicted points, so create a new point
-                    let prediction = CoalescedTouchEvent(event: event)
+                    let prediction = TouchPoint(event: event)
                     predictedPoints.append(prediction)
                     let index = confirmedPoints.count + predictedPoints.count - 1
                     eventToIndex[event.pointIdentifier] = index
@@ -106,7 +106,7 @@ public class CoalescedTouchEvents {
                     if event.expectsUpdate {
                         expectingUpdate.append(event.pointIdentifier)
                     }
-                    let point = CoalescedTouchEvent(event: event)
+                    let point = TouchPoint(event: event)
                     eventToPoint[event.pointIdentifier] = point
                     confirmedPoints.append(point)
                     let index = confirmedPoints.count - 1
@@ -127,8 +127,8 @@ public class CoalescedTouchEvents {
     }
 }
 
-extension CoalescedTouchEvents: Hashable {
-    public static func == (lhs: CoalescedTouchEvents, rhs: CoalescedTouchEvents) -> Bool {
+extension TouchPoints: Hashable {
+    public static func == (lhs: TouchPoints, rhs: TouchPoints) -> Bool {
         return lhs.touchIdentifier == rhs.touchIdentifier
     }
 

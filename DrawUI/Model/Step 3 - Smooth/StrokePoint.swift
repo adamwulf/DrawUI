@@ -16,7 +16,7 @@ public struct StrokePoint {
     public var azimuth: CGFloat
 
     // MARK: - Immutable
-    public let touchPoint: CoalescedTouchEvent
+    public let touchPoint: TouchPoint
 
     // MARK: - Immutable Computed
     public var event: TouchEvent {
@@ -26,7 +26,7 @@ public struct StrokePoint {
         return touchPoint.expectsUpdate
     }
 
-    init(touchPoint: CoalescedTouchEvent) {
+    init(touchPoint: TouchPoint) {
         self.force = touchPoint.event.force
         self.location = touchPoint.event.location
         self.altitudeAngle = touchPoint.event.altitudeAngle

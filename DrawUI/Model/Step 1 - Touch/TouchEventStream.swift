@@ -27,7 +27,9 @@ public class TouchEventStream {
         // noop
     }
 
-    @objc func streamChanged(_ gesture: TouchStreamGestureRecognizer) {
+    // MARK: - Gesture
+
+    @objc private func gestureDidTouch(_ gesture: TouchStreamGestureRecognizer) {
         eventStreamChanged?(self.process())
     }
 
@@ -35,7 +37,7 @@ public class TouchEventStream {
 
     private var lazyGesture: TouchStreamGestureRecognizer?
     public var gesture: UIGestureRecognizer {
-        lazyGesture = lazyGesture ?? TouchStreamGestureRecognizer(touchStream: self, target: self, action: #selector(streamChanged(_:)))
+        lazyGesture = lazyGesture ?? TouchStreamGestureRecognizer(touchStream: self, target: self, action: #selector(gestureDidTouch(_:)))
         return lazyGesture!
     }
 
