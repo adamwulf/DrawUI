@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// A mutable version of `TouchPoint` that maintains a reference to the immutable point it's initialized from
 public struct StrokePoint {
 
     // MARK: - Mutable

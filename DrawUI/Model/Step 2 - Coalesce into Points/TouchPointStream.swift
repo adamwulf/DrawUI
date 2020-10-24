@@ -7,7 +7,8 @@
 
 import UIKit
 
-/// Input: An array of touch events from one or more touches representing one or more strokes.
+/// Input: An array of touch events from one or more touches representing one or more collections.
+/// A `TouchPointCollection` represents all of the different TouchPoints that share the same `touchIdentifier`
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
 public class TouchPointStream {
 

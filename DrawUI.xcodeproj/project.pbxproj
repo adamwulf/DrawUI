@@ -142,13 +142,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C507F3E42504AA68001A7821 /* Contributed */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Contributed;
-			sourceTree = "<group>";
-		};
 		C559CBFE24EB9AAF006D263C /* Smoothing Filters */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,7 +219,6 @@
 				C5C159B024E9AF1C00B52B4B /* DrawUI */,
 				C58025AA24EA3F150043130D /* DrawUITests */,
 				C5C159C224E9AF4E00B52B4B /* DrawUIExample */,
-				C507F3E42504AA68001A7821 /* Contributed */,
 				C5C159AF24E9AF1C00B52B4B /* Products */,
 				C5C159D724E9AF6100B52B4B /* Frameworks */,
 			);

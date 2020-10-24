@@ -8,6 +8,7 @@
 import Foundation
 
 public struct Stroke {
+
     // MARK: - Public Properties
     public let isComplete: Bool
     public let touchIdentifier: String
