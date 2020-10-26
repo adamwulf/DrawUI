@@ -12,18 +12,18 @@ public class PolylineStream {
     public typealias Output = (strokes: [Polyline], deltas: [Delta])
 
     public enum Delta {
-        case addedStroke(stroke: Int)
-        case updatedStroke(stroke: Int, updatedIndexes: IndexSet)
-        case completedStroke(stroke: Int)
+        case addedPolyline(index: Int)
+        case updatedPolyline(index: Int, updatedIndexes: IndexSet)
+        case completedPolyline(index: Int)
 
         public var rawString: String {
             switch self {
-            case .addedStroke(let stroke):
-                return "addedStroke(\(stroke))"
-            case .updatedStroke(let stroke, let indexSet):
-                return "updatedStroke(\(stroke), \(indexSet)"
-            case .completedStroke(let stroke):
-                return "completedStroke(\(stroke))"
+            case .addedPolyline(let index):
+                return "addedPolyline(\(index))"
+            case .updatedPolyline(let index, let indexSet):
+                return "updatedPolyline(\(index), \(indexSet)"
+            case .completedPolyline(let index):
+                return "completedPolyline(\(index))"
             }
         }
     }
@@ -50,16 +50,16 @@ public class PolylineStream {
                 let index = strokes.count
                 indexToIndex[pointCollectionIndex] = index
                 strokes.append(smoothStroke)
-                deltas.append(.addedStroke(stroke: index))
+                deltas.append(.addedPolyline(index: index))
             case .updatedTouchPoints(let pointCollectionIndex, let indexSet):
                 let pointCollection = input.pointCollections[pointCollectionIndex]
                 if let index = indexToIndex[pointCollectionIndex] {
                     let updates = strokes[index].update(with: pointCollection, indexSet: indexSet)
-                    deltas.append(.updatedStroke(stroke: index, updatedIndexes: updates))
+                    deltas.append(.updatedPolyline(index: index, updatedIndexes: updates))
                 }
             case .completedTouchPoints(let pointCollectionIndex):
                 if let index = indexToIndex[pointCollectionIndex] {
-                    deltas.append(.completedStroke(stroke: index))
+                    deltas.append(.completedPolyline(index: index))
                 }
             }
         }

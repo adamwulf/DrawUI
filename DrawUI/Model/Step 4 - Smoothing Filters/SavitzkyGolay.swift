@@ -60,7 +60,7 @@ public class SavitzkyGolay: StrokeFilter {
         // simply treat every stroke as brand new and smooth the entire set
         for strokeIdx in 0 ..< input.strokes.count {
             smooth(strokeIdx: strokeIdx)
-            outDeltas.append(.addedStroke(stroke: strokeIdx))
+            outDeltas.append(.addedPolyline(index: strokeIdx))
         }
 
         return (outStrokes, outDeltas)
@@ -79,13 +79,13 @@ public class SavitzkyGolay: StrokeFilter {
         var outDeltas: [PolylineStream.Delta] = []
         for delta in deltas {
             switch delta {
-            case .addedStroke:
+            case .addedPolyline:
                 outDeltas.append(delta)
-            case .completedStroke:
+            case .completedPolyline:
                 outDeltas.append(delta)
-            case .updatedStroke(let strokeIndex, let indexes):
+            case .updatedPolyline(let strokeIndex, let indexes):
                 let updatedIndexes = smoothStroke(stroke: &outStrokes[strokeIndex], at: indexes)
-                outDeltas.append(.updatedStroke(stroke: strokeIndex, updatedIndexes: updatedIndexes))
+                outDeltas.append(.updatedPolyline(index: strokeIndex, updatedIndexes: updatedIndexes))
             }
         }
 

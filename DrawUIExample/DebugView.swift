@@ -102,10 +102,10 @@ class DebugView: UIView {
 
             for delta in deltas {
                 switch delta {
-                case .addedStroke(let index):
-                    draw(stroke: originalStrokes[index], indexSet: nil)
-                case .updatedStroke(let index, let indexSet):
-                    draw(stroke: originalStrokes[index], indexSet: indexSet)
+                case .addedPolyline(let polylineIndex):
+                    draw(stroke: originalStrokes[polylineIndex], indexSet: nil)
+                case .updatedPolyline(let polylineIndex, let indexSet):
+                    draw(stroke: originalStrokes[polylineIndex], indexSet: indexSet)
                 default:
                     break
                 }
