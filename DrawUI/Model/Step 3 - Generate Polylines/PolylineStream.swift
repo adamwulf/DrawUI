@@ -30,7 +30,7 @@ public class PolylineStream {
 
     public private(set) var strokes: [Polyline]
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
-    public private(set) var indexToIndex: [TouchPointCollection: Int]
+    public private(set) var indexToIndex: [Int: Int]
 
     public init() {
         indexToIndex = [:]
@@ -44,19 +44,21 @@ public class PolylineStream {
 
         for delta in pointCollectionDeltas {
             switch delta {
-            case .addedTouchPoints(let pointCollection):
+            case .addedTouchPoints(let pointCollectionIndex):
+                let pointCollection = input.pointCollections[pointCollectionIndex]
                 let smoothStroke = Polyline(touchPoints: pointCollection)
                 let index = strokes.count
-                indexToIndex[pointCollection] = index
+                indexToIndex[pointCollectionIndex] = index
                 strokes.append(smoothStroke)
                 deltas.append(.addedStroke(stroke: index))
-            case .updatedTouchPoints(let pointCollection, let indexSet):
-                if let index = indexToIndex[pointCollection] {
+            case .updatedTouchPoints(let pointCollectionIndex, let indexSet):
+                let pointCollection = input.pointCollections[pointCollectionIndex]
+                if let index = indexToIndex[pointCollectionIndex] {
                     let updates = strokes[index].update(with: pointCollection, indexSet: indexSet)
                     deltas.append(.updatedStroke(stroke: index, updatedIndexes: updates))
                 }
-            case .completedTouchPoints(let pointCollection):
-                if let index = indexToIndex[pointCollection] {
+            case .completedTouchPoints(let pointCollectionIndex):
+                if let index = indexToIndex[pointCollectionIndex] {
                     deltas.append(.completedStroke(stroke: index))
                 }
             }

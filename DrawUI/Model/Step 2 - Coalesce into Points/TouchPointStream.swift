@@ -15,28 +15,27 @@ public class TouchPointStream {
     public typealias Output = (pointCollections: [TouchPointCollection], deltas: [Delta])
 
     public enum Delta {
-        case addedTouchPoints(pointCollection: TouchPointCollection)
-        case updatedTouchPoints(pointCollection: TouchPointCollection, updatedIndexes: IndexSet)
-        case completedTouchPoints(pointCollection: TouchPointCollection)
+        case addedTouchPoints(pointCollectionIndex: Int)
+        case updatedTouchPoints(pointCollectionIndex: Int, updatedIndexes: IndexSet)
+        case completedTouchPoints(pointCollectionIndex: Int)
 
         public var rawString: String {
             switch self {
-            case .addedTouchPoints(let pointCollection):
-                return "addedTouchPoints(\(pointCollection.touchIdentifier))"
-            case .updatedTouchPoints(let pointCollection, let indexSet):
-                return "updatedTouchPoints(\(pointCollection.touchIdentifier), \(indexSet)"
-            case .completedTouchPoints(let pointCollection):
-                return "completedTouchPoints(\(pointCollection.touchIdentifier))"
+            case .addedTouchPoints(let pointCollectionIndex):
+                return "addedTouchPoints(\(pointCollectionIndex))"
+            case .updatedTouchPoints(let pointCollectionIndex, let indexSet):
+                return "updatedTouchPoints(\(pointCollectionIndex), \(indexSet)"
+            case .completedTouchPoints(let pointCollectionIndex):
+                return "completedTouchPoints(\(pointCollectionIndex))"
             }
         }
     }
 
-    private var touchToPointCollection: [UITouchIdentifier: TouchPointCollection]
-
+    private var touchToIndex: [UITouchIdentifier: Int]
     public private(set) var pointCollections: [TouchPointCollection]
 
     public init() {
-        touchToPointCollection = [:]
+        touchToIndex = [:]
         pointCollections = []
     }
 
@@ -54,17 +53,20 @@ public class TouchPointStream {
         })
 
         for (touchIdentifier, events) in updatedEventsPerTouch {
-            if let pointCollection = touchToPointCollection[touchIdentifier] {
+            if let pointCollectionIndex = touchToIndex[touchIdentifier] {
+                let pointCollection = pointCollections[pointCollectionIndex]
                 let updatedIndexes = pointCollection.add(touchEvents: events)
-                deltas.append(.updatedTouchPoints(pointCollection: pointCollection, updatedIndexes: updatedIndexes))
+                deltas.append(.updatedTouchPoints(pointCollectionIndex: pointCollectionIndex, updatedIndexes: updatedIndexes))
+
                 if pointCollection.isComplete {
-                    deltas.append(.completedTouchPoints(pointCollection: pointCollection))
+                    deltas.append(.completedTouchPoints(pointCollectionIndex: pointCollectionIndex))
                 }
             } else if let touchIdentifier = events.first?.touchIdentifier,
                       let pointCollection = TouchPointCollection(touchEvents: events) {
-                touchToPointCollection[touchIdentifier] = pointCollection
+                let pointCollectionIndex = pointCollections.count
+                touchToIndex[touchIdentifier] = pointCollectionIndex
                 pointCollections.append(pointCollection)
-                deltas.append(.addedTouchPoints(pointCollection: pointCollection))
+                deltas.append(.addedTouchPoints(pointCollectionIndex: pointCollectionIndex))
             }
         }
 
