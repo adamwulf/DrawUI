@@ -38,7 +38,8 @@ public class StrokeStream {
                 assert(!polyline.points.isEmpty, "Added Stroke must have at least one point")
                 let strokeIndex = strokes.count
                 indexToIndex[polylineIndex] = strokeIndex
-                strokes.append(Stroke(polyline: polyline))
+                let stroke = Stroke(polyline: polyline, smoothness: smoothness)
+                strokes.append(stroke)
                 deltas.append(.addedStroke(index: strokeIndex))
             case .completedPolyline(let polylineIndex):
                 guard let strokeIndex = indexToIndex[polylineIndex] else {
