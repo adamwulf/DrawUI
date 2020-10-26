@@ -1,5 +1,5 @@
 //
-//  StrokeStream.swift
+//  PolylineStream.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/17/20.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-public class StrokeStream {
+public class PolylineStream {
 
-    public typealias Output = (strokes: [Stroke], deltas: [Delta])
+    public typealias Output = (strokes: [Polyline], deltas: [Delta])
 
     public enum Delta {
         case addedStroke(stroke: Int)
@@ -28,7 +28,7 @@ public class StrokeStream {
         }
     }
 
-    public private(set) var strokes: [Stroke]
+    public private(set) var strokes: [Polyline]
     public private(set) var otpToIndex: [TouchPointCollection: Int]
 
     public init() {
@@ -44,7 +44,7 @@ public class StrokeStream {
         for delta in pointCollectionDeltas {
             switch delta {
             case .addedTouchPoints(let pointCollection):
-                let smoothStroke = Stroke(touchPoints: pointCollection)
+                let smoothStroke = Polyline(touchPoints: pointCollection)
                 let index = strokes.count
                 otpToIndex[pointCollection] = index
                 strokes.append(smoothStroke)

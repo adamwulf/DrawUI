@@ -9,11 +9,11 @@ import UIKit
 import DrawUI
 
 class DebugView: UIView {
-    var originalStrokes: [Stroke] = []
-    var smoothStrokes: [Stroke] = []
-    private var deltas: [StrokeStream.Delta]?
+    var originalStrokes: [Polyline] = []
+    var smoothStrokes: [Polyline] = []
+    private var deltas: [PolylineStream.Delta]?
 
-    func add(deltas: [StrokeStream.Delta]) {
+    func add(deltas: [PolylineStream.Delta]) {
         if self.deltas == nil {
             self.deltas = []
         }
@@ -71,7 +71,7 @@ class DebugView: UIView {
         }
 
         if let deltas = deltas {
-            func draw(stroke: Stroke, indexSet: IndexSet?) {
+            func draw(stroke: Polyline, indexSet: IndexSet?) {
                 UIColor.red.setStroke()
                 if let indexSet = indexSet {
                     for index in indexSet {

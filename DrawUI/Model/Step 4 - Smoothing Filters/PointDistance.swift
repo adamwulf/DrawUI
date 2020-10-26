@@ -14,7 +14,7 @@ public class PointDistance: StrokeFilter {
     public init () {
     }
 
-    public func process(input: StrokeStream.Output) -> StrokeStream.Output {
+    public func process(input: PolylineStream.Output) -> PolylineStream.Output {
         guard enabled else { return input }
 
         // TODO: implement filtering a stroke's points by their distance

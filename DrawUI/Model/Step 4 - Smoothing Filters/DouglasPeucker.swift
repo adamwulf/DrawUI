@@ -15,7 +15,7 @@ public class DouglasPeucker: StrokeFilter {
     public init () {
     }
 
-    public func process(input: StrokeStream.Output) -> StrokeStream.Output {
+    public func process(input: PolylineStream.Output) -> PolylineStream.Output {
         guard enabled else { return input }
 
         // TODO: implement Douglas-Peucker algorithm to reduce the number of points

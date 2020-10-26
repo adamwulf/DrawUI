@@ -12,5 +12,5 @@ import Foundation
 
 public protocol StrokeFilter {
     var enabled: Bool { get set }
-    func process(input: StrokeStream.Output) -> StrokeStream.Output
+    func process(input: PolylineStream.Output) -> PolylineStream.Output
 }

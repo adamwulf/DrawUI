@@ -33,10 +33,10 @@ public class SavitzkyGolay: StrokeFilter {
         order = 3
     }
 
-    public func process(input: StrokeStream.Output) -> StrokeStream.Output {
+    public func process(input: PolylineStream.Output) -> PolylineStream.Output {
         guard enabled else { return input }
         var outStrokes = input.strokes
-        var outDeltas: [StrokeStream.Delta] = []
+        var outDeltas: [PolylineStream.Delta] = []
 
         func smooth(strokeIdx: Int) {
             for pIndex in 0 ..< outStrokes[strokeIdx].points.count {
@@ -67,7 +67,7 @@ public class SavitzkyGolay: StrokeFilter {
     }
 
     // TODO: optimize the smoothing to cache stroke state and only re-smooth when required
-    func optimized_smooth(strokes: [Stroke], deltas: [StrokeStream.Delta]) -> (strokes: [Stroke], deltas: [StrokeStream.Delta]) {
+    func optimized_smooth(strokes: [Polyline], deltas: [PolylineStream.Delta]) -> (strokes: [Polyline], deltas: [PolylineStream.Delta]) {
         var outStrokes = strokes
 
         // TODO: cache the output smooth strokes so that we can use the same result next time
@@ -76,7 +76,7 @@ public class SavitzkyGolay: StrokeFilter {
         //
         // add unit tests
 
-        var outDeltas: [StrokeStream.Delta] = []
+        var outDeltas: [PolylineStream.Delta] = []
         for delta in deltas {
             switch delta {
             case .addedStroke:
@@ -95,7 +95,7 @@ public class SavitzkyGolay: StrokeFilter {
     // MARK: - Private
 
     @discardableResult
-    private func smoothStroke(stroke: inout Stroke, at indexes: IndexSet?) -> IndexSet {
+    private func smoothStroke(stroke: inout Polyline, at indexes: IndexSet?) -> IndexSet {
         let outIndexes = { () -> IndexSet in
             if let indexes = indexes {
                 var outIndexes = IndexSet()

@@ -1,5 +1,5 @@
 //
-//  Stroke.swift
+//  Polyline.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/17/20.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Stroke {
+public struct Polyline {
 
     // MARK: - Public Properties
     public let isComplete: Bool
