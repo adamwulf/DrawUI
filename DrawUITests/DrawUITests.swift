@@ -68,63 +68,67 @@ class DrawUITests: XCTestCase {
                                       isPrediction: false)
 
         let strokes = TouchPointStream()
-        let delta1 = strokes.process(touchEvents: [startTouch, predictedTouch]).deltas
+        var output = strokes.process(touchEvents: [startTouch, predictedTouch])
+        let delta1 = output.deltas
 
         XCTAssertEqual(delta1.count, 1)
-        if case .addedTouchPoints(let stroke) = delta1.first {
-            XCTAssertEqual(stroke.points.count, 2)
-            XCTAssertEqual(stroke.points.first!.event.location, CGPoint(x: 100, y: 100))
-            XCTAssertEqual(stroke.points.last!.event.location, CGPoint(x: 200, y: 100))
-            XCTAssert(stroke.points.first!.expectsUpdate)
-            XCTAssert(stroke.points.last!.expectsUpdate)
+        if case .addedTouchPoints(let index) = delta1.first {
+            XCTAssertEqual(output.pointCollections[index].points.count, 2)
+            XCTAssertEqual(output.pointCollections[index].points.first!.event.location, CGPoint(x: 100, y: 100))
+            XCTAssertEqual(output.pointCollections[index].points.last!.event.location, CGPoint(x: 200, y: 100))
+            XCTAssert(output.pointCollections[index].points.first!.expectsUpdate)
+            XCTAssert(output.pointCollections[index].points.last!.expectsUpdate)
         } else {
             XCTFail()
         }
 
-        let delta2 = strokes.process(touchEvents: [updatedTouch]).deltas
+        output = strokes.process(touchEvents: [updatedTouch])
+        let delta2 = output.deltas
 
         XCTAssertEqual(delta2.count, 1)
-        if case .updatedTouchPoints(let stroke, let indexSet) = delta2.first {
-            XCTAssertEqual(stroke.points.count, 1)
+        if case .updatedTouchPoints(let index, let indexSet) = delta2.first {
+            XCTAssertEqual(output.pointCollections[index].points.count, 1)
             XCTAssertEqual(indexSet.count, 2)
             XCTAssertEqual(indexSet.first!, 0)
             XCTAssertEqual(indexSet.last!, 1)
-            XCTAssertEqual(stroke.points.first!.event.location, CGPoint(x: 110, y: 120))
-            XCTAssert(!stroke.points.first!.expectsUpdate)
+            XCTAssertEqual(output.pointCollections[index].points.first!.event.location, CGPoint(x: 110, y: 120))
+            XCTAssert(!output.pointCollections[index].points.first!.expectsUpdate)
         } else {
             XCTFail()
         }
 
-        let delta3 = strokes.process(touchEvents: [lastTouch]).deltas
+        output = strokes.process(touchEvents: [lastTouch])
+        let delta3 = output.deltas
 
         XCTAssertEqual(delta3.count, 1)
-        if case .updatedTouchPoints(let stroke, let indexSet) = delta3.first {
-            XCTAssertEqual(stroke.points.count, 2)
+        if case .updatedTouchPoints(let index, let indexSet) = delta3.first {
+            XCTAssertEqual(output.pointCollections[index].points.count, 2)
             XCTAssertEqual(indexSet.count, 1)
             XCTAssertEqual(indexSet.first!, 1)
-            XCTAssertEqual(stroke.points.last!.event.location, CGPoint(x: 200, y: 100))
-            XCTAssert(stroke.points.last!.expectsUpdate)
-            XCTAssertFalse(stroke.isComplete)
+            XCTAssertEqual(output.pointCollections[index].points.last!.event.location, CGPoint(x: 200, y: 100))
+            XCTAssert(output.pointCollections[index].points.last!.expectsUpdate)
+            XCTAssertFalse(output.pointCollections[index].isComplete)
         } else {
             XCTFail()
         }
 
-        let delta4 = strokes.process(touchEvents: [lastUpdatedTouch]).deltas
+        output = strokes.process(touchEvents: [lastUpdatedTouch])
+        let delta4 = output.deltas
 
         XCTAssertEqual(delta4.count, 2)
-        if case .updatedTouchPoints(let stroke, let indexSet) = delta4.first {
-            XCTAssertEqual(stroke.points.count, 2)
+        if case .updatedTouchPoints(let index, let indexSet) = delta4.first {
+            XCTAssertEqual(output.pointCollections[index].points.count, 2)
             XCTAssertEqual(indexSet.count, 1)
             XCTAssertEqual(indexSet.first!, 1)
-            XCTAssertEqual(stroke.points.last!.event.location, CGPoint(x: 220, y: 120))
-            XCTAssert(!stroke.points.last!.expectsUpdate)
-            XCTAssertTrue(stroke.isComplete)
+            XCTAssertEqual(output.pointCollections[index].points.last!.event.location, CGPoint(x: 220, y: 120))
+            XCTAssert(!output.pointCollections[index].points.last!.expectsUpdate)
+            XCTAssertTrue(output.pointCollections[index].isComplete)
         } else {
             XCTFail()
         }
 
-        if case .completedTouchPoints(let stroke) = delta4.last {
-            XCTAssertTrue(stroke.isComplete)
+        if case .completedTouchPoints(let index) = delta4.last {
+            XCTAssertTrue(output.pointCollections[index].isComplete)
         } else {
             XCTFail()
         }
