@@ -16,6 +16,24 @@ public struct StrokePoint {
     public var altitudeAngle: CGFloat
     public var azimuth: CGFloat
 
+    public var x: CGFloat {
+        get {
+            location.x
+        }
+        set {
+            location.x = newValue
+        }
+    }
+
+    public var y: CGFloat {
+        get {
+            location.y
+        }
+        set {
+            location.y = newValue
+        }
+    }
+
     // MARK: - Immutable
     public let touchPoint: TouchPoint
 
