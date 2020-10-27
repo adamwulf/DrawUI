@@ -25,22 +25,46 @@ extension Array where Element == TouchEvent.Simple {
 extension Array where Element == TouchEvent.Complete {
     func phased() -> [TouchEvent.Phased] {
         var phaseEvents = self.map { (completeEvent) -> TouchEvent.Phased in
-            return TouchEvent.Phased(event: completeEvent, phase: .moved)
+            return TouchEvent.Phased(event: completeEvent, phase: .moved, updatePhase: nil)
         }
+        // find the .began and .ended events per touchIdentifier
         var soFar: [UITouchIdentifier] = []
         for index in phaseEvents.indices {
-            if !soFar.contains(phaseEvents[index].event.id) {
-                soFar.append(phaseEvents[index].event.id)
+            let phased = phaseEvents[index]
+            if !soFar.contains(phased.event.id),
+               !phased.event.pred {
+                soFar.append(phased.event.id)
                 phaseEvents[index].phase = .began
             }
         }
         for index in phaseEvents.indices.reversed() {
-            if soFar.contains(phaseEvents[index].event.id),
-               phaseEvents[index].phase == .moved {
-                soFar.remove(phaseEvents[index].event.id)
+            let phased = phaseEvents[index]
+            if soFar.contains(phased.event.id),
+               phased.phase == .moved,
+               !phased.event.pred {
+                soFar.remove(phased.event.id)
                 phaseEvents[index].phase = .ended
             }
         }
+        // Find all indices for every updated TouchEvent
+        var estIndices: [EstimationUpdateIndex: NSMutableIndexSet] = [:]
+        for index in phaseEvents.indices {
+            if let estInd = phaseEvents[index].event.update {
+                let indices = estIndices[estInd] ?? NSMutableIndexSet()
+                indices.add(index)
+                estIndices[estInd] = indices
+            }
+        }
+
+        for estInd in estIndices.indices {
+            let eventIndexes = estIndices[estInd].value
+            for index in eventIndexes {
+                phaseEvents[index].updatePhase = .moved
+            }
+            phaseEvents[eventIndexes.firstIndex].updatePhase = .began
+            phaseEvents[eventIndexes.lastIndex].updatePhase = .ended
+        }
+
         return phaseEvents
     }
 }
@@ -65,25 +89,35 @@ extension Array where Element == TouchEvent {
     func matches(_ simple: [TouchEvent.Simple]) -> Bool {
         return matches(simple.phased())
     }
+    func matches(_ simple: [TouchEvent.Complete]) -> Bool {
+        return matches(simple.phased())
+    }
 }
 
 extension TouchEvent {
 
     typealias Simple = (id: UITouchIdentifier, loc: CGPoint)
     typealias Complete = (id: UITouchIdentifier, loc: CGPoint, pred: Bool, update: EstimationUpdateIndex?)
-    typealias Phased = (event: Complete, phase: UITouch.Phase)
+    typealias Phased = (event: Complete, phase: UITouch.Phase, updatePhase: UITouch.Phase?)
 
     static func newFrom(_ simpleEvents: [Simple]) -> [TouchEvent] {
-        let phaseEvents = simpleEvents.phased()
+        return newFrom(simpleEvents.map({ (id: $0.id, loc: $0.loc, pred: false, update: false) }))
+    }
+
+    static func newFrom(_ completeEvents: [Complete]) -> [TouchEvent] {
+        let phaseEvents = completeEvents.phased()
 
         return phaseEvents.map { (phaseEvent) -> TouchEvent in
+            let hasUpdate = phaseEvent.updatePhase != nil
             return TouchEvent(touchIdentifier: phaseEvent.event.id,
-                              phase: phaseEvent.phase,
-                              location: phaseEvent.event.loc,
-                              estimatedProperties: .none,
-                              estimatedPropertiesExpectingUpdates: .none,
-                              isUpdate: false,
-                              isPrediction: false)
+                       type: .direct,
+                       phase: phaseEvent.phase,
+                       location: phaseEvent.event.loc,
+                       estimationUpdateIndex: phaseEvent.event.update,
+                       estimatedProperties: hasUpdate ? .location : .none,
+                       estimatedPropertiesExpectingUpdates: hasUpdate && phaseEvent.updatePhase != .ended ? .location : .none,
+                       isUpdate: hasUpdate && phaseEvent.updatePhase != .began,
+                       isPrediction: phaseEvent.event.pred)
         }
     }
 }

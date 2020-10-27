@@ -26,49 +26,39 @@ class DrawUITests: XCTestCase {
         // that point is removed. its index is included in the IndexSet
         // of modified points.
         let touchId: UITouchIdentifier = UUID().uuidString
-        let startTouch = TouchEvent(touchIdentifier: touchId,
-                                    phase: .began,
-                                    location: CGPoint(x: 100, y: 100),
-                                    estimationUpdateIndex: EstimationUpdateIndex(1),
-                                    estimatedProperties: .location,
-                                    estimatedPropertiesExpectingUpdates: .location,
-                                    isUpdate: false,
-                                    isPrediction: false)
-        let predictedTouch = TouchEvent(touchIdentifier: touchId,
-                                        phase: .moved,
-                                        location: CGPoint(x: 200, y: 100),
-                                        estimationUpdateIndex: nil,
-                                        estimatedProperties: .none,
-                                        estimatedPropertiesExpectingUpdates: .none,
-                                        isUpdate: false,
-                                        isPrediction: true)
-        let updatedTouch = TouchEvent(touchIdentifier: touchId,
-                                      phase: .began,
-                                      location: CGPoint(x: 110, y: 120),
-                                      estimationUpdateIndex: EstimationUpdateIndex(1),
-                                      estimatedProperties: .none,
-                                      estimatedPropertiesExpectingUpdates: .none,
-                                      isUpdate: true,
-                                      isPrediction: false)
-        let lastTouch = TouchEvent(touchIdentifier: touchId,
-                                   phase: .ended,
-                                   location: CGPoint(x: 200, y: 100),
-                                   estimationUpdateIndex: EstimationUpdateIndex(2),
-                                   estimatedProperties: .location,
-                                   estimatedPropertiesExpectingUpdates: .location,
-                                   isUpdate: false,
-                                   isPrediction: false)
-        let lastUpdatedTouch = TouchEvent(touchIdentifier: touchId,
-                                      phase: .ended,
-                                      location: CGPoint(x: 220, y: 120),
-                                      estimationUpdateIndex: EstimationUpdateIndex(2),
-                                      estimatedProperties: .location,
-                                      estimatedPropertiesExpectingUpdates: .none,
-                                      isUpdate: true,
-                                      isPrediction: false)
+        let completeEvents = [(id: touchId, loc: CGPoint(x: 100, y: 100), pred: false, update: EstimationUpdateIndex(1)),
+                            (id: touchId, loc: CGPoint(x: 200, y: 100), pred: true, update: nil),
+                            (id: touchId, loc: CGPoint(x: 110, y: 120), pred: false, update: EstimationUpdateIndex(1)),
+                            (id: touchId, loc: CGPoint(x: 200, y: 100), pred: false, update: EstimationUpdateIndex(2)),
+                            (id: touchId, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(2))]
+        let events = TouchEvent.newFrom(completeEvents)
+
+        XCTAssertEqual(events.count, 5)
+        XCTAssertEqual(events[0].phase, .began)
+        XCTAssertEqual(events[1].phase, .moved)
+        XCTAssertEqual(events[2].phase, .moved)
+        XCTAssertEqual(events[3].phase, .moved)
+        XCTAssertEqual(events[4].phase, .ended)
+        XCTAssertEqual(events[0].isUpdate, false)
+        XCTAssertEqual(events[1].isUpdate, false)
+        XCTAssertEqual(events[2].isUpdate, true)
+        XCTAssertEqual(events[3].isUpdate, false)
+        XCTAssertEqual(events[4].isUpdate, true)
+        XCTAssertEqual(events[0].expectsUpdate, true)
+        XCTAssertEqual(events[1].expectsUpdate, false)
+        XCTAssertEqual(events[2].expectsUpdate, false)
+        XCTAssertEqual(events[3].expectsUpdate, true)
+        XCTAssertEqual(events[4].expectsUpdate, false)
+        XCTAssertEqual(events[0].isPrediction, false)
+        XCTAssertEqual(events[1].isPrediction, true)
+        XCTAssertEqual(events[2].isPrediction, false)
+        XCTAssertEqual(events[3].isPrediction, false)
+        XCTAssertEqual(events[4].isPrediction, false)
+
+        XCTAssert(events.matches(completeEvents))
 
         let pointStream = TouchPointStream()
-        var output = pointStream.process(touchEvents: [startTouch, predictedTouch])
+        var output = pointStream.process(touchEvents: Array(events[0...1]))
         let delta1 = output.deltas
 
         XCTAssertEqual(delta1.count, 1)
@@ -82,7 +72,7 @@ class DrawUITests: XCTestCase {
             XCTFail()
         }
 
-        output = pointStream.process(touchEvents: [updatedTouch])
+        output = pointStream.process(touchEvents: [events[2]])
         let delta2 = output.deltas
 
         XCTAssertEqual(output.pointCollections.count, 1)
@@ -98,7 +88,7 @@ class DrawUITests: XCTestCase {
             XCTFail()
         }
 
-        output = pointStream.process(touchEvents: [lastTouch])
+        output = pointStream.process(touchEvents: [events[3]])
         let delta3 = output.deltas
 
         XCTAssertEqual(output.pointCollections.count, 1)
@@ -114,7 +104,7 @@ class DrawUITests: XCTestCase {
             XCTFail()
         }
 
-        output = pointStream.process(touchEvents: [lastUpdatedTouch])
+        output = pointStream.process(touchEvents: [events[4]])
         let delta4 = output.deltas
 
         XCTAssertEqual(output.pointCollections.count, 1)
