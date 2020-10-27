@@ -57,6 +57,7 @@ public class TouchPointCollection {
         predictedPoints = []
 
         for event in touchEvents {
+            assert(touchIdentifier == event.touchIdentifier)
             if
                 eventToPoint[event.pointIdentifier] != nil,
                 let index = eventToIndex[event.pointIdentifier] {
