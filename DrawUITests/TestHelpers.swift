@@ -18,8 +18,14 @@ extension Array where Element: Equatable {
 
 extension Array where Element == TouchEvent.Simple {
     func phased() -> [TouchEvent.Phased] {
-        var phaseEvents = self.map { (simpleEvent) -> TouchEvent.Phased in
-            return TouchEvent.Phased(event: simpleEvent, phase: .moved)
+        return map({ (id: $0.id, loc: $0.loc, pred: false, update: false) }).phased()
+    }
+}
+
+extension Array where Element == TouchEvent.Complete {
+    func phased() -> [TouchEvent.Phased] {
+        var phaseEvents = self.map { (completeEvent) -> TouchEvent.Phased in
+            return TouchEvent.Phased(event: completeEvent, phase: .moved)
         }
         var soFar: [UITouchIdentifier] = []
         for index in phaseEvents.indices {
@@ -64,7 +70,8 @@ extension Array where Element == TouchEvent {
 extension TouchEvent {
 
     typealias Simple = (id: UITouchIdentifier, loc: CGPoint)
-    typealias Phased = (event: Simple, phase: UITouch.Phase)
+    typealias Complete = (id: UITouchIdentifier, loc: CGPoint, pred: Bool, update: EstimationUpdateIndex?)
+    typealias Phased = (event: Complete, phase: UITouch.Phase)
 
     static func newFrom(_ simpleEvents: [Simple]) -> [TouchEvent] {
         let phaseEvents = simpleEvents.phased()
