@@ -27,7 +27,7 @@
 		C580259C24E9E1150043130D /* TouchPointCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* TouchPointCollection.swift */; };
 		C580259F24E9E1C10043130D /* TouchPointStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* TouchPointStream.swift */; };
 		C58025A124E9E3F90043130D /* TouchPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025A024E9E3F90043130D /* TouchPoint.swift */; };
-		C58025AC24EA3F150043130D /* DrawUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025AB24EA3F150043130D /* DrawUITests.swift */; };
+		C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025AB24EA3F150043130D /* TestsOfTests.swift */; };
 		C58025AE24EA3F150043130D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */; };
 		C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594308124F0E3640097D52B /* CGPoint+Extensions.swift */; };
 		C594309424F376A90097D52B /* SavitzkyGolayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594309324F376A90097D52B /* SavitzkyGolayViewController.swift */; };
@@ -99,7 +99,7 @@
 		C580259E24E9E1C10043130D /* TouchPointStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPointStream.swift; sourceTree = "<group>"; };
 		C58025A024E9E3F90043130D /* TouchPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPoint.swift; sourceTree = "<group>"; };
 		C58025A924EA3F150043130D /* DrawUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C58025AB24EA3F150043130D /* DrawUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawUITests.swift; sourceTree = "<group>"; };
+		C58025AB24EA3F150043130D /* TestsOfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsOfTests.swift; sourceTree = "<group>"; };
 		C58025AD24EA3F150043130D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C594308124F0E3640097D52B /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		C594309324F376A90097D52B /* SavitzkyGolayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavitzkyGolayViewController.swift; sourceTree = "<group>"; };
@@ -204,7 +204,7 @@
 		C58025AA24EA3F150043130D /* DrawUITests */ = {
 			isa = PBXGroup;
 			children = (
-				C58025AB24EA3F150043130D /* DrawUITests.swift */,
+				C58025AB24EA3F150043130D /* TestsOfTests.swift */,
 				C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */,
 				C58025AD24EA3F150043130D /* Info.plist */,
 			);
@@ -481,7 +481,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */,
-				C58025AC24EA3F150043130D /* DrawUITests.swift in Sources */,
+				C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

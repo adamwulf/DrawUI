@@ -8,7 +8,7 @@
 import XCTest
 import DrawUI
 
-class DrawUITests: XCTestCase {
+class TestsOfTests: XCTestCase {
 
     typealias Event = TouchEvent.Simple
 
