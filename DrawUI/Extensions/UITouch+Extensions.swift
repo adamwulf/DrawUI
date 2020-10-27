@@ -22,3 +22,7 @@ extension UITouch {
         }
     }
 }
+
+extension UITouch.Properties {
+    public static let none = UITouch.Properties([])
+}

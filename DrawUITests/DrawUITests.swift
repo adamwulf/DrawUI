@@ -10,7 +10,7 @@ import DrawUI
 
 class DrawUITests: XCTestCase {
 
-    func testExample() throws {
+    func testSingleStrokeWithUpdate() throws {
         // Input:
         // event batch 1 contains:
         //     a) a point expecting a location update
@@ -38,16 +38,16 @@ class DrawUITests: XCTestCase {
                                         phase: .moved,
                                         location: CGPoint(x: 200, y: 100),
                                         estimationUpdateIndex: nil,
-                                        estimatedProperties: UITouch.Properties(rawValue: 0),
-                                        estimatedPropertiesExpectingUpdates: UITouch.Properties(rawValue: 0),
+                                        estimatedProperties: .none,
+                                        estimatedPropertiesExpectingUpdates: .none,
                                         isUpdate: false,
                                         isPrediction: true)
         let updatedTouch = TouchEvent(touchIdentifier: touchId,
                                       phase: .began,
                                       location: CGPoint(x: 110, y: 120),
                                       estimationUpdateIndex: EstimationUpdateIndex(1),
-                                      estimatedProperties: UITouch.Properties(rawValue: 0),
-                                      estimatedPropertiesExpectingUpdates: UITouch.Properties(rawValue: 0),
+                                      estimatedProperties: .none,
+                                      estimatedPropertiesExpectingUpdates: .none,
                                       isUpdate: true,
                                       isPrediction: false)
         let lastTouch = TouchEvent(touchIdentifier: touchId,
@@ -63,12 +63,12 @@ class DrawUITests: XCTestCase {
                                       location: CGPoint(x: 220, y: 120),
                                       estimationUpdateIndex: EstimationUpdateIndex(2),
                                       estimatedProperties: .location,
-                                      estimatedPropertiesExpectingUpdates: UITouch.Properties(rawValue: 0),
+                                      estimatedPropertiesExpectingUpdates: .none,
                                       isUpdate: true,
                                       isPrediction: false)
 
-        let strokes = TouchPointStream()
-        var output = strokes.process(touchEvents: [startTouch, predictedTouch])
+        let pointStream = TouchPointStream()
+        var output = pointStream.process(touchEvents: [startTouch, predictedTouch])
         let delta1 = output.deltas
 
         XCTAssertEqual(delta1.count, 1)
@@ -82,9 +82,10 @@ class DrawUITests: XCTestCase {
             XCTFail()
         }
 
-        output = strokes.process(touchEvents: [updatedTouch])
+        output = pointStream.process(touchEvents: [updatedTouch])
         let delta2 = output.deltas
 
+        XCTAssertEqual(output.pointCollections.count, 1)
         XCTAssertEqual(delta2.count, 1)
         if case .updatedTouchPoints(let index, let indexSet) = delta2.first {
             XCTAssertEqual(output.pointCollections[index].points.count, 1)
@@ -97,9 +98,10 @@ class DrawUITests: XCTestCase {
             XCTFail()
         }
 
-        output = strokes.process(touchEvents: [lastTouch])
+        output = pointStream.process(touchEvents: [lastTouch])
         let delta3 = output.deltas
 
+        XCTAssertEqual(output.pointCollections.count, 1)
         XCTAssertEqual(delta3.count, 1)
         if case .updatedTouchPoints(let index, let indexSet) = delta3.first {
             XCTAssertEqual(output.pointCollections[index].points.count, 2)
@@ -112,9 +114,10 @@ class DrawUITests: XCTestCase {
             XCTFail()
         }
 
-        output = strokes.process(touchEvents: [lastUpdatedTouch])
+        output = pointStream.process(touchEvents: [lastUpdatedTouch])
         let delta4 = output.deltas
 
+        XCTAssertEqual(output.pointCollections.count, 1)
         XCTAssertEqual(delta4.count, 2)
         if case .updatedTouchPoints(let index, let indexSet) = delta4.first {
             XCTAssertEqual(output.pointCollections[index].points.count, 2)
@@ -132,5 +135,54 @@ class DrawUITests: XCTestCase {
         } else {
             XCTFail()
         }
+    }
+
+    func testSimpleStroke() {
+        let touchId: UITouchIdentifier = UUID().uuidString
+        let simpleEvents = [(id: touchId, loc: CGPoint(x: 4, y: 10)),
+                            (id: touchId, loc: CGPoint(x: 10, y: 100)),
+                            (id: touchId, loc: CGPoint(x: 12, y: 40)),
+                            (id: touchId, loc: CGPoint(x: 16, y: 600))]
+        let events = TouchEvent.newFrom(simpleEvents)
+
+        XCTAssertEqual(events.count, 4)
+        XCTAssertEqual(events[0].phase, .began)
+        XCTAssertEqual(events[1].phase, .moved)
+        XCTAssertEqual(events[2].phase, .moved)
+        XCTAssertEqual(events[3].phase, .ended)
+
+        XCTAssertEqual(events[0].location, simpleEvents[0].loc)
+        XCTAssertEqual(events[1].location, simpleEvents[1].loc)
+        XCTAssertEqual(events[2].location, simpleEvents[2].loc)
+        XCTAssertEqual(events[3].location, simpleEvents[3].loc)
+
+        XCTAssert(events.matches(simpleEvents))
+        XCTAssert(events.matches(simpleEvents.phased()))
+    }
+
+    func testTwoStrokes() {
+        let touchId1: UITouchIdentifier = UUID().uuidString
+        let touchId2: UITouchIdentifier = UUID().uuidString
+        let simpleEvents = [(id: touchId1, loc: CGPoint(x: 4, y: 10)),
+                            (id: touchId1, loc: CGPoint(x: 10, y: 100)),
+                            (id: touchId2, loc: CGPoint(x: 12, y: 40)),
+                            (id: touchId1, loc: CGPoint(x: 16, y: 600)),
+                            (id: touchId2, loc: CGPoint(x: 4, y: 10)),
+                            (id: touchId2, loc: CGPoint(x: 10, y: 100)),
+                            (id: touchId1, loc: CGPoint(x: 12, y: 40)),
+                            (id: touchId2, loc: CGPoint(x: 16, y: 600))]
+        let events = TouchEvent.newFrom(simpleEvents)
+        let str1 = events.having(id: touchId1)
+        let str2 = events.having(id: touchId2)
+
+        for str in [str1, str2] {
+            XCTAssertEqual(str.count, 4)
+            XCTAssertEqual(str[0].phase, .began)
+            XCTAssertEqual(str[1].phase, .moved)
+            XCTAssertEqual(str[2].phase, .moved)
+            XCTAssertEqual(str[3].phase, .ended)
+        }
+
+        XCTAssert(events.matches(simpleEvents))
     }
 }
