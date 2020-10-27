@@ -18,12 +18,6 @@ extension Array where Element: Equatable {
 
 extension Array where Element == TouchEvent.Simple {
     func phased() -> [TouchEvent.Phased] {
-        return map({ (id: $0.id, loc: $0.loc, pred: false, update: false) }).phased()
-    }
-}
-
-extension Array where Element == TouchEvent.Complete {
-    func phased() -> [TouchEvent.Phased] {
         var phaseEvents = self.map { (completeEvent) -> TouchEvent.Phased in
             return TouchEvent.Phased(event: completeEvent, phase: .moved, updatePhase: nil)
         }
@@ -89,22 +83,27 @@ extension Array where Element == TouchEvent {
     func matches(_ simple: [TouchEvent.Simple]) -> Bool {
         return matches(simple.phased())
     }
-    func matches(_ simple: [TouchEvent.Complete]) -> Bool {
-        return matches(simple.phased())
-    }
 }
 
 extension TouchEvent {
 
-    typealias Simple = (id: UITouchIdentifier, loc: CGPoint)
-    typealias Complete = (id: UITouchIdentifier, loc: CGPoint, pred: Bool, update: EstimationUpdateIndex?)
-    typealias Phased = (event: Complete, phase: UITouch.Phase, updatePhase: UITouch.Phase?)
+    struct Simple {
+        let id: UITouchIdentifier
+        let loc: CGPoint
+        let pred: Bool
+        let update: EstimationUpdateIndex?
 
-    static func newFrom(_ simpleEvents: [Simple]) -> [TouchEvent] {
-        return newFrom(simpleEvents.map({ (id: $0.id, loc: $0.loc, pred: false, update: false) }))
+        init(id: UITouchIdentifier? = nil, loc: CGPoint, pred: Bool? = nil, update: EstimationUpdateIndex? = nil) {
+            self.id = id ?? UUID().uuidString
+            self.loc = loc
+            self.pred = pred ?? false
+            self.update = update
+        }
     }
 
-    static func newFrom(_ completeEvents: [Complete]) -> [TouchEvent] {
+    typealias Phased = (event: Simple, phase: UITouch.Phase, updatePhase: UITouch.Phase?)
+
+    static func newFrom(_ completeEvents: [Simple]) -> [TouchEvent] {
         let phaseEvents = completeEvents.phased()
 
         return phaseEvents.map { (phaseEvent) -> TouchEvent in

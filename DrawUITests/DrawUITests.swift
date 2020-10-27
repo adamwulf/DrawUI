@@ -10,6 +10,8 @@ import DrawUI
 
 class DrawUITests: XCTestCase {
 
+    typealias Event = TouchEvent.Simple
+
     func testSingleStrokeWithUpdate() throws {
         // Input:
         // event batch 1 contains:
@@ -26,11 +28,11 @@ class DrawUITests: XCTestCase {
         // that point is removed. its index is included in the IndexSet
         // of modified points.
         let touchId: UITouchIdentifier = UUID().uuidString
-        let completeEvents = [(id: touchId, loc: CGPoint(x: 100, y: 100), pred: false, update: EstimationUpdateIndex(1)),
-                            (id: touchId, loc: CGPoint(x: 200, y: 100), pred: true, update: nil),
-                            (id: touchId, loc: CGPoint(x: 110, y: 120), pred: false, update: EstimationUpdateIndex(1)),
-                            (id: touchId, loc: CGPoint(x: 200, y: 100), pred: false, update: EstimationUpdateIndex(2)),
-                            (id: touchId, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(2))]
+        let completeEvents = [Event(id: touchId, loc: CGPoint(x: 100, y: 100), pred: false, update: EstimationUpdateIndex(1)),
+                              Event(id: touchId, loc: CGPoint(x: 200, y: 100), pred: true),
+                              Event(id: touchId, loc: CGPoint(x: 110, y: 120), pred: false, update: EstimationUpdateIndex(1)),
+                              Event(id: touchId, loc: CGPoint(x: 200, y: 100), pred: false, update: EstimationUpdateIndex(2)),
+                              Event(id: touchId, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(2))]
         let events = TouchEvent.newFrom(completeEvents)
 
         XCTAssertEqual(events.count, 5)
@@ -129,10 +131,10 @@ class DrawUITests: XCTestCase {
 
     func testSimpleStroke() {
         let touchId: UITouchIdentifier = UUID().uuidString
-        let simpleEvents = [(id: touchId, loc: CGPoint(x: 4, y: 10)),
-                            (id: touchId, loc: CGPoint(x: 10, y: 100)),
-                            (id: touchId, loc: CGPoint(x: 12, y: 40)),
-                            (id: touchId, loc: CGPoint(x: 16, y: 600))]
+        let simpleEvents = [Event(id: touchId, loc: CGPoint(x: 4, y: 10)),
+                            Event(id: touchId, loc: CGPoint(x: 10, y: 100)),
+                            Event(id: touchId, loc: CGPoint(x: 12, y: 40)),
+                            Event(id: touchId, loc: CGPoint(x: 16, y: 600))]
         let events = TouchEvent.newFrom(simpleEvents)
 
         XCTAssertEqual(events.count, 4)
@@ -153,14 +155,14 @@ class DrawUITests: XCTestCase {
     func testTwoStrokes() {
         let touchId1: UITouchIdentifier = UUID().uuidString
         let touchId2: UITouchIdentifier = UUID().uuidString
-        let simpleEvents = [(id: touchId1, loc: CGPoint(x: 4, y: 10)),
-                            (id: touchId1, loc: CGPoint(x: 10, y: 100)),
-                            (id: touchId2, loc: CGPoint(x: 12, y: 40)),
-                            (id: touchId1, loc: CGPoint(x: 16, y: 600)),
-                            (id: touchId2, loc: CGPoint(x: 4, y: 10)),
-                            (id: touchId2, loc: CGPoint(x: 10, y: 100)),
-                            (id: touchId1, loc: CGPoint(x: 12, y: 40)),
-                            (id: touchId2, loc: CGPoint(x: 16, y: 600))]
+        let simpleEvents = [Event(id: touchId1, loc: CGPoint(x: 4, y: 10)),
+                            Event(id: touchId1, loc: CGPoint(x: 10, y: 100)),
+                            Event(id: touchId2, loc: CGPoint(x: 12, y: 40)),
+                            Event(id: touchId1, loc: CGPoint(x: 16, y: 600)),
+                            Event(id: touchId2, loc: CGPoint(x: 4, y: 10)),
+                            Event(id: touchId2, loc: CGPoint(x: 10, y: 100)),
+                            Event(id: touchId1, loc: CGPoint(x: 12, y: 40)),
+                            Event(id: touchId2, loc: CGPoint(x: 16, y: 600))]
         let events = TouchEvent.newFrom(simpleEvents)
         let str1 = events.having(id: touchId1)
         let str2 = events.having(id: touchId2)
