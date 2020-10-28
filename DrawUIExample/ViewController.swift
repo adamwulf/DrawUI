@@ -32,8 +32,11 @@ class ViewController: UIViewController {
 
         setupTable()
 
+        var allEvents: [TouchEvent] = []
+
         eventStream.eventStreamChanged = { [weak self] (updatedEvents) in
             guard let self = self else { return }
+            allEvents.append(contentsOf: updatedEvents)
             let pointOutput = self.pointStream.process(touchEvents: updatedEvents)
             let strokeOutput = self.strokeStream.process(input: pointOutput)
             let douglasPeuckerOutput = self.douglasPeucker.process(input: strokeOutput)
@@ -44,6 +47,15 @@ class ViewController: UIViewController {
             self.debugView?.smoothStrokes = smoothOutput.strokes
             self.debugView?.add(deltas: strokeOutput.deltas)
             self.debugView?.setNeedsDisplay()
+
+            let jsonEncoder = JSONEncoder()
+            jsonEncoder.outputFormatting = [.withoutEscapingSlashes, .prettyPrinted]
+            if let json = try? jsonEncoder.encode(allEvents) {
+                print(json)
+                if let events = try? JSONDecoder().decode([TouchEvent].self, from: json) {
+                    print(events)
+                }
+            }
         }
 
         debugView?.addGestureRecognizer(eventStream.gesture)

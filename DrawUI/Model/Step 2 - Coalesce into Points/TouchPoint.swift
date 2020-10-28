@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class TouchPoint {
+public class TouchPoint: Codable {
 
     public private(set) var events: [TouchEvent]
     public var event: TouchEvent {

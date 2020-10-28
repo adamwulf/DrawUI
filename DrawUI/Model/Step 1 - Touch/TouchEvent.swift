@@ -11,7 +11,7 @@ public typealias TouchEventIdentifier = String
 public typealias PointIdentifier = String
 public typealias EstimationUpdateIndex = NSNumber
 
-public class TouchEvent {
+public class TouchEvent: Codable {
 
     /// A completely unique identifier per event, even for events built from
     /// the same touch or coalescedTouch
@@ -161,6 +161,80 @@ public class TouchEvent {
 
     public func isSameTouchAs(event: TouchEvent) -> Bool {
         return touchIdentifier == event.touchIdentifier
+    }
+
+    // MARK: - Codable
+
+    enum CodingKeys: CodingKey {
+        case identifier
+        case touchIdentifier
+        case timestamp
+        case type
+        case phase
+        case force
+        case maximumPossibleForce
+        case altitudeAngle
+        case azimuthUnitVector
+        case azimuth
+        case majorRadius
+        case majorRadiusTolerance
+        case location
+        case estimationUpdateIndex
+        case estimatedProperties
+        case estimatedPropertiesExpectingUpdates
+        case isUpdate
+        case isPrediction
+    }
+
+    required public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.identifier = try values.decode(TouchEventIdentifier.self, forKey: .identifier)
+        self.touchIdentifier = try values.decode(UITouchIdentifier.self, forKey: .touchIdentifier)
+        self.timestamp = try values.decode(TimeInterval.self, forKey: .timestamp)
+        self.type = try values.decode(UITouch.TouchType.self, forKey: .type)
+        self.phase = try values.decode(UITouch.Phase.self, forKey: .phase)
+        self.force = try values.decode(CGFloat.self, forKey: .force)
+        self.maximumPossibleForce = try values.decode(CGFloat.self, forKey: .maximumPossibleForce)
+        self.altitudeAngle = try values.decode(CGFloat.self, forKey: .altitudeAngle)
+        self.azimuthUnitVector = try values.decode(CGVector.self, forKey: .azimuthUnitVector)
+        self.azimuth = try values.decode(CGFloat.self, forKey: .azimuth)
+        self.majorRadius = try values.decode(CGFloat.self, forKey: .majorRadius)
+        self.majorRadiusTolerance = try values.decode(CGFloat.self, forKey: .majorRadiusTolerance)
+        self.location = try values.decode(CGPoint.self, forKey: .location)
+
+        if let index = try values.decodeIfPresent(Double.self, forKey: .estimationUpdateIndex) {
+            self.estimationUpdateIndex = NSNumber(value: index)
+        } else {
+            self.estimationUpdateIndex = nil
+        }
+
+        self.estimatedProperties = try values.decode(UITouch.Properties.self, forKey: .estimatedProperties)
+        self.estimatedPropertiesExpectingUpdates = try values.decode(UITouch.Properties.self, forKey: .estimatedPropertiesExpectingUpdates)
+        self.isUpdate = try values.decode(Bool.self, forKey: .isUpdate)
+        self.isPrediction = try values.decode(Bool.self, forKey: .isPrediction)
+        self.view = nil
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(identifier, forKey: .identifier)
+        try container.encode(touchIdentifier, forKey: .touchIdentifier)
+        try container.encode(timestamp, forKey: .timestamp)
+        try container.encode(type, forKey: .type)
+        try container.encode(phase, forKey: .phase)
+        try container.encode(force, forKey: .force)
+        try container.encode(maximumPossibleForce, forKey: .maximumPossibleForce)
+        try container.encode(altitudeAngle, forKey: .altitudeAngle)
+        try container.encode(azimuthUnitVector, forKey: .azimuthUnitVector)
+        try container.encode(azimuth, forKey: .azimuth)
+        try container.encode(majorRadius, forKey: .majorRadius)
+        try container.encode(majorRadiusTolerance, forKey: .majorRadiusTolerance)
+        try container.encode(location, forKey: .location)
+        try container.encodeIfPresent(estimationUpdateIndex?.doubleValue, forKey: .estimationUpdateIndex)
+        try container.encode(estimatedProperties, forKey: .estimatedProperties)
+        try container.encode(estimatedPropertiesExpectingUpdates, forKey: .estimatedPropertiesExpectingUpdates)
+        try container.encode(isUpdate, forKey: .isUpdate)
+        try container.encode(isPrediction, forKey: .isPrediction)
     }
 }
 

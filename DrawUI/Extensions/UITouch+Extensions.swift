@@ -26,3 +26,15 @@ extension UITouch {
 extension UITouch.Properties {
     public static let none = UITouch.Properties([])
 }
+
+extension UITouch.TouchType: Codable {
+
+}
+
+extension UITouch.Phase: Codable {
+
+}
+
+extension UITouch.Properties: Codable {
+
+}
