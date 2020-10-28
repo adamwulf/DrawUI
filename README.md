@@ -49,11 +49,15 @@ DrawUI includes multiple rendering methods. Many are unoptimized reference rende
 
 Next steps:
 
-1. Create UIBezierPath cubic smoothing
-2. implement CGContextRenderer
-3. Implement a UIView that uses the context renderer for its drawing
-4. implement background rendering to image
-5. implement background rendering to vector PDF
+1. [x] Unit tests for existing Steps 1, 2
+2. [x] Ability to save/load json files containing touch event data
+3. [ ] Unit tests for existing Step 3
+4. [ ] Unit tests for existing Step 4
+5. [ ] Create UIBezierPath cubic smoothing
+6. [ ] implement CGContextRenderer
+7. [ ] Implement a UIView that uses the context renderer for its drawing
+8. [ ] implement background rendering to image
+9. [ ] implement background rendering to vector PDF
 
 
 ### Smoothing:
