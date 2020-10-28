@@ -41,10 +41,33 @@ class TouchPointStreamTests: XCTestCase {
         let touchStream = TouchPointStream()
         touchStream.process(touchEvents: events)
 
-        for split in 1..<completeEvents.count {
+        for split in 1..<events.count {
             let altStream = TouchPointStream()
             altStream.process(touchEvents: Array(events[0 ..< split]))
-            altStream.process(touchEvents: Array(events[split ..< completeEvents.count]))
+            altStream.process(touchEvents: Array(events[split ..< events.count]))
+
+            XCTAssertEqual(touchStream.pointCollections, altStream.pointCollections)
+        }
+    }
+
+    func testStreamsMatch2() throws {
+        let testBundle = Bundle(for: type(of: self))
+        guard
+            let jsonFile = testBundle.url(forResource: "events", withExtension: "json")
+        else {
+            XCTFail("Could not load json")
+            return
+        }
+
+        let data = try Data(contentsOf: jsonFile)
+        let events = try JSONDecoder().decode([TouchEvent].self, from: data)
+        let touchStream = TouchPointStream()
+        touchStream.process(touchEvents: events)
+
+        for split in 1..<events.count {
+            let altStream = TouchPointStream()
+            altStream.process(touchEvents: Array(events[0 ..< split]))
+            altStream.process(touchEvents: Array(events[split ..< events.count]))
 
             XCTAssertEqual(touchStream.pointCollections, altStream.pointCollections)
         }

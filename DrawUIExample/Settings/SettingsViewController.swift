@@ -11,6 +11,7 @@ import DrawUI
 
 protocol SettingsViewControllerDelegate: class {
     func didChangeSettings()
+    func didRequestExport()
 }
 
 class SettingsViewController: FormViewController {
@@ -22,6 +23,11 @@ class SettingsViewController: FormViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let exportButton = UIBarButtonItem(systemItem: .action)
+        exportButton.target = self
+        exportButton.action = #selector(didRequestExport)
+        navigationItem.rightBarButtonItem = exportButton
 
         let predictionRow = SwitchRowFormer<FormSwitchCell> {
             $0.titleLabel.text = "Allow Prediction"
@@ -113,6 +119,10 @@ class SettingsViewController: FormViewController {
 
         self.former.reload()
         tableView.reloadData()
+    }
+
+    @objc func didRequestExport() {
+        delegate?.didRequestExport()
     }
 }
 

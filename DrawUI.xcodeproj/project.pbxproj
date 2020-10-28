@@ -18,6 +18,7 @@
 		C507F3FA2505F4A0001A7821 /* DouglasPeuckerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3F92505F4A0001A7821 /* DouglasPeuckerViewController.swift */; };
 		C507F3FC2505F58C001A7821 /* PointDinstanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3FB2505F58C001A7821 /* PointDinstanceViewController.swift */; };
 		C53651B72544CC7F00FA25A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C53651B62544CC7E00FA25A4 /* README.md */; };
+		C5420EA52549096700473D8A /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = C5420EA42549096700473D8A /* events.json */; };
 		C559CBFB24EB9489006D263C /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF824EB9489006D263C /* StrokePoint.swift */; };
 		C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* PolylineStream.swift */; };
 		C559CBFD24EB9489006D263C /* Polyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFA24EB9489006D263C /* Polyline.swift */; };
@@ -90,6 +91,7 @@
 		C507F3F92505F4A0001A7821 /* DouglasPeuckerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DouglasPeuckerViewController.swift; sourceTree = "<group>"; };
 		C507F3FB2505F58C001A7821 /* PointDinstanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointDinstanceViewController.swift; sourceTree = "<group>"; };
 		C53651B62544CC7E00FA25A4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		C5420EA42549096700473D8A /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
 		C559CBF824EB9489006D263C /* StrokePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* PolylineStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolylineStream.swift; sourceTree = "<group>"; };
 		C559CBFA24EB9489006D263C /* Polyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Polyline.swift; sourceTree = "<group>"; };
@@ -152,6 +154,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C5420EAA2549096F00473D8A /* Test Data */ = {
+			isa = PBXGroup;
+			children = (
+				C5420EA42549096700473D8A /* events.json */,
+			);
+			name = "Test Data";
+			sourceTree = "<group>";
+		};
 		C548CEBE2547777000F4E648 /* Step 5 - Smooth Strokes */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +216,7 @@
 		C58025AA24EA3F150043130D /* DrawUITests */ = {
 			isa = PBXGroup;
 			children = (
+				C5420EAA2549096F00473D8A /* Test Data */,
 				C58025AB24EA3F150043130D /* TestsOfTests.swift */,
 				C5005F562548E14500E6DD0C /* TouchPointStreamTests.swift */,
 				C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */,
@@ -434,6 +445,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5420EA52549096700473D8A /* events.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
