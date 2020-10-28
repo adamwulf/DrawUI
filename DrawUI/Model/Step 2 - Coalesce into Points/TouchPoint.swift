@@ -25,3 +25,13 @@ public class TouchPoint {
         events.append(event)
     }
 }
+
+extension TouchPoint: Hashable {
+    public static func == (lhs: TouchPoint, rhs: TouchPoint) -> Bool {
+        return lhs.expectsUpdate == rhs.expectsUpdate && lhs.events == rhs.events
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(events)
+    }
+}

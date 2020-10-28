@@ -10,6 +10,7 @@
 		C5005F472547788100E6DD0C /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F462547788100E6DD0C /* StrokeStream.swift */; };
 		C5005F4B2547789C00E6DD0C /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F4A2547789C00E6DD0C /* Stroke.swift */; };
 		C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */; };
+		C5005F572548E14500E6DD0C /* TouchPointStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F562548E14500E6DD0C /* TouchPointStreamTests.swift */; };
 		C507F3E325041E0B001A7821 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E225041E0B001A7821 /* Clamping.swift */; };
 		C507F3F2250554AD001A7821 /* Former in Frameworks */ = {isa = PBXBuildFile; productRef = C507F3F1250554AD001A7821 /* Former */; };
 		C507F3F42505E40C001A7821 /* EnabledSliderRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3F32505E40C001A7821 /* EnabledSliderRowFormer.swift */; };
@@ -82,6 +83,7 @@
 		C5005F462547788100E6DD0C /* StrokeStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeStream.swift; sourceTree = "<group>"; };
 		C5005F4A2547789C00E6DD0C /* Stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
 		C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		C5005F562548E14500E6DD0C /* TouchPointStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPointStreamTests.swift; sourceTree = "<group>"; };
 		C507F3E225041E0B001A7821 /* Clamping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
 		C507F3F32505E40C001A7821 /* EnabledSliderRowFormer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledSliderRowFormer.swift; sourceTree = "<group>"; };
 		C507F3F72505EF59001A7821 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				C58025AB24EA3F150043130D /* TestsOfTests.swift */,
+				C5005F562548E14500E6DD0C /* TouchPointStreamTests.swift */,
 				C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */,
 				C58025AD24EA3F150043130D /* Info.plist */,
 			);
@@ -480,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5005F572548E14500E6DD0C /* TouchPointStreamTests.swift in Sources */,
 				C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */,
 				C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */,
 			);

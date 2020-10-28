@@ -53,7 +53,7 @@ public class TouchPointCollection {
     func add(touchEvents: [TouchEvent]) -> IndexSet {
         assert(!isComplete, "Cannot add events to a complete pointCollection")
         var indexSet = IndexSet()
-        var consumable = predictedPoints
+        var consumable: [TouchPoint] = predictedPoints
         predictedPoints = []
 
         for event in touchEvents {
@@ -90,14 +90,13 @@ public class TouchPointCollection {
                 }
             } else {
                 // The event is a normal confirmed user event. Attempt to re-use a consumable point, or create a new Point
-                if let point = consumable.first {
+                if let point = consumable.popFirst() ?? predictedPoints.popFirst() {
                     // The event is a new confirmed points, consume a previous prediction if possible and update it to the now
                     // confirmed point.
                     if event.expectsUpdate {
                         expectingUpdate.append(event.pointIdentifier)
                     }
                     point.add(event: event)
-                    consumable.removeFirst()
                     eventToPoint[event.pointIdentifier] = point
                     confirmedPoints.append(point)
                     let index = confirmedPoints.count - 1
@@ -131,7 +130,7 @@ public class TouchPointCollection {
 
 extension TouchPointCollection: Hashable {
     public static func == (lhs: TouchPointCollection, rhs: TouchPointCollection) -> Bool {
-        return lhs.touchIdentifier == rhs.touchIdentifier
+        return lhs.touchIdentifier == rhs.touchIdentifier && lhs.points == rhs.points
     }
 
     public func hash(into hasher: inout Hasher) {
