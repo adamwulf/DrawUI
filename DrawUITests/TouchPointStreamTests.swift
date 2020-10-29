@@ -103,6 +103,26 @@ class TouchPointStreamTests: XCTestCase {
         }
     }
 
+    func testMeasureTouchEvents() throws {
+        let testBundle = Bundle(for: type(of: self))
+        guard
+            let jsonFile = testBundle.url(forResource: "events", withExtension: "json")
+        else {
+            XCTFail("Could not load json")
+            return
+        }
+
+        let data = try Data(contentsOf: jsonFile)
+        let events = try JSONDecoder().decode([TouchEvent].self, from: data)
+
+        measure {
+            let touchStream = TouchPointStream()
+            let midPoint = events.count / 2
+            touchStream.process(touchEvents: Array(events[0 ..< midPoint]))
+            touchStream.process(touchEvents: Array(events[midPoint...]))
+        }
+    }
+
     func testStreamsMatch3() throws {
         let touchId: UITouchIdentifier = UUID().uuidString
         let completeEvents = [Event(id: touchId, loc: CGPoint(x: 100, y: 100), pred: false, update: EstimationUpdateIndex(1)),

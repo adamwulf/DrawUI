@@ -42,6 +42,7 @@ public class TouchPointStream {
     @discardableResult
     public func process(touchEvents: [TouchEvent]) -> Output {
         var deltas: [Delta] = []
+        var orderOfTouches: [UITouchIdentifier] = []
         let updatedEventsPerTouch = touchEvents.reduce([:], { (result, event) -> [String: [TouchEvent]] in
             var result = result
             if result[event.touchIdentifier] != nil {
@@ -49,10 +50,14 @@ public class TouchPointStream {
             } else {
                 result[event.touchIdentifier] = [event]
             }
+            if !orderOfTouches.contains(event.touchIdentifier) {
+                orderOfTouches.append(event.touchIdentifier)
+            }
             return result
         })
 
-        for (touchIdentifier, events) in updatedEventsPerTouch {
+        for touchIdentifier in orderOfTouches {
+            guard let events = updatedEventsPerTouch[touchIdentifier] else { continue }
             if let pointCollectionIndex = touchToIndex[touchIdentifier] {
                 let pointCollection = pointCollections[pointCollectionIndex]
                 let updatedIndexes = pointCollection.add(touchEvents: events)
