@@ -72,4 +72,54 @@ class TouchPointStreamTests: XCTestCase {
             XCTAssertEqual(touchStream.pointCollections, altStream.pointCollections)
         }
     }
+
+    func testCorrectPointCountAndLocation() throws {
+        let touchId: UITouchIdentifier = UUID().uuidString
+        let completeEvents = [Event(id: touchId, loc: CGPoint(x: 100, y: 100), pred: false, update: EstimationUpdateIndex(1)),
+                              Event(id: touchId, loc: CGPoint(x: 200, y: 100), pred: true),
+                              Event(id: touchId, loc: CGPoint(x: 110, y: 120), pred: false, update: EstimationUpdateIndex(1)),
+                              Event(id: touchId, loc: CGPoint(x: 200, y: 110), pred: false, update: EstimationUpdateIndex(2)),
+                              Event(id: touchId, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(2))]
+        var events = TouchEvent.newFrom(completeEvents)
+
+        let touchStream = TouchPointStream()
+        var output = touchStream.process(touchEvents: [events.removeFirst()])
+
+        XCTAssertEqual(output.pointCollections.count, 1)
+        XCTAssertEqual(output.pointCollections[0].touchIdentifier, touchId)
+        XCTAssertEqual(output.pointCollections[0].isComplete, false)
+        XCTAssertEqual(output.pointCollections[0].points.count, 1)
+        XCTAssertEqual(output.pointCollections[0].points[0].events.count, 1)
+        XCTAssertEqual(output.pointCollections[0].points[0].event.location, CGPoint(x: 100, y: 100))
+
+        output = touchStream.process(touchEvents: [events.removeFirst()])
+
+        XCTAssertEqual(output.pointCollections.count, 1)
+        XCTAssertEqual(output.pointCollections[0].isComplete, false)
+        XCTAssertEqual(output.pointCollections[0].points.count, 2)
+        XCTAssertEqual(output.pointCollections[0].points[0].events.count, 1)
+        XCTAssertEqual(output.pointCollections[0].points[0].event.location, CGPoint(x: 100, y: 100))
+        XCTAssertEqual(output.pointCollections[0].points[1].events.count, 1)
+        XCTAssertEqual(output.pointCollections[0].points[1].event.location, CGPoint(x: 200, y: 100))
+
+        output = touchStream.process(touchEvents: [events.removeFirst(), events.removeFirst()])
+
+        XCTAssertEqual(output.pointCollections.count, 1)
+        XCTAssertEqual(output.pointCollections[0].isComplete, false)
+        XCTAssertEqual(output.pointCollections[0].points.count, 2)
+        XCTAssertEqual(output.pointCollections[0].points[0].events.count, 2)
+        XCTAssertEqual(output.pointCollections[0].points[0].event.location, CGPoint(x: 110, y: 120))
+        XCTAssertEqual(output.pointCollections[0].points[1].events.count, 2)
+        XCTAssertEqual(output.pointCollections[0].points[1].event.location, CGPoint(x: 200, y: 110))
+
+        output = touchStream.process(touchEvents: [events.removeFirst()])
+
+        XCTAssertEqual(output.pointCollections.count, 1)
+        XCTAssertEqual(output.pointCollections[0].isComplete, true)
+        XCTAssertEqual(output.pointCollections[0].points.count, 2)
+        XCTAssertEqual(output.pointCollections[0].points[0].events.count, 2)
+        XCTAssertEqual(output.pointCollections[0].points[0].event.location, CGPoint(x: 110, y: 120))
+        XCTAssertEqual(output.pointCollections[0].points[1].events.count, 3)
+        XCTAssertEqual(output.pointCollections[0].points[1].event.location, CGPoint(x: 220, y: 120))
+    }
 }
