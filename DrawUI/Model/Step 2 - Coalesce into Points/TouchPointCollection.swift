@@ -31,8 +31,13 @@ public class TouchPointCollection {
     }
 
     // MARK: - Private Properties
+    /// Confirmed points have at least one non-predictive point
     private var confirmedPoints: [TouchPoint]
+    /// Predicted points have only a single prediction event, and have been predicted in our most recent `process()` round
     private var predictedPoints: [TouchPoint]
+    /// Consumable points are previously predicted points that were not used up by the previous `process()` when creating confirmed points.
+    /// these should be used before any newly predicted points
+    private var consumable: [TouchPoint]
     private var expectingUpdate: [String]
     private var eventToPoint: [PointIdentifier: TouchPoint]
     private var eventToIndex: [PointIdentifier: Int]
@@ -42,6 +47,7 @@ public class TouchPointCollection {
         guard !touchEvents.isEmpty else { return nil }
         self.confirmedPoints = []
         self.predictedPoints = []
+        self.consumable = []
         self.eventToPoint = [:]
         self.eventToIndex = [:]
         self.expectingUpdate = []
@@ -53,14 +59,17 @@ public class TouchPointCollection {
     func add(touchEvents: [TouchEvent]) -> IndexSet {
         assert(!isComplete, "Cannot add events to a complete pointCollection")
         var indexSet = IndexSet()
-        var consumable: [TouchPoint] = predictedPoints
-        predictedPoints = []
+        let startingCount = points.count
 
         for event in touchEvents {
             assert(touchIdentifier == event.touchIdentifier)
             if
                 eventToPoint[event.pointIdentifier] != nil,
                 let index = eventToIndex[event.pointIdentifier] {
+                // we got an update to a legitimate point. move all of our predictions into consumable
+                consumable.append(contentsOf: predictedPoints)
+                predictedPoints.removeAll()
+
                 // This is an update to an existing point. Add the event to the point that we already have.
                 // If this is the last event that the point expects, then remove it from `expectsUpdate`
                 eventToPoint[event.pointIdentifier]?.add(event: event)
@@ -71,11 +80,10 @@ public class TouchPointCollection {
             } else if event.isPrediction {
                 // The event is a prediction. Attempt to consume a previous prediction and reuse a Point object,
                 // otherwise create a new Point and add to the predictions array
-                if let prediction = consumable.first {
+                if let prediction = consumable.popFirst() {
                     // This event is a prediction, and we can reuse one of the points from the previous predictions
                     // consume a prediction and reuse it
                     prediction.add(event: event)
-                    consumable.removeFirst()
                     predictedPoints.append(prediction)
                     let index = confirmedPoints.count + predictedPoints.count - 1
                     eventToIndex[event.pointIdentifier] = index
@@ -89,6 +97,10 @@ public class TouchPointCollection {
                     indexSet.insert(index)
                 }
             } else {
+                // we got a new legitimate point. move all of our predictions into consumable
+                consumable.append(contentsOf: predictedPoints)
+                predictedPoints.removeAll()
+
                 // The event is a normal confirmed user event. Attempt to re-use a consumable point, or create a new Point
                 if let point = consumable.popFirst() ?? predictedPoints.popFirst() {
                     // The event is a new confirmed points, consume a previous prediction if possible and update it to the now
@@ -121,7 +133,10 @@ public class TouchPointCollection {
         // in that case, mark the now-out-of-bounds indexes as modified since those points
         // were deleted
         for index in consumable.indices {
-            indexSet.insert(confirmedPoints.count + predictedPoints.count + index)
+            let possiblyRemovedIndex = confirmedPoints.count + predictedPoints.count + index
+            if possiblyRemovedIndex < startingCount {
+                indexSet.insert(possiblyRemovedIndex)
+            }
         }
 
         return indexSet

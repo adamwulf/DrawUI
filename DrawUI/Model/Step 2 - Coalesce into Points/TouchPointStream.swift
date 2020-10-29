@@ -14,7 +14,7 @@ public class TouchPointStream {
 
     public typealias Output = (pointCollections: [TouchPointCollection], deltas: [Delta])
 
-    public enum Delta {
+    public enum Delta: Equatable {
         case addedTouchPoints(pointCollectionIndex: Int)
         case updatedTouchPoints(pointCollectionIndex: Int, updatedIndexes: IndexSet)
         case completedTouchPoints(pointCollectionIndex: Int)
@@ -67,6 +67,10 @@ public class TouchPointStream {
                 touchToIndex[touchIdentifier] = pointCollectionIndex
                 pointCollections.append(pointCollection)
                 deltas.append(.addedTouchPoints(pointCollectionIndex: pointCollectionIndex))
+
+                if pointCollection.isComplete {
+                    deltas.append(.completedTouchPoints(pointCollectionIndex: pointCollectionIndex))
+                }
             }
         }
 
