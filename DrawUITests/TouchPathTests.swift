@@ -1,5 +1,5 @@
 //
-//  TouchLineStreamTests.swift
+//  TouchPathTests.swift
 //  DrawUITests
 //
 //  Created by Adam Wulf on 10/27/20.
@@ -8,7 +8,7 @@
 import XCTest
 import DrawUI
 
-class TouchLineStreamTests: XCTestCase {
+class TouchPathTests: XCTestCase {
 
     typealias Event = TouchEvent.Simple
 
