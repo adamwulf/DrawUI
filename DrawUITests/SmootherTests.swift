@@ -29,8 +29,8 @@ class SmootherTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 2)
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 0), IndexSet([0]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 1), IndexSet([0]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([0]))
     }
 
     func testThreePoints() throws {
@@ -48,9 +48,9 @@ class SmootherTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 3)
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 0), IndexSet([0, 1]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 1), IndexSet([0, 1]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 2), IndexSet([1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([0, 1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1]))
     }
 
     func testFourPoints() throws {
@@ -69,10 +69,10 @@ class SmootherTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 4)
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 0), IndexSet([0, 1]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 1), IndexSet([0, 1]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 2), IndexSet([1]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 3), IndexSet([1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([0, 1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 3), IndexSet([1]))
     }
 
     func testFivePoints() throws {
@@ -92,11 +92,11 @@ class SmootherTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 5)
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 0), IndexSet([0, 1]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 1), IndexSet([0, 1, 2]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 2), IndexSet([1, 2]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 3), IndexSet([1, 2]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 4), IndexSet([2]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([0, 1, 2]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1, 2]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 3), IndexSet([1, 2]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 4), IndexSet([2]))
     }
 
     func testSixPoints() throws {
@@ -117,12 +117,12 @@ class SmootherTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 6)
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 0), IndexSet([0, 1]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 1), IndexSet([0, 1, 2]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 2), IndexSet([1, 2, 3]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 3), IndexSet([1, 2, 3]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 4), IndexSet([2, 3]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 5), IndexSet([3]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([0, 1, 2]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1, 2, 3]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 3), IndexSet([1, 2, 3]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 4), IndexSet([2, 3]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 5), IndexSet([3]))
     }
 
     func testSevenPoints() throws {
@@ -144,13 +144,13 @@ class SmootherTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 7)
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 0), IndexSet([0, 1]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 1), IndexSet([0, 1, 2]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 2), IndexSet([1, 2, 3]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 3), IndexSet([1, 2, 3, 4]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 4), IndexSet([2, 3, 4]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 5), IndexSet([3, 4]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 6), IndexSet([4]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([0, 1, 2]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1, 2, 3]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 3), IndexSet([1, 2, 3, 4]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 4), IndexSet([2, 3, 4]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 5), IndexSet([3, 4]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 6), IndexSet([4]))
     }
 
     func testEightPoints() throws {
@@ -173,19 +173,16 @@ class SmootherTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 8)
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 0), IndexSet([0, 1]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 1), IndexSet([0, 1, 2]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 2), IndexSet([1, 2, 3]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 3), IndexSet([1, 2, 3, 4]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 4), IndexSet([2, 3, 4, 5]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 5), IndexSet([3, 4, 5]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 6), IndexSet([4, 5]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0], index: 7), IndexSet([5]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0],
-                                                            indexes: IndexSet([0, 7])), IndexSet([0, 1, 5]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0],
-                                                            indexes: IndexSet([6, 7])), IndexSet([4, 5]))
-        XCTAssertEqual(AntigrainSmoother.smoothedIndexesFor(polyline: polylineOutput.lines[0],
-                                                            indexes: IndexSet([3, 4])), IndexSet([1, 2, 3, 4, 5]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([0, 1, 2]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1, 2, 3]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 3), IndexSet([1, 2, 3, 4]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 4), IndexSet([2, 3, 4, 5]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 5), IndexSet([3, 4, 5]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 6), IndexSet([4, 5]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 7), IndexSet([5]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(indexes: IndexSet([0, 7])), IndexSet([0, 1, 5]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(indexes: IndexSet([6, 7])), IndexSet([4, 5]))
+        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(indexes: IndexSet([3, 4])), IndexSet([1, 2, 3, 4, 5]))
     }
 }
