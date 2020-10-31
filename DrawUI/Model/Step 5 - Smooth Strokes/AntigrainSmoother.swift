@@ -22,20 +22,28 @@ public class AntigrainSmoother {
     // 0 => 1, 0
     // 1 => 2, 1, 0
     // 2 => 3, 2, 1
-    // 3 => 4, 3, 2
+    // 3 => 4, 3, 2, 1
     // 4 => 5, 4, 3, 2
     // 5 => 6, 5, 4, 3
     // 6 => 7, 6, 5, 4
     // 7 => 8, 7, 6, 5
     public static func smoothedIndexesFor(polyline: Polyline, index: IndexSet.Element) -> IndexSet {
         assert(index < polyline.points.count)
-        let maxIndex = Swift.max(0, polyline.points.count - 2)
+        let maxIndex = { () -> Int in
+            if polyline.points.count == 3 {
+                // special case, where we use a quadratic curve instead of cubic curve to fit
+                return 1
+            }
+            return Swift.max(0, polyline.points.count - 3)
+        }()
         var ret = IndexSet()
 
-        if index > 0 {
+        if index > 0,
+           index - 1 <= maxIndex {
             ret.insert(index - 1)
         }
-        if index > 1 {
+        if index > 2,
+           index - 2 <= maxIndex {
             ret.insert(index - 2)
         }
         if index <= maxIndex {
