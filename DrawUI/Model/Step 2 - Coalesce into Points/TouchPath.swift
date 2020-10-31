@@ -1,5 +1,5 @@
 //
-//  TouchPointCollection.swift
+//  TouchPath.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -18,11 +18,11 @@ import Foundation
 /// the same point, so that it can output a series of points [A, B, C]
 ///
 /// The output points also know if they are predicted, expecting updates, or is finished
-public class TouchPointCollection {
+public class TouchPath {
 
     // MARK: - Public Properties
     public private(set) var touchIdentifier: String
-    public var points: [TouchPoint] {
+    public var points: [Point] {
         return confirmedPoints + predictedPoints
     }
     public var isComplete: Bool {
@@ -32,14 +32,14 @@ public class TouchPointCollection {
 
     // MARK: - Private Properties
     /// Confirmed points have at least one non-predictive point
-    private var confirmedPoints: [TouchPoint]
+    private var confirmedPoints: [Point]
     /// Predicted points have only a single prediction event, and have been predicted in our most recent `process()` round
-    private var predictedPoints: [TouchPoint]
+    private var predictedPoints: [Point]
     /// Consumable points are previously predicted points that were not used up by the previous `process()` when creating confirmed points.
     /// these should be used before any newly predicted points
-    private var consumable: [TouchPoint]
+    private var consumable: [Point]
     private var expectingUpdate: [String]
-    private var eventToPoint: [PointIdentifier: TouchPoint]
+    private var eventToPoint: [PointIdentifier: Point]
     private var eventToIndex: [PointIdentifier: Int]
 
     // MARK: - Init
@@ -90,7 +90,7 @@ public class TouchPointCollection {
                     indexSet.insert(index)
                 } else {
                     // The event is a prediction, and we're out of consumable previous predicted points, so create a new point
-                    let prediction = TouchPoint(event: event)
+                    let prediction = Point(event: event)
                     predictedPoints.append(prediction)
                     let index = confirmedPoints.count + predictedPoints.count - 1
                     eventToIndex[event.pointIdentifier] = index
@@ -119,7 +119,7 @@ public class TouchPointCollection {
                     if event.expectsUpdate {
                         expectingUpdate.append(event.pointIdentifier)
                     }
-                    let point = TouchPoint(event: event)
+                    let point = Point(event: event)
                     eventToPoint[event.pointIdentifier] = point
                     confirmedPoints.append(point)
                     let index = confirmedPoints.count - 1
@@ -143,12 +143,43 @@ public class TouchPointCollection {
     }
 }
 
-extension TouchPointCollection: Hashable {
-    public static func == (lhs: TouchPointCollection, rhs: TouchPointCollection) -> Bool {
+extension TouchPath: Hashable {
+    public static func == (lhs: TouchPath, rhs: TouchPath) -> Bool {
         return lhs.touchIdentifier == rhs.touchIdentifier && lhs.points == rhs.points
     }
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(touchIdentifier)
+    }
+}
+
+extension TouchPath {
+    public class Point: Codable {
+
+        public private(set) var events: [TouchEvent]
+        public var event: TouchEvent {
+            return events.last!
+        }
+        public var expectsUpdate: Bool {
+            return self.event.isPrediction || self.event.expectsUpdate
+        }
+
+        init(event: TouchEvent) {
+            events = [event]
+        }
+
+        func add(event: TouchEvent) {
+            events.append(event)
+        }
+    }
+}
+
+extension TouchPath.Point: Hashable {
+    public static func == (lhs: TouchPath.Point, rhs: TouchPath.Point) -> Bool {
+        return lhs.expectsUpdate == rhs.expectsUpdate && lhs.events == rhs.events
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(events)
     }
 }

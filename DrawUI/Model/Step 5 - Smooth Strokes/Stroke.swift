@@ -10,8 +10,8 @@ import UIKit
 public struct Stroke {
 
     public enum Element {
-        case moveTo(point: StrokePoint)
-        case curveTo(point: StrokePoint, ctrl1: CGPoint, ctrl2: CGPoint)
+        case moveTo(point: Polyline.Point)
+        case curveTo(point: Polyline.Point, ctrl1: CGPoint, ctrl2: CGPoint)
     }
 
     public let smoothness: CGFloat
@@ -47,7 +47,7 @@ public struct Stroke {
 }
 
 extension Stroke.Element {
-    func new(p0: StrokePoint? = nil, p1: StrokePoint, p2: StrokePoint, p3: StrokePoint, smoothFactor: CGFloat) -> Stroke.Element {
+    func new(p0: Polyline.Point? = nil, p1: Polyline.Point, p2: Polyline.Point, p3: Polyline.Point, smoothFactor: CGFloat) -> Stroke.Element {
         let p0 = p0 ?? p1
 
         let c1 = CGPoint(x: (p0.x + p1.x) / 2.0, y: (p0.y + p1.y) / 2.0)

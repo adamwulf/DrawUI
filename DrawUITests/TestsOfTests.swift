@@ -59,17 +59,17 @@ class TestsOfTests: XCTestCase {
 
         XCTAssert(events.matches(completeEvents))
 
-        let pointStream = TouchPointStream()
+        let pointStream = TouchPathStream()
         var output = pointStream.process(touchEvents: Array(events[0...1]))
         let delta1 = output.deltas
 
         XCTAssertEqual(delta1.count, 1)
-        if case .addedTouchPoints(let index) = delta1.first {
-            XCTAssertEqual(output.pointCollections[index].points.count, 2)
-            XCTAssertEqual(output.pointCollections[index].points.first!.event.location, CGPoint(x: 100, y: 100))
-            XCTAssertEqual(output.pointCollections[index].points.last!.event.location, CGPoint(x: 200, y: 100))
-            XCTAssert(output.pointCollections[index].points.first!.expectsUpdate)
-            XCTAssert(output.pointCollections[index].points.last!.expectsUpdate)
+        if case .addedTouchPath(let index) = delta1.first {
+            XCTAssertEqual(output.paths[index].points.count, 2)
+            XCTAssertEqual(output.paths[index].points.first!.event.location, CGPoint(x: 100, y: 100))
+            XCTAssertEqual(output.paths[index].points.last!.event.location, CGPoint(x: 200, y: 100))
+            XCTAssert(output.paths[index].points.first!.expectsUpdate)
+            XCTAssert(output.paths[index].points.last!.expectsUpdate)
         } else {
             XCTFail()
         }
@@ -77,15 +77,15 @@ class TestsOfTests: XCTestCase {
         output = pointStream.process(touchEvents: [events[2]])
         let delta2 = output.deltas
 
-        XCTAssertEqual(output.pointCollections.count, 1)
+        XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(delta2.count, 1)
-        if case .updatedTouchPoints(let index, let indexSet) = delta2.first {
-            XCTAssertEqual(output.pointCollections[index].points.count, 1)
+        if case .updatedTouchPath(let index, let indexSet) = delta2.first {
+            XCTAssertEqual(output.paths[index].points.count, 1)
             XCTAssertEqual(indexSet.count, 2)
             XCTAssertEqual(indexSet.first!, 0)
             XCTAssertEqual(indexSet.last!, 1)
-            XCTAssertEqual(output.pointCollections[index].points.first!.event.location, CGPoint(x: 110, y: 120))
-            XCTAssert(!output.pointCollections[index].points.first!.expectsUpdate)
+            XCTAssertEqual(output.paths[index].points.first!.event.location, CGPoint(x: 110, y: 120))
+            XCTAssert(!output.paths[index].points.first!.expectsUpdate)
         } else {
             XCTFail()
         }
@@ -93,15 +93,15 @@ class TestsOfTests: XCTestCase {
         output = pointStream.process(touchEvents: [events[3]])
         let delta3 = output.deltas
 
-        XCTAssertEqual(output.pointCollections.count, 1)
+        XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(delta3.count, 1)
-        if case .updatedTouchPoints(let index, let indexSet) = delta3.first {
-            XCTAssertEqual(output.pointCollections[index].points.count, 2)
+        if case .updatedTouchPath(let index, let indexSet) = delta3.first {
+            XCTAssertEqual(output.paths[index].points.count, 2)
             XCTAssertEqual(indexSet.count, 1)
             XCTAssertEqual(indexSet.first!, 1)
-            XCTAssertEqual(output.pointCollections[index].points.last!.event.location, CGPoint(x: 200, y: 100))
-            XCTAssert(output.pointCollections[index].points.last!.expectsUpdate)
-            XCTAssertFalse(output.pointCollections[index].isComplete)
+            XCTAssertEqual(output.paths[index].points.last!.event.location, CGPoint(x: 200, y: 100))
+            XCTAssert(output.paths[index].points.last!.expectsUpdate)
+            XCTAssertFalse(output.paths[index].isComplete)
         } else {
             XCTFail()
         }
@@ -109,21 +109,21 @@ class TestsOfTests: XCTestCase {
         output = pointStream.process(touchEvents: [events[4]])
         let delta4 = output.deltas
 
-        XCTAssertEqual(output.pointCollections.count, 1)
+        XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(delta4.count, 2)
-        if case .updatedTouchPoints(let index, let indexSet) = delta4.first {
-            XCTAssertEqual(output.pointCollections[index].points.count, 2)
+        if case .updatedTouchPath(let index, let indexSet) = delta4.first {
+            XCTAssertEqual(output.paths[index].points.count, 2)
             XCTAssertEqual(indexSet.count, 1)
             XCTAssertEqual(indexSet.first!, 1)
-            XCTAssertEqual(output.pointCollections[index].points.last!.event.location, CGPoint(x: 220, y: 120))
-            XCTAssert(!output.pointCollections[index].points.last!.expectsUpdate)
-            XCTAssertTrue(output.pointCollections[index].isComplete)
+            XCTAssertEqual(output.paths[index].points.last!.event.location, CGPoint(x: 220, y: 120))
+            XCTAssert(!output.paths[index].points.last!.expectsUpdate)
+            XCTAssertTrue(output.paths[index].isComplete)
         } else {
             XCTFail()
         }
 
-        if case .completedTouchPoints(let index) = delta4.last {
-            XCTAssertTrue(output.pointCollections[index].isComplete)
+        if case .completedTouchPath(let index) = delta4.last {
+            XCTAssertTrue(output.paths[index].isComplete)
         } else {
             XCTFail()
         }

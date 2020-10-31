@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     var allEvents: [TouchEvent] = []
 
     let eventStream: TouchEventStream
-    let pointStream: TouchPointStream
+    let pointStream: TouchPathStream
     let strokeStream: PolylineStream
     @IBOutlet var debugView: DebugView!
 
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
 
     required init?(coder: NSCoder) {
         eventStream = TouchEventStream()
-        pointStream = TouchPointStream()
+        pointStream = TouchPathStream()
         strokeStream = PolylineStream()
         super.init(coder: coder)
     }
@@ -81,7 +81,7 @@ extension ViewController: SettingsViewControllerDelegate {
 
     private func resmoothEverything() {
         // If any of the settings have changed or been reenabled, etc.
-        let originalOutput: PolylineStream.Output = (strokes: strokeStream.strokes, deltas: [])
+        let originalOutput: PolylineStream.Output = (strokes: strokeStream.lines, deltas: [])
         let douglasPeuckerOutput = self.douglasPeucker.process(input: originalOutput)
         let pointDistanceOutput = self.pointDistance.process(input: douglasPeuckerOutput)
         let smoothOutput = self.savitzkyGolay.process(input: pointDistanceOutput)

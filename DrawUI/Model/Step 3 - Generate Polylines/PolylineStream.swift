@@ -28,42 +28,42 @@ public class PolylineStream {
         }
     }
 
-    public private(set) var strokes: [Polyline]
+    public private(set) var lines: [Polyline]
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
     public private(set) var indexToIndex: [Int: Int]
 
     public init() {
         indexToIndex = [:]
-        strokes = []
+        lines = []
     }
 
     @discardableResult
-    public func process(input: TouchPointStream.Output) -> Output {
+    public func process(input: TouchPathStream.Output) -> Output {
         let pointCollectionDeltas = input.deltas
         var deltas: [Delta] = []
 
         for delta in pointCollectionDeltas {
             switch delta {
-            case .addedTouchPoints(let pointCollectionIndex):
-                let pointCollection = input.pointCollections[pointCollectionIndex]
-                let smoothStroke = Polyline(touchPoints: pointCollection)
-                let index = strokes.count
-                indexToIndex[pointCollectionIndex] = index
-                strokes.append(smoothStroke)
+            case .addedTouchPath(let pathIndex):
+                let line = input.paths[pathIndex]
+                let smoothStroke = Polyline(touchPoints: line)
+                let index = lines.count
+                indexToIndex[pathIndex] = index
+                lines.append(smoothStroke)
                 deltas.append(.addedPolyline(index: index))
-            case .updatedTouchPoints(let pointCollectionIndex, let indexSet):
-                let pointCollection = input.pointCollections[pointCollectionIndex]
-                if let index = indexToIndex[pointCollectionIndex] {
-                    let updates = strokes[index].update(with: pointCollection, indexSet: indexSet)
+            case .updatedTouchPath(let pathIndex, let indexSet):
+                let line = input.paths[pathIndex]
+                if let index = indexToIndex[pathIndex] {
+                    let updates = lines[index].update(with: line, indexSet: indexSet)
                     deltas.append(.updatedPolyline(index: index, updatedIndexes: updates))
                 }
-            case .completedTouchPoints(let pointCollectionIndex):
+            case .completedTouchPath(let pointCollectionIndex):
                 if let index = indexToIndex[pointCollectionIndex] {
                     deltas.append(.completedPolyline(index: index))
                 }
             }
         }
 
-        return (strokes, deltas)
+        return (lines, deltas)
     }
 }

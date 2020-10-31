@@ -1,48 +1,63 @@
 # DrawUI
 
-Draw UI is an inking framework for iOS. The goals are:
+## Funnel
 
-1. Low CPU overhead
-2. Easy to customize
-3. Easy to integrate
-4. Multiple rendering methods
+### 1. Touch Events (class)
 
+UITouches come in a few types:
+ - new data about a new touch
+ - updating estimated data about an existing touch
+ - predicted data about a future touch
+ 
+ Additionally, UITouches can contain `coalesced` touch information about multiple UITouch events of higher precision.
+ 
+ further, touches come in batches, both adding new touch points and updating/predicting other touch points.
+ 
+ The `TouchEventGestureRecognizer` creates `TouchEvent` objects for every incoming `UITouch`. These can be serialized to json, so that
+ raw touch data can be replayed. This serialization makes reproducing specific ink behavior much easier, as users can export their raw touch data
+ and it can be loaded and replayed in development or inside of unit tests.
+ 
+### 2. Touch Paths (class)
 
-### Low CPU Overhead
-UITouches can be both predicted and asynchronously updated. Touch inputs from the Pencil arrive extremely quickly, and represent a moment in time of the touch's location, force, azimuth, etc.
+The `TouchPathStream` processes all of the `TouchEvents` and separates them into `TouchPath`s. Each `TouchPath` represents one
+finger or Pencil on the iPad, and all of the events associated with that finger are collected into a single `TouchPath.Point`. Also, since many UITouches
+may represent the same moment in time (a predicted touch, the actual touch with estimated data, and updates to the touch with more accurate data),
+the `TouchPath` will also coalesce all matching events into a single `TouchPoints.Point` object.
 
-A naive approach to smooth these points, generate a fitting UIBezierPath, and render to the screen efficiently a major challenge.
-
-DrawUI aims to be a drop-in inking view that won't consume tons of CPU during drawing, and is flexible for integrating into your project.
-
-
-### 2. Easy to customize
-
-DrawUI processes all touch inputs in stages:
-
-1. Gesture for capturing touch event data
-2. Coalesce touch events into `Stroke` objects
-3. Optionally modify each `Stroke`'s points
-4. Generate fixed-width or variable-width `UIBezierPath`
-5. Render strokes to the screen or an output image
-
-At each of the points in the above pipeline, you have the opportunity to modify DrawUI's behavior.
-
-It's very likely that one of DrawUI's renderers will be sufficient for your needs, but if not, you have the option of modifying DrawUI's behavior at whatever level of detail you need.
+`TouchPath` also tracks if an update is still expected for the touch, either because the phase is not yet `.ended` or because an existing `.Point` is still
+expecting more accurate data to arrive as an updated event. If any event is still expected, `isComplete` will be `false` regardless of the `phase`.
 
 
-### 3. Easy to integrate
+### 3. PolyLine (struct)
 
-To get started:
+The `PolylineStream` creates `Polyline`s to wrap the `TouchPath` and `TouchPath.Point` in structs so that they can be modified by filters without
+modifying the underlying data. This way each Smoothing Filter can hold a copy of its input, and any modified data will be insulated from other filters modifications.
+This makes caching inside of the filters much more straight forward.
 
-[ fill in getting started code here ]
-
-
-### 4. Multiple rendering methods
-
-DrawUI includes multiple rendering methods. Many are unoptimized reference renderers, like `DebugView`. Others are highly optimized renderers. Most involve rendering the ink to the screen, though some are included to generate image or PDF contents.
+`Polyline`s are essentially mutable versions of `TouchPath`
 
 
+### 4. Polyline Filters
+
+Filters are an easy way to transform the `PolylineStream.Output` with any modification. For instance, a Savitzky-Golay filter will smooth the points together,
+modifying their location attributes of the `Polyline.Point`s. A Douglas-Peucker filter will remove unecessarly points that are colinear with their neighboring points.
+
+These filters are a way for the dense Polyline output of the original Polyline stream to be simplified before being smoothed into Bezier paths.
+
+
+### 5. Smooth Strokes (TBD)
+
+The StrokeStream will convert a `Polyline` into a Bezier modelled `Stroke`.
+
+
+### 6. Tapered Strokes (TBD)
+
+This will convert single-width stroked-path beziers into variable-width filled-path beziers.
+
+
+### 7. Clipped Strokes (TBD)
+
+This will take Tapered Strokes and calculate their clipped difference with an input eraser stroke
 
 
 ## TODO

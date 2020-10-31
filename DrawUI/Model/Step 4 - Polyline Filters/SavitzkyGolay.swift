@@ -11,7 +11,7 @@ import UIKit
 /// https://en.wikipedia.org/wiki/Savitzky%E2%80%93Golay_filter
 /// Coefficients are calculated with the algorithm from https://dekalogblog.blogspot.com/2013/09/savitzky-golay-filter-convolution.html
 /// Values were confirmed against the coefficients listed at http://www.statistics4u.info/fundstat_eng/cc_savgol_coeff.html
-public class SavitzkyGolay: StrokeFilter {
+public class SavitzkyGolay: PolylineFilter {
 
     private let deriv: Int // 0 is smooth, 1 is first derivative, etc
     private let order: Int
@@ -67,8 +67,8 @@ public class SavitzkyGolay: StrokeFilter {
     }
 
     // TODO: optimize the smoothing to cache stroke state and only re-smooth when required
-    func optimized_smooth(strokes: [Polyline], deltas: [PolylineStream.Delta]) -> (strokes: [Polyline], deltas: [PolylineStream.Delta]) {
-        var outStrokes = strokes
+    func optimized_process(input: PolylineStream.Output) -> PolylineStream.Output {
+        var outStrokes = input.strokes
 
         // TODO: cache the output smooth strokes so that we can use the same result next time
         // and update it with the incoming delta. allow for clearing cache so that the smooth
@@ -77,7 +77,7 @@ public class SavitzkyGolay: StrokeFilter {
         // add unit tests
 
         var outDeltas: [PolylineStream.Delta] = []
-        for delta in deltas {
+        for delta in input.deltas {
             switch delta {
             case .addedPolyline:
                 outDeltas.append(delta)

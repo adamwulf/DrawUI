@@ -8,7 +8,7 @@
 import Foundation
 
 /// Removes points from `strokes` that are within a minimum distance of each other
-public class PointDistance: StrokeFilter {
+public class PointDistance: PolylineFilter {
     public var enabled: Bool = true
 
     public init () {
