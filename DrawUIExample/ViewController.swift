@@ -18,9 +18,9 @@ class ViewController: UIViewController {
     let strokeStream: PolylineStream
     @IBOutlet var debugView: DebugView!
 
-    let savitzkyGolay = SavitzkyGolay()
-    let douglasPeucker = DouglasPeucker()
-    let pointDistance = PointDistance()
+    let savitzkyGolay = NaiveSavitzkyGolay()
+    let douglasPeucker = NaiveDouglasPeucker()
+    let pointDistance = NaivePointDistance()
 
     var settings: SettingsViewController?
 

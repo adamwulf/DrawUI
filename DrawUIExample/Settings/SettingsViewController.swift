@@ -16,9 +16,9 @@ protocol SettingsViewControllerDelegate: class {
 
 class SettingsViewController: FormViewController {
 
-    var savitzkyGolay: SavitzkyGolay?
-    var douglasPeucker: DouglasPeucker?
-    var pointDistance: PointDistance?
+    var savitzkyGolay: NaiveSavitzkyGolay?
+    var douglasPeucker: NaiveDouglasPeucker?
+    var pointDistance: NaivePointDistance?
     var delegate: SettingsViewControllerDelegate?
 
     override func viewDidLoad() {

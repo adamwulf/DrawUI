@@ -11,7 +11,7 @@ import DrawUI
 
 class SavitzkyGolayViewController: FormViewController {
 
-    var savitzkyGolay: SavitzkyGolay?
+    var savitzkyGolay: NaiveSavitzkyGolay?
     var delegate: SettingsViewControllerDelegate?
 
     override func viewDidLoad() {

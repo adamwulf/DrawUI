@@ -1,5 +1,5 @@
 //
-//  SavitzkyGolay.swift
+//  NaiveSavitzkyGolay.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/18/20.
@@ -11,7 +11,7 @@ import UIKit
 /// https://en.wikipedia.org/wiki/Savitzky%E2%80%93Golay_filter
 /// Coefficients are calculated with the algorithm from https://dekalogblog.blogspot.com/2013/09/savitzky-golay-filter-convolution.html
 /// Values were confirmed against the coefficients listed at http://www.statistics4u.info/fundstat_eng/cc_savgol_coeff.html
-public class SavitzkyGolay: PolylineFilter {
+public class NaiveSavitzkyGolay: PolylineFilter {
 
     private let deriv: Int // 0 is smooth, 1 is first derivative, etc
     private let order: Int

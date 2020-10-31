@@ -1,5 +1,5 @@
 //
-//  PointDistance.swift
+//  NaivePointDistance.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 8/18/20.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// Removes points from `strokes` that are within a minimum distance of each other
-public class PointDistance: PolylineFilter {
+public class NaivePointDistance: PolylineFilter {
     public var enabled: Bool = true
 
     public init () {

@@ -11,7 +11,7 @@ import DrawUI
 
 class PointDinstanceViewController: FormViewController {
 
-    var pointDistance: PointDistance?
+    var pointDistance: NaivePointDistance?
     var delegate: SettingsViewControllerDelegate?
 
     override func viewDidLoad() {

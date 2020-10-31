@@ -11,7 +11,7 @@ import DrawUI
 
 class DouglasPeuckerViewController: FormViewController {
 
-    var douglasPeucker: DouglasPeucker?
+    var douglasPeucker: NaiveDouglasPeucker?
     var delegate: SettingsViewControllerDelegate?
 
     override func viewDidLoad() {
