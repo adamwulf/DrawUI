@@ -9,9 +9,9 @@ import UIKit
 
 public class PolylineStream {
 
-    public typealias Output = (strokes: [Polyline], deltas: [Delta])
+    public typealias Output = (lines: [Polyline], deltas: [Delta])
 
-    public enum Delta {
+    public enum Delta: Equatable {
         case addedPolyline(index: Int)
         case updatedPolyline(index: Int, updatedIndexes: IndexSet)
         case completedPolyline(index: Int)

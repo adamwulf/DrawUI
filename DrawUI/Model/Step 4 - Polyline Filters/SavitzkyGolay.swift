@@ -35,40 +35,40 @@ public class SavitzkyGolay: PolylineFilter {
 
     public func process(input: PolylineStream.Output) -> PolylineStream.Output {
         guard enabled else { return input }
-        var outStrokes = input.strokes
+        var outLines = input.lines
         var outDeltas: [PolylineStream.Delta] = []
 
-        func smooth(strokeIdx: Int) {
-            for pIndex in 0 ..< outStrokes[strokeIdx].points.count {
-                let minWin = min(min(window, pIndex), outStrokes[strokeIdx].points.count - 1 - pIndex)
+        func smooth(lineIdx: Int) {
+            for pIndex in 0 ..< outLines[lineIdx].points.count {
+                let minWin = min(min(window, pIndex), outLines[lineIdx].points.count - 1 - pIndex)
 
                 if minWin > 1 {
                     var outPoint = CGPoint.zero
                     for windowPos in -minWin ... minWin {
                         let wght = weight(0, windowPos, minWin, order, deriv)
-                        outPoint.x += wght * input.strokes[strokeIdx].points[pIndex + windowPos].location.x
-                        outPoint.y += wght * input.strokes[strokeIdx].points[pIndex + windowPos].location.y
+                        outPoint.x += wght * input.lines[lineIdx].points[pIndex + windowPos].location.x
+                        outPoint.y += wght * input.lines[lineIdx].points[pIndex + windowPos].location.y
                     }
-                    let origPoint = outStrokes[strokeIdx].points[pIndex].location
+                    let origPoint = outLines[lineIdx].points[pIndex].location
 
-                    outStrokes[strokeIdx].points[pIndex].location = origPoint * CGFloat(1 - strength) + outPoint * strength
+                    outLines[lineIdx].points[pIndex].location = origPoint * CGFloat(1 - strength) + outPoint * strength
                 }
             }
         }
 
         // Temporary non-cached non-optimized smoothing
         // simply treat every stroke as brand new and smooth the entire set
-        for strokeIdx in 0 ..< input.strokes.count {
-            smooth(strokeIdx: strokeIdx)
-            outDeltas.append(.addedPolyline(index: strokeIdx))
+        for lineIdx in 0 ..< input.lines.count {
+            smooth(lineIdx: lineIdx)
+            outDeltas.append(.addedPolyline(index: lineIdx))
         }
 
-        return (outStrokes, outDeltas)
+        return (outLines, outDeltas)
     }
 
     // TODO: optimize the smoothing to cache stroke state and only re-smooth when required
     func optimized_process(input: PolylineStream.Output) -> PolylineStream.Output {
-        var outStrokes = input.strokes
+        var outLines = input.lines
 
         // TODO: cache the output smooth strokes so that we can use the same result next time
         // and update it with the incoming delta. allow for clearing cache so that the smooth
@@ -84,12 +84,12 @@ public class SavitzkyGolay: PolylineFilter {
             case .completedPolyline:
                 outDeltas.append(delta)
             case .updatedPolyline(let strokeIndex, let indexes):
-                let updatedIndexes = smoothStroke(stroke: &outStrokes[strokeIndex], at: indexes)
+                let updatedIndexes = smoothStroke(stroke: &outLines[strokeIndex], at: indexes)
                 outDeltas.append(.updatedPolyline(index: strokeIndex, updatedIndexes: updatedIndexes))
             }
         }
 
-        return (strokes: outStrokes, deltas: outDeltas)
+        return (lines: outLines, deltas: outDeltas)
     }
 
     // MARK: - Private

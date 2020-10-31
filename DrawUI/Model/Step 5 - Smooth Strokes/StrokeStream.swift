@@ -34,7 +34,7 @@ public class StrokeStream {
         for delta in pointCollectionDeltas {
             switch delta {
             case .addedPolyline(let polylineIndex):
-                let polyline = input.strokes[polylineIndex]
+                let polyline = input.lines[polylineIndex]
                 assert(!polyline.points.isEmpty, "Added Stroke must have at least one point")
                 let strokeIndex = strokes.count
                 indexToIndex[polylineIndex] = strokeIndex
@@ -53,7 +53,7 @@ public class StrokeStream {
                     assertionFailure("Don't have matching Stroke for Polyline index \(polylineIndex)")
                     continue
                 }
-                let polyline = input.strokes[polylineIndex]
+                let polyline = input.lines[polylineIndex]
                 let updatedElements = strokes[strokeIndex].update(with: polyline, indexSet: updatedIndexes)
                 deltas.append(.updatedStroke(index: strokeIndex, updatedElements: updatedElements))
             }

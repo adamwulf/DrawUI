@@ -45,8 +45,8 @@ class ViewController: UIViewController {
             let pointDistanceOutput = self.pointDistance.process(input: douglasPeuckerOutput)
             let smoothOutput = self.savitzkyGolay.process(input: pointDistanceOutput)
 
-            self.debugView?.originalStrokes = strokeOutput.strokes
-            self.debugView?.smoothStrokes = smoothOutput.strokes
+            self.debugView?.originalStrokes = strokeOutput.lines
+            self.debugView?.smoothStrokes = smoothOutput.lines
             self.debugView?.add(deltas: strokeOutput.deltas)
             self.debugView?.setNeedsDisplay()
         }
@@ -81,11 +81,11 @@ extension ViewController: SettingsViewControllerDelegate {
 
     private func resmoothEverything() {
         // If any of the settings have changed or been reenabled, etc.
-        let originalOutput: PolylineStream.Output = (strokes: strokeStream.lines, deltas: [])
+        let originalOutput: PolylineStream.Output = (lines: strokeStream.lines, deltas: [])
         let douglasPeuckerOutput = self.douglasPeucker.process(input: originalOutput)
         let pointDistanceOutput = self.pointDistance.process(input: douglasPeuckerOutput)
         let smoothOutput = self.savitzkyGolay.process(input: pointDistanceOutput)
-        debugView.smoothStrokes = smoothOutput.strokes
+        debugView.smoothStrokes = smoothOutput.lines
         debugView.setNeedsDisplay()
     }
 

@@ -29,6 +29,7 @@
 		C580259F24E9E1C10043130D /* TouchPathStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* TouchPathStream.swift */; };
 		C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025AB24EA3F150043130D /* TestsOfTests.swift */; };
 		C58025AE24EA3F150043130D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */; };
+		C58B5017254DFCCA0010F195 /* PolylineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B5016254DFCCA0010F195 /* PolylineTests.swift */; };
 		C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594308124F0E3640097D52B /* CGPoint+Extensions.swift */; };
 		C594309424F376A90097D52B /* SavitzkyGolayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594309324F376A90097D52B /* SavitzkyGolayViewController.swift */; };
 		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -101,6 +102,7 @@
 		C58025A924EA3F150043130D /* DrawUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58025AB24EA3F150043130D /* TestsOfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsOfTests.swift; sourceTree = "<group>"; };
 		C58025AD24EA3F150043130D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C58B5016254DFCCA0010F195 /* PolylineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolylineTests.swift; sourceTree = "<group>"; };
 		C594308124F0E3640097D52B /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		C594309324F376A90097D52B /* SavitzkyGolayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavitzkyGolayViewController.swift; sourceTree = "<group>"; };
 		C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +216,7 @@
 				C5420EAA2549096F00473D8A /* Test Data */,
 				C58025AB24EA3F150043130D /* TestsOfTests.swift */,
 				C5005F562548E14500E6DD0C /* TouchPathTests.swift */,
+				C58B5016254DFCCA0010F195 /* PolylineTests.swift */,
 				C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */,
 				C58025AD24EA3F150043130D /* Info.plist */,
 			);
@@ -490,6 +493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5005F572548E14500E6DD0C /* TouchPathTests.swift in Sources */,
+				C58B5017254DFCCA0010F195 /* PolylineTests.swift in Sources */,
 				C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */,
 				C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */,
 			);

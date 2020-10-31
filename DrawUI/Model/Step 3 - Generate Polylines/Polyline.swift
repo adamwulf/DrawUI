@@ -11,7 +11,7 @@ import Foundation
 public struct Polyline {
 
     // MARK: - Public Properties
-    public let isComplete: Bool
+    public private(set) var isComplete: Bool
     public let touchIdentifier: String
     public var points: [Point]
 
@@ -21,13 +21,13 @@ public struct Polyline {
         points = touchPoints.points.map({ Point(touchPoint: $0) })
     }
 
-    mutating func update(with stroke: TouchPath, indexSet: IndexSet) -> IndexSet {
+    mutating func update(with path: TouchPath, indexSet: IndexSet) -> IndexSet {
         for index in indexSet {
-            if index < stroke.points.count {
+            if index < path.points.count {
                 if index < points.count {
-                    points[index].location = stroke.points[index].event.location
+                    points[index].location = path.points[index].event.location
                 } else if index == points.count {
-                    points.append(Point(touchPoint: stroke.points[index]))
+                    points.append(Point(touchPoint: path.points[index]))
                 } else {
                     assertionFailure("Attempting to modify a point that doesn't yet exist. maybe an update is out of order?")
                 }
@@ -35,6 +35,9 @@ public struct Polyline {
                 points.remove(at: index)
             }
         }
+
+        isComplete = path.isComplete
+
         return indexSet
     }
 }
