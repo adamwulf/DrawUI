@@ -48,7 +48,7 @@
 		C5C159E724E9BC6500B52B4B /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159E624E9BC6500B52B4B /* DebugView.swift */; };
 		C5C5CC41254E089000B6662F /* AntigrainSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */; };
 		C5C5CC4B254E0DA100B6662F /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5CC4A254E0DA100B6662F /* StrokeStream.swift */; };
-		C5C5CC4F254E0DDD00B6662F /* SmootherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5CC4E254E0DDD00B6662F /* SmootherTests.swift */; };
+		C5C5CC4F254E0DDD00B6662F /* AntigrainSmootherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,7 +126,7 @@
 		C5C5CC34254E028200B6662F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntigrainSmoother.swift; sourceTree = "<group>"; };
 		C5C5CC4A254E0DA100B6662F /* StrokeStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeStream.swift; sourceTree = "<group>"; };
-		C5C5CC4E254E0DDD00B6662F /* SmootherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmootherTests.swift; sourceTree = "<group>"; };
+		C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntigrainSmootherTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,7 +222,7 @@
 				C58025AB24EA3F150043130D /* TestsOfTests.swift */,
 				C5005F562548E14500E6DD0C /* TouchPathTests.swift */,
 				C58B5016254DFCCA0010F195 /* PolylineTests.swift */,
-				C5C5CC4E254E0DDD00B6662F /* SmootherTests.swift */,
+				C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */,
 				C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */,
 				C58025AD24EA3F150043130D /* Info.plist */,
 			);
@@ -517,7 +517,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5005F572548E14500E6DD0C /* TouchPathTests.swift in Sources */,
-				C5C5CC4F254E0DDD00B6662F /* SmootherTests.swift in Sources */,
+				C5C5CC4F254E0DDD00B6662F /* AntigrainSmootherTests.swift in Sources */,
 				C58B5017254DFCCA0010F195 /* PolylineTests.swift in Sources */,
 				C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */,
 				C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */,
