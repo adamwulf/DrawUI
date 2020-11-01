@@ -44,9 +44,6 @@ public class AntigrainSmoother {
         assert(index >= 0 && index <= line.antigrainMaxIndex)
 
         if index == 0 {
-            if line.points.count > 1 {
-                return .moveTo(point: line.points[0])
-            }
             return .moveTo(point: line.points[0])
         }
 
@@ -98,11 +95,8 @@ public class AntigrainSmoother {
 extension Polyline {
 
     fileprivate var antigrainMaxIndex: Int {
-        if points.count == 3 {
-            // special case, where we use a quadratic curve instead of cubic curve to fit
-            return 1
-        }
-        return Swift.max(0, points.count - 3)
+        let lastIndex = points.count - 1
+        return Swift.max(0, lastIndex - 1)
     }
 
     public func antigrainIndexesFor(indexes: IndexSet) -> IndexSet {
@@ -116,32 +110,31 @@ extension Polyline {
     }
 
     // Below are the examples of input indexes, and which smoothed elements that point index affects
-    // 0 => 1, 0
-    // 1 => 2, 1, 0
-    // 2 => 3, 2, 1
-    // 3 => 4, 3, 2, 1
-    // 4 => 5, 4, 3, 2
-    // 5 => 6, 5, 4, 3
-    // 6 => 7, 6, 5, 4
-    // 7 => 8, 7, 6, 5
+    // 0 => 2, 1, 0
+    // 1 => 3, 2, 1, 0
+    // 2 => 4, 3, 2, 1
+    // 3 => 5, 4, 3, 2
+    // 4 => 6, 5, 4, 3
+    // 5 => 7, 6, 5, 4
+    // 6 => 8, 7, 6, 5
+    // 7 => 9, 8, 7, 6
     public func antigrainIndexesFor(index: Int) -> IndexSet {
-        assert(index < points.count)
+        assert(index >= 0 && index < points.count)
         let maxIndex = antigrainMaxIndex
         var ret = IndexSet()
 
-        if index > 0,
+        if index > 1,
            index - 1 <= maxIndex {
             ret.insert(index - 1)
-        }
-        if index > 2,
-           index - 2 <= maxIndex {
-            ret.insert(index - 2)
         }
         if index <= maxIndex {
             ret.insert(index)
         }
         if index + 1 <= maxIndex {
             ret.insert(index + 1)
+        }
+        if index + 2 <= maxIndex {
+            ret.insert(index + 2)
         }
 
         return ret
