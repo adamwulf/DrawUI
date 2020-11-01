@@ -47,12 +47,11 @@ public class AntigrainSmoother {
             return .moveTo(point: line.points[0])
         }
 
-        if index == 1,
-           line.points.count == 3 {
+        if index == 1 {
             return new(p1: line.points[0], p2: line.points[1], p3: line.points[2])
         }
 
-        return new(p0: line.points[index - 1], p1: line.points[index], p2: line.points[index + 1], p3: line.points[index + 2])
+        return new(p0: line.points[index - 2], p1: line.points[index - 1], p2: line.points[index], p3: line.points[index + 1])
     }
 
     private func new(p0: Polyline.Point? = nil, p1: Polyline.Point, p2: Polyline.Point, p3: Polyline.Point) -> Element {
@@ -94,7 +93,7 @@ public class AntigrainSmoother {
 
 extension Polyline {
 
-    fileprivate var antigrainMaxIndex: Int {
+    public var antigrainMaxIndex: Int {
         let lastIndex = points.count - 1
         return Swift.max(0, lastIndex - 1)
     }
