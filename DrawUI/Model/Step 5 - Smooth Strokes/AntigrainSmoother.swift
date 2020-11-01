@@ -51,6 +51,10 @@ public class AntigrainSmoother {
             return new(p1: line.points[0], p2: line.points[1], p3: line.points[2])
         }
 
+        if line.isComplete && index == line.antigrainMaxIndex {
+            return new(p0: line.points[index - 2], p1: line.points[index - 1], p2: line.points[index], p3: line.points[index])
+        }
+
         return new(p0: line.points[index - 2], p1: line.points[index - 1], p2: line.points[index], p3: line.points[index + 1])
     }
 
@@ -95,7 +99,7 @@ extension Polyline {
 
     public var antigrainMaxIndex: Int {
         let lastIndex = points.count - 1
-        return Swift.max(0, lastIndex - 1)
+        return Swift.max(0, lastIndex - 1) + (points.count > 2 && isComplete ? 1 : 0)
     }
 
     public func antigrainIndexesFor(indexes: IndexSet) -> IndexSet {
