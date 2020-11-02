@@ -351,4 +351,60 @@ class AntigrainSmootherTests: XCTestCase {
                                                               ctrl1: CGPoint(x: 433.39180836637934, y: 94.99122874504309),
                                                               ctrl2: CGPoint(x: 465, y: 113)))
     }
+
+    func testPiecewiseFivePointsElement() throws {
+        let touchId: UITouchIdentifier = UUID().uuidString
+        let completeEvents = [Event(id: touchId, loc: CGPoint(x: 100, y: 100)),
+                              Event(id: touchId, loc: CGPoint(x: 200, y: 150)),
+                              Event(id: touchId, loc: CGPoint(x: 300, y: 150)),
+                              Event(id: touchId, loc: CGPoint(x: 400, y: 100)),
+                              Event(id: touchId, loc: CGPoint(x: 500, y: 120))]
+        let events = TouchEvent.newFrom(completeEvents)
+
+        let touchStream = TouchPathStream()
+        let polylineStream = PolylineStream()
+
+        var touchOutput = touchStream.process(touchEvents: Array(events[0...3]))
+        var polylineOutput = polylineStream.process(input: touchOutput)
+
+        let antigrain = AntigrainSmoother()
+
+        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 2)
+
+        var ele = antigrain.elementIn(line: polylineOutput.lines[0], at: 0)
+
+        XCTAssertEqual(ele, AntigrainSmoother.Element.moveTo(point: polylineOutput.lines[0].points[0]))
+
+        ele = antigrain.elementIn(line: polylineOutput.lines[0], at: 1)
+
+        XCTAssertEqual(ele, AntigrainSmoother.Element.curveTo(point: polylineOutput.lines[0].points[1],
+                                                              ctrl1: CGPoint(x: 135.0, y: 117.5),
+                                                              ctrl2: CGPoint(x: 163.0495168499706, y: 140.76237921249262)))
+
+        ele = antigrain.elementIn(line: polylineOutput.lines[0], at: 2)
+
+        XCTAssertEqual(ele, AntigrainSmoother.Element.curveTo(point: polylineOutput.lines[0].points[2],
+                                                              ctrl1: CGPoint(x: 233.0495168499706, y: 158.26237921249262),
+                                                              ctrl2: CGPoint(x: 266.9504831500295, y: 158.26237921249262)))
+
+        // Now we complete the stroke, and when we complete it adds the segment that would normally be
+        // smoothed from the added point, as well as the very last element so that we reach the last point
+
+        touchOutput = touchStream.process(touchEvents: [events[4]])
+        polylineOutput = polylineStream.process(input: touchOutput)
+
+        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 4)
+
+        ele = antigrain.elementIn(line: polylineOutput.lines[0], at: 3)
+
+        XCTAssertEqual(ele, AntigrainSmoother.Element.curveTo(point: polylineOutput.lines[0].points[3],
+                                                              ctrl1: CGPoint(x: 336.9504831500294, y: 140.76237921249262),
+                                                              ctrl2: CGPoint(x: 363.39180836637934, y: 105.49122874504309)))
+
+        ele = antigrain.elementIn(line: polylineOutput.lines[0], at: 4)
+
+        XCTAssertEqual(ele, AntigrainSmoother.Element.curveTo(point: polylineOutput.lines[0].points[4],
+                                                              ctrl1: CGPoint(x: 433.39180836637934, y: 94.99122874504309),
+                                                              ctrl2: CGPoint(x: 465, y: 113)))
+    }
 }
