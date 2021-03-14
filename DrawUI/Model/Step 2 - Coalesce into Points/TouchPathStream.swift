@@ -18,10 +18,16 @@ private struct AnonymousConsumer: TouchPathStreamConsumer {
     }
 }
 
+public protocol TouchPathStreamProducer {
+    func addConsumer(_ consumer: TouchPathStreamConsumer)
+
+    func addConsumer(_ block: @escaping (TouchPathStream.Output) -> Void)
+}
+
 /// Input: An array of touch events from one or more touches representing one or more collections.
 /// A `TouchPathStream` represents all of the different `TouchPathStream.Point` that share the same `touchIdentifier`
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
-public class TouchPathStream: TouchEventStreamConsumer {
+public class TouchPathStream: TouchEventStreamConsumer, TouchPathStreamProducer {
 
     public typealias Output = (paths: [TouchPath], deltas: [Delta])
 
@@ -54,7 +60,7 @@ public class TouchPathStream: TouchEventStreamConsumer {
         paths = []
     }
 
-    // MARK: - Consumers
+    // MARK: - TouchPathStreamProducer
 
     public func addConsumer(_ consumer: TouchPathStreamConsumer) {
         consumers.append(consumer)

@@ -18,7 +18,13 @@ private struct AnonymousConsumer: PolylineStreamConsumer {
     }
 }
 
-public class PolylineStream: TouchPathStreamConsumer {
+public protocol PolylineStreamProducer {
+    func addConsumer(_ consumer: PolylineStreamConsumer)
+
+    func addConsumer(_ block: @escaping (PolylineStream.Output) -> Void)
+}
+
+public class PolylineStream: TouchPathStreamConsumer, PolylineStreamProducer {
 
     public typealias Output = (lines: [Polyline], deltas: [Delta])
 
@@ -50,7 +56,7 @@ public class PolylineStream: TouchPathStreamConsumer {
         lines = []
     }
 
-    // MARK: - Consumers
+    // MARK: - PolylineStreamProducer
 
     public func addConsumer(_ consumer: PolylineStreamConsumer) {
         consumers.append(consumer)

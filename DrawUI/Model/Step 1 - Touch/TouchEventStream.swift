@@ -18,8 +18,14 @@ private struct AnonymousConsumer: TouchEventStreamConsumer {
     }
 }
 
+public protocol TouchEventStreamProducer {
+    func addConsumer(_ consumer: TouchEventStreamConsumer)
+
+    func addConsumer(_ block: @escaping ([TouchEvent]) -> Void)
+}
+
 // Processes events for mutiple touches
-public class TouchEventStream {
+public class TouchEventStream: TouchEventStreamProducer {
 
     // MARK: - Private
     private var recentEvents: [TouchEvent] = []
