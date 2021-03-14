@@ -11,6 +11,7 @@
 		C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */; };
 		C5005F572548E14500E6DD0C /* TouchPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F562548E14500E6DD0C /* TouchPathTests.swift */; };
 		C507F3E325041E0B001A7821 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E225041E0B001A7821 /* Clamping.swift */; };
+		C5094CE225FEB0A60001AE2A /* BezierStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5094CE125FEB0A60001AE2A /* BezierStream.swift */; };
 		C53651B72544CC7F00FA25A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C53651B62544CC7E00FA25A4 /* README.md */; };
 		C5420EA52549096700473D8A /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = C5420EA42549096700473D8A /* events.json */; };
 		C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* PolylineStream.swift */; };
@@ -18,6 +19,7 @@
 		C559CC0024EB9ABE006D263C /* NaiveSavitzkyGolay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */; };
 		C559CC0224EB9ACA006D263C /* NaiveDouglasPeucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */; };
 		C559CC0724EBA6C0006D263C /* NaivePointDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */; };
+		C55E42A825FEAF4500093DEC /* FlatBezierStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55E42A725FEAF4500093DEC /* FlatBezierStream.swift */; };
 		C580259C24E9E1150043130D /* TouchPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* TouchPath.swift */; };
 		C580259F24E9E1C10043130D /* TouchPathStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* TouchPathStream.swift */; };
 		C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025AB24EA3F150043130D /* TestsOfTests.swift */; };
@@ -79,6 +81,7 @@
 		C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		C5005F562548E14500E6DD0C /* TouchPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPathTests.swift; sourceTree = "<group>"; };
 		C507F3E225041E0B001A7821 /* Clamping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
+		C5094CE125FEB0A60001AE2A /* BezierStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierStream.swift; sourceTree = "<group>"; };
 		C53651B62544CC7E00FA25A4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		C5420EA42549096700473D8A /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* PolylineStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolylineStream.swift; sourceTree = "<group>"; };
@@ -86,6 +89,7 @@
 		C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveSavitzkyGolay.swift; sourceTree = "<group>"; };
 		C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveDouglasPeucker.swift; sourceTree = "<group>"; };
 		C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaivePointDistance.swift; sourceTree = "<group>"; };
+		C55E42A725FEAF4500093DEC /* FlatBezierStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatBezierStream.swift; sourceTree = "<group>"; };
 		C580259B24E9E1150043130D /* TouchPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPath.swift; sourceTree = "<group>"; };
 		C580259E24E9E1C10043130D /* TouchPathStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPathStream.swift; sourceTree = "<group>"; };
 		C58025A924EA3F150043130D /* DrawUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,7 +158,6 @@
 		C548CEBE2547777000F4E648 /* Step 5 - Smooth Strokes */ = {
 			isa = PBXGroup;
 			children = (
-				C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */,
 				C5005F4A2547789C00E6DD0C /* Stroke.swift */,
 				C5C5CC4A254E0DA100B6662F /* StrokeStream.swift */,
 			);
@@ -170,6 +173,24 @@
 			path = "Step 4 - Polyline Filters";
 			sourceTree = "<group>";
 		};
+		C55E42A625FEAF2D00093DEC /* Step 5 - Beziers */ = {
+			isa = PBXGroup;
+			children = (
+				C55E42AB25FEAF7400093DEC /* Helpers */,
+				C5094CE125FEB0A60001AE2A /* BezierStream.swift */,
+				C55E42A725FEAF4500093DEC /* FlatBezierStream.swift */,
+			);
+			path = "Step 5 - Beziers";
+			sourceTree = "<group>";
+		};
+		C55E42AB25FEAF7400093DEC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		C58025A224EA26BB0043130D /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +198,7 @@
 				C58025A424EA26DA0043130D /* Step 2 - Coalesce into Points */,
 				C58025B824EA4F6A0043130D /* Step 3 - Generate Polylines */,
 				C559CBFE24EB9AAF006D263C /* Step 4 - Polyline Filters */,
+				C55E42A625FEAF2D00093DEC /* Step 5 - Beziers */,
 				C548CEBE2547777000F4E648 /* Step 5 - Smooth Strokes */,
 			);
 			path = Model;
@@ -498,6 +520,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5094CE225FEB0A60001AE2A /* BezierStream.swift in Sources */,
 				C507F3E325041E0B001A7821 /* Clamping.swift in Sources */,
 				C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */,
 				C559CC0224EB9ACA006D263C /* NaiveDouglasPeucker.swift in Sources */,
@@ -515,6 +538,7 @@
 				C580259C24E9E1150043130D /* TouchPath.swift in Sources */,
 				C559CBFD24EB9489006D263C /* Polyline.swift in Sources */,
 				C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */,
+				C55E42A825FEAF4500093DEC /* FlatBezierStream.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

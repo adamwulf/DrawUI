@@ -15,6 +15,7 @@ class DebugViewController: UIViewController {
     let touchEventStream = TouchEventStream()
     let touchPathStream = TouchPathStream()
     let strokeStream = PolylineStream()
+    let pathStream = FlatBezierStream()
     @IBOutlet var debugView: DebugView!
 
     let savitzkyGolay = NaiveSavitzkyGolay()
@@ -41,6 +42,11 @@ class DebugViewController: UIViewController {
             self.debugView?.smoothStrokes = smoothOutput.lines
             self.debugView?.add(deltas: strokeOutput.deltas)
             self.debugView?.setNeedsDisplay()
+        }
+
+        savitzkyGolay.addConsumer(pathStream)
+        pathStream.addConsumer { (input) in
+            print("pathCount: \(input.paths.count) updatedCount:\(input.deltas.count)")
         }
     }
 
