@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  DebugViewController.swift
 //  DrawUIExample
 //
 //  Created by Adam Wulf on 8/16/20.
@@ -7,9 +7,8 @@
 
 import UIKit
 import DrawUI
-import Former
 
-class ViewController: UIViewController {
+class DebugViewController: UIViewController {
 
     var allEvents: [TouchEvent] = []
 
@@ -22,8 +21,6 @@ class ViewController: UIViewController {
     let douglasPeucker = NaiveDouglasPeucker()
     let pointDistance = NaivePointDistance()
 
-    var settings: SettingsViewController?
-
     required init?(coder: NSCoder) {
         eventStream = TouchEventStream()
         pointStream = TouchPathStream()
@@ -34,7 +31,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupTable()
+        let exportButton = UIButton()
+        exportButton.setTitle("Export", for: .normal)
+        exportButton.setTitleColor(.systemBlue, for: .normal)
+        view.addSubview(exportButton)
+        exportButton.translatesAutoresizingMaskIntoConstraints = false
+        exportButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        exportButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        exportButton.addTarget(self, action: #selector(didRequestExport), for: .touchUpInside)
 
         eventStream.eventStreamChanged = { [weak self] (updatedEvents) in
             guard let self = self else { return }
@@ -53,31 +57,9 @@ class ViewController: UIViewController {
 
         debugView?.addGestureRecognizer(eventStream.gesture)
     }
-
-    private func setupTable() {
-        let settings = SettingsViewController()
-        self.settings = settings
-        settings.delegate = self
-        settings.savitzkyGolay = savitzkyGolay
-        settings.douglasPeucker = douglasPeucker
-        settings.pointDistance = pointDistance
-        let nav = UINavigationController(rootViewController: settings)
-        nav.navigationBar.barStyle = .default
-
-        settings.navigationItem.title = "Settings"
-
-        addChild(nav)
-        nav.view.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(nav.view)
-
-        nav.view.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        nav.view.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        nav.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
-        nav.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
-    }
 }
 
-extension ViewController: SettingsViewControllerDelegate {
+extension DebugViewController {
 
     private func resmoothEverything() {
         // If any of the settings have changed or been reenabled, etc.
@@ -93,18 +75,17 @@ extension ViewController: SettingsViewControllerDelegate {
         resmoothEverything()
     }
 
-    func didRequestExport() {
+    @objc func didRequestExport(_ sender: UIView) {
         let tmpDirURL = FileManager.default.temporaryDirectory.appendingPathComponent("events").appendingPathExtension("json")
         let jsonEncoder = JSONEncoder()
         jsonEncoder.outputFormatting = [.withoutEscapingSlashes, .prettyPrinted]
 
-        if let settings = settings,
-           let json = try? jsonEncoder.encode(allEvents) {
+        if let json = try? jsonEncoder.encode(allEvents) {
             do {
                 try json.write(to: tmpDirURL)
 
                 let sharevc = UIActivityViewController(activityItems: [tmpDirURL], applicationActivities: nil)
-                sharevc.popoverPresentationController?.barButtonItem = settings.navigationItem.rightBarButtonItem
+                sharevc.popoverPresentationController?.sourceView = sender
                 present(sharevc, animated: true, completion: nil)
             } catch {
                 // ignore

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,11 +11,6 @@
 		C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */; };
 		C5005F572548E14500E6DD0C /* TouchPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F562548E14500E6DD0C /* TouchPathTests.swift */; };
 		C507F3E325041E0B001A7821 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E225041E0B001A7821 /* Clamping.swift */; };
-		C507F3F2250554AD001A7821 /* Former in Frameworks */ = {isa = PBXBuildFile; productRef = C507F3F1250554AD001A7821 /* Former */; };
-		C507F3F42505E40C001A7821 /* EnabledSliderRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3F32505E40C001A7821 /* EnabledSliderRowFormer.swift */; };
-		C507F3F82505EF59001A7821 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3F72505EF59001A7821 /* SettingsViewController.swift */; };
-		C507F3FA2505F4A0001A7821 /* DouglasPeuckerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3F92505F4A0001A7821 /* DouglasPeuckerViewController.swift */; };
-		C507F3FC2505F58C001A7821 /* PointDinstanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3FB2505F58C001A7821 /* PointDinstanceViewController.swift */; };
 		C53651B72544CC7F00FA25A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C53651B62544CC7E00FA25A4 /* README.md */; };
 		C5420EA52549096700473D8A /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = C5420EA42549096700473D8A /* events.json */; };
 		C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* PolylineStream.swift */; };
@@ -30,13 +25,12 @@
 		C58025AE24EA3F150043130D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */; };
 		C58B5017254DFCCA0010F195 /* PolylineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B5016254DFCCA0010F195 /* PolylineTests.swift */; };
 		C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594308124F0E3640097D52B /* CGPoint+Extensions.swift */; };
-		C594309424F376A90097D52B /* SavitzkyGolayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594309324F376A90097D52B /* SavitzkyGolayViewController.swift */; };
 		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159B924E9AF3600B52B4B /* TouchEvent.swift */; };
 		C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159BA24E9AF3600B52B4B /* TouchEventStream.swift */; };
 		C5C159C424E9AF4E00B52B4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159C324E9AF4E00B52B4B /* AppDelegate.swift */; };
 		C5C159C624E9AF4E00B52B4B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159C524E9AF4E00B52B4B /* SceneDelegate.swift */; };
-		C5C159C824E9AF4E00B52B4B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159C724E9AF4E00B52B4B /* ViewController.swift */; };
+		C5C159C824E9AF4E00B52B4B /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159C724E9AF4E00B52B4B /* DebugViewController.swift */; };
 		C5C159CB24E9AF4E00B52B4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5C159C924E9AF4E00B52B4B /* Main.storyboard */; };
 		C5C159CD24E9AF4E00B52B4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5C159CC24E9AF4E00B52B4B /* Assets.xcassets */; };
 		C5C159D024E9AF4E00B52B4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5C159CE24E9AF4E00B52B4B /* LaunchScreen.storyboard */; };
@@ -86,10 +80,6 @@
 		C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		C5005F562548E14500E6DD0C /* TouchPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPathTests.swift; sourceTree = "<group>"; };
 		C507F3E225041E0B001A7821 /* Clamping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
-		C507F3F32505E40C001A7821 /* EnabledSliderRowFormer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledSliderRowFormer.swift; sourceTree = "<group>"; };
-		C507F3F72505EF59001A7821 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		C507F3F92505F4A0001A7821 /* DouglasPeuckerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DouglasPeuckerViewController.swift; sourceTree = "<group>"; };
-		C507F3FB2505F58C001A7821 /* PointDinstanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointDinstanceViewController.swift; sourceTree = "<group>"; };
 		C53651B62544CC7E00FA25A4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		C5420EA42549096700473D8A /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* PolylineStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolylineStream.swift; sourceTree = "<group>"; };
@@ -105,7 +95,6 @@
 		C58025AD24EA3F150043130D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C58B5016254DFCCA0010F195 /* PolylineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolylineTests.swift; sourceTree = "<group>"; };
 		C594308124F0E3640097D52B /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
-		C594309324F376A90097D52B /* SavitzkyGolayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavitzkyGolayViewController.swift; sourceTree = "<group>"; };
 		C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C159B124E9AF1C00B52B4B /* DrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawUI.h; sourceTree = "<group>"; };
 		C5C159B224E9AF1C00B52B4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -114,7 +103,7 @@
 		C5C159C124E9AF4E00B52B4B /* DrawUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C159C324E9AF4E00B52B4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5C159C524E9AF4E00B52B4B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C5C159C724E9AF4E00B52B4B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C5C159C724E9AF4E00B52B4B /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		C5C159CA24E9AF4E00B52B4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C5C159CC24E9AF4E00B52B4B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5C159CF24E9AF4E00B52B4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -150,7 +139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5C159D824E9AF6100B52B4B /* DrawUI.framework in Frameworks */,
-				C507F3F2250554AD001A7821 /* Former in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,18 +244,6 @@
 			path = Optimized;
 			sourceTree = "<group>";
 		};
-		C594308B24F1B4350097D52B /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				C507F3F72505EF59001A7821 /* SettingsViewController.swift */,
-				C594309324F376A90097D52B /* SavitzkyGolayViewController.swift */,
-				C507F3F92505F4A0001A7821 /* DouglasPeuckerViewController.swift */,
-				C507F3FB2505F58C001A7821 /* PointDinstanceViewController.swift */,
-				C507F3F32505E40C001A7821 /* EnabledSliderRowFormer.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		C5C159A424E9AF1C00B52B4B = {
 			isa = PBXGroup;
 			children = (
@@ -305,10 +281,9 @@
 		C5C159C224E9AF4E00B52B4B /* DrawUIExample */ = {
 			isa = PBXGroup;
 			children = (
-				C594308B24F1B4350097D52B /* Settings */,
 				C5C159C324E9AF4E00B52B4B /* AppDelegate.swift */,
 				C5C159C524E9AF4E00B52B4B /* SceneDelegate.swift */,
-				C5C159C724E9AF4E00B52B4B /* ViewController.swift */,
+				C5C159C724E9AF4E00B52B4B /* DebugViewController.swift */,
 				C5C159E624E9BC6500B52B4B /* DebugView.swift */,
 				C5C159C924E9AF4E00B52B4B /* Main.storyboard */,
 				C5C159CC24E9AF4E00B52B4B /* Assets.xcassets */,
@@ -411,7 +386,6 @@
 			);
 			name = DrawUIExample;
 			packageProductDependencies = (
-				C507F3F1250554AD001A7821 /* Former */,
 			);
 			productName = DrawUIExample;
 			productReference = C5C159C124E9AF4E00B52B4B /* DrawUIExample.app */;
@@ -448,7 +422,6 @@
 			);
 			mainGroup = C5C159A424E9AF1C00B52B4B;
 			packageReferences = (
-				C507F3F0250554AD001A7821 /* XCRemoteSwiftPackageReference "Former" */,
 			);
 			productRefGroup = C5C159AF24E9AF1C00B52B4B /* Products */;
 			projectDirPath = "";
@@ -554,14 +527,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5C159E724E9BC6500B52B4B /* DebugView.swift in Sources */,
-				C5C159C824E9AF4E00B52B4B /* ViewController.swift in Sources */,
-				C507F3FA2505F4A0001A7821 /* DouglasPeuckerViewController.swift in Sources */,
-				C507F3F82505EF59001A7821 /* SettingsViewController.swift in Sources */,
+				C5C159C824E9AF4E00B52B4B /* DebugViewController.swift in Sources */,
 				C5C159C424E9AF4E00B52B4B /* AppDelegate.swift in Sources */,
-				C507F3F42505E40C001A7821 /* EnabledSliderRowFormer.swift in Sources */,
 				C5C159C624E9AF4E00B52B4B /* SceneDelegate.swift in Sources */,
-				C507F3FC2505F58C001A7821 /* PointDinstanceViewController.swift in Sources */,
-				C594309424F376A90097D52B /* SavitzkyGolayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,25 +855,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		C507F3F0250554AD001A7821 /* XCRemoteSwiftPackageReference "Former" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ra1028/Former.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.8.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C507F3F1250554AD001A7821 /* Former */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C507F3F0250554AD001A7821 /* XCRemoteSwiftPackageReference "Former" */;
-			productName = Former;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C5C159A524E9AF1C00B52B4B /* Project object */;
 }
