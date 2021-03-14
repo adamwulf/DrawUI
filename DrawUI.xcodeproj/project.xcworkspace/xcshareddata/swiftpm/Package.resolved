@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MMSwiftToolbox",
+        "repositoryURL": "https://github.com/adamwulf/MMSwiftToolbox.git",
+        "state": {
+          "branch": "main",
+          "revision": "288d07c57b4e8797456c693a443b0823e2cd2d6a",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

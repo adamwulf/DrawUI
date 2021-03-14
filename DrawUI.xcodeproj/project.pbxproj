@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,9 @@
 		C5005F572548E14500E6DD0C /* TouchPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F562548E14500E6DD0C /* TouchPathTests.swift */; };
 		C507F3E325041E0B001A7821 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E225041E0B001A7821 /* Clamping.swift */; };
 		C5094CE225FEB0A60001AE2A /* BezierStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5094CE125FEB0A60001AE2A /* BezierStream.swift */; };
+		C5094CE925FEB6770001AE2A /* BezierViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5094CE825FEB6770001AE2A /* BezierViewController.swift */; };
+		C5094CEF25FEB6FB0001AE2A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5094CEE25FEB6FB0001AE2A /* BaseViewController.swift */; };
+		C5094CF825FEBA3B0001AE2A /* MMSwiftToolbox in Frameworks */ = {isa = PBXBuildFile; productRef = C5094CF725FEBA3B0001AE2A /* MMSwiftToolbox */; };
 		C53651B72544CC7F00FA25A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C53651B62544CC7E00FA25A4 /* README.md */; };
 		C5420EA52549096700473D8A /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = C5420EA42549096700473D8A /* events.json */; };
 		C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* PolylineStream.swift */; };
@@ -82,6 +85,8 @@
 		C5005F562548E14500E6DD0C /* TouchPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPathTests.swift; sourceTree = "<group>"; };
 		C507F3E225041E0B001A7821 /* Clamping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
 		C5094CE125FEB0A60001AE2A /* BezierStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierStream.swift; sourceTree = "<group>"; };
+		C5094CE825FEB6770001AE2A /* BezierViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierViewController.swift; sourceTree = "<group>"; };
+		C5094CEE25FEB6FB0001AE2A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		C53651B62544CC7E00FA25A4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		C5420EA42549096700473D8A /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* PolylineStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolylineStream.swift; sourceTree = "<group>"; };
@@ -133,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5094CF825FEBA3B0001AE2A /* MMSwiftToolbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +153,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C5094CE725FEB6690001AE2A /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				C5094CEE25FEB6FB0001AE2A /* BaseViewController.swift */,
+				C5C159C724E9AF4E00B52B4B /* DebugViewController.swift */,
+				C5094CE825FEB6770001AE2A /* BezierViewController.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
 		C5420EAA2549096F00473D8A /* Test Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,9 +316,9 @@
 		C5C159C224E9AF4E00B52B4B /* DrawUIExample */ = {
 			isa = PBXGroup;
 			children = (
+				C5094CE725FEB6690001AE2A /* Tabs */,
 				C5C159C324E9AF4E00B52B4B /* AppDelegate.swift */,
 				C5C159C524E9AF4E00B52B4B /* SceneDelegate.swift */,
-				C5C159C724E9AF4E00B52B4B /* DebugViewController.swift */,
 				C5C159E624E9BC6500B52B4B /* DebugView.swift */,
 				C5C159C924E9AF4E00B52B4B /* Main.storyboard */,
 				C5C159CC24E9AF4E00B52B4B /* Assets.xcassets */,
@@ -385,6 +401,9 @@
 			dependencies = (
 			);
 			name = DrawUI;
+			packageProductDependencies = (
+				C5094CF725FEBA3B0001AE2A /* MMSwiftToolbox */,
+			);
 			productName = DrawUI;
 			productReference = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */;
 			productType = "com.apple.product-type.framework";
@@ -441,6 +460,7 @@
 			);
 			mainGroup = C5C159A424E9AF1C00B52B4B;
 			packageReferences = (
+				C5094CF625FEBA3B0001AE2A /* XCRemoteSwiftPackageReference "MMSwiftToolbox" */,
 			);
 			productRefGroup = C5C159AF24E9AF1C00B52B4B /* Products */;
 			projectDirPath = "";
@@ -546,7 +566,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5094CE925FEB6770001AE2A /* BezierViewController.swift in Sources */,
 				C5C159E724E9BC6500B52B4B /* DebugView.swift in Sources */,
+				C5094CEF25FEB6FB0001AE2A /* BaseViewController.swift in Sources */,
 				C5C159C824E9AF4E00B52B4B /* DebugViewController.swift in Sources */,
 				C5C159C424E9AF4E00B52B4B /* AppDelegate.swift in Sources */,
 				C5C159C624E9AF4E00B52B4B /* SceneDelegate.swift in Sources */,
@@ -875,6 +897,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C5094CF625FEBA3B0001AE2A /* XCRemoteSwiftPackageReference "MMSwiftToolbox" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adamwulf/MMSwiftToolbox.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C5094CF725FEBA3B0001AE2A /* MMSwiftToolbox */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5094CF625FEBA3B0001AE2A /* XCRemoteSwiftPackageReference "MMSwiftToolbox" */;
+			productName = MMSwiftToolbox;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C5C159A524E9AF1C00B52B4B /* Project object */;
 }

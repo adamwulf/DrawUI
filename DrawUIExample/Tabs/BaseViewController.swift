@@ -1,52 +1,24 @@
 //
-//  DebugViewController.swift
+//  BaseViewController.swift
 //  DrawUIExample
 //
-//  Created by Adam Wulf on 8/16/20.
+//  Created by Adam Wulf on 3/14/21.
 //
 
 import UIKit
 import DrawUI
 
-class DebugViewController: UIViewController {
+class BaseViewController: UIViewController {
 
     var allEvents: [TouchEvent] = []
 
     let touchEventStream = TouchEventStream()
-    let touchPathStream = TouchPathStream()
-    let strokeStream = PolylineStream()
-    let pathStream = FlatBezierStream()
-    @IBOutlet var debugView: DebugView!
-
-    let savitzkyGolay = NaiveSavitzkyGolay()
-    let douglasPeucker = NaiveDouglasPeucker()
-    let pointDistance = NaivePointDistance()
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
 
         touchEventStream.addConsumer { (updatedEvents) in
             self.allEvents.append(contentsOf: updatedEvents)
-        }
-        touchEventStream.addConsumer(touchPathStream)
-        touchPathStream.addConsumer(strokeStream)
-        strokeStream.addConsumer(douglasPeucker)
-        var strokeOutput: PolylineStream.Output = (lines: [], deltas: [])
-        strokeStream.addConsumer { (input) in
-            strokeOutput = input
-        }
-        douglasPeucker.addConsumer(pointDistance)
-        pointDistance.addConsumer(savitzkyGolay)
-        savitzkyGolay.addConsumer { (smoothOutput) in
-            self.debugView?.originalStrokes = strokeOutput.lines
-            self.debugView?.smoothStrokes = smoothOutput.lines
-            self.debugView?.add(deltas: strokeOutput.deltas)
-            self.debugView?.setNeedsDisplay()
-        }
-
-        savitzkyGolay.addConsumer(pathStream)
-        pathStream.addConsumer { (input) in
-            print("pathCount: \(input.paths.count) updatedCount:\(input.deltas.count)")
         }
     }
 
@@ -61,12 +33,10 @@ class DebugViewController: UIViewController {
         exportButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
         exportButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         exportButton.addTarget(self, action: #selector(didRequestExport), for: .touchUpInside)
-
-        debugView?.addGestureRecognizer(touchEventStream.gesture)
     }
 }
 
-extension DebugViewController {
+extension BaseViewController {
 
     @objc func didRequestExport(_ sender: UIView) {
         let tmpDirURL = FileManager.default.temporaryDirectory.appendingPathComponent("events").appendingPathExtension("json")

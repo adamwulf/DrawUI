@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sP7-PE-svj">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -8,7 +8,44 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Debug View Controller-->
+        <!--Bezier-->
+        <scene sceneID="BBE-YK-fEy">
+            <objects>
+                <viewController id="zNX-gI-D9f" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rb2-W7-yY4" customClass="PathView" customModule="DrawUIExample" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="oHM-da-eVE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Bezier" id="u5C-tg-qxQ"/>
+                    <connections>
+                        <outlet property="pathView" destination="rb2-W7-yY4" id="R47-II-Qz5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vEF-fV-aSY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-623" y="577"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="vLv-so-AUA">
+            <objects>
+                <tabBarController id="sP7-PE-svj" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8g6-dI-yPt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="gGA-17-E7E"/>
+                        <segue destination="zNX-gI-D9f" kind="relationship" relationship="viewControllers" id="H5p-NY-MZt"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o6x-Rq-qpR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1857" y="208"/>
+        </scene>
+        <!--Debug-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="DebugViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
@@ -31,6 +68,7 @@
                             <constraint firstItem="Ws6-cd-wAk" firstAttribute="leading" secondItem="cda-CR-GYy" secondAttribute="leading" id="wcS-Ts-44T"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Debug" id="qHK-5d-EwE"/>
                     <connections>
                         <outlet property="debugView" destination="Ws6-cd-wAk" id="POl-Tt-2q6"/>
                         <outlet property="view" destination="8bC-Xf-vdC" id="IrY-jj-sYu"/>
@@ -38,7 +76,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="98.550724637681171" y="97.767857142857139"/>
+            <point key="canvasLocation" x="-622" y="-238"/>
         </scene>
     </scenes>
     <resources>
