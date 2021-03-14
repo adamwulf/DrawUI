@@ -11,10 +11,16 @@ import UIKit
 /// https://en.wikipedia.org/wiki/Savitzky%E2%80%93Golay_filter
 /// Coefficients are calculated with the algorithm from https://dekalogblog.blogspot.com/2013/09/savitzky-golay-filter-convolution.html
 /// Values were confirmed against the coefficients listed at http://www.statistics4u.info/fundstat_eng/cc_savgol_coeff.html
-public class NaiveSavitzkyGolay: PolylineFilter {
+public class NaiveSavitzkyGolay: PolylineStreamProducer, PolylineStreamConsumer {
+
+    // MARK: Private
 
     private let deriv: Int // 0 is smooth, 1 is first derivative, etc
     private let order: Int
+    private var consumers: [PolylineStreamConsumer] = []
+
+    // MARK: Public
+
     public var enabled: Bool = true {
         didSet {
             clearCaches()
@@ -27,14 +33,31 @@ public class NaiveSavitzkyGolay: PolylineFilter {
     }
     @Clamping(0...1) public var strength: CGFloat = 1
 
+    // MARK: Init
+
     public init () {
         strength = 1
         deriv = 0
         order = 3
     }
 
-    public func process(input: PolylineStream.Output) -> PolylineStream.Output {
-        guard enabled else { return input }
+    // MARK: - PolylineStreamProducer
+
+    public func addConsumer(_ consumer: PolylineStreamConsumer) {
+        consumers.append(consumer)
+    }
+
+    public func addConsumer(_ block: @escaping (PolylineStream.Output) -> Void) {
+        addConsumer(AnonymousPolylineStreamConsumer(block: block))
+    }
+
+    // MARK: - PolylineStreamConsumer
+
+    public func process(_ input: PolylineStream.Output) {
+        guard enabled else {
+            consumers.forEach({ $0.process(input) })
+            return
+        }
         var outLines = input.lines
         var outDeltas: [PolylineStream.Delta] = []
 
@@ -63,7 +86,8 @@ public class NaiveSavitzkyGolay: PolylineFilter {
             outDeltas.append(.addedPolyline(index: lineIdx))
         }
 
-        return (outLines, outDeltas)
+        let output = (outLines, outDeltas)
+        consumers.forEach({ $0.process(output) })
     }
 
     // TODO: optimize the smoothing to cache stroke state and only re-smooth when required

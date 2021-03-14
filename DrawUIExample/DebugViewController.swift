@@ -29,6 +29,19 @@ class DebugViewController: UIViewController {
         }
         touchEventStream.addConsumer(touchPathStream)
         touchPathStream.addConsumer(strokeStream)
+        strokeStream.addConsumer(douglasPeucker)
+        var strokeOutput: PolylineStream.Output = (lines: [], deltas: [])
+        strokeStream.addConsumer { (input) in
+            strokeOutput = input
+        }
+        douglasPeucker.addConsumer(pointDistance)
+        pointDistance.addConsumer(savitzkyGolay)
+        savitzkyGolay.addConsumer { (smoothOutput) in
+            self.debugView?.originalStrokes = strokeOutput.lines
+            self.debugView?.smoothStrokes = smoothOutput.lines
+            self.debugView?.add(deltas: strokeOutput.deltas)
+            self.debugView?.setNeedsDisplay()
+        }
     }
 
     override func viewDidLoad() {
@@ -43,37 +56,11 @@ class DebugViewController: UIViewController {
         exportButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         exportButton.addTarget(self, action: #selector(didRequestExport), for: .touchUpInside)
 
-        strokeStream.addConsumer { [weak self] (strokeOutput) in
-            guard let self = self else { return }
-            let douglasPeuckerOutput = self.douglasPeucker.process(input: strokeOutput)
-            let pointDistanceOutput = self.pointDistance.process(input: douglasPeuckerOutput)
-            let smoothOutput = self.savitzkyGolay.process(input: pointDistanceOutput)
-
-            self.debugView?.originalStrokes = strokeOutput.lines
-            self.debugView?.smoothStrokes = smoothOutput.lines
-            self.debugView?.add(deltas: strokeOutput.deltas)
-            self.debugView?.setNeedsDisplay()
-        }
-
         debugView?.addGestureRecognizer(touchEventStream.gesture)
     }
 }
 
 extension DebugViewController {
-
-    private func resmoothEverything() {
-        // If any of the settings have changed or been reenabled, etc.
-        let originalOutput: PolylineStream.Output = (lines: strokeStream.lines, deltas: [])
-        let douglasPeuckerOutput = self.douglasPeucker.process(input: originalOutput)
-        let pointDistanceOutput = self.pointDistance.process(input: douglasPeuckerOutput)
-        let smoothOutput = self.savitzkyGolay.process(input: pointDistanceOutput)
-        debugView.smoothStrokes = smoothOutput.lines
-        debugView.setNeedsDisplay()
-    }
-
-    func didChangeSettings() {
-        resmoothEverything()
-    }
 
     @objc func didRequestExport(_ sender: UIView) {
         let tmpDirURL = FileManager.default.temporaryDirectory.appendingPathComponent("events").appendingPathExtension("json")

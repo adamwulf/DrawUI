@@ -11,7 +11,7 @@ public protocol TouchPathStreamConsumer {
     func process(_ input: TouchPathStream.Output)
 }
 
-private struct AnonymousConsumer: TouchPathStreamConsumer {
+struct AnonymousTouchPathStreamConsumer: TouchPathStreamConsumer {
     var block: (TouchPathStream.Output) -> Void
     func process(_ input: TouchPathStream.Output) {
         block(input)
@@ -49,11 +49,15 @@ public class TouchPathStream: TouchEventStreamConsumer, TouchPathStreamProducer 
     }
 
     // MARK: - Private
+
     private var touchToIndex: [UITouchIdentifier: Int]
     private var consumers: [TouchPathStreamConsumer] = []
 
     // MARK: - Public
+
     public private(set) var paths: [TouchPath]
+
+    // MARK: - Init
 
     public init() {
         touchToIndex = [:]
@@ -67,7 +71,7 @@ public class TouchPathStream: TouchEventStreamConsumer, TouchPathStreamProducer 
     }
 
     public func addConsumer(_ block: @escaping (TouchPathStream.Output) -> Void) {
-        addConsumer(AnonymousConsumer(block: block))
+        addConsumer(AnonymousTouchPathStreamConsumer(block: block))
     }
 
     // MARK: - TouchEventStreamConsumer

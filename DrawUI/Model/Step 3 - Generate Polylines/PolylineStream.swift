@@ -11,7 +11,7 @@ public protocol PolylineStreamConsumer {
     func process(_ input: PolylineStream.Output)
 }
 
-private struct AnonymousConsumer: PolylineStreamConsumer {
+struct AnonymousPolylineStreamConsumer: PolylineStreamConsumer {
     var block: (PolylineStream.Output) -> Void
     func process(_ input: PolylineStream.Output) {
         block(input)
@@ -46,10 +46,13 @@ public class PolylineStream: TouchPathStreamConsumer, PolylineStreamProducer {
     }
 
     // MARK: - Private
+
     public private(set) var lines: [Polyline]
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
     public private(set) var indexToIndex: [Int: Int]
     private var consumers: [PolylineStreamConsumer] = []
+
+    // MARK: - Init
 
     public init() {
         indexToIndex = [:]
@@ -63,7 +66,7 @@ public class PolylineStream: TouchPathStreamConsumer, PolylineStreamProducer {
     }
 
     public func addConsumer(_ block: @escaping (PolylineStream.Output) -> Void) {
-        addConsumer(AnonymousConsumer(block: block))
+        addConsumer(AnonymousPolylineStreamConsumer(block: block))
     }
 
     // MARK: - TouchPathStreamConsumer

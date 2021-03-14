@@ -11,7 +11,7 @@ public protocol TouchEventStreamConsumer {
     func process(events: [TouchEvent])
 }
 
-private struct AnonymousConsumer: TouchEventStreamConsumer {
+struct AnonymousTouchEventStreamConsumer: TouchEventStreamConsumer {
     var block: ([TouchEvent]) -> Void
     func process(events: [TouchEvent]) {
         block(events)
@@ -28,15 +28,19 @@ public protocol TouchEventStreamProducer {
 public class TouchEventStream: TouchEventStreamProducer {
 
     // MARK: - Private
+
     private var recentEvents: [TouchEvent] = []
     private var processedEvents: [TouchEvent] = []
     private var lazyGesture: TouchEventGestureRecognizer?
     private var consumers: [TouchEventStreamConsumer] = []
 
     // MARK: - Public
+
     public var events: [TouchEvent] {
         return processedEvents + recentEvents
     }
+
+    // MARK: - Init
 
     public init() {
         // noop
@@ -49,7 +53,7 @@ public class TouchEventStream: TouchEventStreamProducer {
     }
 
     public func addConsumer(_ block: @escaping ([TouchEvent]) -> Void) {
-        addConsumer(AnonymousConsumer(block: block))
+        addConsumer(AnonymousTouchEventStreamConsumer(block: block))
     }
 
     // MARK: - Gesture
