@@ -7,7 +7,18 @@
 
 import UIKit
 
-public class PolylineStream {
+public protocol PolylineStreamConsumer {
+    func process(_ input: PolylineStream.Output)
+}
+
+private struct AnonymousConsumer: PolylineStreamConsumer {
+    var block: (PolylineStream.Output) -> Void
+    func process(_ input: PolylineStream.Output) {
+        block(input)
+    }
+}
+
+public class PolylineStream: TouchPathStreamConsumer {
 
     public typealias Output = (lines: [Polyline], deltas: [Delta])
 
@@ -28,17 +39,30 @@ public class PolylineStream {
         }
     }
 
+    // MARK: - Private
     public private(set) var lines: [Polyline]
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
     public private(set) var indexToIndex: [Int: Int]
+    private var consumers: [PolylineStreamConsumer] = []
 
     public init() {
         indexToIndex = [:]
         lines = []
     }
 
-    @discardableResult
-    public func process(input: TouchPathStream.Output) -> Output {
+    // MARK: - Consumers
+
+    public func addConsumer(_ consumer: PolylineStreamConsumer) {
+        consumers.append(consumer)
+    }
+
+    public func addConsumer(_ block: @escaping (PolylineStream.Output) -> Void) {
+        addConsumer(AnonymousConsumer(block: block))
+    }
+
+    // MARK: - TouchPathStreamConsumer
+
+    public func process(_ input: TouchPathStream.Output) {
         let pointCollectionDeltas = input.deltas
         var deltas: [Delta] = []
 
@@ -64,6 +88,7 @@ public class PolylineStream {
             }
         }
 
-        return (lines, deltas)
+        let output = (lines, deltas)
+        consumers.forEach({ $0.process(output) })
     }
 }
