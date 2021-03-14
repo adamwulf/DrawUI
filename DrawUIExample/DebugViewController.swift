@@ -12,9 +12,9 @@ class DebugViewController: UIViewController {
 
     var allEvents: [TouchEvent] = []
 
-    let eventStream: TouchEventStream
-    let pointStream: TouchPathStream
-    let strokeStream: PolylineStream
+    let touchEventStream = TouchEventStream()
+    let touchPathStream = TouchPathStream()
+    let strokeStream = PolylineStream()
     @IBOutlet var debugView: DebugView!
 
     let savitzkyGolay = NaiveSavitzkyGolay()
@@ -22,10 +22,11 @@ class DebugViewController: UIViewController {
     let pointDistance = NaivePointDistance()
 
     required init?(coder: NSCoder) {
-        eventStream = TouchEventStream()
-        pointStream = TouchPathStream()
-        strokeStream = PolylineStream()
         super.init(coder: coder)
+
+        touchEventStream.addConsumer { (updatedEvents) in
+            self.allEvents.append(contentsOf: updatedEvents)
+        }
     }
 
     override func viewDidLoad() {
@@ -40,10 +41,9 @@ class DebugViewController: UIViewController {
         exportButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         exportButton.addTarget(self, action: #selector(didRequestExport), for: .touchUpInside)
 
-        eventStream.eventStreamChanged = { [weak self] (updatedEvents) in
+        touchEventStream.addConsumer { [weak self] (updatedEvents) in
             guard let self = self else { return }
-            self.allEvents.append(contentsOf: updatedEvents)
-            let pointOutput = self.pointStream.process(touchEvents: updatedEvents)
+            let pointOutput = self.touchPathStream.process(touchEvents: updatedEvents)
             let strokeOutput = self.strokeStream.process(input: pointOutput)
             let douglasPeuckerOutput = self.douglasPeucker.process(input: strokeOutput)
             let pointDistanceOutput = self.pointDistance.process(input: douglasPeuckerOutput)
@@ -55,7 +55,7 @@ class DebugViewController: UIViewController {
             self.debugView?.setNeedsDisplay()
         }
 
-        debugView?.addGestureRecognizer(eventStream.gesture)
+        debugView?.addGestureRecognizer(touchEventStream.gesture)
     }
 }
 
