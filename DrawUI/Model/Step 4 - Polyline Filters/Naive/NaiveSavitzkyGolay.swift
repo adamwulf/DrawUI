@@ -90,7 +90,6 @@ public class NaiveSavitzkyGolay: PolylineStreamProducer, PolylineStreamConsumer 
         consumers.forEach({ $0.process(output) })
     }
 
-    // TODO: optimize the smoothing to cache stroke state and only re-smooth when required
     func optimized_process(input: PolylineStream.Output) -> PolylineStream.Output {
         var outLines = input.lines
 
