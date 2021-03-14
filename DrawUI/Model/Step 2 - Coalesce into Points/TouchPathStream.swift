@@ -7,10 +7,21 @@
 
 import UIKit
 
+public protocol TouchPathStreamConsumer {
+    func process(_ input: TouchPathStream.Output)
+}
+
+private struct AnonymousConsumer: TouchPathStreamConsumer {
+    var block: (TouchPathStream.Output) -> Void
+    func process(_ input: TouchPathStream.Output) {
+        block(input)
+    }
+}
+
 /// Input: An array of touch events from one or more touches representing one or more collections.
 /// A `TouchPathStream` represents all of the different `TouchPathStream.Point` that share the same `touchIdentifier`
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
-public class TouchPathStream {
+public class TouchPathStream: TouchEventStreamConsumer {
 
     public typealias Output = (paths: [TouchPath], deltas: [Delta])
 
@@ -31,7 +42,11 @@ public class TouchPathStream {
         }
     }
 
+    // MARK: - Private
     private var touchToIndex: [UITouchIdentifier: Int]
+    private var consumers: [TouchPathStreamConsumer] = []
+
+    // MARK: - Public
     public private(set) var paths: [TouchPath]
 
     public init() {
@@ -39,11 +54,22 @@ public class TouchPathStream {
         paths = []
     }
 
-    @discardableResult
-    public func process(touchEvents: [TouchEvent]) -> Output {
+    // MARK: - Consumers
+
+    public func addConsumer(_ consumer: TouchPathStreamConsumer) {
+        consumers.append(consumer)
+    }
+
+    public func addConsumer(_ block: @escaping (TouchPathStream.Output) -> Void) {
+        addConsumer(AnonymousConsumer(block: block))
+    }
+
+    // MARK: - TouchEventStreamConsumer
+
+    public func process(events: [TouchEvent]) {
         var deltas: [Delta] = []
         var orderOfTouches: [UITouchIdentifier] = []
-        let updatedEventsPerTouch = touchEvents.reduce([:], { (result, event) -> [String: [TouchEvent]] in
+        let updatedEventsPerTouch = events.reduce([:], { (result, event) -> [String: [TouchEvent]] in
             var result = result
             if result[event.touchIdentifier] != nil {
                 result[event.touchIdentifier]?.append(event)
@@ -79,6 +105,8 @@ public class TouchPathStream {
             }
         }
 
-        return (paths, deltas)
+        let output = (paths, deltas)
+
+        consumers.forEach({ $0.process(output) })
     }
 }

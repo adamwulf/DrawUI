@@ -27,6 +27,7 @@ class DebugViewController: UIViewController {
         touchEventStream.addConsumer { (updatedEvents) in
             self.allEvents.append(contentsOf: updatedEvents)
         }
+        touchEventStream.addConsumer(touchPathStream)
     }
 
     override func viewDidLoad() {
@@ -41,9 +42,8 @@ class DebugViewController: UIViewController {
         exportButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         exportButton.addTarget(self, action: #selector(didRequestExport), for: .touchUpInside)
 
-        touchEventStream.addConsumer { [weak self] (updatedEvents) in
+        touchPathStream.addConsumer { [weak self] (pointOutput) in
             guard let self = self else { return }
-            let pointOutput = self.touchPathStream.process(touchEvents: updatedEvents)
             let strokeOutput = self.strokeStream.process(input: pointOutput)
             let douglasPeuckerOutput = self.douglasPeucker.process(input: strokeOutput)
             let pointDistanceOutput = self.pointDistance.process(input: douglasPeuckerOutput)

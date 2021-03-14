@@ -11,7 +11,7 @@ public protocol TouchEventStreamConsumer {
     func process(events: [TouchEvent])
 }
 
-struct AnonymousConsumer: TouchEventStreamConsumer {
+private struct AnonymousConsumer: TouchEventStreamConsumer {
     var block: ([TouchEvent]) -> Void
     func process(events: [TouchEvent]) {
         block(events)
