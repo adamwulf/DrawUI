@@ -1,5 +1,5 @@
 //
-//  DrawRectView.swift
+//  SmartDrawRectView.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 3/15/21.
@@ -8,7 +8,7 @@
 import UIKit
 import MMSwiftToolbox
 
-public class DrawRectView: UIView, BezierStreamConsumer {
+public class SmartDrawRectView: UIView, BezierStreamConsumer {
 
     private var model: BezierStream.Output = (paths: [], deltas: [])
 

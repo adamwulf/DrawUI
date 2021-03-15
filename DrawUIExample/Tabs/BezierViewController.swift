@@ -14,7 +14,7 @@ class BezierViewController: BaseViewController {
     let touchPathStream = TouchPathStream()
     let strokeStream = PolylineStream()
     let pathStream = FlatBezierStream()
-    @IBOutlet var pathView: DrawRectView!
+    @IBOutlet var pathView: SmartDrawRectView!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
