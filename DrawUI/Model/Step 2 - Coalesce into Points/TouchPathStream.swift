@@ -28,7 +28,7 @@ public protocol TouchPathStreamProducer {
 /// A `TouchPathStream` represents all of the different `TouchPathStream.Point` that share the same `touchIdentifier`
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
 public class TouchPathStream: Consumer, TouchPathStreamProducer {
-    public typealias Consumes = TouchEvent
+    public typealias Consumes = [TouchEvent]
     public typealias Output = (paths: [TouchPath], deltas: [Delta])
 
     public enum Delta: Equatable {

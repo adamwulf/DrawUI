@@ -10,9 +10,9 @@ import UIKit
 // Processes events for mutiple touches
 public class TouchEventStream: Producer {
     // How do I keep Customer generic here?
-    public typealias Produces = TouchEvent
+    public typealias Produces = [TouchEvent]
 
-    var consumers: [([Produces]) -> Void] = []
+    var consumers: [(Produces) -> Void] = []
 
     // MARK: - Private
 
@@ -35,7 +35,7 @@ public class TouchEventStream: Producer {
     // MARK: - Consumers
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
-        consumers.append({ (produces: [Produces]) in
+        consumers.append({ (produces: Produces) in
             consumer.process(produces)
         })
     }
