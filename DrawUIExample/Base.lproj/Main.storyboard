@@ -12,7 +12,7 @@
         <scene sceneID="BBE-YK-fEy">
             <objects>
                 <viewController id="zNX-gI-D9f" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="rb2-W7-yY4" customClass="PathView" customModule="DrawUIExample" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="rb2-W7-yY4" customClass="DrawRectView" customModule="DrawUI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="oHM-da-eVE"/>

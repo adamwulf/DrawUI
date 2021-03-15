@@ -29,6 +29,7 @@
 		C58025AE24EA3F150043130D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */; };
 		C58B5017254DFCCA0010F195 /* PolylineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B5016254DFCCA0010F195 /* PolylineTests.swift */; };
 		C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594308124F0E3640097D52B /* CGPoint+Extensions.swift */; };
+		C59582BC25FF366500C4B202 /* DrawRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59582BB25FF366500C4B202 /* DrawRectView.swift */; };
 		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159B924E9AF3600B52B4B /* TouchEvent.swift */; };
 		C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159BA24E9AF3600B52B4B /* TouchEventStream.swift */; };
@@ -102,6 +103,7 @@
 		C58025AD24EA3F150043130D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C58B5016254DFCCA0010F195 /* PolylineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolylineTests.swift; sourceTree = "<group>"; };
 		C594308124F0E3640097D52B /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		C59582BB25FF366500C4B202 /* DrawRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawRectView.swift; sourceTree = "<group>"; };
 		C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C159B124E9AF1C00B52B4B /* DrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawUI.h; sourceTree = "<group>"; };
 		C5C159B224E9AF1C00B52B4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				C559CBFE24EB9AAF006D263C /* Step 4 - Polyline Filters */,
 				C55E42A625FEAF2D00093DEC /* Step 5 - Beziers */,
 				C548CEBE2547777000F4E648 /* Step 5 - Smooth Strokes */,
+				C59582BA25FF363500C4B202 /* Step 6 - Render */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -277,6 +280,14 @@
 			children = (
 			);
 			path = Optimized;
+			sourceTree = "<group>";
+		};
+		C59582BA25FF363500C4B202 /* Step 6 - Render */ = {
+			isa = PBXGroup;
+			children = (
+				C59582BB25FF366500C4B202 /* DrawRectView.swift */,
+			);
+			path = "Step 6 - Render";
 			sourceTree = "<group>";
 		};
 		C5C159A424E9AF1C00B52B4B = {
@@ -552,6 +563,7 @@
 				C5005F4B2547789C00E6DD0C /* Stroke.swift in Sources */,
 				C5C5CC4B254E0DA100B6662F /* StrokeStream.swift in Sources */,
 				C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */,
+				C59582BC25FF366500C4B202 /* DrawRectView.swift in Sources */,
 				C5C5CC41254E089000B6662F /* AntigrainSmoother.swift in Sources */,
 				C559CC0024EB9ABE006D263C /* NaiveSavitzkyGolay.swift in Sources */,
 				C5C159DD24E9AF8100B52B4B /* Array+Extensions.swift in Sources */,
