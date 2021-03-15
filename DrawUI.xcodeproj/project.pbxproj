@@ -31,6 +31,7 @@
 		C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594308124F0E3640097D52B /* CGPoint+Extensions.swift */; };
 		C59582BC25FF366500C4B202 /* SmartDrawRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59582BB25FF366500C4B202 /* SmartDrawRectView.swift */; };
 		C59582C225FF388000C4B202 /* NaiveDrawRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59582C125FF388000C4B202 /* NaiveDrawRectView.swift */; };
+		C59582F125FF4A1F00C4B202 /* PerformanceBezier in Frameworks */ = {isa = PBXBuildFile; productRef = C59582F025FF4A1F00C4B202 /* PerformanceBezier */; };
 		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159B924E9AF3600B52B4B /* TouchEvent.swift */; };
 		C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159BA24E9AF3600B52B4B /* TouchEventStream.swift */; };
@@ -142,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C59582F125FF4A1F00C4B202 /* PerformanceBezier in Frameworks */,
 				C5094CF825FEBA3B0001AE2A /* MMSwiftToolbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,6 +419,7 @@
 			name = DrawUI;
 			packageProductDependencies = (
 				C5094CF725FEBA3B0001AE2A /* MMSwiftToolbox */,
+				C59582F025FF4A1F00C4B202 /* PerformanceBezier */,
 			);
 			productName = DrawUI;
 			productReference = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */;
@@ -475,6 +478,7 @@
 			mainGroup = C5C159A424E9AF1C00B52B4B;
 			packageReferences = (
 				C5094CF625FEBA3B0001AE2A /* XCRemoteSwiftPackageReference "MMSwiftToolbox" */,
+				C59582EF25FF4A1F00C4B202 /* XCRemoteSwiftPackageReference "PerformanceBezier" */,
 			);
 			productRefGroup = C5C159AF24E9AF1C00B52B4B /* Products */;
 			projectDirPath = "";
@@ -923,6 +927,14 @@
 				kind = branch;
 			};
 		};
+		C59582EF25FF4A1F00C4B202 /* XCRemoteSwiftPackageReference "PerformanceBezier" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adamwulf/PerformanceBezier";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -930,6 +942,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C5094CF625FEBA3B0001AE2A /* XCRemoteSwiftPackageReference "MMSwiftToolbox" */;
 			productName = MMSwiftToolbox;
+		};
+		C59582F025FF4A1F00C4B202 /* PerformanceBezier */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C59582EF25FF4A1F00C4B202 /* XCRemoteSwiftPackageReference "PerformanceBezier" */;
+			productName = PerformanceBezier;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

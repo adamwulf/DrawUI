@@ -9,6 +9,15 @@
           "revision": "288d07c57b4e8797456c693a443b0823e2cd2d6a",
           "version": null
         }
+      },
+      {
+        "package": "PerformanceBezier",
+        "repositoryURL": "https://github.com/adamwulf/PerformanceBezier",
+        "state": {
+          "branch": "main",
+          "revision": "be3fd06056b1e1d7eec6ba456c20c3d43cccac0d",
+          "version": null
+        }
       }
     ]
   },
