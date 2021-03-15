@@ -22,6 +22,7 @@
 		C559CC0024EB9ABE006D263C /* NaiveSavitzkyGolay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */; };
 		C559CC0224EB9ACA006D263C /* NaiveDouglasPeucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */; };
 		C559CC0724EBA6C0006D263C /* NaivePointDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */; };
+		C55B2CB926000C58004F6BDF /* ProducerConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */; };
 		C55E42A825FEAF4500093DEC /* FlatBezierStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55E42A725FEAF4500093DEC /* FlatBezierStream.swift */; };
 		C580259C24E9E1150043130D /* TouchPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* TouchPath.swift */; };
 		C580259F24E9E1C10043130D /* TouchPathStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* TouchPathStream.swift */; };
@@ -97,6 +98,7 @@
 		C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveSavitzkyGolay.swift; sourceTree = "<group>"; };
 		C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveDouglasPeucker.swift; sourceTree = "<group>"; };
 		C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaivePointDistance.swift; sourceTree = "<group>"; };
+		C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerConsumer.swift; sourceTree = "<group>"; };
 		C55E42A725FEAF4500093DEC /* FlatBezierStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatBezierStream.swift; sourceTree = "<group>"; };
 		C580259B24E9E1150043130D /* TouchPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPath.swift; sourceTree = "<group>"; };
 		C580259E24E9E1C10043130D /* TouchPathStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPathStream.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		C58025A224EA26BB0043130D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */,
 				C58025A324EA26C40043130D /* Step 1 - Touch */,
 				C58025A424EA26DA0043130D /* Step 2 - Coalesce into Points */,
 				C58025B824EA4F6A0043130D /* Step 3 - Generate Polylines */,
@@ -565,6 +568,7 @@
 				C59582C225FF388000C4B202 /* NaiveDrawRectView.swift in Sources */,
 				C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */,
 				C5C159E224E9B2F800B52B4B /* TouchEventGestureRecognizer.swift in Sources */,
+				C55B2CB926000C58004F6BDF /* ProducerConsumer.swift in Sources */,
 				C580259F24E9E1C10043130D /* TouchPathStream.swift in Sources */,
 				C559CC0724EBA6C0006D263C /* NaivePointDistance.swift in Sources */,
 				C5C159DC24E9AF8100B52B4B /* UITouch+Extensions.swift in Sources */,

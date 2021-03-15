@@ -7,32 +7,18 @@
 
 import UIKit
 
-public protocol TouchEventStreamConsumer {
-    func process(events: [TouchEvent])
-}
-
-struct AnonymousTouchEventStreamConsumer: TouchEventStreamConsumer {
-    var block: ([TouchEvent]) -> Void
-    func process(events: [TouchEvent]) {
-        block(events)
-    }
-}
-
-public protocol TouchEventStreamProducer {
-    func addConsumer(_ consumer: TouchEventStreamConsumer)
-
-    func addConsumer(_ block: @escaping ([TouchEvent]) -> Void)
-}
-
 // Processes events for mutiple touches
-public class TouchEventStream: TouchEventStreamProducer {
+public class TouchEventStream: Producer {
+    // How do I keep Customer generic here?
+    public typealias Produces = TouchEvent
+
+    var consumers: [([Produces]) -> Void] = []
 
     // MARK: - Private
 
     private var recentEvents: [TouchEvent] = []
     private var processedEvents: [TouchEvent] = []
     private var lazyGesture: TouchEventGestureRecognizer?
-    private var consumers: [TouchEventStreamConsumer] = []
 
     // MARK: - Public
 
@@ -48,12 +34,14 @@ public class TouchEventStream: TouchEventStreamProducer {
 
     // MARK: - Consumers
 
-    public func addConsumer(_ consumer: TouchEventStreamConsumer) {
-        consumers.append(consumer)
+    public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
+        consumers.append({ (produces: [Produces]) in
+            consumer.process(produces)
+        })
     }
 
     public func addConsumer(_ block: @escaping ([TouchEvent]) -> Void) {
-        addConsumer(AnonymousTouchEventStreamConsumer(block: block))
+        consumers.append(block)
     }
 
     // MARK: - Gesture
@@ -79,6 +67,6 @@ public class TouchEventStream: TouchEventStreamProducer {
         defer {
             recentEvents.removeAll()
         }
-        consumers.forEach({ $0.process(events: recentEvents) })
+        consumers.forEach({ $0(recentEvents) })
     }
 }

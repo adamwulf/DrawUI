@@ -27,8 +27,8 @@ public protocol TouchPathStreamProducer {
 /// Input: An array of touch events from one or more touches representing one or more collections.
 /// A `TouchPathStream` represents all of the different `TouchPathStream.Point` that share the same `touchIdentifier`
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
-public class TouchPathStream: TouchEventStreamConsumer, TouchPathStreamProducer {
-
+public class TouchPathStream: Consumer, TouchPathStreamProducer {
+    public typealias Consumes = TouchEvent
     public typealias Output = (paths: [TouchPath], deltas: [Delta])
 
     public enum Delta: Equatable {
@@ -74,12 +74,12 @@ public class TouchPathStream: TouchEventStreamConsumer, TouchPathStreamProducer 
         addConsumer(AnonymousTouchPathStreamConsumer(block: block))
     }
 
-    // MARK: - TouchEventStreamConsumer
+    // MARK: - Consumer<TouchEvent>
 
-    public func process(events: [TouchEvent]) {
+    public func process(_ input: [TouchEvent]) {
         var deltas: [Delta] = []
         var orderOfTouches: [UITouchIdentifier] = []
-        let updatedEventsPerTouch = events.reduce([:], { (result, event) -> [String: [TouchEvent]] in
+        let updatedEventsPerTouch = input.reduce([:], { (result, event) -> [String: [TouchEvent]] in
             var result = result
             if result[event.touchIdentifier] != nil {
                 result[event.touchIdentifier]?.append(event)
