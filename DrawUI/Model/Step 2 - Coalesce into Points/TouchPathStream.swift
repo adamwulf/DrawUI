@@ -7,29 +7,12 @@
 
 import UIKit
 
-public protocol TouchPathStreamConsumer {
-    func process(_ input: TouchPathStream.Output)
-}
-
-struct AnonymousTouchPathStreamConsumer: TouchPathStreamConsumer {
-    var block: (TouchPathStream.Output) -> Void
-    func process(_ input: TouchPathStream.Output) {
-        block(input)
-    }
-}
-
-public protocol TouchPathStreamProducer {
-    func addConsumer(_ consumer: TouchPathStreamConsumer)
-
-    func addConsumer(_ block: @escaping (TouchPathStream.Output) -> Void)
-}
-
 /// Input: An array of touch events from one or more touches representing one or more collections.
 /// A `TouchPathStream` represents all of the different `TouchPathStream.Point` that share the same `touchIdentifier`
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
-public class TouchPathStream: Consumer, TouchPathStreamProducer {
-    public typealias Consumes = [TouchEvent]
-    public typealias Output = (paths: [TouchPath], deltas: [Delta])
+public class TouchPathStream: Consumer, Producer {
+    public typealias Consumes = TouchEventStream.Produces
+    public typealias Produces = (paths: [TouchPath], deltas: [Delta])
 
     public enum Delta: Equatable {
         case addedTouchPath(index: Int)
@@ -51,7 +34,7 @@ public class TouchPathStream: Consumer, TouchPathStreamProducer {
     // MARK: - Private
 
     private var touchToIndex: [UITouchIdentifier: Int]
-    private var consumers: [TouchPathStreamConsumer] = []
+    public private(set) var consumers: [(Produces) -> Void] = []
 
     // MARK: - Public
 
@@ -66,12 +49,14 @@ public class TouchPathStream: Consumer, TouchPathStreamProducer {
 
     // MARK: - TouchPathStreamProducer
 
-    public func addConsumer(_ consumer: TouchPathStreamConsumer) {
-        consumers.append(consumer)
+    public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
+            consumers.append({ (produces: Produces) in
+                consumer.process(produces)
+            })
     }
 
-    public func addConsumer(_ block: @escaping (TouchPathStream.Output) -> Void) {
-        addConsumer(AnonymousTouchPathStreamConsumer(block: block))
+    public func addConsumer(_ block: @escaping (TouchPathStream.Produces) -> Void) {
+        consumers.append(block)
     }
 
     // MARK: - Consumer<TouchEvent>
@@ -117,6 +102,6 @@ public class TouchPathStream: Consumer, TouchPathStreamProducer {
 
         let output = (paths, deltas)
 
-        consumers.forEach({ $0.process(output) })
+        consumers.forEach({ $0(output) })
     }
 }

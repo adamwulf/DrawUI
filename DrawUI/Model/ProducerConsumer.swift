@@ -14,6 +14,7 @@ public protocol Consumer {
 
 public protocol Producer {
     associatedtype Produces
+    var consumers: [(Produces) -> Void] { get }
 
     func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces
 }
@@ -22,16 +23,17 @@ class ExampleStream: Producer {
     // How do I keep Customer generic here?
     typealias Produces = [TouchEvent]
 
+    var consumers: [(Produces) -> Void] = []
+
+    // Alternate idea to wrap them in an object instead of a loose closure
     struct AnyConsumer {
         let process: (Produces) -> Void
     }
-
-    var consumerClosures: [(Produces) -> Void] = []
     var wrappedCustomers: [AnyConsumer] = []
 
     func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
         wrappedCustomers.append(AnyConsumer(process: consumer.process))
-        consumerClosures.append({ (produces: Produces) in
+        consumers.append({ (produces: Produces) in
             consumer.process(produces)
         })
     }

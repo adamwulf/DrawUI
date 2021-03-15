@@ -12,7 +12,7 @@ public class TouchEventStream: Producer {
     // How do I keep Customer generic here?
     public typealias Produces = [TouchEvent]
 
-    var consumers: [(Produces) -> Void] = []
+    public private(set) var consumers: [(Produces) -> Void] = []
 
     // MARK: - Private
 

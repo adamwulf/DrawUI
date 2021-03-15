@@ -24,8 +24,8 @@ public protocol PolylineStreamProducer {
     func addConsumer(_ block: @escaping (PolylineStream.Output) -> Void)
 }
 
-public class PolylineStream: TouchPathStreamConsumer, PolylineStreamProducer {
-
+public class PolylineStream: Consumer, PolylineStreamProducer {
+    public typealias Consumes = TouchPathStream.Produces
     public typealias Output = (lines: [Polyline], deltas: [Delta])
 
     public enum Delta: Equatable {
@@ -71,7 +71,7 @@ public class PolylineStream: TouchPathStreamConsumer, PolylineStreamProducer {
 
     // MARK: - TouchPathStreamConsumer
 
-    public func process(_ input: TouchPathStream.Output) {
+    public func process(_ input: TouchPathStream.Produces) {
         let pointCollectionDeltas = input.deltas
         var deltas: [Delta] = []
 
