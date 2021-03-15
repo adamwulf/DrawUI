@@ -42,9 +42,6 @@ class DebugViewController: BaseViewController {
         }
 
         savitzkyGolay.addConsumer(pathStream)
-        pathStream.addConsumer { (input) in
-            print("pathCount: \(input.paths.count) updatedCount:\(input.deltas.count)")
-        }
     }
 
     override func viewDidLoad() {

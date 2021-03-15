@@ -58,5 +58,13 @@ public class FlatBezierStream: BezierStream, PolylineStreamConsumer {
 extension UIBezierPath {
     convenience init(polyline: Polyline) {
         self.init()
+        var points = polyline.points
+        guard let startPoint = points.popFirst() else { return }
+        move(to: startPoint.location)
+        lineWidth = max(startPoint.force, 1)
+
+        for point in points {
+            addLine(to: point.location)
+        }
     }
 }
