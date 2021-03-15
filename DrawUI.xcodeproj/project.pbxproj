@@ -177,13 +177,13 @@
 			name = "Test Data";
 			sourceTree = "<group>";
 		};
-		C548CEBE2547777000F4E648 /* Step 5 - Smooth Strokes */ = {
+		C548CEBE2547777000F4E648 /* Alternate Step 5 - Smooth Strokes */ = {
 			isa = PBXGroup;
 			children = (
 				C5005F4A2547789C00E6DD0C /* Stroke.swift */,
 				C5C5CC4A254E0DA100B6662F /* StrokeStream.swift */,
 			);
-			path = "Step 5 - Smooth Strokes";
+			path = "Alternate Step 5 - Smooth Strokes";
 			sourceTree = "<group>";
 		};
 		C559CBFE24EB9AAF006D263C /* Step 4 - Polyline Filters */ = {
@@ -221,7 +221,7 @@
 				C58025B824EA4F6A0043130D /* Step 3 - Generate Polylines */,
 				C559CBFE24EB9AAF006D263C /* Step 4 - Polyline Filters */,
 				C55E42A625FEAF2D00093DEC /* Step 5 - Beziers */,
-				C548CEBE2547777000F4E648 /* Step 5 - Smooth Strokes */,
+				C548CEBE2547777000F4E648 /* Alternate Step 5 - Smooth Strokes */,
 				C59582BA25FF363500C4B202 /* Step 6 - Render */,
 			);
 			path = Model;
