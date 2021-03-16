@@ -11,7 +11,7 @@ import UIKit
 /// https://en.wikipedia.org/wiki/Savitzky%E2%80%93Golay_filter
 /// Coefficients are calculated with the algorithm from https://dekalogblog.blogspot.com/2013/09/savitzky-golay-filter-convolution.html
 /// Values were confirmed against the coefficients listed at http://www.statistics4u.info/fundstat_eng/cc_savgol_coeff.html
-public class NaiveSavitzkyGolay: Producer, Consumer {
+public class NaiveSavitzkyGolay: ProducerConsumer {
     public typealias Consumes = PolylineStream.Produces
     public typealias Produces = PolylineStream.Produces
 
@@ -58,9 +58,14 @@ public class NaiveSavitzkyGolay: Producer, Consumer {
     // MARK: - PolylineStreamConsumer
 
     public func process(_ input: Consumes) {
+        produce(with: input)
+    }
+
+    @discardableResult
+    public func produce(with input: Consumes) -> Produces {
         guard enabled else {
             consumers.forEach({ $0(input) })
-            return
+            return input
         }
         var outLines = input.lines
         var outDeltas: [PolylineStream.Delta] = []
@@ -92,6 +97,7 @@ public class NaiveSavitzkyGolay: Producer, Consumer {
 
         let output = (outLines, outDeltas)
         consumers.forEach({ $0(output) })
+        return output
     }
 
     func optimized_process(input: Consumes) -> Produces {

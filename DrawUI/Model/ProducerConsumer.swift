@@ -18,6 +18,11 @@ public protocol Producer {
     func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces
 }
 
+public protocol ProducerConsumer: Producer, Consumer {
+    @discardableResult
+    func produce(with input: Consumes) -> Produces
+}
+
 class ExampleStream: Producer {
     // How do I keep Customer generic here?
     typealias Produces = [TouchEvent]

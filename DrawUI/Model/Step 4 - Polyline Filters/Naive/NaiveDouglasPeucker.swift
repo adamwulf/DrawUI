@@ -9,7 +9,7 @@ import Foundation
 
 /// Removes points from `strokes` according to the Ramer-Douglas-Peucker algorithm
 /// https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
-public class NaiveDouglasPeucker: Producer, Consumer {
+public class NaiveDouglasPeucker: ProducerConsumer {
     public typealias Consumes = PolylineStream.Produces
     public typealias Produces = PolylineStream.Produces
 
@@ -41,12 +41,18 @@ public class NaiveDouglasPeucker: Producer, Consumer {
     // MARK: - PolylineStreamConsumer
 
     public func process(_ input: Consumes) {
+        produce(with: input)
+    }
+
+    @discardableResult
+    public func produce(with input: Consumes) -> Produces {
         guard enabled else {
             consumers.forEach({ $0(input) })
-            return
+            return input
         }
 
         // TODO: implement Douglas-Peucker algorithm to reduce the number of points
         consumers.forEach({ $0(input) })
+        return input
     }
 }

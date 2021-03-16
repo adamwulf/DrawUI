@@ -10,7 +10,8 @@ import UIKit
 /// Input: An array of touch events from one or more touches representing one or more collections.
 /// A `TouchPathStream` represents all of the different `TouchPathStream.Point` that share the same `touchIdentifier`
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
-public class TouchPathStream: Consumer, Producer {
+public class TouchPathStream: ProducerConsumer {
+
     public typealias Consumes = TouchEventStream.Produces
     public typealias Produces = (paths: [TouchPath], deltas: [Delta])
 
@@ -60,8 +61,12 @@ public class TouchPathStream: Consumer, Producer {
     }
 
     // MARK: - Consumer<TouchEvent>
-
     public func process(_ input: [TouchEvent]) {
+        produce(with: input)
+    }
+
+    @discardableResult
+    public func produce(with input: Consumes) -> Produces {
         var deltas: [Delta] = []
         var orderOfTouches: [UITouchIdentifier] = []
         let updatedEventsPerTouch = input.reduce([:], { (result, event) -> [String: [TouchEvent]] in
@@ -101,7 +106,7 @@ public class TouchPathStream: Consumer, Producer {
         }
 
         let output = (paths, deltas)
-
         consumers.forEach({ $0(output) })
+        return output
     }
 }

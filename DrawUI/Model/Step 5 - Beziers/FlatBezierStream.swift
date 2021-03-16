@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-public class FlatBezierStream: BezierStream, Consumer {
+public class FlatBezierStream: BezierStream, ProducerConsumer {
     public typealias Consumes = PolylineStream.Produces
 
     // MARK: - Private
@@ -26,6 +26,11 @@ public class FlatBezierStream: BezierStream, Consumer {
     // MARK: - PolylineStreamConsumer
 
     public func process(_ input: Consumes) {
+        produce(with: input)
+    }
+
+    @discardableResult
+    public func produce(with input: Consumes) -> Produces {
         var deltas: [Delta] = []
 
         for delta in input.deltas {
@@ -51,6 +56,7 @@ public class FlatBezierStream: BezierStream, Consumer {
 
         let output = (paths: paths, deltas: deltas)
         consumers.forEach({ $0(output) })
+        return output
     }
 }
 

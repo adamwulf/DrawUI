@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class PolylineStream: Consumer, Producer {
+public class PolylineStream: ProducerConsumer {
     public typealias Consumes = TouchPathStream.Produces
     public typealias Produces = (lines: [Polyline], deltas: [Delta])
 
@@ -60,6 +60,11 @@ public class PolylineStream: Consumer, Producer {
     // MARK: - TouchPathStreamConsumer
 
     public func process(_ input: TouchPathStream.Produces) {
+        produce(with: input)
+    }
+
+    @discardableResult
+    public func produce(with input: Consumes) -> Produces {
         let pointCollectionDeltas = input.deltas
         var deltas: [Delta] = []
 
@@ -87,5 +92,6 @@ public class PolylineStream: Consumer, Producer {
 
         let output = (lines, deltas)
         consumers.forEach({ $0(output) })
+        return output
     }
 }

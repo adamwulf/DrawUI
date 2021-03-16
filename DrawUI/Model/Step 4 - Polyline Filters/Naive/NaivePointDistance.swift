@@ -8,7 +8,7 @@
 import Foundation
 
 /// Removes points from `strokes` that are within a minimum distance of each other
-public class NaivePointDistance: Producer, Consumer {
+public class NaivePointDistance: ProducerConsumer {
     public typealias Consumes = PolylineStream.Produces
     public typealias Produces = PolylineStream.Produces
 
@@ -40,12 +40,18 @@ public class NaivePointDistance: Producer, Consumer {
     // MARK: - PolylineStreamConsumer
 
     public func process(_ input: Consumes) {
+        produce(with: input)
+    }
+
+    @discardableResult
+    public func produce(with input: Consumes) -> Produces {
         guard enabled else {
             consumers.forEach({ $0(input) })
-            return
+            return input
         }
 
         // TODO: implement filtering a stroke's points by their distance
         consumers.forEach({ $0(input) })
+        return input
     }
 }
