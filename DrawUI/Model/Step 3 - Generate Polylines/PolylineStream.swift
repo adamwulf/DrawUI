@@ -7,26 +7,9 @@
 
 import UIKit
 
-public protocol PolylineStreamConsumer {
-    func process(_ input: PolylineStream.Output)
-}
-
-struct AnonymousPolylineStreamConsumer: PolylineStreamConsumer {
-    var block: (PolylineStream.Output) -> Void
-    func process(_ input: PolylineStream.Output) {
-        block(input)
-    }
-}
-
-public protocol PolylineStreamProducer {
-    func addConsumer(_ consumer: PolylineStreamConsumer)
-
-    func addConsumer(_ block: @escaping (PolylineStream.Output) -> Void)
-}
-
-public class PolylineStream: Consumer, PolylineStreamProducer {
+public class PolylineStream: Consumer, Producer {
     public typealias Consumes = TouchPathStream.Produces
-    public typealias Output = (lines: [Polyline], deltas: [Delta])
+    public typealias Produces = (lines: [Polyline], deltas: [Delta])
 
     public enum Delta: Equatable {
         case addedPolyline(index: Int)
@@ -50,7 +33,7 @@ public class PolylineStream: Consumer, PolylineStreamProducer {
     public private(set) var lines: [Polyline]
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
     public private(set) var indexToIndex: [Int: Int]
-    private var consumers: [PolylineStreamConsumer] = []
+    public private(set) var consumers: [(Produces) -> Void] = []
 
     // MARK: - Init
 
@@ -61,12 +44,14 @@ public class PolylineStream: Consumer, PolylineStreamProducer {
 
     // MARK: - PolylineStreamProducer
 
-    public func addConsumer(_ consumer: PolylineStreamConsumer) {
-        consumers.append(consumer)
+    public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
+        consumers.append({ (produces: Produces) in
+            consumer.process(produces)
+        })
     }
 
-    public func addConsumer(_ block: @escaping (PolylineStream.Output) -> Void) {
-        addConsumer(AnonymousPolylineStreamConsumer(block: block))
+    public func addConsumer(_ block: @escaping (PolylineStream.Produces) -> Void) {
+        consumers.append(block)
     }
 
     // MARK: - TouchPathStreamConsumer
@@ -98,6 +83,6 @@ public class PolylineStream: Consumer, PolylineStreamProducer {
         }
 
         let output = (lines, deltas)
-        consumers.forEach({ $0.process(output) })
+        consumers.forEach({ $0(output) })
     }
 }

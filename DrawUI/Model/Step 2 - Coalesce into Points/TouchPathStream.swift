@@ -50,9 +50,9 @@ public class TouchPathStream: Consumer, Producer {
     // MARK: - TouchPathStreamProducer
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
-            consumers.append({ (produces: Produces) in
-                consumer.process(produces)
-            })
+        consumers.append({ (produces: Produces) in
+            consumer.process(produces)
+        })
     }
 
     public func addConsumer(_ block: @escaping (TouchPathStream.Produces) -> Void) {

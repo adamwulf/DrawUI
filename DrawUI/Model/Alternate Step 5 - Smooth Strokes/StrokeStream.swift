@@ -27,7 +27,7 @@ public class StrokeStream {
     }
 
     @discardableResult
-    public func process(input: PolylineStream.Output) -> Output {
+    public func process(input: PolylineStream.Produces) -> Output {
         let pointCollectionDeltas = input.deltas
         var deltas: [Delta] = []
 

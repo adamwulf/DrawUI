@@ -11,13 +11,15 @@ import UIKit
 /// https://en.wikipedia.org/wiki/Savitzky%E2%80%93Golay_filter
 /// Coefficients are calculated with the algorithm from https://dekalogblog.blogspot.com/2013/09/savitzky-golay-filter-convolution.html
 /// Values were confirmed against the coefficients listed at http://www.statistics4u.info/fundstat_eng/cc_savgol_coeff.html
-public class NaiveSavitzkyGolay: PolylineStreamProducer, PolylineStreamConsumer {
+public class NaiveSavitzkyGolay: Producer, Consumer {
+    public typealias Consumes = PolylineStream.Produces
+    public typealias Produces = PolylineStream.Produces
 
-    // MARK: Private
+    // MARK: - Private
 
     private let deriv: Int // 0 is smooth, 1 is first derivative, etc
     private let order: Int
-    private var consumers: [PolylineStreamConsumer] = []
+    public private(set) var consumers: [(Produces) -> Void] = []
 
     // MARK: Public
 
@@ -43,19 +45,21 @@ public class NaiveSavitzkyGolay: PolylineStreamProducer, PolylineStreamConsumer 
 
     // MARK: - PolylineStreamProducer
 
-    public func addConsumer(_ consumer: PolylineStreamConsumer) {
-        consumers.append(consumer)
+    public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
+        consumers.append({ (produces: Produces) in
+            consumer.process(produces)
+        })
     }
 
-    public func addConsumer(_ block: @escaping (PolylineStream.Output) -> Void) {
-        addConsumer(AnonymousPolylineStreamConsumer(block: block))
+    public func addConsumer(_ block: @escaping (Produces) -> Void) {
+        consumers.append(block)
     }
 
     // MARK: - PolylineStreamConsumer
 
-    public func process(_ input: PolylineStream.Output) {
+    public func process(_ input: Consumes) {
         guard enabled else {
-            consumers.forEach({ $0.process(input) })
+            consumers.forEach({ $0(input) })
             return
         }
         var outLines = input.lines
@@ -87,10 +91,10 @@ public class NaiveSavitzkyGolay: PolylineStreamProducer, PolylineStreamConsumer 
         }
 
         let output = (outLines, outDeltas)
-        consumers.forEach({ $0.process(output) })
+        consumers.forEach({ $0(output) })
     }
 
-    func optimized_process(input: PolylineStream.Output) -> PolylineStream.Output {
+    func optimized_process(input: Consumes) -> Produces {
         var outLines = input.lines
 
         // TODO: cache the output smooth strokes so that we can use the same result next time
