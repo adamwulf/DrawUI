@@ -12,22 +12,22 @@ import MMSwiftToolbox
 class BezierViewController: BaseViewController {
 
     let touchPathStream = TouchPathStream()
-    let strokeStream = PolylineStream()
-    let pathStream = FlatBezierStream()
+    let lineStream = PolylineStream()
+    let bezierStream = FlatBezierStream()
     @IBOutlet var pathView: SmartDrawRectView!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
 
         touchEventStream.addConsumer(touchPathStream)
-        touchPathStream.addConsumer(strokeStream)
-        strokeStream.addConsumer(pathStream)
+        touchPathStream.addConsumer(lineStream)
+        lineStream.addConsumer(bezierStream)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        pathStream.addConsumer(pathView)
+        bezierStream.addConsumer(pathView)
         pathView?.addGestureRecognizer(touchEventStream.gesture)
     }
 }

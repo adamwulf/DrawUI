@@ -11,8 +11,8 @@ import DrawUI
 class DebugViewController: BaseViewController {
 
     let touchPathStream = TouchPathStream()
-    let strokeStream = PolylineStream()
-    let pathStream = FlatBezierStream()
+    let lineStream = PolylineStream()
+    let bezierStream = FlatBezierStream()
     @IBOutlet var debugView: DebugView!
 
     let savitzkyGolay = NaiveSavitzkyGolay()
@@ -26,10 +26,10 @@ class DebugViewController: BaseViewController {
             self.allEvents.append(contentsOf: updatedEvents)
         }
         touchEventStream.addConsumer(touchPathStream)
-        touchPathStream.addConsumer(strokeStream)
-        strokeStream.addConsumer(douglasPeucker)
+        touchPathStream.addConsumer(lineStream)
+        lineStream.addConsumer(douglasPeucker)
         var strokeOutput: PolylineStream.Produces = (lines: [], deltas: [])
-        strokeStream.addConsumer { (input) in
+        lineStream.addConsumer { (input) in
             strokeOutput = input
         }
         douglasPeucker.addConsumer(pointDistance)
@@ -41,7 +41,7 @@ class DebugViewController: BaseViewController {
             self.debugView?.setNeedsDisplay()
         }
 
-        savitzkyGolay.addConsumer(pathStream)
+        savitzkyGolay.addConsumer(bezierStream)
     }
 
     override func viewDidLoad() {
