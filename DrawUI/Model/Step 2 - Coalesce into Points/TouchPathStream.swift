@@ -34,7 +34,7 @@ public class TouchPathStream: Consumer, Producer {
     // MARK: - Private
 
     private var touchToIndex: [UITouchIdentifier: Int]
-    public private(set) var consumers: [(Produces) -> Void] = []
+    private var consumers: [(Produces) -> Void] = []
 
     // MARK: - Public
 
@@ -55,7 +55,7 @@ public class TouchPathStream: Consumer, Producer {
         })
     }
 
-    public func addConsumer(_ block: @escaping (TouchPathStream.Produces) -> Void) {
+    public func addConsumer(_ block: @escaping (Produces) -> Void) {
         consumers.append(block)
     }
 

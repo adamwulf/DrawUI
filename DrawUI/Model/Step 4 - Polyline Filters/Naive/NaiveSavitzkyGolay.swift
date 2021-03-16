@@ -19,7 +19,7 @@ public class NaiveSavitzkyGolay: Producer, Consumer {
 
     private let deriv: Int // 0 is smooth, 1 is first derivative, etc
     private let order: Int
-    public private(set) var consumers: [(Produces) -> Void] = []
+    private var consumers: [(Produces) -> Void] = []
 
     // MARK: Public
 

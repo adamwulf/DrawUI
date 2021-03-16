@@ -14,7 +14,6 @@ public protocol Consumer {
 
 public protocol Producer {
     associatedtype Produces
-    var consumers: [(Produces) -> Void] { get }
 
     func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces
 }

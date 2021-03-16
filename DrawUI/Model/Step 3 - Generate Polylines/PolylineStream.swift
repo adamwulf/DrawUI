@@ -30,10 +30,13 @@ public class PolylineStream: Consumer, Producer {
 
     // MARK: - Private
 
+    private var consumers: [(Produces) -> Void] = []
+
+    // MARK: - Public
+
     public private(set) var lines: [Polyline]
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
     public private(set) var indexToIndex: [Int: Int]
-    public private(set) var consumers: [(Produces) -> Void] = []
 
     // MARK: - Init
 
@@ -50,7 +53,7 @@ public class PolylineStream: Consumer, Producer {
         })
     }
 
-    public func addConsumer(_ block: @escaping (PolylineStream.Produces) -> Void) {
+    public func addConsumer(_ block: @escaping (Produces) -> Void) {
         consumers.append(block)
     }
 

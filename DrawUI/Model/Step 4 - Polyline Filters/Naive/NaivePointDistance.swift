@@ -14,7 +14,7 @@ public class NaivePointDistance: Producer, Consumer {
 
     // MARK: - Private
 
-    public private(set) var consumers: [(Produces) -> Void] = []
+    private var consumers: [(Produces) -> Void] = []
 
     // MARK: - Public
 

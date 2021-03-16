@@ -13,15 +13,13 @@ public class FlatBezierStream: BezierStream, Consumer {
 
     // MARK: - Private
 
-    public private(set) var paths: [UIBezierPath]
+    public private(set) var paths: [UIBezierPath] = []
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
-    public private(set) var indexToIndex: [Int: Int]
+    public private(set) var indexToIndex: [Int: Int] = [:]
 
     // MARK: - Init
 
     override public init() {
-        indexToIndex = [:]
-        paths = []
         super.init()
     }
 
@@ -56,7 +54,7 @@ public class FlatBezierStream: BezierStream, Consumer {
     }
 }
 
-extension UIBezierPath {
+private extension UIBezierPath {
     convenience init(polyline: Polyline) {
         self.init()
         var points = polyline.points

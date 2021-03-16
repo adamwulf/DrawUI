@@ -12,10 +12,9 @@ public class TouchEventStream: Producer {
     // How do I keep Customer generic here?
     public typealias Produces = [TouchEvent]
 
-    public private(set) var consumers: [(Produces) -> Void] = []
-
     // MARK: - Private
 
+    private var consumers: [(Produces) -> Void] = []
     private var recentEvents: [TouchEvent] = []
     private var processedEvents: [TouchEvent] = []
     private var lazyGesture: TouchEventGestureRecognizer?
@@ -40,7 +39,7 @@ public class TouchEventStream: Producer {
         })
     }
 
-    public func addConsumer(_ block: @escaping ([TouchEvent]) -> Void) {
+    public func addConsumer(_ block: @escaping (Produces) -> Void) {
         consumers.append(block)
     }
 

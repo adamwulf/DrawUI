@@ -31,7 +31,7 @@ public class BezierStream: Producer {
 
     // MARK: - Private
 
-    public private(set) var consumers: [(Produces) -> Void] = []
+    var consumers: [(Produces) -> Void] = []
 
     // MARK: - BezierStreamProducer
 
