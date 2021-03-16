@@ -20,18 +20,11 @@ class PolylineTests: XCTestCase {
                               Event(id: touchId, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(2))]
         let events = TouchEvent.newFrom(completeEvents)
 
-        var touchOutput: TouchPathStream.Produces = (paths: [], deltas: [])
-        var polylineOutput: PolylineStream.Produces = (lines: [], deltas: [])
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
-        touchStream.addConsumer(polylineStream)
-        touchStream.addConsumer { (input) -> Void in
-            touchOutput = input
-        }
-        polylineStream.addConsumer { (input) -> Void in
-            polylineOutput = input
-        }
-        touchStream.process(events)
+
+        let touchOutput = touchStream.produce(with: events)
+        let polylineOutput = polylineStream.produce(with: touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(touchOutput.paths.count, polylineOutput.lines.count)
@@ -55,18 +48,11 @@ class PolylineTests: XCTestCase {
                               Event(id: touchId, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(2))]
         let events = TouchEvent.newFrom(completeEvents)
 
-        var touchOutput: TouchPathStream.Produces = (paths: [], deltas: [])
-        var polylineOutput: PolylineStream.Produces = (lines: [], deltas: [])
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
-        touchStream.addConsumer(polylineStream)
-        touchStream.addConsumer { (input) -> Void in
-            touchOutput = input
-        }
-        polylineStream.addConsumer { (input) -> Void in
-            polylineOutput = input
-        }
-        touchStream.process(Array(events[0...1]))
+
+        var touchOutput = touchStream.produce(with: Array(events[0...1]))
+        var polylineOutput = polylineStream.produce(with: touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(touchOutput.paths.count, polylineOutput.lines.count)
@@ -79,7 +65,8 @@ class PolylineTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.deltas[0], .addedPolyline(index: 0))
 
-        touchStream.process(Array(events[2...]))
+        touchOutput = touchStream.produce(with: Array(events[2...]))
+        polylineOutput = polylineStream.produce(with: touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(touchOutput.paths.count, polylineOutput.lines.count)
@@ -104,18 +91,11 @@ class PolylineTests: XCTestCase {
                               Event(id: touchId, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(2))]
         let events = TouchEvent.newFrom(completeEvents)
 
-        var touchOutput: TouchPathStream.Produces = (paths: [], deltas: [])
-        var polylineOutput: PolylineStream.Produces = (lines: [], deltas: [])
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
-        touchStream.addConsumer(polylineStream)
-        touchStream.addConsumer { (input) -> Void in
-            touchOutput = input
-        }
-        polylineStream.addConsumer { (input) -> Void in
-            polylineOutput = input
-        }
-        touchStream.process(Array(events[0...2]))
+
+        var touchOutput = touchStream.produce(with: Array(events[0...2]))
+        var polylineOutput = polylineStream.produce(with: touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(touchOutput.paths.count, polylineOutput.lines.count)
@@ -130,7 +110,8 @@ class PolylineTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.deltas[0], .addedPolyline(index: 0))
 
-        touchStream.process(Array(events[3...]))
+        touchOutput = touchStream.produce(with: Array(events[3...]))
+        polylineOutput = polylineStream.produce(with: touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(touchOutput.paths.count, polylineOutput.lines.count)

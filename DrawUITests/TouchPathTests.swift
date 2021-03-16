@@ -7,7 +7,6 @@
 
 import XCTest
 import DrawUI
-import PerformanceBezier
 
 class TouchPathTests: XCTestCase {
 
@@ -39,29 +38,16 @@ class TouchPathTests: XCTestCase {
                               Event(id: touchId, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(2))]
         let events = TouchEvent.newFrom(completeEvents)
 
-        var output: TouchPathStream.Produces = (paths: [], deltas: [])
         let touchStream = TouchPathStream()
-        touchStream.addConsumer { (input) -> Void in
-            output = input
-        }
-        touchStream.process(events)
+        let output = touchStream.produce(with: events)
 
         XCTAssertEqual(output.deltas.count, 2)
         XCTAssertEqual(output.deltas[0], .addedTouchPath(index: 0))
         XCTAssertEqual(output.deltas[1], .completedTouchPath(index: 0))
 
         let altStream = TouchPathStream()
-        var altOutput1: TouchPathStream.Produces = (paths: [], deltas: [])
-        var altOutput2: TouchPathStream.Produces = (paths: [], deltas: [])
-        altStream.addConsumer { (input) -> Void in
-            if altOutput1.deltas.isEmpty {
-                altOutput1 = input
-            } else {
-                altOutput2 = input
-            }
-        }
-        altStream.process(Array(events[0 ..< 2]))
-        altStream.process(Array(events[2...]))
+        let altOutput1 = altStream.produce(with: Array(events[0 ..< 2]))
+        let altOutput2 = altStream.produce(with: Array(events[2...]))
 
         XCTAssertEqual(altOutput1.deltas.count, 1)
         XCTAssertEqual(altOutput1.deltas[0], .addedTouchPath(index: 0))
@@ -83,12 +69,12 @@ class TouchPathTests: XCTestCase {
         let events = TouchEvent.newFrom(completeEvents)
 
         let touchStream = TouchPathStream()
-        touchStream.process(events)
+        touchStream.produce(with: events)
 
         for split in 1..<events.count {
             let altStream = TouchPathStream()
-            altStream.process(Array(events[0 ..< split]))
-            altStream.process(Array(events[split ..< events.count]))
+            altStream.produce(with: Array(events[0 ..< split]))
+            altStream.produce(with: Array(events[split ..< events.count]))
 
             XCTAssertEqual(touchStream.paths, altStream.paths, "match fails in split(\(split)))")
         }
@@ -106,12 +92,12 @@ class TouchPathTests: XCTestCase {
         let data = try Data(contentsOf: jsonFile)
         let events = try JSONDecoder().decode([TouchEvent].self, from: data)
         let touchStream = TouchPathStream()
-        touchStream.process(events)
+        touchStream.produce(with: events)
 
         for split in 1..<events.count {
             let altStream = TouchPathStream()
-            altStream.process(Array(events[0 ..< split]))
-            altStream.process(Array(events[split ..< events.count]))
+            altStream.produce(with: Array(events[0 ..< split]))
+            altStream.produce(with: Array(events[split ..< events.count]))
 
             XCTAssertEqual(touchStream.paths, altStream.paths)
         }
@@ -132,8 +118,8 @@ class TouchPathTests: XCTestCase {
         measure {
             let touchStream = TouchPathStream()
             let midPoint = events.count / 2
-            touchStream.process(Array(events[0 ..< midPoint]))
-            touchStream.process(Array(events[midPoint...]))
+            touchStream.produce(with: Array(events[0 ..< midPoint]))
+            touchStream.produce(with: Array(events[midPoint...]))
         }
     }
 
@@ -149,12 +135,12 @@ class TouchPathTests: XCTestCase {
         let events = TouchEvent.newFrom(completeEvents)
 
         let touchStream = TouchPathStream()
-        touchStream.process(events)
+        touchStream.produce(with: events)
 
         for split in 2..<events.count {
             let altStream = TouchPathStream()
-            altStream.process(Array(events[0 ..< split]))
-            altStream.process(Array(events[split ..< events.count]))
+            altStream.produce(with: Array(events[0 ..< split]))
+            altStream.produce(with: Array(events[split ..< events.count]))
 
             XCTAssertEqual(touchStream.paths, altStream.paths)
         }
@@ -167,30 +153,16 @@ class TouchPathTests: XCTestCase {
                               Event(id: touchId, loc: CGPoint(x: 300, y: 100), pred: true),
                               Event(id: touchId, loc: CGPoint(x: 110, y: 120), pred: false, update: EstimationUpdateIndex(1))]
         let events = TouchEvent.newFrom(completeEvents)
-
-        var output: TouchPathStream.Produces = (paths: [], deltas: [])
         let touchStream = TouchPathStream()
-        touchStream.addConsumer { (input) -> Void in
-            output = input
-        }
-        touchStream.process(events)
+        let output = touchStream.produce(with: events)
 
         XCTAssertEqual(output.deltas.count, 2)
         XCTAssertEqual(output.deltas[0], .addedTouchPath(index: 0))
         XCTAssertEqual(output.deltas[1], .completedTouchPath(index: 0))
 
         let altStream = TouchPathStream()
-        var altOutput1: TouchPathStream.Produces = (paths: [], deltas: [])
-        var altOutput2: TouchPathStream.Produces = (paths: [], deltas: [])
-        altStream.addConsumer { (input) -> Void in
-            if altOutput1.deltas.isEmpty {
-                altOutput1 = input
-            } else {
-                altOutput2 = input
-            }
-        }
-        altStream.process(Array(events[0 ... 2]))
-        altStream.process(Array(events[3...]))
+        let altOutput1 = altStream.produce(with: Array(events[0 ... 2]))
+        let altOutput2 = altStream.produce(with: Array(events[3...]))
 
         XCTAssertEqual(altOutput1.deltas.count, 1)
         XCTAssertEqual(altOutput1.deltas[0], .addedTouchPath(index: 0))
@@ -214,12 +186,8 @@ class TouchPathTests: XCTestCase {
                               Event(id: touchId, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(2))]
         var events = TouchEvent.newFrom(completeEvents)
 
-        var output: TouchPathStream.Produces = (paths: [], deltas: [])
         let touchStream = TouchPathStream()
-        touchStream.addConsumer { (input) -> Void in
-            output = input
-        }
-        touchStream.process([events.removeFirst()])
+        var output = touchStream.produce(with: [events.removeFirst()])
 
         XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(output.paths[0].touchIdentifier, touchId)
@@ -228,7 +196,7 @@ class TouchPathTests: XCTestCase {
         XCTAssertEqual(output.paths[0].points[0].events.count, 1)
         XCTAssertEqual(output.paths[0].points[0].event.location, CGPoint(x: 100, y: 100))
 
-        touchStream.process([events.removeFirst()])
+        output = touchStream.produce(with: [events.removeFirst()])
 
         XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(output.paths[0].isComplete, false)
@@ -238,7 +206,7 @@ class TouchPathTests: XCTestCase {
         XCTAssertEqual(output.paths[0].points[1].events.count, 1)
         XCTAssertEqual(output.paths[0].points[1].event.location, CGPoint(x: 200, y: 100))
 
-        touchStream.process([events.removeFirst(), events.removeFirst()])
+        output = touchStream.produce(with: [events.removeFirst(), events.removeFirst()])
 
         XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(output.paths[0].isComplete, false)
@@ -248,7 +216,7 @@ class TouchPathTests: XCTestCase {
         XCTAssertEqual(output.paths[0].points[1].events.count, 2)
         XCTAssertEqual(output.paths[0].points[1].event.location, CGPoint(x: 200, y: 110))
 
-        touchStream.process([events.removeFirst()])
+        output = touchStream.produce(with: [events.removeFirst()])
 
         XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(output.paths[0].isComplete, true)
@@ -269,12 +237,8 @@ class TouchPathTests: XCTestCase {
                               Event(id: touchId, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(2))]
         var events = TouchEvent.newFrom(completeEvents)
 
-        var output: TouchPathStream.Produces = (paths: [], deltas: [])
         let touchStream = TouchPathStream()
-        touchStream.addConsumer { (input) -> Void in
-            output = input
-        }
-        touchStream.process([events.removeFirst()])
+        var output = touchStream.produce(with: [events.removeFirst()])
 
         XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(output.paths[0].touchIdentifier, touchId)
@@ -283,7 +247,7 @@ class TouchPathTests: XCTestCase {
         XCTAssertEqual(output.paths[0].points[0].events.count, 1)
         XCTAssertEqual(output.paths[0].points[0].event.location, CGPoint(x: 100, y: 100))
 
-        touchStream.process([events.removeFirst()])
+        output = touchStream.produce(with: [events.removeFirst()])
 
         XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(output.paths[0].isComplete, false)
@@ -293,7 +257,7 @@ class TouchPathTests: XCTestCase {
         XCTAssertEqual(output.paths[0].points[1].events.count, 1)
         XCTAssertEqual(output.paths[0].points[1].event.location, CGPoint(x: 200, y: 100))
 
-        touchStream.process([events.removeFirst()])
+        output = touchStream.produce(with: [events.removeFirst()])
 
         XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(output.paths[0].isComplete, false)
@@ -306,7 +270,7 @@ class TouchPathTests: XCTestCase {
         XCTAssertEqual(output.paths[0].points[2].event.location, CGPoint(x: 300, y: 100))
 
         // consume 2 events
-        touchStream.process([events.removeFirst(), events.removeFirst()])
+        output = touchStream.produce(with: [events.removeFirst(), events.removeFirst()])
 
         XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(output.paths[0].isComplete, false)
@@ -316,7 +280,7 @@ class TouchPathTests: XCTestCase {
         XCTAssertEqual(output.paths[0].points[1].events.count, 2)
         XCTAssertEqual(output.paths[0].points[1].event.location, CGPoint(x: 200, y: 110))
 
-        touchStream.process([events.removeFirst()])
+        output = touchStream.produce(with: [events.removeFirst()])
 
         XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(output.paths[0].isComplete, true)
@@ -342,12 +306,8 @@ class TouchPathTests: XCTestCase {
                               Event(id: touchId2, loc: CGPoint(x: 220, y: 120), pred: false, update: EstimationUpdateIndex(4))]
         let events = TouchEvent.newFrom(completeEvents)
 
-        var output: TouchPathStream.Produces = (paths: [], deltas: [])
         let touchStream = TouchPathStream()
-        touchStream.addConsumer { (input) -> Void in
-            output = input
-        }
-        touchStream.process(Array(events[0 ..< 3]))
+        var output = touchStream.produce(with: Array(events[0 ..< 3]))
 
         XCTAssertEqual(output.paths.count, 1)
         XCTAssertEqual(output.paths[0].touchIdentifier, touchId1)
@@ -359,7 +319,7 @@ class TouchPathTests: XCTestCase {
         XCTAssertEqual(output.deltas.count, 1)
         XCTAssertEqual(output.deltas[0], .addedTouchPath(index: 0))
 
-        touchStream.process(Array(events[3 ..< 6]))
+        output = touchStream.produce(with: Array(events[3 ..< 6]))
 
         XCTAssertEqual(output.paths.count, 2)
         XCTAssertEqual(output.paths[1].touchIdentifier, touchId2)
@@ -371,7 +331,7 @@ class TouchPathTests: XCTestCase {
         XCTAssertEqual(output.deltas.count, 1)
         XCTAssertEqual(output.deltas[0], .addedTouchPath(index: 1))
 
-        touchStream.process(Array(events[6...]))
+        output = touchStream.produce(with: Array(events[6...]))
 
         XCTAssertEqual(output.paths.count, 2)
         XCTAssertEqual(output.paths[0].isComplete, true)
