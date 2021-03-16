@@ -9,11 +9,13 @@ import UIKit
 import MMSwiftToolbox
 import PerformanceBezier
 
-public class NaiveDrawRectView: UIView, BezierStreamConsumer {
+public class NaiveDrawRectView: UIView, Consumer {
 
-    private var model: BezierStream.Output = (paths: [], deltas: [])
+    public typealias Consumes = BezierStream.Produces
 
-    public func process(_ input: BezierStream.Output) {
+    private var model: BezierStream.Produces = (paths: [], deltas: [])
+
+    public func process(_ input: Consumes) {
         model = input
 
         if !input.deltas.isEmpty {

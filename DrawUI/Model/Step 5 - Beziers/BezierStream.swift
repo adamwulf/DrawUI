@@ -8,26 +8,9 @@
 import Foundation
 import UIKit
 
-public protocol BezierStreamConsumer {
-    func process(_ input: BezierStream.Output)
-}
+public class BezierStream: Producer {
 
-struct AnonymousBezierStreamConsumer: BezierStreamConsumer {
-    var block: (BezierStream.Output) -> Void
-    func process(_ input: BezierStream.Output) {
-        block(input)
-    }
-}
-
-public protocol BezierStreamProducer {
-    func addConsumer(_ consumer: BezierStreamConsumer)
-
-    func addConsumer(_ block: @escaping (BezierStream.Output) -> Void)
-}
-
-public class BezierStream: BezierStreamProducer {
-
-    public typealias Output = (paths: [UIBezierPath], deltas: [Delta])
+    public typealias Produces = (paths: [UIBezierPath], deltas: [Delta])
 
     public enum Delta: Equatable {
         case addedBezierPath(index: Int)
@@ -48,15 +31,17 @@ public class BezierStream: BezierStreamProducer {
 
     // MARK: - Private
 
-    var consumers: [BezierStreamConsumer] = []
+    public private(set) var consumers: [(Produces) -> Void] = []
 
     // MARK: - BezierStreamProducer
 
-    public func addConsumer(_ consumer: BezierStreamConsumer) {
-        consumers.append(consumer)
+    public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
+        consumers.append({ (produces: Produces) in
+            consumer.process(produces)
+        })
     }
 
-    public func addConsumer(_ block: @escaping (Output) -> Void) {
-        addConsumer(AnonymousBezierStreamConsumer(block: block))
+    public func addConsumer(_ block: @escaping (Produces) -> Void) {
+        consumers.append(block)
     }
 }
