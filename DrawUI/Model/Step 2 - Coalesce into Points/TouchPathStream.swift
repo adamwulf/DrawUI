@@ -15,12 +15,12 @@ public class TouchPathStream: ProducerConsumer {
     public typealias Consumes = TouchEventStream.Produces
     public typealias Produces = (paths: [TouchPath], deltas: [Delta])
 
-    public enum Delta: Equatable {
+    public enum Delta: Equatable, CustomDebugStringConvertible {
         case addedTouchPath(index: Int)
         case updatedTouchPath(index: Int, updatedIndexes: IndexSet)
         case completedTouchPath(index: Int)
 
-        public var rawString: String {
+        public var debugDescription: String {
             switch self {
             case .addedTouchPath(let index):
                 return "addedTouchPath(\(index))"

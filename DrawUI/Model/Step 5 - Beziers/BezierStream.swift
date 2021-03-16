@@ -12,12 +12,12 @@ public class BezierStream: Producer {
 
     public typealias Produces = (paths: [UIBezierPath], deltas: [Delta])
 
-    public enum Delta: Equatable {
+    public enum Delta: Equatable, CustomDebugStringConvertible {
         case addedBezierPath(index: Int)
         case updatedBezierPath(index: Int, updatedIndexes: IndexSet)
         case completedBezierPath(index: Int)
 
-        public var rawString: String {
+        public var debugDescription: String {
             switch self {
             case .addedBezierPath(let index):
                 return "addedBezierPath(\(index))"

@@ -10,11 +10,33 @@ import UIKit
 
 public class AntigrainSmoother {
 
+    // MARK: - Private
+
     let smoothFactor: CGFloat = 0.7
+
+    // MARK: - Init
 
     public init() { }
 
-    public enum Element: Equatable {
+    // MARK: - Public
+
+    public enum Element: Equatable, CustomDebugStringConvertible {
+        case moveTo(point: Polyline.Point)
+        case curveTo(point: Polyline.Point, ctrl1: CGPoint, ctrl2: CGPoint)
+
+        // MARK: CustomDebugStringConvertible
+
+        public var debugDescription: String {
+            switch self {
+            case .moveTo(let point):
+                return "moveTo(\(point.location))"
+            case .curveTo(let point, let ctrl1, let ctrl2):
+                return "curveTo(\(point.location), \(ctrl1), \(ctrl2))"
+            }
+        }
+
+        // MARK: Equatable
+
         public static func == (lhs: AntigrainSmoother.Element, rhs: AntigrainSmoother.Element) -> Bool {
             if case let .moveTo(point: lpoint) = lhs,
                case let .moveTo(point: rpoint) = rhs {
@@ -26,39 +48,35 @@ public class AntigrainSmoother {
             }
             return false
         }
-
-        case moveTo(point: Polyline.Point)
-        case curveTo(point: Polyline.Point, ctrl1: CGPoint, ctrl2: CGPoint)
-
-        public var rawString: String {
-            switch self {
-            case .moveTo(let point):
-                return "moveTo(\(point.location))"
-            case .curveTo(let point, let ctrl1, let ctrl2):
-                return "curveTo(\(point.location), \(ctrl1), \(ctrl2))"
-            }
-        }
     }
 
-    public func elementIn(line: Polyline, at index: Int) -> AntigrainSmoother.Element {
-        assert(index >= 0 && index <= line.antigrainMaxIndex)
+    public func element(in line: Polyline, at antigrainIndex: Int) -> AntigrainSmoother.Element {
+        assert(antigrainIndex >= 0 && antigrainIndex <= line.antigrainMaxIndex)
 
-        if index == 0 {
+        if antigrainIndex == 0 {
             return .moveTo(point: line.points[0])
         }
 
-        if index == 1 {
-            return new(p1: line.points[0], p2: line.points[1], p3: line.points[2])
+        if antigrainIndex == 1 {
+            return newCurve(p1: line.points[0], p2: line.points[1], p3: line.points[2])
         }
 
-        if line.isComplete && index == line.antigrainMaxIndex {
-            return new(p0: line.points[index - 2], p1: line.points[index - 1], p2: line.points[index], p3: line.points[index])
+        if line.isComplete && antigrainIndex == line.antigrainMaxIndex {
+            return newCurve(p0: line.points[antigrainIndex - 2],
+                            p1: line.points[antigrainIndex - 1],
+                            p2: line.points[antigrainIndex],
+                            p3: line.points[antigrainIndex])
         }
 
-        return new(p0: line.points[index - 2], p1: line.points[index - 1], p2: line.points[index], p3: line.points[index + 1])
+        return newCurve(p0: line.points[antigrainIndex - 2],
+                        p1: line.points[antigrainIndex - 1],
+                        p2: line.points[antigrainIndex],
+                        p3: line.points[antigrainIndex + 1])
     }
 
-    private func new(p0: Polyline.Point? = nil, p1: Polyline.Point, p2: Polyline.Point, p3: Polyline.Point) -> Element {
+    // MARK: - Helper
+
+    private func newCurve(p0: Polyline.Point? = nil, p1: Polyline.Point, p2: Polyline.Point, p3: Polyline.Point) -> Element {
         let p0 = p0 ?? p1
 
         let c1 = CGPoint(x: (p0.x + p1.x) / 2.0, y: (p0.y + p1.y) / 2.0)

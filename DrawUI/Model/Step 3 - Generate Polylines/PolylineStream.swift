@@ -11,12 +11,12 @@ public class PolylineStream: ProducerConsumer {
     public typealias Consumes = TouchPathStream.Produces
     public typealias Produces = (lines: [Polyline], deltas: [Delta])
 
-    public enum Delta: Equatable {
+    public enum Delta: Equatable, CustomDebugStringConvertible {
         case addedPolyline(index: Int)
         case updatedPolyline(index: Int, updatedIndexes: IndexSet)
         case completedPolyline(index: Int)
 
-        public var rawString: String {
+        public var debugDescription: String {
             switch self {
             case .addedPolyline(let index):
                 return "addedPolyline(\(index))"
