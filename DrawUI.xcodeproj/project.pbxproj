@@ -401,6 +401,8 @@
 				C58025B024EA3F150043130D /* PBXTargetDependency */,
 			);
 			name = DrawUITests;
+			packageProductDependencies = (
+			);
 			productName = DrawUITests;
 			productReference = C58025A924EA3F150043130D /* DrawUITests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
