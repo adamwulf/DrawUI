@@ -49,7 +49,7 @@ public class PolylineStream: ProducerConsumer {
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
         consumers.append({ (produces: Produces) in
-            consumer.process(produces)
+            consumer.consume(produces)
         })
     }
 
@@ -59,7 +59,7 @@ public class PolylineStream: ProducerConsumer {
 
     // MARK: - TouchPathStreamConsumer
 
-    public func process(_ input: TouchPathStream.Produces) {
+    public func consume(_ input: TouchPathStream.Produces) {
         produce(with: input)
     }
 

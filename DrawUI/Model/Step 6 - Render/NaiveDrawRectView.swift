@@ -15,7 +15,7 @@ public class NaiveDrawRectView: UIView, Consumer {
 
     private var model: BezierStream.Produces = (paths: [], deltas: [])
 
-    public func process(_ input: Consumes) {
+    public func consume(_ input: Consumes) {
         model = input
 
         if !input.deltas.isEmpty {

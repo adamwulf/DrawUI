@@ -35,7 +35,7 @@ public class TouchEventStream: Producer {
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
         consumers.append({ (produces: Produces) in
-            consumer.process(produces)
+            consumer.consume(produces)
         })
     }
 

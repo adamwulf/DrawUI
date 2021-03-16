@@ -47,7 +47,7 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
         consumers.append({ (produces: Produces) in
-            consumer.process(produces)
+            consumer.consume(produces)
         })
     }
 
@@ -57,7 +57,7 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
 
     // MARK: - PolylineStreamConsumer
 
-    public func process(_ input: Consumes) {
+    public func consume(_ input: Consumes) {
         produce(with: input)
     }
 

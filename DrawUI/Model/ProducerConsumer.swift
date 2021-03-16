@@ -9,7 +9,7 @@ import Foundation
 
 public protocol Consumer {
     associatedtype Consumes
-    func process(_ input: Consumes)
+    func consume(_ input: Consumes)
 }
 
 public protocol Producer {
@@ -36,9 +36,9 @@ class ExampleStream: Producer {
     var wrappedCustomers: [AnyConsumer] = []
 
     func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
-        wrappedCustomers.append(AnyConsumer(process: consumer.process))
+        wrappedCustomers.append(AnyConsumer(process: consumer.consume))
         consumers.append({ (produces: Produces) in
-            consumer.process(produces)
+            consumer.consume(produces)
         })
     }
 }
@@ -47,7 +47,7 @@ struct ExampleAnonymousConsumer: Consumer {
     typealias Consumes = [TouchEvent]
 
     var block: ([TouchEvent]) -> Void
-    func process(_ input: [TouchEvent]) {
+    func consume(_ input: [TouchEvent]) {
         block(input)
     }
 }

@@ -52,7 +52,7 @@ public class TouchPathStream: ProducerConsumer {
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
         consumers.append({ (produces: Produces) in
-            consumer.process(produces)
+            consumer.consume(produces)
         })
     }
 
@@ -61,7 +61,7 @@ public class TouchPathStream: ProducerConsumer {
     }
 
     // MARK: - Consumer<TouchEvent>
-    public func process(_ input: [TouchEvent]) {
+    public func consume(_ input: [TouchEvent]) {
         produce(with: input)
     }
 

@@ -25,7 +25,7 @@ public class FlatBezierStream: BezierStream, ProducerConsumer {
 
     // MARK: - PolylineStreamConsumer
 
-    public func process(_ input: Consumes) {
+    public func consume(_ input: Consumes) {
         produce(with: input)
     }
 

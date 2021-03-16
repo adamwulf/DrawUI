@@ -14,7 +14,7 @@ public class SmartDrawRectView: UIView, Consumer {
 
     private var model: BezierStream.Produces = (paths: [], deltas: [])
 
-    public func process(_ input: Consumes) {
+    public func consume(_ input: Consumes) {
         let previousModel = model
         model = input
 
