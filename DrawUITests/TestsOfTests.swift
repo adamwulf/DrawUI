@@ -60,7 +60,7 @@ class TestsOfTests: XCTestCase {
         XCTAssert(events.matches(completeEvents))
 
         let pointStream = TouchPathStream()
-        var output = pointStream.process(touchEvents: Array(events[0...1]))
+        var output = pointStream.process(Array(events[0...1]))
         let delta1 = output.deltas
 
         XCTAssertEqual(delta1.count, 1)
@@ -74,7 +74,7 @@ class TestsOfTests: XCTestCase {
             XCTFail()
         }
 
-        output = pointStream.process(touchEvents: [events[2]])
+        output = pointStream.process([events[2]])
         let delta2 = output.deltas
 
         XCTAssertEqual(output.paths.count, 1)
@@ -90,7 +90,7 @@ class TestsOfTests: XCTestCase {
             XCTFail()
         }
 
-        output = pointStream.process(touchEvents: [events[3]])
+        output = pointStream.process([events[3]])
         let delta3 = output.deltas
 
         XCTAssertEqual(output.paths.count, 1)
@@ -106,7 +106,7 @@ class TestsOfTests: XCTestCase {
             XCTFail()
         }
 
-        output = pointStream.process(touchEvents: [events[4]])
+        output = pointStream.process([events[4]])
         let delta4 = output.deltas
 
         XCTAssertEqual(output.paths.count, 1)

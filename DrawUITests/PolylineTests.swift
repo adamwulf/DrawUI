@@ -23,8 +23,8 @@ class PolylineTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        touchStream.addConsumer(polylineStream)
+        touchStream.process(events)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(touchOutput.paths.count, polylineOutput.lines.count)
@@ -51,8 +51,8 @@ class PolylineTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        var touchOutput = touchStream.process(touchEvents: Array(events[0...1]))
-        var polylineOutput = polylineStream.process(input: touchOutput)
+        var touchOutput = touchStream.process(Array(events[0...1]))
+        var polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(touchOutput.paths.count, polylineOutput.lines.count)
@@ -65,8 +65,8 @@ class PolylineTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.deltas[0], .addedPolyline(index: 0))
 
-        touchOutput = touchStream.process(touchEvents: Array(events[2...]))
-        polylineOutput = polylineStream.process(input: touchOutput)
+        touchOutput = touchStream.process(Array(events[2...]))
+        polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(touchOutput.paths.count, polylineOutput.lines.count)
@@ -94,8 +94,8 @@ class PolylineTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        var touchOutput = touchStream.process(touchEvents: Array(events[0...2]))
-        var polylineOutput = polylineStream.process(input: touchOutput)
+        var touchOutput = touchStream.process(Array(events[0...2]))
+        var polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(touchOutput.paths.count, polylineOutput.lines.count)
@@ -110,8 +110,8 @@ class PolylineTests: XCTestCase {
 
         XCTAssertEqual(polylineOutput.deltas[0], .addedPolyline(index: 0))
 
-        touchOutput = touchStream.process(touchEvents: Array(events[3...]))
-        polylineOutput = polylineStream.process(input: touchOutput)
+        touchOutput = touchStream.process(Array(events[3...]))
+        polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(touchOutput.paths.count, polylineOutput.lines.count)

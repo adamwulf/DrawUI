@@ -24,8 +24,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 2)
@@ -41,8 +41,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 1)
@@ -59,8 +59,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 2)
@@ -79,8 +79,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 3)
@@ -101,8 +101,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 4)
@@ -125,8 +125,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 5)
@@ -151,8 +151,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 6)
@@ -179,8 +179,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 7)
@@ -209,8 +209,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 7)
 
@@ -239,8 +239,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         let antigrain = AntigrainSmoother()
 
@@ -274,8 +274,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         let antigrain = AntigrainSmoother()
 
@@ -316,8 +316,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        let touchOutput = touchStream.process(touchEvents: events)
-        let polylineOutput = polylineStream.process(input: touchOutput)
+        let touchOutput = touchStream.process(events)
+        let polylineOutput = polylineStream.process(touchOutput)
 
         let antigrain = AntigrainSmoother()
 
@@ -364,8 +364,8 @@ class AntigrainSmootherTests: XCTestCase {
         let touchStream = TouchPathStream()
         let polylineStream = PolylineStream()
 
-        var touchOutput = touchStream.process(touchEvents: Array(events[0...3]))
-        var polylineOutput = polylineStream.process(input: touchOutput)
+        var touchOutput = touchStream.process(Array(events[0...3]))
+        var polylineOutput = polylineStream.process(touchOutput)
 
         let antigrain = AntigrainSmoother()
 
@@ -390,8 +390,8 @@ class AntigrainSmootherTests: XCTestCase {
         // Now we complete the stroke, and when we complete it adds the segment that would normally be
         // smoothed from the added point, as well as the very last element so that we reach the last point
 
-        touchOutput = touchStream.process(touchEvents: [events[4]])
-        polylineOutput = polylineStream.process(input: touchOutput)
+        touchOutput = touchStream.process([events[4]])
+        polylineOutput = polylineStream.process(touchOutput)
 
         XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 4)
 
