@@ -26,6 +26,12 @@ public protocol ProducerConsumer: Producer, Consumer {
     func produce(with input: Consumes) -> Produces
 }
 
+extension ProducerConsumer {
+    public func consume(_ input: Consumes) {
+        produce(with: input)
+    }
+}
+
 class ExampleStream: Producer {
     // How do I keep Customer generic here?
     typealias Produces = [TouchEvent]

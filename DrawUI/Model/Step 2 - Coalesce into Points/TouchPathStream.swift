@@ -35,7 +35,6 @@ public class TouchPathStream: ProducerConsumer {
     // MARK: - Private
 
     private var touchToIndex: [UITouchIdentifier: Int]
-    private var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
 
     // MARK: - Public
 
@@ -57,6 +56,8 @@ public class TouchPathStream: ProducerConsumer {
     }
 
     // MARK: - Producer<TouchPath>
+
+    private var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
         consumers.append((process: { (produces: Produces) in

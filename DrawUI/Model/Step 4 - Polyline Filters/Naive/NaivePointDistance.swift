@@ -45,10 +45,6 @@ public class NaivePointDistance: ProducerConsumer {
 
     // MARK: - Consumer<Polyline>
 
-    public func consume(_ input: Consumes) {
-        produce(with: input)
-    }
-
     @discardableResult
     public func produce(with input: Consumes) -> Produces {
         guard enabled else {

@@ -33,10 +33,6 @@ public class FlatBezierStream: BezierStream, ProducerConsumer {
 
     // MARK: - Consumer<Polyline>
 
-    public func consume(_ input: Consumes) {
-        produce(with: input)
-    }
-
     @discardableResult
     public func produce(with input: Consumes) -> Produces {
         var deltas: [Delta] = []
