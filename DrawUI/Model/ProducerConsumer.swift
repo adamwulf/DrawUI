@@ -17,6 +17,7 @@ public protocol Producer {
     associatedtype Produces
 
     func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces
+    func addConsumer(_ block: @escaping (Produces) -> Void)
     func reset()
 }
 
@@ -44,6 +45,10 @@ class ExampleStream: Producer {
             consumer.consume(produces)
         })
         consumerResets.append(consumer.reset)
+    }
+    func addConsumer(_ block: @escaping ([TouchEvent]) -> Void) {
+        wrappedCustomers.append(AnyConsumer(process: block))
+        consumers.append(block)
     }
     func reset() {
         consumerResets.forEach({ $0() })
