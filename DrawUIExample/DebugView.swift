@@ -20,6 +20,13 @@ class DebugView: UIView {
         self.deltas?.append(contentsOf: deltas)
     }
 
+    func reset() {
+        originalStrokes = []
+        smoothStrokes = []
+        deltas = []
+        setNeedsDisplay()
+    }
+
     override func draw(_ rect: CGRect) {
         for stroke in originalStrokes {
             for event in stroke.points.flatMap({ $0.touchPoint.events }) {

@@ -14,6 +14,7 @@ public class TouchEventStream: Producer {
 
     // MARK: - Private
 
+    private var consumerResets: [() -> Void] = []
     private var consumers: [(Produces) -> Void] = []
     private var recentEvents: [TouchEvent] = []
     private var processedEvents: [TouchEvent] = []
@@ -31,12 +32,19 @@ public class TouchEventStream: Producer {
         // noop
     }
 
+    public func reset() {
+        processedEvents = []
+        recentEvents = []
+        consumerResets.forEach({ $0() })
+    }
+
     // MARK: - Consumers
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
         consumers.append({ (produces: Produces) in
             consumer.consume(produces)
         })
+        consumerResets.append(consumer.reset)
     }
 
     public func addConsumer(_ block: @escaping (Produces) -> Void) {

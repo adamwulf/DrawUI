@@ -30,6 +30,7 @@ public class PolylineStream: ProducerConsumer {
 
     // MARK: - Private
 
+    private var consumerResets: [() -> Void] = []
     private var consumers: [(Produces) -> Void] = []
 
     // MARK: - Public
@@ -45,19 +46,28 @@ public class PolylineStream: ProducerConsumer {
         lines = []
     }
 
-    // MARK: - PolylineStreamProducer
+    // MARK: - ProducerConsumer<Polyline>
+
+    public func reset() {
+        indexToIndex = [:]
+        lines = []
+        consumerResets.forEach({ $0() })
+    }
+
+    // MARK: - Producer<Polyline>
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
         consumers.append({ (produces: Produces) in
             consumer.consume(produces)
         })
+        consumerResets.append(consumer.reset)
     }
 
     public func addConsumer(_ block: @escaping (Produces) -> Void) {
         consumers.append(block)
     }
 
-    // MARK: - TouchPathStreamConsumer
+    // MARK: - Consumer<TouchPath>
 
     public func consume(_ input: TouchPathStream.Produces) {
         produce(with: input)

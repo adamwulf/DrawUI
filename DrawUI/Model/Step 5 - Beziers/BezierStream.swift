@@ -31,7 +31,14 @@ public class BezierStream: Producer {
 
     // MARK: - Private
 
+    private var consumerResets: [() -> Void] = []
     var consumers: [(Produces) -> Void] = []
+
+    // MARK: - Consumer<Polyline>
+
+    public func reset() {
+        consumerResets.forEach({ $0() })
+    }
 
     // MARK: - BezierStreamProducer
 
@@ -39,6 +46,7 @@ public class BezierStream: Producer {
         consumers.append({ (produces: Produces) in
             consumer.consume(produces)
         })
+        consumerResets.append(consumer.reset)
     }
 
     public func addConsumer(_ block: @escaping (Produces) -> Void) {

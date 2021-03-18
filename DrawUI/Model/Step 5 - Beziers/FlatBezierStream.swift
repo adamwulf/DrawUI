@@ -23,7 +23,15 @@ public class FlatBezierStream: BezierStream, ProducerConsumer {
         super.init()
     }
 
-    // MARK: - PolylineStreamConsumer
+    // MARK: - ProducerConsumer<Polyline>
+
+    override public func reset() {
+        paths = []
+        indexToIndex = [:]
+        super.reset()
+    }
+
+    // MARK: - Consumer<Polyline>
 
     public func consume(_ input: Consumes) {
         produce(with: input)

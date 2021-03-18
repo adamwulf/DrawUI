@@ -42,6 +42,15 @@ class BaseViewController: UIViewController, UIDocumentPickerDelegate {
         importButton.topAnchor.constraint(equalTo: exportButton.bottomAnchor, constant: 20).isActive = true
         importButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         importButton.addTarget(self, action: #selector(didRequestImport), for: .touchUpInside)
+
+        let clearButton = UIButton()
+        clearButton.setTitle("Clear", for: .normal)
+        clearButton.setTitleColor(.systemBlue, for: .normal)
+        view.addSubview(clearButton)
+        clearButton.translatesAutoresizingMaskIntoConstraints = false
+        clearButton.topAnchor.constraint(equalTo: importButton.bottomAnchor, constant: 20).isActive = true
+        clearButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        clearButton.addTarget(self, action: #selector(didRequestClear), for: .touchUpInside)
     }
 
     // MARK: - UIDocumentPickerDelegate
@@ -87,5 +96,10 @@ extension BaseViewController {
         let picker = UIDocumentPickerViewController(documentTypes: ["public.json", "public.text"], in: .import)
         picker.delegate = self
         present(picker, animated: true, completion: nil)
+    }
+
+    @objc func didRequestClear(_ sender: UIView) {
+        allEvents = []
+        touchEventStream.reset()
     }
 }

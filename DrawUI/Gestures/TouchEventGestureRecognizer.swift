@@ -20,6 +20,7 @@ public class TouchEventGestureRecognizer: UIGestureRecognizer, UIGestureRecogniz
 
         super.init(target: target, action: action)
 
+        cancelsTouchesInView = false
         delaysTouchesBegan = false
         delaysTouchesEnded = false
         allowedTouchTypes = [NSNumber(value: UITouch.TouchType.direct.rawValue), NSNumber(value: UITouch.TouchType.stylus.rawValue)]

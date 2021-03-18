@@ -49,4 +49,9 @@ class DebugViewController: BaseViewController {
 
         debugView?.addGestureRecognizer(touchEventStream.gesture)
     }
+
+    @objc override func didRequestClear(_ sender: UIView) {
+        self.debugView?.reset()
+        super.didRequestClear(sender)
+    }
 }
