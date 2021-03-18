@@ -27,11 +27,11 @@ class DebugViewController: BaseViewController {
         }
         touchEventStream.addConsumer(touchPathStream)
         touchPathStream.addConsumer(lineStream)
-        lineStream.addConsumer(douglasPeucker)
         var strokeOutput: PolylineStream.Produces = (lines: [], deltas: [])
         lineStream.addConsumer { (input) in
             strokeOutput = input
         }
+        lineStream.addConsumer(douglasPeucker)
         douglasPeucker.addConsumer(pointDistance)
         pointDistance.addConsumer(savitzkyGolay)
         savitzkyGolay.addConsumer { (smoothOutput) in

@@ -61,11 +61,11 @@ public class TouchEventStream: Producer {
 
     // MARK: - TouchEventStream
 
-    private func process() {
-        processedEvents.append(contentsOf: recentEvents)
+    public func process(events: [TouchEvent] = []) {
+        processedEvents.append(contentsOf: recentEvents + events)
         defer {
             recentEvents.removeAll()
         }
-        consumers.forEach({ $0(recentEvents) })
+        consumers.forEach({ $0(recentEvents + events) })
     }
 }
