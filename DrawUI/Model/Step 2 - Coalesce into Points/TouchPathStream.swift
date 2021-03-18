@@ -35,8 +35,7 @@ public class TouchPathStream: ProducerConsumer {
     // MARK: - Private
 
     private var touchToIndex: [UITouchIdentifier: Int]
-    private var consumerResets: [() -> Void] = []
-    private var consumers: [(Produces) -> Void] = []
+    private var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
 
     // MARK: - Public
 
@@ -54,20 +53,19 @@ public class TouchPathStream: ProducerConsumer {
     public func reset() {
         touchToIndex = [:]
         paths = []
-        consumerResets.forEach({ $0() })
+        consumers.forEach({ $0.reset() })
     }
 
     // MARK: - Producer<TouchPath>
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
-        consumers.append({ (produces: Produces) in
+        consumers.append((process: { (produces: Produces) in
             consumer.consume(produces)
-        })
-        consumerResets.append(consumer.reset)
+        }, reset: consumer.reset))
     }
 
     public func addConsumer(_ block: @escaping (Produces) -> Void) {
-        consumers.append(block)
+        consumers.append((process: block, reset: {}))
     }
 
     // MARK: - Consumer<TouchEvent>
@@ -117,7 +115,7 @@ public class TouchPathStream: ProducerConsumer {
         }
 
         let output = (paths, deltas)
-        consumers.forEach({ $0(output) })
+        consumers.forEach({ $0.process(output) })
         return output
     }
 }

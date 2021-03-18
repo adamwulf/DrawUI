@@ -14,8 +14,7 @@ public class NaivePointDistance: ProducerConsumer {
 
     // MARK: - Private
 
-    private var consumerResets: [() -> Void] = []
-    private var consumers: [(Produces) -> Void] = []
+    private var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
 
     // MARK: - Public
 
@@ -29,20 +28,19 @@ public class NaivePointDistance: ProducerConsumer {
     // MARK: - ProducerConsumer<Polyline>
 
     public func reset() {
-        consumerResets.forEach({ $0() })
+        consumers.forEach({ $0.reset() })
     }
 
     // MARK: - Producer<Polyline>
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
-        consumers.append({ (produces: Produces) in
+        consumers.append((process: { (produces: Produces) in
             consumer.consume(produces)
-        })
-        consumerResets.append(consumer.reset)
+        }, reset: consumer.reset))
     }
 
     public func addConsumer(_ block: @escaping (Produces) -> Void) {
-        consumers.append(block)
+        consumers.append((process: block, reset: {}))
     }
 
     // MARK: - Consumer<Polyline>
@@ -54,12 +52,12 @@ public class NaivePointDistance: ProducerConsumer {
     @discardableResult
     public func produce(with input: Consumes) -> Produces {
         guard enabled else {
-            consumers.forEach({ $0(input) })
+            consumers.forEach({ $0.process(input) })
             return input
         }
 
         // TODO: implement filtering a stroke's points by their distance
-        consumers.forEach({ $0(input) })
+        consumers.forEach({ $0.process(input) })
         return input
     }
 }

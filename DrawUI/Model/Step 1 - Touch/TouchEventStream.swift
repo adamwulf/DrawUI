@@ -14,8 +14,7 @@ public class TouchEventStream: Producer {
 
     // MARK: - Private
 
-    private var consumerResets: [() -> Void] = []
-    private var consumers: [(Produces) -> Void] = []
+    private var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
     private var recentEvents: [TouchEvent] = []
     private var processedEvents: [TouchEvent] = []
     private var lazyGesture: TouchEventGestureRecognizer?
@@ -35,20 +34,19 @@ public class TouchEventStream: Producer {
     public func reset() {
         processedEvents = []
         recentEvents = []
-        consumerResets.forEach({ $0() })
+        consumers.forEach({ $0.reset() })
     }
 
     // MARK: - Consumers
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
-        consumers.append({ (produces: Produces) in
+        consumers.append((process: { (produces: Produces) in
             consumer.consume(produces)
-        })
-        consumerResets.append(consumer.reset)
+        }, reset: consumer.reset))
     }
 
     public func addConsumer(_ block: @escaping (Produces) -> Void) {
-        consumers.append(block)
+        consumers.append((process: block, reset: {}))
     }
 
     // MARK: - Gesture
@@ -74,6 +72,6 @@ public class TouchEventStream: Producer {
         defer {
             recentEvents.removeAll()
         }
-        consumers.forEach({ $0(recentEvents + events) })
+        consumers.forEach({ $0.process(recentEvents + events) })
     }
 }

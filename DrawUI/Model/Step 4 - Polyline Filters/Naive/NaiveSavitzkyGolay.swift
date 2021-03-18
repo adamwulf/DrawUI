@@ -19,8 +19,7 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
 
     private let deriv: Int // 0 is smooth, 1 is first derivative, etc
     private let order: Int
-    private var consumerResets: [() -> Void] = []
-    private var consumers: [(Produces) -> Void] = []
+    private var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
 
     // MARK: Public
 
@@ -47,20 +46,19 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
     // MARK: - ProducerConsumer<Polyline>
 
     public func reset() {
-        consumerResets.forEach({ $0() })
+        consumers.forEach({ $0.reset() })
     }
 
     // MARK: - Producer<Polyline>
 
     public func addConsumer<Customer>(_ consumer: Customer) where Customer: Consumer, Customer.Consumes == Produces {
-        consumers.append({ (produces: Produces) in
+        consumers.append((process: { (produces: Produces) in
             consumer.consume(produces)
-        })
-        consumerResets.append(consumer.reset)
+        }, reset: consumer.reset))
     }
 
     public func addConsumer(_ block: @escaping (Produces) -> Void) {
-        consumers.append(block)
+        consumers.append((process: block, reset: {}))
     }
 
     // MARK: - Consumer<Polyline>
@@ -72,7 +70,7 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
     @discardableResult
     public func produce(with input: Consumes) -> Produces {
         guard enabled else {
-            consumers.forEach({ $0(input) })
+            consumers.forEach({ $0.process(input) })
             return input
         }
         var outLines = input.lines
@@ -104,7 +102,7 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
         }
 
         let output = (outLines, outDeltas)
-        consumers.forEach({ $0(output) })
+        consumers.forEach({ $0.process(output) })
         return output
     }
 

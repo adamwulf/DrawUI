@@ -63,7 +63,7 @@ public class FlatBezierStream: BezierStream, ProducerConsumer {
         }
 
         let output = (paths: paths, deltas: deltas)
-        consumers.forEach({ $0(output) })
+        consumers.forEach({ $0.process(output) })
         return output
     }
 }
