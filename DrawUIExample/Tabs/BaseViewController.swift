@@ -56,8 +56,10 @@ class BaseViewController: UIViewController, UIDocumentPickerDelegate {
     }
 
     func importEvents(_ events: [TouchEvent]) {
-        allEvents += events
-        touchEventStream.process(events: events)
+        let existingIdentifiers = allEvents.map({ $0.identifier })
+        let filtered = events.filter({ !existingIdentifiers.contains($0.identifier) })
+        allEvents += filtered
+        touchEventStream.process(events: filtered)
     }
 }
 
