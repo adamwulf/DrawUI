@@ -8,17 +8,7 @@
 import Foundation
 import UIKit
 
-public class AntigrainSmoother {
-
-    // MARK: - Private
-
-    let smoothFactor: CGFloat = 0.7
-
-    // MARK: - Init
-
-    public init() { }
-
-    // MARK: - Public
+extension Polyline {
 
     public enum Element: Equatable, CustomDebugStringConvertible {
         case moveTo(point: Polyline.Point)
@@ -37,7 +27,7 @@ public class AntigrainSmoother {
 
         // MARK: Equatable
 
-        public static func == (lhs: AntigrainSmoother.Element, rhs: AntigrainSmoother.Element) -> Bool {
+        public static func == (lhs: Polyline.Element, rhs: Polyline.Element) -> Bool {
             if case let .moveTo(point: lpoint) = lhs,
                case let .moveTo(point: rpoint) = rhs {
                 return lpoint.touchPoint == rpoint.touchPoint
@@ -50,70 +40,34 @@ public class AntigrainSmoother {
         }
     }
 
-    public func element(in line: Polyline, at antigrainIndex: Int) -> AntigrainSmoother.Element {
-        assert(antigrainIndex >= 0 && antigrainIndex <= line.antigrainMaxIndex)
+    public func antigrainElement(smoothFactor: CGFloat = 0.7, at antigrainIndex: Int) -> Polyline.Element {
+        assert(antigrainIndex >= 0 && antigrainIndex <= antigrainMaxIndex)
 
         if antigrainIndex == 0 {
-            return .moveTo(point: line.points[0])
+            return .moveTo(point: points[0])
         }
 
         if antigrainIndex == 1 {
-            return newCurve(p1: line.points[0], p2: line.points[1], p3: line.points[2])
+            return Self.newCurve(smoothFactor: smoothFactor,
+                                 p1: points[0],
+                                 p2: points[1],
+                                 p3: points[2])
         }
 
-        if line.isComplete && antigrainIndex == line.antigrainMaxIndex {
-            return newCurve(p0: line.points[antigrainIndex - 2],
-                            p1: line.points[antigrainIndex - 1],
-                            p2: line.points[antigrainIndex],
-                            p3: line.points[antigrainIndex])
+        if isComplete && antigrainIndex == antigrainMaxIndex {
+            return Self.newCurve(smoothFactor: smoothFactor,
+                                 p0: points[antigrainIndex - 2],
+                                 p1: points[antigrainIndex - 1],
+                                 p2: points[antigrainIndex],
+                                 p3: points[antigrainIndex])
         }
 
-        return newCurve(p0: line.points[antigrainIndex - 2],
-                        p1: line.points[antigrainIndex - 1],
-                        p2: line.points[antigrainIndex],
-                        p3: line.points[antigrainIndex + 1])
+        return Self.newCurve(smoothFactor: smoothFactor,
+                             p0: points[antigrainIndex - 2],
+                             p1: points[antigrainIndex - 1],
+                             p2: points[antigrainIndex],
+                             p3: points[antigrainIndex + 1])
     }
-
-    // MARK: - Helper
-
-    private func newCurve(p0: Polyline.Point? = nil, p1: Polyline.Point, p2: Polyline.Point, p3: Polyline.Point) -> Element {
-        let p0 = p0 ?? p1
-
-        let c1 = CGPoint(x: (p0.x + p1.x) / 2.0, y: (p0.y + p1.y) / 2.0)
-        let c2 = CGPoint(x: (p1.x + p2.x) / 2.0, y: (p1.y + p2.y) / 2.0)
-        let c3 = CGPoint(x: (p2.x + p3.x) / 2.0, y: (p2.y + p3.y) / 2.0)
-
-        let len1 = sqrt((p1.x - p0.x) * (p1.x - p0.x) + (p1.y - p0.y) * (p1.y - p0.y))
-        let len2 = sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y))
-        let len3 = sqrt((p3.x - p2.x) * (p3.x - p2.x) + (p3.y - p2.y) * (p3.y - p2.y))
-
-        let k1 = len1 / (len1 + len2)
-        let k2 = len2 / (len2 + len3)
-
-        let m1 = CGPoint(x: c1.x + (c2.x - c1.x) * k1, y: c1.y + (c2.y - c1.y) * k1)
-        let m2 = CGPoint(x: c2.x + (c3.x - c2.x) * k2, y: c2.y + (c3.y - c2.y) * k2)
-
-        // Resulting control points. Here smooth_value is mentioned
-        // above coefficient K whose value should be in range [0...1].
-        var ctrl1 = CGPoint(x: m1.x + (c2.x - m1.x) * smoothFactor + p1.x - m1.x,
-                              y: m1.y + (c2.y - m1.y) * smoothFactor + p1.y - m1.y)
-
-        var ctrl2 = CGPoint(x: m2.x + (c2.x - m2.x) * smoothFactor + p2.x - m2.x,
-                            y: m2.y + (c2.y - m2.y) * smoothFactor + p2.y - m2.y)
-
-        if ctrl1.x.isNaN || ctrl1.y.isNaN {
-            ctrl1 = p1.location
-        }
-
-        if ctrl2.x.isNaN || ctrl2.y.isNaN {
-            ctrl2 = p2.location
-        }
-
-        return .curveTo(point: p2, ctrl1: ctrl1, ctrl2: ctrl2)
-    }
-}
-
-extension Polyline {
 
     public var antigrainMaxIndex: Int {
         let lastIndex = points.count - 1
@@ -159,5 +113,47 @@ extension Polyline {
         }
 
         return ret
+    }
+
+    // MARK: - Helper
+
+    private static func newCurve(smoothFactor: CGFloat,
+                                 p0: Polyline.Point? = nil,
+                                 p1: Polyline.Point,
+                                 p2: Polyline.Point,
+                                 p3: Polyline.Point) -> Element {
+        let p0 = p0 ?? p1
+
+        let c1 = CGPoint(x: (p0.x + p1.x) / 2.0, y: (p0.y + p1.y) / 2.0)
+        let c2 = CGPoint(x: (p1.x + p2.x) / 2.0, y: (p1.y + p2.y) / 2.0)
+        let c3 = CGPoint(x: (p2.x + p3.x) / 2.0, y: (p2.y + p3.y) / 2.0)
+
+        let len1 = sqrt((p1.x - p0.x) * (p1.x - p0.x) + (p1.y - p0.y) * (p1.y - p0.y))
+        let len2 = sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y))
+        let len3 = sqrt((p3.x - p2.x) * (p3.x - p2.x) + (p3.y - p2.y) * (p3.y - p2.y))
+
+        let k1 = len1 / (len1 + len2)
+        let k2 = len2 / (len2 + len3)
+
+        let m1 = CGPoint(x: c1.x + (c2.x - c1.x) * k1, y: c1.y + (c2.y - c1.y) * k1)
+        let m2 = CGPoint(x: c2.x + (c3.x - c2.x) * k2, y: c2.y + (c3.y - c2.y) * k2)
+
+        // Resulting control points. Here smooth_value is mentioned
+        // above coefficient K whose value should be in range [0...1].
+        var ctrl1 = CGPoint(x: m1.x + (c2.x - m1.x) * smoothFactor + p1.x - m1.x,
+                              y: m1.y + (c2.y - m1.y) * smoothFactor + p1.y - m1.y)
+
+        var ctrl2 = CGPoint(x: m2.x + (c2.x - m2.x) * smoothFactor + p2.x - m2.x,
+                            y: m2.y + (c2.y - m2.y) * smoothFactor + p2.y - m2.y)
+
+        if ctrl1.x.isNaN || ctrl1.y.isNaN {
+            ctrl1 = p1.location
+        }
+
+        if ctrl2.x.isNaN || ctrl2.y.isNaN {
+            ctrl2 = p2.location
+        }
+
+        return .curveTo(point: p2, ctrl1: ctrl1, ctrl2: ctrl2)
     }
 }
