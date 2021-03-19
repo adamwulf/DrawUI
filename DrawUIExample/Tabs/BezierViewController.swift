@@ -13,7 +13,7 @@ class BezierViewController: BaseViewController {
 
     let touchPathStream = TouchPathStream()
     let lineStream = PolylineStream()
-    let bezierStream = FlatBezierStream()
+    let bezierStream = BezierStream(smoother: AntigrainSmoother())
     @IBOutlet var pathView: SmartDrawRectView!
 
     required init?(coder: NSCoder) {

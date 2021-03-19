@@ -10,7 +10,7 @@ import DrawUI
 
 class DebugView: UIView {
     var originalStrokes: [Polyline] = []
-    var smoothStrokes: [Polyline] = []
+    var smoothStrokes: [UIBezierPath] = []
     private var deltas: [PolylineStream.Delta]?
 
     func add(deltas: [PolylineStream.Delta]) {
@@ -47,7 +47,7 @@ class DebugView: UIView {
                         UIColor.green.setFill()
                     }
                 }
-                UIBezierPath(ovalIn: CGRect(origin: event.location, size: CGSize.zero).insetBy(dx: -radius, dy: -radius)).fill()
+                UIBezierPath(ovalIn: CGRect(origin: event.location, size: CGSize.zero).expand(by: radius)).fill()
             }
 
             UIColor.red.setStroke()
@@ -63,17 +63,9 @@ class DebugView: UIView {
             path.stroke()
         }
 
-        for stroke in smoothStrokes {
+        for path in smoothStrokes {
             UIColor.green.setStroke()
 
-            let path = UIBezierPath()
-            for point in stroke.points {
-                if point.event.phase == .began {
-                    path.move(to: point.location)
-                } else {
-                    path.addLine(to: point.location)
-                }
-            }
             path.stroke()
         }
 
@@ -92,7 +84,7 @@ class DebugView: UIView {
                             path.stroke()
                         } else {
                             let point = stroke.points.last!
-                            UIBezierPath(rect: CGRect(origin: point.event.location, size: CGSize.zero).insetBy(dx: -4, dy: -4)).stroke()
+                            UIBezierPath(rect: CGRect(origin: point.event.location, size: CGSize.zero).expand(by: 4)).stroke()
                         }
                     }
                 } else {

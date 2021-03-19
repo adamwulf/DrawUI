@@ -23,7 +23,8 @@
 		C559CC0224EB9ACA006D263C /* NaiveDouglasPeucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */; };
 		C559CC0724EBA6C0006D263C /* NaivePointDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */; };
 		C55B2CB926000C58004F6BDF /* ProducerConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */; };
-		C55E42A825FEAF4500093DEC /* FlatBezierStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55E42A725FEAF4500093DEC /* FlatBezierStream.swift */; };
+		C5721090260468FA00DEB0C0 /* LineSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C572108F260468FA00DEB0C0 /* LineSmoother.swift */; };
+		C5721094260469C000DEB0C0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5721093260469C000DEB0C0 /* Smoother.swift */; };
 		C580259C24E9E1150043130D /* TouchPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* TouchPath.swift */; };
 		C580259F24E9E1C10043130D /* TouchPathStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* TouchPathStream.swift */; };
 		C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025AB24EA3F150043130D /* TestsOfTests.swift */; };
@@ -99,7 +100,8 @@
 		C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveDouglasPeucker.swift; sourceTree = "<group>"; };
 		C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaivePointDistance.swift; sourceTree = "<group>"; };
 		C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerConsumer.swift; sourceTree = "<group>"; };
-		C55E42A725FEAF4500093DEC /* FlatBezierStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatBezierStream.swift; sourceTree = "<group>"; };
+		C572108F260468FA00DEB0C0 /* LineSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSmoother.swift; sourceTree = "<group>"; };
+		C5721093260469C000DEB0C0 /* Smoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smoother.swift; sourceTree = "<group>"; };
 		C580259B24E9E1150043130D /* TouchPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPath.swift; sourceTree = "<group>"; };
 		C580259E24E9E1C10043130D /* TouchPathStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPathStream.swift; sourceTree = "<group>"; };
 		C58025A924EA3F150043130D /* DrawUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,19 +202,20 @@
 		C55E42A625FEAF2D00093DEC /* Step 5 - Beziers */ = {
 			isa = PBXGroup;
 			children = (
-				C55E42AB25FEAF7400093DEC /* Helpers */,
+				C55E42AB25FEAF7400093DEC /* Smoothers */,
 				C5094CE125FEB0A60001AE2A /* BezierStream.swift */,
-				C55E42A725FEAF4500093DEC /* FlatBezierStream.swift */,
 			);
 			path = "Step 5 - Beziers";
 			sourceTree = "<group>";
 		};
-		C55E42AB25FEAF7400093DEC /* Helpers */ = {
+		C55E42AB25FEAF7400093DEC /* Smoothers */ = {
 			isa = PBXGroup;
 			children = (
+				C5721093260469C000DEB0C0 /* Smoother.swift */,
 				C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */,
+				C572108F260468FA00DEB0C0 /* LineSmoother.swift */,
 			);
-			path = Helpers;
+			path = Smoothers;
 			sourceTree = "<group>";
 		};
 		C58025A224EA26BB0043130D /* Model */ = {
@@ -584,7 +587,8 @@
 				C580259C24E9E1150043130D /* TouchPath.swift in Sources */,
 				C559CBFD24EB9489006D263C /* Polyline.swift in Sources */,
 				C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */,
-				C55E42A825FEAF4500093DEC /* FlatBezierStream.swift in Sources */,
+				C5721094260469C000DEB0C0 /* Smoother.swift in Sources */,
+				C5721090260468FA00DEB0C0 /* LineSmoother.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

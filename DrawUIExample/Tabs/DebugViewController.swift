@@ -12,7 +12,7 @@ class DebugViewController: BaseViewController {
 
     let touchPathStream = TouchPathStream()
     let lineStream = PolylineStream()
-    let bezierStream = FlatBezierStream()
+    let bezierStream = BezierStream(smoother: AntigrainSmoother())
     @IBOutlet var debugView: DebugView!
 
     let savitzkyGolay = NaiveSavitzkyGolay()
@@ -34,14 +34,13 @@ class DebugViewController: BaseViewController {
         lineStream.addConsumer(douglasPeucker)
         douglasPeucker.addConsumer(pointDistance)
         pointDistance.addConsumer(savitzkyGolay)
-        savitzkyGolay.addConsumer { (smoothOutput) in
+        savitzkyGolay.addConsumer(bezierStream)
+        bezierStream.addConsumer { (bezierOutput) in
+            self.debugView?.smoothStrokes = bezierOutput.paths
             self.debugView?.originalStrokes = strokeOutput.lines
-            self.debugView?.smoothStrokes = smoothOutput.lines
             self.debugView?.add(deltas: strokeOutput.deltas)
             self.debugView?.setNeedsDisplay()
         }
-
-        savitzkyGolay.addConsumer(bezierStream)
     }
 
     override func viewDidLoad() {

@@ -26,11 +26,12 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 2)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet())
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 0), IndexSet([0]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 1), IndexSet())
     }
 
     func testOnePoints() throws {
@@ -43,11 +44,12 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 1)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 0)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0]))
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 0)
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 0), IndexSet([0]))
     }
 
     func testTwoPoints() throws {
@@ -61,12 +63,13 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 2)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 0)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet())
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 0)
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 0), IndexSet([0]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 1), IndexSet())
     }
 
     func testThreePoints() throws {
@@ -81,13 +84,14 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 3)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 2)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1, 2]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([1, 2]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1, 2]))
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 2)
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 0), IndexSet([0, 1, 2]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 1), IndexSet([1, 2]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 2), IndexSet([1, 2]))
     }
 
     func testFourPoints() throws {
@@ -103,14 +107,15 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 4)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 3)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1, 2]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([1, 2, 3]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1, 2, 3]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 3), IndexSet([2, 3]))
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 3)
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 0), IndexSet([0, 1, 2]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 1), IndexSet([1, 2, 3]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 2), IndexSet([1, 2, 3]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 3), IndexSet([2, 3]))
     }
 
     func testFivePoints() throws {
@@ -127,15 +132,16 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 5)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 4)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1, 2]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([1, 2, 3]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1, 2, 3, 4]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 3), IndexSet([2, 3, 4]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 4), IndexSet([3, 4]))
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 4)
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 0), IndexSet([0, 1, 2]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 1), IndexSet([1, 2, 3]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 2), IndexSet([1, 2, 3, 4]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 3), IndexSet([2, 3, 4]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 4), IndexSet([3, 4]))
     }
 
     func testSixPoints() throws {
@@ -153,16 +159,17 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 6)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 5)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1, 2]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([1, 2, 3]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1, 2, 3, 4]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 3), IndexSet([2, 3, 4, 5]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 4), IndexSet([3, 4, 5]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 5), IndexSet([4, 5]))
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 5)
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 0), IndexSet([0, 1, 2]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 1), IndexSet([1, 2, 3]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 2), IndexSet([1, 2, 3, 4]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 3), IndexSet([2, 3, 4, 5]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 4), IndexSet([3, 4, 5]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 5), IndexSet([4, 5]))
     }
 
     func testSevenPoints() throws {
@@ -181,17 +188,18 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 7)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 6)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1, 2]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([1, 2, 3]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1, 2, 3, 4]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 3), IndexSet([2, 3, 4, 5]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 4), IndexSet([3, 4, 5, 6]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 5), IndexSet([4, 5, 6]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 6), IndexSet([5, 6]))
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 6)
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 0), IndexSet([0, 1, 2]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 1), IndexSet([1, 2, 3]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 2), IndexSet([1, 2, 3, 4]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 3), IndexSet([2, 3, 4, 5]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 4), IndexSet([3, 4, 5, 6]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 5), IndexSet([4, 5, 6]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 6), IndexSet([5, 6]))
     }
 
     func testEightPoints() throws {
@@ -211,22 +219,23 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 7)
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 7)
 
         XCTAssertEqual(polylineOutput.lines.count, 1)
         XCTAssertEqual(polylineOutput.lines[0].points.count, 8)
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 0), IndexSet([0, 1, 2]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 1), IndexSet([1, 2, 3]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 2), IndexSet([1, 2, 3, 4]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 3), IndexSet([2, 3, 4, 5]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 4), IndexSet([3, 4, 5, 6]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 5), IndexSet([4, 5, 6, 7]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 6), IndexSet([5, 6, 7]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(index: 7), IndexSet([6, 7]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(indexes: IndexSet([0, 7])), IndexSet([0, 1, 2, 6, 7]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(indexes: IndexSet([6, 7])), IndexSet([5, 6, 7]))
-        XCTAssertEqual(polylineOutput.lines[0].antigrainIndexesFor(indexes: IndexSet([3, 4])), IndexSet([2, 3, 4, 5, 6]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 0), IndexSet([0, 1, 2]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 1), IndexSet([1, 2, 3]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 2), IndexSet([1, 2, 3, 4]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 3), IndexSet([2, 3, 4, 5]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 4), IndexSet([3, 4, 5, 6]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 5), IndexSet([4, 5, 6, 7]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 6), IndexSet([5, 6, 7]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: 7), IndexSet([6, 7]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: IndexSet([0, 7])), IndexSet([0, 1, 2, 6, 7]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: IndexSet([6, 7])), IndexSet([5, 6, 7]))
+        XCTAssertEqual(smoother.elementIndexes(for: polylineOutput.lines[0], at: IndexSet([3, 4])), IndexSet([2, 3, 4, 5, 6]))
     }
 
     func testThreePointsElement() throws {
@@ -241,20 +250,21 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 2)
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 2)
 
-        var ele = polylineOutput.lines[0].antigrainElement(at: 0)
+        var ele = smoother.element(for: polylineOutput.lines[0], at: 0)
 
         XCTAssertEqual(ele, .moveTo(point: polylineOutput.lines[0].points[0]))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 1)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 1)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[1],
                                      ctrl1: CGPoint(x: 135.0, y: 117.5),
                                      ctrl2: CGPoint(x: 163.0495168499706, y: 140.76237921249262)))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 2)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 2)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[2],
                                      ctrl1: CGPoint(x: 233.0495168499706, y: 158.26237921249262),
@@ -274,26 +284,27 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 3)
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 3)
 
-        var ele = polylineOutput.lines[0].antigrainElement(at: 0)
+        var ele = smoother.element(for: polylineOutput.lines[0], at: 0)
 
         XCTAssertEqual(ele, .moveTo(point: polylineOutput.lines[0].points[0]))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 1)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 1)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[1],
                                      ctrl1: CGPoint(x: 135.0, y: 117.5),
                                      ctrl2: CGPoint(x: 163.0495168499706, y: 140.76237921249262)))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 2)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 2)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[2],
                                      ctrl1: CGPoint(x: 233.0495168499706, y: 158.26237921249262),
                                      ctrl2: CGPoint(x: 266.9504831500295, y: 158.26237921249262)))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 3)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 3)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[3],
                                      ctrl1: CGPoint(x: 336.9504831500294, y: 140.76237921249262),
@@ -314,32 +325,33 @@ class AntigrainSmootherTests: XCTestCase {
 
         let touchOutput = touchStream.produce(with: events)
         let polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 4)
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 4)
 
-        var ele = polylineOutput.lines[0].antigrainElement(at: 0)
+        var ele = smoother.element(for: polylineOutput.lines[0], at: 0)
 
         XCTAssertEqual(ele, .moveTo(point: polylineOutput.lines[0].points[0]))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 1)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 1)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[1],
                                      ctrl1: CGPoint(x: 135.0, y: 117.5),
                                      ctrl2: CGPoint(x: 163.0495168499706, y: 140.76237921249262)))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 2)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 2)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[2],
                                      ctrl1: CGPoint(x: 233.0495168499706, y: 158.26237921249262),
                                      ctrl2: CGPoint(x: 266.9504831500295, y: 158.26237921249262)))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 3)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 3)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[3],
                                      ctrl1: CGPoint(x: 336.9504831500294, y: 140.76237921249262),
                                      ctrl2: CGPoint(x: 363.39180836637934, y: 105.49122874504309)))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 4)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 4)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[4],
                                      ctrl1: CGPoint(x: 433.39180836637934, y: 94.99122874504309),
@@ -360,20 +372,21 @@ class AntigrainSmootherTests: XCTestCase {
 
         var touchOutput = touchStream.produce(with: Array(events[0...3]))
         var polylineOutput = polylineStream.produce(with: touchOutput)
+        let smoother = AntigrainSmoother()
 
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 2)
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 2)
 
-        var ele = polylineOutput.lines[0].antigrainElement(at: 0)
+        var ele = smoother.element(for: polylineOutput.lines[0], at: 0)
 
         XCTAssertEqual(ele, .moveTo(point: polylineOutput.lines[0].points[0]))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 1)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 1)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[1],
                                      ctrl1: CGPoint(x: 135.0, y: 117.5),
                                      ctrl2: CGPoint(x: 163.0495168499706, y: 140.76237921249262)))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 2)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 2)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[2],
                                      ctrl1: CGPoint(x: 233.0495168499706, y: 158.26237921249262),
@@ -385,15 +398,15 @@ class AntigrainSmootherTests: XCTestCase {
         touchOutput = touchStream.produce(with: [events[4]])
         polylineOutput = polylineStream.produce(with: touchOutput)
 
-        XCTAssertEqual(polylineOutput.lines[0].antigrainMaxIndex, 4)
+        XCTAssertEqual(smoother.maxIndex(for: polylineOutput.lines[0]), 4)
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 3)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 3)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[3],
                                      ctrl1: CGPoint(x: 336.9504831500294, y: 140.76237921249262),
                                      ctrl2: CGPoint(x: 363.39180836637934, y: 105.49122874504309)))
 
-        ele = polylineOutput.lines[0].antigrainElement(at: 4)
+        ele = smoother.element(for: polylineOutput.lines[0], at: 4)
 
         XCTAssertEqual(ele, .curveTo(point: polylineOutput.lines[0].points[4],
                                      ctrl1: CGPoint(x: 433.39180836637934, y: 94.99122874504309),

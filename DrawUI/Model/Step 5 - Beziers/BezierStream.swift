@@ -8,9 +8,10 @@
 import Foundation
 import UIKit
 
-public class BezierStream: Producer {
+public class BezierStream: ProducerConsumer {
 
     public typealias Produces = (paths: [UIBezierPath], deltas: [Delta])
+    public typealias Consumes = PolylineStream.Produces
 
     public enum Delta: Equatable, CustomDebugStringConvertible {
         case addedBezierPath(index: Int)
@@ -31,11 +32,23 @@ public class BezierStream: Producer {
 
     // MARK: - Private
 
+    var smoother: Smoother
     var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
+    private(set) var paths: [UIBezierPath] = []
+    /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
+    private(set) var indexToIndex: [Int: Int] = [:]
+
+    // MARK: - Init
+
+    public init(smoother: Smoother) {
+        self.smoother = smoother
+    }
 
     // MARK: - Consumer<Polyline>
 
     public func reset() {
+        paths = []
+        indexToIndex = [:]
         consumers.forEach({ $0.reset() })
     }
 
@@ -49,5 +62,97 @@ public class BezierStream: Producer {
 
     public func addConsumer(_ block: @escaping (Produces) -> Void) {
         consumers.append((process: block, reset: {}))
+    }
+
+    // MARK: - ProducerConsumer<Polyline>
+
+    @discardableResult
+    public func produce(with input: Consumes) -> Produces {
+        var deltas: [Delta] = []
+
+        for delta in input.deltas {
+            switch delta {
+            case .addedPolyline(let lineIndex):
+                let line = input.lines[lineIndex]
+                let max = smoother.maxIndex(for: line)
+                let path = UIBezierPath()
+                for elementIndex in 0 ..< max {
+                    path.append(smoother.element(for: line, at: elementIndex))
+                }
+                let index = paths.count
+                indexToIndex[lineIndex] = index
+                paths.append(path)
+                deltas.append(.addedBezierPath(index: index))
+            case .updatedPolyline(let lineIndex, _):
+                let line = input.lines[lineIndex]
+                guard let pathIndex = indexToIndex[lineIndex] else { assertionFailure("path at \(lineIndex) does not exist"); continue }
+                let max = smoother.maxIndex(for: line)
+                let path = UIBezierPath()
+                for elementIndex in 0 ..< max {
+                    path.append(smoother.element(for: line, at: elementIndex))
+                }
+                paths[pathIndex] = path
+                deltas.append(.updatedBezierPath(index: pathIndex, updatedIndexes: IndexSet(0 ..< max)))
+            case .completedPolyline(let lineIndex):
+                guard let index = indexToIndex[lineIndex] else { assertionFailure("path at \(lineIndex) does not exist"); continue }
+                deltas.append(.completedBezierPath(index: index))
+            }
+        }
+
+        let output = (paths: paths.map({ $0 }), deltas: deltas)
+        consumers.forEach({ $0.process(output) })
+        return output
+    }
+}
+
+public extension BezierStream {
+    enum Element: Equatable, CustomDebugStringConvertible {
+        case moveTo(point: Polyline.Point)
+        case lineTo(point: Polyline.Point)
+        case curveTo(point: Polyline.Point, ctrl1: CGPoint, ctrl2: CGPoint)
+
+        // MARK: CustomDebugStringConvertible
+
+        public var debugDescription: String {
+            switch self {
+            case .moveTo(let point):
+                return "moveTo(\(point.location))"
+            case .lineTo(let point):
+                return "lineTo(\(point.location))"
+            case .curveTo(let point, let ctrl1, let ctrl2):
+                return "curveTo(\(point.location), \(ctrl1), \(ctrl2))"
+            }
+        }
+
+        // MARK: Equatable
+
+        public static func == (lhs: BezierStream.Element, rhs: BezierStream.Element) -> Bool {
+            if case let .moveTo(point: lpoint) = lhs,
+               case let .moveTo(point: rpoint) = rhs {
+                return lpoint.touchPoint == rpoint.touchPoint
+            }
+            if case let .lineTo(point: lpoint) = lhs,
+               case let .lineTo(point: rpoint) = rhs {
+                return lpoint.touchPoint == rpoint.touchPoint
+            }
+            if case let .curveTo(point: lpoint, ctrl1: lctrl1, ctrl2: lctrl2) = lhs,
+               case let .curveTo(point: rpoint, ctrl1: rctrl1, ctrl2: rctrl2) = rhs {
+                return lpoint.touchPoint == rpoint.touchPoint && lctrl1 == rctrl1 && lctrl2 == rctrl2
+            }
+            return false
+        }
+    }
+}
+
+public extension UIBezierPath {
+    func append(_ element: BezierStream.Element) {
+        switch element {
+        case .moveTo(let point):
+            move(to: point.location)
+        case .lineTo(let point):
+            addLine(to: point.location)
+        case .curveTo(let point, let ctrl1, let ctrl2):
+            addCurve(to: point.location, controlPoint1: ctrl1, controlPoint2: ctrl2)
+        }
     }
 }
