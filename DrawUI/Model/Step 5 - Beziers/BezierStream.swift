@@ -34,7 +34,7 @@ public class BezierStream: ProducerConsumer {
 
     var smoother: Smoother
     var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
-    private(set) var paths: [UIBezierPath] = []
+    private var builders: [BezierBuilder] = []
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
     private(set) var indexToIndex: [Int: Int] = [:]
 
@@ -47,7 +47,7 @@ public class BezierStream: ProducerConsumer {
     // MARK: - Consumer<Polyline>
 
     public func reset() {
-        paths = []
+        builders = []
         indexToIndex = [:]
         consumers.forEach({ $0.reset() })
     }
@@ -74,34 +74,59 @@ public class BezierStream: ProducerConsumer {
             switch delta {
             case .addedPolyline(let lineIndex):
                 let line = input.lines[lineIndex]
-                let max = smoother.maxIndex(for: line)
-                let path = UIBezierPath()
-                for elementIndex in 0 ..< max {
-                    path.append(smoother.element(for: line, at: elementIndex))
-                }
-                let index = paths.count
-                indexToIndex[lineIndex] = index
-                paths.append(path)
-                deltas.append(.addedBezierPath(index: index))
-            case .updatedPolyline(let lineIndex, _):
+                let builder = BezierBuilder(smoother: smoother)
+                builder.update(with: line, at: IndexSet(0 ..< line.points.count))
+                let builderIndex = builders.count
+                indexToIndex[lineIndex] = builderIndex
+                builders.append(builder)
+                deltas.append(.addedBezierPath(index: builderIndex))
+            case .updatedPolyline(let lineIndex, let updatedIndexes):
                 let line = input.lines[lineIndex]
-                guard let pathIndex = indexToIndex[lineIndex] else { assertionFailure("path at \(lineIndex) does not exist"); continue }
-                let max = smoother.maxIndex(for: line)
-                let path = UIBezierPath()
-                for elementIndex in 0 ..< max {
-                    path.append(smoother.element(for: line, at: elementIndex))
-                }
-                paths[pathIndex] = path
-                deltas.append(.updatedBezierPath(index: pathIndex, updatedIndexes: IndexSet(0 ..< max)))
+                guard let builderIndex = indexToIndex[lineIndex] else { assertionFailure("path at \(lineIndex) does not exist"); continue }
+                let builder = builders[builderIndex]
+                let updateElementIndexes = builder.update(with: line, at: updatedIndexes)
+                deltas.append(.updatedBezierPath(index: builderIndex, updatedIndexes: updateElementIndexes))
             case .completedPolyline(let lineIndex):
                 guard let index = indexToIndex[lineIndex] else { assertionFailure("path at \(lineIndex) does not exist"); continue }
                 deltas.append(.completedBezierPath(index: index))
             }
         }
 
-        let output = (paths: paths.map({ $0 }), deltas: deltas)
+        let output = (paths: builders.map({ $0.path }), deltas: deltas)
         consumers.forEach({ $0.process(output) })
         return output
+    }
+
+    private class BezierBuilder {
+        private var elements: [BezierStream.Element] = []
+        private let smoother: Smoother
+
+        var path: UIBezierPath {
+            let ret = UIBezierPath()
+            for element in elements {
+                ret.append(element)
+            }
+            return ret
+        }
+
+        init(smoother: Smoother) {
+            self.smoother = smoother
+        }
+
+        @discardableResult
+        func update(with line: Polyline, at indexes: IndexSet) -> IndexSet {
+            let ret = smoother.elementIndexes(for: line, at: indexes)
+            for elementIndex in ret.sorted() {
+                assert(elementIndex <= elements.count, "Invalid element index")
+                let element = smoother.element(for: line, at: elementIndex)
+                if elementIndex == elements.count {
+                    elements.append(element)
+                } else {
+                    elements[elementIndex] = element
+                }
+            }
+            return ret
+        }
     }
 }
 

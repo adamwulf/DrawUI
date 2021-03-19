@@ -10,10 +10,10 @@ import UIKit
 
 public class AntigrainSmoother: Smoother {
 
-    var smoothFactor: CGFloat = 0.7
+    let smoothFactor: CGFloat
 
-    public init() {
-
+    public init(smoothFactor: CGFloat = 0.7) {
+        self.smoothFactor = smoothFactor
     }
 
     public func element(for line: Polyline, at elementIndex: Int) -> BezierStream.Element {

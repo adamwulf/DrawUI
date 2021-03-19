@@ -21,17 +21,19 @@ public class SmartDrawRectView: UIView, Consumer {
         for delta in input.deltas {
             switch delta {
             case .addedBezierPath(let index):
+                print("add(\(index))")
                 let path = model.paths[index]
                 setNeedsDisplay(path.bounds.expand(by: path.lineWidth))
-            case .updatedBezierPath(let index, _):
+            case .updatedBezierPath(let index, let indexes):
+                print("update(\(index), \(indexes))")
                 let path = model.paths[index]
                 setNeedsDisplay(path.bounds.expand(by: path.lineWidth))
                 if index < previousModel.paths.count {
                     let previous = previousModel.paths[index]
                     setNeedsDisplay(previous.bounds.expand(by: previous.lineWidth))
                 }
-            case .completedBezierPath:
-                break
+            case .completedBezierPath(let index):
+                print("finish(\(index))")
             }
         }
     }
