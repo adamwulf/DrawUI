@@ -14,6 +14,7 @@ class BezierViewController: BaseViewController {
     let touchPathStream = TouchPathStream()
     let lineStream = PolylineStream()
     let bezierStream = BezierStream(smoother: AntigrainSmoother())
+    let attributeStream = AttributesStream()
     @IBOutlet var pathView: SmartDrawRectView!
 
     required init?(coder: NSCoder) {
@@ -22,12 +23,13 @@ class BezierViewController: BaseViewController {
         touchEventStream.addConsumer(touchPathStream)
         touchPathStream.addConsumer(lineStream)
         lineStream.addConsumer(bezierStream)
+        bezierStream.addConsumer(attributeStream)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        bezierStream.addConsumer(pathView)
+        attributeStream.addConsumer(pathView)
         pathView?.addGestureRecognizer(touchEventStream.gesture)
     }
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C5005F4B2547789C00E6DD0C /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F4A2547789C00E6DD0C /* Stroke.swift */; };
 		C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */; };
 		C5005F572548E14500E6DD0C /* TouchPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F562548E14500E6DD0C /* TouchPathTests.swift */; };
 		C507F3E325041E0B001A7821 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E225041E0B001A7821 /* Clamping.swift */; };
@@ -15,6 +14,7 @@
 		C5094CE925FEB6770001AE2A /* BezierViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5094CE825FEB6770001AE2A /* BezierViewController.swift */; };
 		C5094CEF25FEB6FB0001AE2A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5094CEE25FEB6FB0001AE2A /* BaseViewController.swift */; };
 		C5094CF825FEBA3B0001AE2A /* MMSwiftToolbox in Frameworks */ = {isa = PBXBuildFile; productRef = C5094CF725FEBA3B0001AE2A /* MMSwiftToolbox */; };
+		C5255131260527B7009876B9 /* AttributesStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5255130260527B7009876B9 /* AttributesStream.swift */; };
 		C53651B72544CC7F00FA25A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C53651B62544CC7E00FA25A4 /* README.md */; };
 		C5420EA52549096700473D8A /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = C5420EA42549096700473D8A /* events.json */; };
 		C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* PolylineStream.swift */; };
@@ -50,7 +50,6 @@
 		C5C159E224E9B2F800B52B4B /* TouchEventGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159E124E9B2F800B52B4B /* TouchEventGestureRecognizer.swift */; };
 		C5C159E724E9BC6500B52B4B /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159E624E9BC6500B52B4B /* DebugView.swift */; };
 		C5C5CC41254E089000B6662F /* AntigrainSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */; };
-		C5C5CC4B254E0DA100B6662F /* StrokeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5CC4A254E0DA100B6662F /* StrokeStream.swift */; };
 		C5C5CC4F254E0DDD00B6662F /* AntigrainSmootherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -85,13 +84,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C5005F4A2547789C00E6DD0C /* Stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
 		C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		C5005F562548E14500E6DD0C /* TouchPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPathTests.swift; sourceTree = "<group>"; };
 		C507F3E225041E0B001A7821 /* Clamping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
 		C5094CE125FEB0A60001AE2A /* BezierStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierStream.swift; sourceTree = "<group>"; };
 		C5094CE825FEB6770001AE2A /* BezierViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierViewController.swift; sourceTree = "<group>"; };
 		C5094CEE25FEB6FB0001AE2A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		C5255130260527B7009876B9 /* AttributesStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesStream.swift; sourceTree = "<group>"; };
 		C53651B62544CC7E00FA25A4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		C5420EA42549096700473D8A /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
 		C559CBF924EB9489006D263C /* PolylineStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolylineStream.swift; sourceTree = "<group>"; };
@@ -130,7 +129,6 @@
 		C5C159E624E9BC6500B52B4B /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
 		C5C5CC34254E028200B6662F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntigrainSmoother.swift; sourceTree = "<group>"; };
-		C5C5CC4A254E0DA100B6662F /* StrokeStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeStream.swift; sourceTree = "<group>"; };
 		C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntigrainSmootherTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,21 +171,20 @@
 			path = Tabs;
 			sourceTree = "<group>";
 		};
+		C525512F2605279B009876B9 /* Step 6 - Stroke Attributes */ = {
+			isa = PBXGroup;
+			children = (
+				C5255130260527B7009876B9 /* AttributesStream.swift */,
+			);
+			path = "Step 6 - Stroke Attributes";
+			sourceTree = "<group>";
+		};
 		C5420EAA2549096F00473D8A /* Test Data */ = {
 			isa = PBXGroup;
 			children = (
 				C5420EA42549096700473D8A /* events.json */,
 			);
 			name = "Test Data";
-			sourceTree = "<group>";
-		};
-		C548CEBE2547777000F4E648 /* Alternate Step 5 - Smooth Strokes */ = {
-			isa = PBXGroup;
-			children = (
-				C5005F4A2547789C00E6DD0C /* Stroke.swift */,
-				C5C5CC4A254E0DA100B6662F /* StrokeStream.swift */,
-			);
-			path = "Alternate Step 5 - Smooth Strokes";
 			sourceTree = "<group>";
 		};
 		C559CBFE24EB9AAF006D263C /* Step 4 - Polyline Filters */ = {
@@ -227,8 +224,8 @@
 				C58025B824EA4F6A0043130D /* Step 3 - Generate Polylines */,
 				C559CBFE24EB9AAF006D263C /* Step 4 - Polyline Filters */,
 				C55E42A625FEAF2D00093DEC /* Step 5 - Beziers */,
-				C548CEBE2547777000F4E648 /* Alternate Step 5 - Smooth Strokes */,
-				C59582BA25FF363500C4B202 /* Step 6 - Render */,
+				C525512F2605279B009876B9 /* Step 6 - Stroke Attributes */,
+				C59582BA25FF363500C4B202 /* Step 7 - Render */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -292,13 +289,13 @@
 			path = Optimized;
 			sourceTree = "<group>";
 		};
-		C59582BA25FF363500C4B202 /* Step 6 - Render */ = {
+		C59582BA25FF363500C4B202 /* Step 7 - Render */ = {
 			isa = PBXGroup;
 			children = (
 				C59582C125FF388000C4B202 /* NaiveDrawRectView.swift */,
 				C59582BB25FF366500C4B202 /* SmartDrawRectView.swift */,
 			);
-			path = "Step 6 - Render";
+			path = "Step 7 - Render";
 			sourceTree = "<group>";
 		};
 		C5C159A424E9AF1C00B52B4B = {
@@ -577,8 +574,6 @@
 				C580259F24E9E1C10043130D /* TouchPathStream.swift in Sources */,
 				C559CC0724EBA6C0006D263C /* NaivePointDistance.swift in Sources */,
 				C5C159DC24E9AF8100B52B4B /* UITouch+Extensions.swift in Sources */,
-				C5005F4B2547789C00E6DD0C /* Stroke.swift in Sources */,
-				C5C5CC4B254E0DA100B6662F /* StrokeStream.swift in Sources */,
 				C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */,
 				C59582BC25FF366500C4B202 /* SmartDrawRectView.swift in Sources */,
 				C5C5CC41254E089000B6662F /* AntigrainSmoother.swift in Sources */,
@@ -588,6 +583,7 @@
 				C559CBFD24EB9489006D263C /* Polyline.swift in Sources */,
 				C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */,
 				C5721094260469C000DEB0C0 /* Smoother.swift in Sources */,
+				C5255131260527B7009876B9 /* AttributesStream.swift in Sources */,
 				C5721090260468FA00DEB0C0 /* LineSmoother.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

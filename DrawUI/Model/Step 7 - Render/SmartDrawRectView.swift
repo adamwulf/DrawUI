@@ -44,6 +44,7 @@ public class SmartDrawRectView: UIView, Consumer {
     override public func draw(_ rect: CGRect) {
         for path in model.paths {
             if rect.intersects(path.bounds.expand(by: path.lineWidth)) {
+                (path.color ?? .black).setStroke()
                 path.stroke()
             }
         }
