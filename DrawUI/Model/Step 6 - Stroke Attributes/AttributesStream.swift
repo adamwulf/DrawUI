@@ -54,14 +54,8 @@ public class AttributesStream: ProducerConsumer {
                 let path = input.paths[index]
                 path.color = .blue
                 path.lineWidth = 2.5
-            case .updatedBezierPath(let index, _):
-                let path = input.paths[index]
-                path.color = .blue
-                path.lineWidth = 2.5
-            case .completedBezierPath(let index):
-                let path = input.paths[index]
-                path.color = .blue
-                path.lineWidth = 2.5
+            default:
+                break
             }
         }
 
