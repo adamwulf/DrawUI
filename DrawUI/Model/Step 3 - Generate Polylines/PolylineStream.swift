@@ -79,6 +79,7 @@ public class PolylineStream: ProducerConsumer {
         for delta in pointCollectionDeltas {
             switch delta {
             case .addedTouchPath(let pathIndex):
+                assert(indexToIndex[pathIndex] == nil, "Cannot add existing line")
                 let line = input.paths[pathIndex]
                 let smoothStroke = Polyline(touchPoints: line)
                 let index = lines.count

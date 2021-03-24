@@ -73,6 +73,7 @@ public class BezierStream: ProducerConsumer {
         for delta in input.deltas {
             switch delta {
             case .addedPolyline(let lineIndex):
+                assert(indexToIndex[lineIndex] == nil, "Cannot add existing line")
                 let line = input.lines[lineIndex]
                 let builder = BezierBuilder(smoother: smoother)
                 builder.update(with: line, at: IndexSet(0 ..< line.points.count))
