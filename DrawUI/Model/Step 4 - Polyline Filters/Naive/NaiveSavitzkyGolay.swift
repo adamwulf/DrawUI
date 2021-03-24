@@ -20,6 +20,7 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
     private let deriv: Int // 0 is smooth, 1 is first derivative, etc
     private let order: Int
     private var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
+    private var knownLines = IndexSet()
 
     // MARK: Public
 
@@ -94,7 +95,13 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
         // simply treat every stroke as brand new and smooth the entire set
         for lineIdx in 0 ..< input.lines.count {
             smooth(lineIdx: lineIdx)
-            outDeltas.append(.addedPolyline(index: lineIdx))
+            if knownLines.contains(lineIdx) {
+                let count = outLines[lineIdx].points.count
+                outDeltas.append(.updatedPolyline(index: lineIdx, updatedIndexes: IndexSet(0..<count)))
+            } else {
+                outDeltas.append(.addedPolyline(index: lineIdx))
+                knownLines.insert(lineIdx)
+            }
         }
 
         let output = (outLines, outDeltas)

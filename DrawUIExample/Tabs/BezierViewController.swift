@@ -13,6 +13,7 @@ class BezierViewController: BaseViewController {
 
     let touchPathStream = TouchPathStream()
     let lineStream = PolylineStream()
+    let savitzkyGolay = NaiveSavitzkyGolay()
     let bezierStream = BezierStream(smoother: AntigrainSmoother())
     let attributeStream = AttributesStream()
     @IBOutlet var pathView: SmartDrawRectView!
@@ -22,7 +23,8 @@ class BezierViewController: BaseViewController {
 
         touchEventStream.addConsumer(touchPathStream)
         touchPathStream.addConsumer(lineStream)
-        lineStream.addConsumer(bezierStream)
+        lineStream.addConsumer(savitzkyGolay)
+        savitzkyGolay.addConsumer(bezierStream)
         bezierStream.addConsumer(attributeStream)
     }
 
