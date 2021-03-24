@@ -24,6 +24,8 @@ public class SmartDrawRectView: UIView, Consumer {
                 let path = model.paths[index]
                 setNeedsDisplay(path.bounds.expand(by: path.lineWidth))
             case .updatedBezierPath(let index, _):
+                // We could only setNeedsDisplay for the rect of the modified elements of the path.
+                // For now, we'll set the entire path as needing display, but something to possibly revisit
                 let path = model.paths[index]
                 setNeedsDisplay(path.bounds.expand(by: path.lineWidth))
                 if index < previousModel.paths.count {
