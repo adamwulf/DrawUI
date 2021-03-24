@@ -100,32 +100,52 @@ public class BezierStream: ProducerConsumer {
     private class BezierBuilder {
         private var elements: [BezierStream.Element] = []
         private let smoother: Smoother
-
-        var path: UIBezierPath {
-            let ret = UIBezierPath()
-            for element in elements {
-                ret.append(element)
-            }
-            return ret
-        }
+        private(set) var path = UIBezierPath()
 
         init(smoother: Smoother) {
             self.smoother = smoother
         }
 
         @discardableResult
-        func update(with line: Polyline, at indexes: IndexSet) -> IndexSet {
-            let ret = smoother.elementIndexes(for: line, at: indexes)
-            for elementIndex in ret.sorted() {
+        func update(with line: Polyline, at lineIndexes: IndexSet) -> IndexSet {
+            let updatedPathIndexes = smoother.elementIndexes(for: line, at: lineIndexes)
+            let updatedPath: UIBezierPath
+            if let min = updatedPathIndexes.min(),
+               min - 1 < path.elementCount,
+               min - 1 >= 0 {
+                updatedPath = path.trimming(toElement: min - 1, andTValue: 1.0)
+            } else {
+                updatedPath = path.buildEmpty()
+            }
+            guard
+                let min = updatedPathIndexes.min(),
+                let max = updatedPathIndexes.max()
+            else {
+                return updatedPathIndexes
+            }
+            for elementIndex in min ... max {
                 assert(elementIndex <= elements.count, "Invalid element index")
-                let element = smoother.element(for: line, at: elementIndex)
-                if elementIndex == elements.count {
-                    elements.append(element)
+                if updatedPathIndexes.contains(elementIndex) {
+                    let element = smoother.element(for: line, at: elementIndex)
+                    if elementIndex == elements.count {
+                        elements.append(element)
+                    } else {
+                        elements[elementIndex] = element
+                    }
+                    updatedPath.append(element)
                 } else {
-                    elements[elementIndex] = element
+                    // use the existing element
+                    let element = elements[elementIndex]
+                    elements.append(element)
+                    updatedPath.append(element)
                 }
             }
-            return ret
+            for elementIndex in max + 1 ..< elements.count {
+                let element = elements[elementIndex]
+                updatedPath.append(element)
+            }
+            path = updatedPath
+            return updatedPathIndexes
         }
     }
 }
@@ -175,8 +195,10 @@ public extension UIBezierPath {
         case .moveTo(let point):
             move(to: point.location)
         case .lineTo(let point):
+            assert(elementCount > 0, "must contain a moveTo")
             addLine(to: point.location)
         case .curveTo(let point, let ctrl1, let ctrl2):
+            assert(elementCount > 0, "must contain a moveTo")
             addCurve(to: point.location, controlPoint1: ctrl1, controlPoint2: ctrl2)
         }
     }
