@@ -8,44 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--SmartDrawRect-->
-        <scene sceneID="BBE-YK-fEy">
-            <objects>
-                <viewController id="zNX-gI-D9f" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="rb2-W7-yY4" userLabel="Smart Draw Rect" customClass="SmartDrawRectView" customModule="DrawUI">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="hVX-LI-tfQ">
-                                <rect key="frame" x="31.5" y="64" width="351" height="32"/>
-                                <segments>
-                                    <segment title="Pen"/>
-                                    <segment title="Marker"/>
-                                    <segment title="Highlighter"/>
-                                    <segment title="Eraser"/>
-                                </segments>
-                                <connections>
-                                    <action selector="toolDidChange:" destination="zNX-gI-D9f" eventType="valueChanged" id="Bem-6b-9dM"/>
-                                </connections>
-                            </segmentedControl>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="oHM-da-eVE"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="hVX-LI-tfQ" firstAttribute="top" secondItem="oHM-da-eVE" secondAttribute="top" constant="20" id="7fW-hB-rn6"/>
-                            <constraint firstItem="hVX-LI-tfQ" firstAttribute="centerX" secondItem="rb2-W7-yY4" secondAttribute="centerX" id="Lec-nd-zFd"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="SmartDrawRect" id="u5C-tg-qxQ"/>
-                    <connections>
-                        <outlet property="pathView" destination="rb2-W7-yY4" id="R47-II-Qz5"/>
-                        <outlet property="toolPicker" destination="hVX-LI-tfQ" id="i1E-7f-4gK"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vEF-fV-aSY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-623" y="577"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="vLv-so-AUA">
             <objects>
@@ -57,8 +19,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="gGA-17-E7E"/>
-                        <segue destination="zNX-gI-D9f" kind="relationship" relationship="viewControllers" id="H5p-NY-MZt"/>
                         <segue destination="8Sh-bC-g2X" kind="relationship" relationship="viewControllers" id="gT6-c2-0wM"/>
+                        <segue destination="RGc-eH-SHM" kind="relationship" relationship="viewControllers" id="6lZ-qK-Rpr"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o6x-Rq-qpR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -102,37 +64,101 @@
         <scene sceneID="zGv-TZ-59T">
             <objects>
                 <viewController id="8Sh-bC-g2X" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Idv-ej-oKN" userLabel="Naive Draw Rect" customClass="NaiveDrawRectView" customModule="DrawUI">
+                    <view key="view" contentMode="scaleToFill" id="Idv-ej-oKN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZMy-S6-X7X">
-                                <rect key="frame" x="31.5" y="64" width="351" height="32"/>
-                                <segments>
-                                    <segment title="Pen"/>
-                                    <segment title="Marker"/>
-                                    <segment title="Highlighter"/>
-                                    <segment title="Eraser"/>
-                                </segments>
-                                <connections>
-                                    <action selector="toolDidChange:" destination="8Sh-bC-g2X" eventType="valueChanged" id="MHL-iX-VnQ"/>
-                                </connections>
-                            </segmentedControl>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LI0-x3-xff" customClass="NaiveDrawRectView" customModule="DrawUI">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZMy-S6-X7X">
+                                        <rect key="frame" x="31.5" y="64" width="351" height="32"/>
+                                        <segments>
+                                            <segment title="Pen"/>
+                                            <segment title="Marker"/>
+                                            <segment title="Highlighter"/>
+                                            <segment title="Eraser"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="toolDidChange:" destination="8Sh-bC-g2X" eventType="valueChanged" id="MHL-iX-VnQ"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <viewLayoutGuide key="safeArea" id="DH7-Pj-vix"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="ZMy-S6-X7X" firstAttribute="centerX" secondItem="LI0-x3-xff" secondAttribute="centerX" id="1aQ-uy-vwc"/>
+                                    <constraint firstItem="ZMy-S6-X7X" firstAttribute="top" secondItem="DH7-Pj-vix" secondAttribute="top" constant="20" id="394-0r-KhW"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="JdX-GF-gT7"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <viewLayoutGuide key="safeArea" id="f0A-NO-UKJ"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="ZMy-S6-X7X" firstAttribute="centerX" secondItem="Idv-ej-oKN" secondAttribute="centerX" id="L06-sA-nBf"/>
-                            <constraint firstItem="ZMy-S6-X7X" firstAttribute="top" secondItem="JdX-GF-gT7" secondAttribute="top" constant="20" id="lig-dn-RMR"/>
+                            <constraint firstItem="LI0-x3-xff" firstAttribute="leading" secondItem="Idv-ej-oKN" secondAttribute="leading" id="2Cr-hI-Wfw"/>
+                            <constraint firstItem="LI0-x3-xff" firstAttribute="top" secondItem="Idv-ej-oKN" secondAttribute="top" id="Ehy-rr-Sz9"/>
+                            <constraint firstAttribute="bottom" secondItem="LI0-x3-xff" secondAttribute="bottom" id="jjk-Na-NCV"/>
+                            <constraint firstAttribute="trailing" secondItem="LI0-x3-xff" secondAttribute="trailing" id="q3Q-CW-j4b"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="NaiveDrawRect" id="xx5-P8-cAu"/>
                     <connections>
-                        <outlet property="pathView" destination="Idv-ej-oKN" id="yMf-sS-rlK"/>
+                        <outlet property="pathView" destination="LI0-x3-xff" id="q40-7z-W7u"/>
                         <outlet property="toolPicker" destination="ZMy-S6-X7X" id="1J3-pU-mJm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XnE-I2-dIb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-623" y="1299"/>
+        </scene>
+        <!--SmartDrawRect-->
+        <scene sceneID="g4G-8K-SJx">
+            <objects>
+                <viewController id="RGc-eH-SHM" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dN3-UW-cDC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESC-cj-5Je" customClass="SmartDrawRectView" customModule="DrawUI">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="XsJ-CP-Rr9">
+                                        <rect key="frame" x="31.5" y="64" width="351" height="32"/>
+                                        <segments>
+                                            <segment title="Pen"/>
+                                            <segment title="Marker"/>
+                                            <segment title="Highlighter"/>
+                                            <segment title="Eraser"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="toolDidChange:" destination="RGc-eH-SHM" eventType="valueChanged" id="TSW-Fm-32s"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <viewLayoutGuide key="safeArea" id="jqD-V8-tvf"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="XsJ-CP-Rr9" firstAttribute="top" secondItem="jqD-V8-tvf" secondAttribute="top" constant="20" id="KUp-MI-uS8"/>
+                                    <constraint firstItem="XsJ-CP-Rr9" firstAttribute="centerX" secondItem="ESC-cj-5Je" secondAttribute="centerX" id="Vc2-ZT-qKh"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="z8N-Vc-yoA"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ESC-cj-5Je" firstAttribute="top" secondItem="dN3-UW-cDC" secondAttribute="top" id="4SS-vA-8n4"/>
+                            <constraint firstItem="ESC-cj-5Je" firstAttribute="leading" secondItem="dN3-UW-cDC" secondAttribute="leading" id="RPj-K2-6BM"/>
+                            <constraint firstAttribute="bottom" secondItem="ESC-cj-5Je" secondAttribute="bottom" id="TqP-QK-YPn"/>
+                            <constraint firstAttribute="trailing" secondItem="ESC-cj-5Je" secondAttribute="trailing" id="vYB-TY-Ddc"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="SmartDrawRect" id="deK-Yr-jRf"/>
+                    <connections>
+                        <outlet property="pathView" destination="ESC-cj-5Je" id="rTe-tk-fUu"/>
+                        <outlet property="toolPicker" destination="XsJ-CP-Rr9" id="FNL-db-38X"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GQv-dP-fOg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-623" y="1299"/>
         </scene>

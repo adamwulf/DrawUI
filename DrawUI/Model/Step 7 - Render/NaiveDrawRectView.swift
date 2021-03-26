@@ -29,10 +29,17 @@ public class NaiveDrawRectView: UIView, Consumer {
     }
 
     override public func draw(_ rect: CGRect) {
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+
         for path in model.paths {
             if rect.intersects(path.bounds.expand(by: path.lineWidth)) {
-                (path.color ?? .black).setStroke()
-                path.stroke()
+                if let color = path.color {
+                    context.setStrokeColor(color.cgColor)
+                    path.stroke()
+                } else {
+                    UIColor.white.setStroke()
+                    path.stroke(with: .clear, alpha: 1.0)
+                }
             }
         }
     }
