@@ -13,16 +13,29 @@ public class AttributesStream: ProducerConsumer {
     public typealias Produces = BezierStream.Produces
     public typealias Consumes = BezierStream.Produces
 
+    public struct ToolStyle {
+        public let width: CGFloat
+        public let color: UIColor?
+        public init(width: CGFloat, color: UIColor?) {
+            self.width = width
+            self.color = color
+        }
+    }
+
     // MARK: - Private
 
-    var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
     private(set) var indexToIndex: [Int: Int] = [:]
+
+    // MARK: - Public
+
+    var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
+    public var style: ToolStyle
 
     // MARK: - Init
 
     public init() {
-        // noop
+        style = ToolStyle(width: 1.5, color: .black)
     }
 
     // MARK: - Consumer<Polyline>
@@ -52,8 +65,10 @@ public class AttributesStream: ProducerConsumer {
             switch delta {
             case .addedBezierPath(let index):
                 let path = input.paths[index]
-                path.color = .blue
-                path.lineWidth = 2.5
+                path.lineCapStyle = .round
+                path.lineJoinStyle = .round
+                path.color = style.color
+                path.lineWidth = style.width
             default:
                 break
             }
