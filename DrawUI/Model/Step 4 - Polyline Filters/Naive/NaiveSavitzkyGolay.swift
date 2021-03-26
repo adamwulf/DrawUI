@@ -48,6 +48,7 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
 
     public func reset() {
         consumers.forEach({ $0.reset() })
+        knownLines = IndexSet()
     }
 
     // MARK: - Producer<Polyline>
