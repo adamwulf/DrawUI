@@ -9,6 +9,7 @@ import Foundation
 
 /// Removes points from `strokes` that are within a minimum distance of each other
 public class NaivePointDistance: ProducerConsumer {
+
     public typealias Consumes = PolylineStream.Produces
     public typealias Produces = PolylineStream.Produces
 

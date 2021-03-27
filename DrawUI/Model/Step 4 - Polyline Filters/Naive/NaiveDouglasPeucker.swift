@@ -10,6 +10,7 @@ import Foundation
 /// Removes points from `strokes` according to the Ramer-Douglas-Peucker algorithm
 /// https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
 public class NaiveDouglasPeucker: ProducerConsumer {
+
     public typealias Consumes = PolylineStream.Produces
     public typealias Produces = PolylineStream.Produces
 

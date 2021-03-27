@@ -64,6 +64,6 @@ class BezierViewController: BaseViewController {
         else {
             return
         }
-        attributeStream.style = tool.style
+        touchEventStream.process(events: [ToolEvent(style: tool.style)])
     }
 }

@@ -8,8 +8,18 @@
 import UIKit
 
 public class PolylineStream: ProducerConsumer {
+
+    public struct Produces {
+        public var lines: [Polyline]
+        public var deltas: [Delta]
+        public var events: [DrawEvent]
+        public init(lines: [Polyline], deltas: [Delta], events: [DrawEvent]) {
+            self.lines = lines
+            self.deltas = deltas
+            self.events = events
+        }
+    }
     public typealias Consumes = TouchPathStream.Produces
-    public typealias Produces = (lines: [Polyline], deltas: [Delta])
 
     public enum Delta: Equatable, CustomDebugStringConvertible {
         case addedPolyline(index: Int)
@@ -99,7 +109,7 @@ public class PolylineStream: ProducerConsumer {
             }
         }
 
-        let output = (lines, deltas)
+        let output = Produces(lines: lines, deltas: deltas, events: input.events)
         consumers.forEach({ $0.process(output) })
         return output
     }

@@ -11,11 +11,34 @@ public typealias TouchEventIdentifier = String
 public typealias PointIdentifier = String
 public typealias EstimationUpdateIndex = NSNumber
 
-public class TouchEvent: Codable {
+// Probably need to do something like this linked issue when encoding/decoding
+// https://stackoverflow.com/questions/59364986/swift-decode-encode-an-array-of-generics-with-different-types
+public class DrawEvent: Codable {
+    public typealias Identifier = String
+
+    enum CodingKeys: CodingKey {
+        case identifier
+    }
 
     /// A completely unique identifier per event, even for events built from
     /// the same touch or coalescedTouch
-    public let identifier: TouchEventIdentifier
+    public let identifier: Identifier
+
+    public init(identifier: Identifier) {
+        self.identifier = identifier
+    }
+
+    required public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.identifier = try values.decode(Identifier.self, forKey: .identifier)
+    }
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(identifier, forKey: .identifier)
+    }
+}
+
+public class TouchEvent: DrawEvent {
 
     /// An identifier unique to the touch that created this event. Events with the same
     /// touch will also have the same touchIdentifier
@@ -107,7 +130,6 @@ public class TouchEvent: Codable {
                 isUpdate: Bool,
                 isPrediction: Bool,
                 in view: UIView?) {
-        self.identifier = identifier
         self.touchIdentifier = touchIdentifier
         self.timestamp = timestamp
         self.type = type
@@ -126,6 +148,7 @@ public class TouchEvent: Codable {
         self.isUpdate = isUpdate
         self.isPrediction = isPrediction
         self.view = view
+        super.init(identifier: identifier)
     }
 
     public convenience init(touchIdentifier: UITouchIdentifier,
@@ -166,7 +189,6 @@ public class TouchEvent: Codable {
     // MARK: - Codable
 
     enum CodingKeys: CodingKey {
-        case identifier
         case touchIdentifier
         case timestamp
         case type
@@ -188,7 +210,6 @@ public class TouchEvent: Codable {
 
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        self.identifier = try values.decode(TouchEventIdentifier.self, forKey: .identifier)
         self.touchIdentifier = try values.decode(UITouchIdentifier.self, forKey: .touchIdentifier)
         self.timestamp = try values.decode(TimeInterval.self, forKey: .timestamp)
         self.type = try values.decode(UITouch.TouchType.self, forKey: .type)
@@ -213,11 +234,12 @@ public class TouchEvent: Codable {
         self.isUpdate = try values.decode(Bool.self, forKey: .isUpdate)
         self.isPrediction = try values.decode(Bool.self, forKey: .isPrediction)
         self.view = nil
+        try super.init(from: decoder)
     }
 
-    public func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(identifier, forKey: .identifier)
+        try super.encode(to: encoder)
         try container.encode(touchIdentifier, forKey: .touchIdentifier)
         try container.encode(timestamp, forKey: .timestamp)
         try container.encode(type, forKey: .type)

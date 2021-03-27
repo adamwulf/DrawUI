@@ -23,6 +23,8 @@
 		C559CC0224EB9ACA006D263C /* NaiveDouglasPeucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */; };
 		C559CC0724EBA6C0006D263C /* NaivePointDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */; };
 		C55B2CB926000C58004F6BDF /* ProducerConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */; };
+		C55CC112260F1F9E00C42FBB /* ColorCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55CC111260F1F9E00C42FBB /* ColorCodable.swift */; };
+		C55CC118260F1FEF00C42FBB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C55CC117260F1FEF00C42FBB /* LICENSE */; };
 		C5721090260468FA00DEB0C0 /* LineSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C572108F260468FA00DEB0C0 /* LineSmoother.swift */; };
 		C5721094260469C000DEB0C0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5721093260469C000DEB0C0 /* Smoother.swift */; };
 		C580259C24E9E1150043130D /* TouchPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* TouchPath.swift */; };
@@ -99,6 +101,8 @@
 		C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveDouglasPeucker.swift; sourceTree = "<group>"; };
 		C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaivePointDistance.swift; sourceTree = "<group>"; };
 		C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerConsumer.swift; sourceTree = "<group>"; };
+		C55CC111260F1F9E00C42FBB /* ColorCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodable.swift; sourceTree = "<group>"; };
+		C55CC117260F1FEF00C42FBB /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C572108F260468FA00DEB0C0 /* LineSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSmoother.swift; sourceTree = "<group>"; };
 		C5721093260469C000DEB0C0 /* Smoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smoother.swift; sourceTree = "<group>"; };
 		C580259B24E9E1150043130D /* TouchPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPath.swift; sourceTree = "<group>"; };
@@ -194,6 +198,15 @@
 				C58B501B254E021A0010F195 /* Optimized */,
 			);
 			path = "Step 4 - Polyline Filters";
+			sourceTree = "<group>";
+		};
+		C55CC110260F1F9300C42FBB /* ColorCodable */ = {
+			isa = PBXGroup;
+			children = (
+				C55CC111260F1F9E00C42FBB /* ColorCodable.swift */,
+				C55CC117260F1FEF00C42FBB /* LICENSE */,
+			);
+			path = ColorCodable;
 			sourceTree = "<group>";
 		};
 		C55E42A625FEAF2D00093DEC /* Step 5 - Beziers */ = {
@@ -323,6 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				C53651B62544CC7E00FA25A4 /* README.md */,
+				C55CC110260F1F9300C42FBB /* ColorCodable */,
 				C5C159E024E9B2F000B52B4B /* Gestures */,
 				C5C159D924E9AF7300B52B4B /* Extensions */,
 				C58025A224EA26BB0043130D /* Model */,
@@ -509,6 +523,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C55CC118260F1FEF00C42FBB /* LICENSE in Resources */,
 				C53651B72544CC7F00FA25A4 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -567,6 +582,7 @@
 				C507F3E325041E0B001A7821 /* Clamping.swift in Sources */,
 				C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */,
 				C559CC0224EB9ACA006D263C /* NaiveDouglasPeucker.swift in Sources */,
+				C55CC112260F1F9E00C42FBB /* ColorCodable.swift in Sources */,
 				C59582C225FF388000C4B202 /* NaiveDrawRectView.swift in Sources */,
 				C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */,
 				C5C159E224E9B2F800B52B4B /* TouchEventGestureRecognizer.swift in Sources */,

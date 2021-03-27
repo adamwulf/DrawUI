@@ -12,6 +12,7 @@ import UIKit
 /// Coefficients are calculated with the algorithm from https://dekalogblog.blogspot.com/2013/09/savitzky-golay-filter-convolution.html
 /// Values were confirmed against the coefficients listed at http://www.statistics4u.info/fundstat_eng/cc_savgol_coeff.html
 public class NaiveSavitzkyGolay: ProducerConsumer {
+
     public typealias Consumes = PolylineStream.Produces
     public typealias Produces = PolylineStream.Produces
 
@@ -105,7 +106,7 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
             }
         }
 
-        let output = (outLines, outDeltas)
+        let output = Produces(lines: outLines, deltas: outDeltas, events: input.events)
         consumers.forEach({ $0.process(output) })
         return output
     }
@@ -132,7 +133,7 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
             }
         }
 
-        return (lines: outLines, deltas: outDeltas)
+        return Produces(lines: outLines, deltas: outDeltas, events: input.events)
     }
 
     // MARK: - Private

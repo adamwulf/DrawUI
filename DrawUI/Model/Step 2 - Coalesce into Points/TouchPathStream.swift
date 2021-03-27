@@ -12,8 +12,17 @@ import UIKit
 /// Output: A OrderedTouchPoints for each stroke of touch event data, which coalesces the events into current point data for that stroke
 public class TouchPathStream: ProducerConsumer {
 
+    public struct Produces {
+        public var paths: [TouchPath]
+        public var deltas: [Delta]
+        public var events: [DrawEvent]
+        public init(paths: [TouchPath], deltas: [Delta], events: [DrawEvent]) {
+            self.paths = paths
+            self.deltas = deltas
+            self.events = events
+        }
+    }
     public typealias Consumes = TouchEventStream.Produces
-    public typealias Produces = (paths: [TouchPath], deltas: [Delta])
 
     public enum Delta: Equatable, CustomDebugStringConvertible {
         case addedTouchPath(index: Int)
@@ -71,7 +80,7 @@ public class TouchPathStream: ProducerConsumer {
 
     // MARK: - Consumer<TouchEvent>
 
-    public func consume(_ input: [TouchEvent]) {
+    public func consume(_ input: [DrawEvent]) {
         produce(with: input)
     }
 
@@ -80,6 +89,8 @@ public class TouchPathStream: ProducerConsumer {
         var deltas: [Delta] = []
         var orderOfTouches: [UITouchIdentifier] = []
         let updatedEventsPerTouch = input.reduce([:], { (result, event) -> [String: [TouchEvent]] in
+            guard let event = event as? TouchEvent else { return result }
+
             var result = result
             if result[event.touchIdentifier] != nil {
                 result[event.touchIdentifier]?.append(event)
@@ -115,7 +126,8 @@ public class TouchPathStream: ProducerConsumer {
             }
         }
 
-        let output = (paths, deltas)
+        let unprocessed = input.filter({ $0 as? TouchEvent == nil })
+        let output = Produces(paths: paths, deltas: deltas, events: unprocessed)
         consumers.forEach({ $0.process(output) })
         return output
     }

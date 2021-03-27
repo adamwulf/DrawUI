@@ -9,9 +9,16 @@ import Foundation
 import UIKit
 
 public class BezierStream: ProducerConsumer {
+
     public struct Produces {
         public var paths: [UIBezierPath]
         public var deltas: [Delta]
+        public var events: [DrawEvent]
+        public init(paths: [UIBezierPath], deltas: [Delta], events: [DrawEvent]) {
+            self.paths = paths
+            self.deltas = deltas
+            self.events = events
+        }
     }
 
     public typealias Consumes = PolylineStream.Produces
@@ -96,7 +103,7 @@ public class BezierStream: ProducerConsumer {
             }
         }
 
-        let output = BezierStream.Produces(paths: builders.map({ $0.path }), deltas: deltas)
+        let output = BezierStream.Produces(paths: builders.map({ $0.path }), deltas: deltas, events: input.events)
         consumers.forEach({ $0.process(output) })
         return output
     }

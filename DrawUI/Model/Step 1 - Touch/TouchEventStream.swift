@@ -10,17 +10,17 @@ import UIKit
 // Processes events for mutiple touches
 public class TouchEventStream: Producer {
     // How do I keep Customer generic here?
-    public typealias Produces = [TouchEvent]
+    public typealias Produces = [DrawEvent]
 
     // MARK: - Private
 
-    private var recentEvents: [TouchEvent] = []
-    private var processedEvents: [TouchEvent] = []
+    private var recentEvents: [DrawEvent] = []
+    private var processedEvents: [DrawEvent] = []
     private var lazyGesture: TouchEventGestureRecognizer?
 
     // MARK: - Public
 
-    public var events: [TouchEvent] {
+    public var events: [DrawEvent] {
         return processedEvents + recentEvents
     }
 
@@ -68,7 +68,7 @@ public class TouchEventStream: Producer {
 
     // MARK: - Public
 
-    public func process(events: [TouchEvent] = []) {
+    public func process(events: [DrawEvent] = []) {
         processedEvents.append(contentsOf: recentEvents + events)
         defer {
             recentEvents.removeAll()

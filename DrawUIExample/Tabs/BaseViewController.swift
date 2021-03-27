@@ -10,7 +10,7 @@ import DrawUI
 
 class BaseViewController: UIViewController, UIDocumentPickerDelegate {
 
-    var allEvents: [TouchEvent] = []
+    var allEvents: [DrawEvent] = []
 
     let touchEventStream = TouchEventStream()
 
@@ -64,7 +64,7 @@ class BaseViewController: UIViewController, UIDocumentPickerDelegate {
         }
     }
 
-    func importEvents(_ events: [TouchEvent]) {
+    func importEvents(_ events: [DrawEvent]) {
         let existingIdentifiers = allEvents.map({ $0.identifier })
         let filtered = events.filter({ !existingIdentifiers.contains($0.identifier) })
         allEvents += filtered

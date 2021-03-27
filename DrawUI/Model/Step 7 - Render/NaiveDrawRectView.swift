@@ -13,7 +13,7 @@ public class NaiveDrawRectView: UIView, Consumer {
 
     public typealias Consumes = BezierStream.Produces
 
-    private var model: BezierStream.Produces = BezierStream.Produces(paths: [], deltas: [])
+    private var model: BezierStream.Produces = BezierStream.Produces(paths: [], deltas: [], events: [])
 
     public func consume(_ input: Consumes) {
         model = input
@@ -24,7 +24,7 @@ public class NaiveDrawRectView: UIView, Consumer {
     }
 
     public func reset() {
-        model = BezierStream.Produces(paths: [], deltas: [])
+        model = BezierStream.Produces(paths: [], deltas: [], events: [])
         setNeedsDisplay()
     }
 

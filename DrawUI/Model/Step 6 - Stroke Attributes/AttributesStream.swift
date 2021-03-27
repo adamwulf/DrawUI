@@ -8,10 +8,45 @@
 import Foundation
 import UIKit
 
+public class ToolEvent: DrawEvent {
+    public var style: AttributesStream.ToolStyle
+
+    public init(style: AttributesStream.ToolStyle) {
+        self.style = style
+        super.init(identifier: UUID().uuidString)
+    }
+
+    // MARK: - Codable
+
+    enum CodingKeys: CodingKey {
+        case width
+        case color
+    }
+
+    required public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let width = try values.decode(CGFloat.self, forKey: .width)
+        let color = try? values.decode(CodableColor.self, forKey: .color).color
+        style = AttributesStream.ToolStyle(width: width, color: color)
+        try super.init(from: decoder)
+    }
+    override public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try super.encode(to: encoder)
+        try container.encode(style.width, forKey: .width)
+        try container.encode(style.color?.codable(), forKey: .color)
+    }
+}
+
 public class AttributesStream: ProducerConsumer {
 
     public typealias Produces = BezierStream.Produces
     public typealias Consumes = BezierStream.Produces
+
+    enum CodingKeys: CodingKey {
+        case width
+        case color
+    }
 
     public struct ToolStyle {
         public let width: CGFloat
@@ -30,7 +65,7 @@ public class AttributesStream: ProducerConsumer {
     // MARK: - Public
 
     var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
-    public var style: ToolStyle
+    private(set) public var style: ToolStyle
 
     // MARK: - Init
 
@@ -61,6 +96,10 @@ public class AttributesStream: ProducerConsumer {
 
     @discardableResult
     public func produce(with input: Consumes) -> Produces {
+        if let event = input.events.last as? ToolEvent {
+            style = event.style
+        }
+
         for delta in input.deltas {
             switch delta {
             case .addedBezierPath(let index):

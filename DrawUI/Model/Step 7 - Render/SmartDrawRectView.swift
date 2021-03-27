@@ -12,7 +12,7 @@ public class SmartDrawRectView: UIView, Consumer {
 
     public typealias Consumes = BezierStream.Produces
 
-    private var model: BezierStream.Produces = BezierStream.Produces(paths: [], deltas: [])
+    private var model: BezierStream.Produces = BezierStream.Produces(paths: [], deltas: [], events: [])
 
     public func consume(_ input: Consumes) {
         let previousModel = model
@@ -39,7 +39,7 @@ public class SmartDrawRectView: UIView, Consumer {
     }
 
     public func reset() {
-        model = BezierStream.Produces(paths: [], deltas: [])
+        model = BezierStream.Produces(paths: [], deltas: [], events: [])
         setNeedsDisplay()
     }
 
