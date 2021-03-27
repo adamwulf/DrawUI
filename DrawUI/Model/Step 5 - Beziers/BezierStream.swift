@@ -9,8 +9,11 @@ import Foundation
 import UIKit
 
 public class BezierStream: ProducerConsumer {
+    public struct Produces {
+        public var paths: [UIBezierPath]
+        public var deltas: [Delta]
+    }
 
-    public typealias Produces = (paths: [UIBezierPath], deltas: [Delta])
     public typealias Consumes = PolylineStream.Produces
 
     public enum Delta: Equatable, CustomDebugStringConvertible {
@@ -93,7 +96,7 @@ public class BezierStream: ProducerConsumer {
             }
         }
 
-        let output = (paths: builders.map({ $0.path }), deltas: deltas)
+        let output = BezierStream.Produces(paths: builders.map({ $0.path }), deltas: deltas)
         consumers.forEach({ $0.process(output) })
         return output
     }
@@ -201,6 +204,22 @@ public extension UIBezierPath {
         case .curveTo(let point, let ctrl1, let ctrl2):
             assert(elementCount > 0, "must contain a moveTo")
             addCurve(to: point.location, controlPoint1: ctrl1, controlPoint2: ctrl2)
+        }
+    }
+}
+
+public extension BezierStream.Produces {
+    func draw(at rect: CGRect, in context: CGContext) {
+        for path in paths {
+            if rect.intersects(path.bounds.expand(by: path.lineWidth)) {
+                if let color = path.color {
+                    context.setStrokeColor(color.cgColor)
+                    path.stroke()
+                } else {
+                    UIColor.white.setStroke()
+                    path.stroke(with: .clear, alpha: 1.0)
+                }
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ public class SmartDrawRectView: UIView, Consumer {
 
     public typealias Consumes = BezierStream.Produces
 
-    private var model: BezierStream.Produces = (paths: [], deltas: [])
+    private var model: BezierStream.Produces = BezierStream.Produces(paths: [], deltas: [])
 
     public func consume(_ input: Consumes) {
         let previousModel = model
@@ -39,23 +39,13 @@ public class SmartDrawRectView: UIView, Consumer {
     }
 
     public func reset() {
-        model = (paths: [], deltas: [])
+        model = BezierStream.Produces(paths: [], deltas: [])
         setNeedsDisplay()
     }
 
     override public func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else { return }
 
-        for path in model.paths {
-            if rect.intersects(path.bounds.expand(by: path.lineWidth)) {
-                if let color = path.color {
-                    context.setStrokeColor(color.cgColor)
-                    path.stroke()
-                } else {
-                    UIColor.white.setStroke()
-                    path.stroke(with: .clear, alpha: 1.0)
-                }
-            }
-        }
+        model.draw(at: rect, in: context)
     }
 }
