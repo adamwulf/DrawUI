@@ -12,11 +12,9 @@ public class PolylineStream: ProducerConsumer {
     public struct Produces {
         public var lines: [Polyline]
         public var deltas: [Delta]
-        public var events: [DrawEvent]
-        public init(lines: [Polyline], deltas: [Delta], events: [DrawEvent]) {
+        public init(lines: [Polyline], deltas: [Delta]) {
             self.lines = lines
             self.deltas = deltas
-            self.events = events
         }
     }
     public typealias Consumes = TouchPathStream.Produces
@@ -25,6 +23,7 @@ public class PolylineStream: ProducerConsumer {
         case addedPolyline(index: Int)
         case updatedPolyline(index: Int, updatedIndexes: IndexSet)
         case completedPolyline(index: Int)
+        case unhandled(event: DrawEvent)
 
         public var debugDescription: String {
             switch self {
@@ -34,6 +33,8 @@ public class PolylineStream: ProducerConsumer {
                 return "updatedPolyline(\(index), \(indexSet)"
             case .completedPolyline(let index):
                 return "completedPolyline(\(index))"
+            case .unhandled(let event):
+                return "unhandledEvent(\(event.identifier))"
             }
         }
     }
@@ -106,10 +107,12 @@ public class PolylineStream: ProducerConsumer {
                 if let index = indexToIndex[pointCollectionIndex] {
                     deltas.append(.completedPolyline(index: index))
                 }
+            case .unhandled(let event):
+                deltas.append(.unhandled(event: event))
             }
         }
 
-        let output = Produces(lines: lines, deltas: deltas, events: input.events)
+        let output = Produces(lines: lines, deltas: deltas)
         consumers.forEach({ $0.process(output) })
         return output
     }

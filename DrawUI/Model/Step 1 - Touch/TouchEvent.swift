@@ -260,8 +260,8 @@ public class TouchEvent: DrawEvent {
     }
 }
 
-extension TouchEvent: Hashable {
-    public static func == (lhs: TouchEvent, rhs: TouchEvent) -> Bool {
+extension DrawEvent: Hashable {
+    public static func == (lhs: DrawEvent, rhs: DrawEvent) -> Bool {
         return lhs.identifier == rhs.identifier
     }
 

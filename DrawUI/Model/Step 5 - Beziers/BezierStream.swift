@@ -13,11 +13,9 @@ public class BezierStream: ProducerConsumer {
     public struct Produces {
         public var paths: [UIBezierPath]
         public var deltas: [Delta]
-        public var events: [DrawEvent]
-        public init(paths: [UIBezierPath], deltas: [Delta], events: [DrawEvent]) {
+        public init(paths: [UIBezierPath], deltas: [Delta]) {
             self.paths = paths
             self.deltas = deltas
-            self.events = events
         }
     }
 
@@ -27,6 +25,7 @@ public class BezierStream: ProducerConsumer {
         case addedBezierPath(index: Int)
         case updatedBezierPath(index: Int, updatedIndexes: IndexSet)
         case completedBezierPath(index: Int)
+        case unhandled(event: DrawEvent)
 
         public var debugDescription: String {
             switch self {
@@ -36,6 +35,8 @@ public class BezierStream: ProducerConsumer {
                 return "updatedBezierPath(\(index), \(indexSet)"
             case .completedBezierPath(let index):
                 return "completedBezierPath(\(index))"
+            case .unhandled(let event):
+                return "unhandledEvent(\(event.identifier))"
             }
         }
     }
@@ -100,10 +101,12 @@ public class BezierStream: ProducerConsumer {
             case .completedPolyline(let lineIndex):
                 guard let index = indexToIndex[lineIndex] else { assertionFailure("path at \(lineIndex) does not exist"); continue }
                 deltas.append(.completedBezierPath(index: index))
+            case .unhandled(let event):
+                deltas.append(.unhandled(event: event))
             }
         }
 
-        let output = BezierStream.Produces(paths: builders.map({ $0.path }), deltas: deltas, events: input.events)
+        let output = BezierStream.Produces(paths: builders.map({ $0.path }), deltas: deltas)
         consumers.forEach({ $0.process(output) })
         return output
     }

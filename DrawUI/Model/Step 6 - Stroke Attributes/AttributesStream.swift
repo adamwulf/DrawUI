@@ -96,10 +96,7 @@ public class AttributesStream: ProducerConsumer {
 
     @discardableResult
     public func produce(with input: Consumes) -> Produces {
-        if let event = input.events.last as? ToolEvent {
-            style = event.style
-        }
-
+        var output = Produces(paths: input.paths, deltas: [])
         for delta in input.deltas {
             switch delta {
             case .addedBezierPath(let index):
@@ -108,12 +105,20 @@ public class AttributesStream: ProducerConsumer {
                 path.lineJoinStyle = .round
                 path.color = style.color
                 path.lineWidth = style.width
+                output.deltas += [delta]
+            case .unhandled(let event):
+                if let event = event as? ToolEvent {
+                    // update our style and consume the event
+                    style = event.style
+                } else {
+                    output.deltas += [delta]
+                }
             default:
-                break
+                output.deltas += [delta]
             }
         }
 
-        consumers.forEach({ $0.process(input) })
+        consumers.forEach({ $0.process(output) })
         return input
     }
 }

@@ -97,16 +97,18 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
         // simply treat every stroke as brand new and smooth the entire set
         for lineIdx in 0 ..< input.lines.count {
             smooth(lineIdx: lineIdx)
-            if knownLines.contains(lineIdx) {
+        }
+        for delta in input.deltas {
+            switch delta {
+            case .updatedPolyline(let lineIdx, _):
                 let count = outLines[lineIdx].points.count
                 outDeltas.append(.updatedPolyline(index: lineIdx, updatedIndexes: IndexSet(0..<count)))
-            } else {
-                outDeltas.append(.addedPolyline(index: lineIdx))
-                knownLines.insert(lineIdx)
+            default:
+                outDeltas.append(delta)
             }
         }
 
-        let output = Produces(lines: outLines, deltas: outDeltas, events: input.events)
+        let output = Produces(lines: outLines, deltas: outDeltas)
         consumers.forEach({ $0.process(output) })
         return output
     }
@@ -130,10 +132,12 @@ public class NaiveSavitzkyGolay: ProducerConsumer {
             case .updatedPolyline(let strokeIndex, let indexes):
                 let updatedIndexes = smoothStroke(stroke: &outLines[strokeIndex], at: indexes)
                 outDeltas.append(.updatedPolyline(index: strokeIndex, updatedIndexes: updatedIndexes))
+            default:
+                outDeltas.append(delta)
             }
         }
 
-        return Produces(lines: outLines, deltas: outDeltas, events: input.events)
+        return Produces(lines: outLines, deltas: outDeltas)
     }
 
     // MARK: - Private

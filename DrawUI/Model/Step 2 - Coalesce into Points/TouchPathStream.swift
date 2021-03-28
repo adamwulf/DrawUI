@@ -15,11 +15,9 @@ public class TouchPathStream: ProducerConsumer {
     public struct Produces {
         public var paths: [TouchPath]
         public var deltas: [Delta]
-        public var events: [DrawEvent]
-        public init(paths: [TouchPath], deltas: [Delta], events: [DrawEvent]) {
+        public init(paths: [TouchPath], deltas: [Delta]) {
             self.paths = paths
             self.deltas = deltas
-            self.events = events
         }
     }
     public typealias Consumes = TouchEventStream.Produces
@@ -28,6 +26,7 @@ public class TouchPathStream: ProducerConsumer {
         case addedTouchPath(index: Int)
         case updatedTouchPath(index: Int, updatedIndexes: IndexSet)
         case completedTouchPath(index: Int)
+        case unhandled(event: DrawEvent)
 
         public var debugDescription: String {
             switch self {
@@ -37,6 +36,8 @@ public class TouchPathStream: ProducerConsumer {
                 return "updatedTouchPath(\(index), \(indexSet)"
             case .completedTouchPath(let index):
                 return "completedTouchPath(\(index))"
+            case .unhandled(let event):
+                return "unhandledEvent(\(event.identifier))"
             }
         }
     }
@@ -87,7 +88,7 @@ public class TouchPathStream: ProducerConsumer {
     @discardableResult
     public func produce(with input: Consumes) -> Produces {
         var deltas: [Delta] = []
-        var orderOfTouches: [UITouchIdentifier] = []
+        var processedTouchIdentifiers: [UITouchIdentifier] = []
         let updatedEventsPerTouch = input.reduce([:], { (result, event) -> [String: [TouchEvent]] in
             guard let event = event as? TouchEvent else { return result }
 
@@ -97,14 +98,28 @@ public class TouchPathStream: ProducerConsumer {
             } else {
                 result[event.touchIdentifier] = [event]
             }
-            if !orderOfTouches.contains(event.touchIdentifier) {
-                orderOfTouches.append(event.touchIdentifier)
-            }
             return result
         })
 
-        for touchIdentifier in orderOfTouches {
-            guard let events = updatedEventsPerTouch[touchIdentifier] else { continue }
+        for eventToProcess in input {
+            guard
+                let touchToProcess = eventToProcess as? TouchEvent
+            else {
+                deltas.append(.unhandled(event: eventToProcess))
+                continue
+            }
+            // The event is a TouchEvent, so process it into its touch
+            let touchIdentifier = touchToProcess.touchIdentifier
+            guard
+                !processedTouchIdentifiers.contains(touchIdentifier),
+                let events = updatedEventsPerTouch[touchIdentifier]
+            else
+            {
+                // we've already processed all of the events for this touch,
+                // so move onto the next event
+                continue
+            }
+            processedTouchIdentifiers.append(touchIdentifier)
             if let index = touchToIndex[touchIdentifier] {
                 let path = paths[index]
                 let updatedIndexes = path.add(touchEvents: events)
@@ -126,8 +141,7 @@ public class TouchPathStream: ProducerConsumer {
             }
         }
 
-        let unprocessed = input.filter({ $0 as? TouchEvent == nil })
-        let output = Produces(paths: paths, deltas: deltas, events: unprocessed)
+        let output = Produces(paths: paths, deltas: deltas)
         consumers.forEach({ $0.process(output) })
         return output
     }

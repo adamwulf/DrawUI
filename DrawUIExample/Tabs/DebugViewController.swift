@@ -28,7 +28,7 @@ class DebugViewController: BaseViewController {
         }
         touchEventStream.addConsumer(touchPathStream)
         touchPathStream.addConsumer(lineStream)
-        var strokeOutput = PolylineStream.Produces(lines: [], deltas: [], events: [])
+        var strokeOutput = PolylineStream.Produces(lines: [], deltas: [])
         lineStream.addConsumer { (input) in
             strokeOutput = input
         }
