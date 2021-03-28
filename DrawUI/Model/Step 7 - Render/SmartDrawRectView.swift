@@ -8,13 +8,13 @@
 import UIKit
 import MMSwiftToolbox
 
-public class SmartDrawRectView: UIView, Consumer {
+public class SmartDrawRectView: RenderView {
 
     public typealias Consumes = BezierStream.Produces
 
-    private var model: BezierStream.Produces = BezierStream.Produces(paths: [], deltas: [])
+    private var model: BezierStream.Produces = BezierStream.Produces.empty
 
-    public func consume(_ input: Consumes) {
+    override public func consume(_ input: Consumes) {
         let previousModel = model
         model = input
 
@@ -40,8 +40,8 @@ public class SmartDrawRectView: UIView, Consumer {
         }
     }
 
-    public func reset() {
-        model = BezierStream.Produces(paths: [], deltas: [])
+    override public func reset() {
+        model = BezierStream.Produces.empty
         setNeedsDisplay()
     }
 

@@ -17,6 +17,10 @@ public class BezierStream: ProducerConsumer {
             self.paths = paths
             self.deltas = deltas
         }
+
+        static var empty: Produces {
+            return Produces(paths: [], deltas: [])
+        }
     }
 
     public typealias Consumes = PolylineStream.Produces
