@@ -111,6 +111,7 @@
 		C58025A924EA3F150043130D /* DrawUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58025AB24EA3F150043130D /* TestsOfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsOfTests.swift; sourceTree = "<group>"; };
 		C58025AD24EA3F150043130D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5825DA92618F24500A67837 /* docs */ = {isa = PBXFileReference; lastKnownFileType = text; path = docs; sourceTree = SOURCE_ROOT; };
 		C58B5016254DFCCA0010F195 /* PolylineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolylineTests.swift; sourceTree = "<group>"; };
 		C594308124F0E3640097D52B /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		C59582BB25FF366500C4B202 /* SmartDrawRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartDrawRectView.swift; sourceTree = "<group>"; };
@@ -354,6 +355,7 @@
 		C5C159B024E9AF1C00B52B4B /* DrawUI */ = {
 			isa = PBXGroup;
 			children = (
+				C5825DA92618F24500A67837 /* docs */,
 				C53651B62544CC7E00FA25A4 /* README.md */,
 				C55CC110260F1F9300C42FBB /* ColorCodable */,
 				C5C159E024E9B2F000B52B4B /* Gestures */,

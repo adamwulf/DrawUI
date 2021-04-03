@@ -1,14 +1,6 @@
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 
 # DrawUI
-
-<div class="mermaid">
-    graph TD
-    A[Client] --> B[Load Balancer]
-    B --> C[Server01]
-    B --> D[Server02]
-  </div>
-  
+ 
 ## Funnel
 
 ### 1. Touch Events (class)
@@ -64,6 +56,8 @@ The StrokeStream will convert a `Polyline` into a Bezier modelled `Stroke`.
 This will convert single-width stroked-path beziers into variable-width filled-path beziers.
 
 
+<iframe src='chart.html' width=400 height=400></iframe>
+
 ### 7. Clipped Strokes (TBD)
 
 This will take Tapered Strokes and calculate their clipped difference with an input eraser stroke
@@ -112,4 +106,3 @@ The below should also implement undo/redo
 - [ ] Implement naive DistanceThinning filtering
 - [ ] Implement optimized DistanceThinning filtering
 
-<script>mermaid.initialize({startOnLoad:true});</script>

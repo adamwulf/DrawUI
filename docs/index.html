@@ -1,0 +1,58 @@
+
+<html>
+    <head>
+        <style>
+            #body {
+                width: 70%;
+                max-width: 1024pt;
+                margin: 80pt auto;
+            }
+            .mermaid {
+                width: inherit;
+                margin: auto;
+            }
+            .mermaidTooltip {
+                position: absolute;
+                padding: 2pt 3pt;
+                background: white;
+                border-radius: 4pt;
+                border: 1pt solid black;
+            }
+        </style>
+        <script src='https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js'></script>
+        <script>
+            function emptyCallback() {
+                // noop
+            }
+        </script>
+    </head>
+    <body>
+
+        <div id='body'>
+            <div class="mermaid">
+                flowchart TD
+                S1[TouchEventStream] --> S2[TouchPathStream]
+                S2 --> S3[PolylineStream]
+
+                subgraph FilterLines
+                    S4A[SavitzkyGolay]
+                    S4B[DouglasPeucker]
+                    S4C[PointDistance]
+                end
+                S3 --> FilterLines
+                FilterLines --> S5[BezierStream]
+                S5 --> S6[AttributesStream]
+                subgraph RenderSimpleBezier
+                    S7[DrawRectView] -.-> S7A[NaiveDrawRectView]
+                    S7 -.-> S7B[SmartDrawRectView]
+                end
+                S6 --> RenderSimpleBezier
+                S6 --> S8[ClippingStream]
+
+                click S1 emptyCallback "Tooltip for a callback"
+            </div>
+        </div>
+
+        <script>mermaid.initialize({startOnLoad:true, securityLevel: 'loose'});</script>
+    </body>
+</html>
