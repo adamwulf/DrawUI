@@ -1,6 +1,16 @@
 
 # DrawUI
  
+ ## Data Flow chart
+ 
+ The flow chart below describes how UITouch events are processed into Bezier paths. The code is extremely modular
+allowing for easy customization at any point of the algorithm. 
+ 
+ <a href='https://adamwulf.github.io/DrawUI/'>View the chart with tooltips here</a>.
+ 
+ <a href='https://adamwulf.github.io/DrawUI/'><img src='docs/graph.png'/></a>
+
+
 ## Funnel
 
 ### 1. Touch Events (class)
@@ -56,8 +66,6 @@ The StrokeStream will convert a `Polyline` into a Bezier modelled `Stroke`.
 This will convert single-width stroked-path beziers into variable-width filled-path beziers.
 
 
-<iframe src='chart.html' width=400 height=400></iframe>
-
 ### 7. Clipped Strokes (TBD)
 
 This will take Tapered Strokes and calculate their clipped difference with an input eraser stroke
@@ -71,16 +79,16 @@ Next steps:
 2. [x] Ability to save/load json files containing touch event data
 3. [ ] Unit tests for existing Step 3
 4. [ ] Unit tests for existing Step 4
-5. [ ] Create UIBezierPath cubic smoothing
-6. [ ] implement CGContextRenderer
-7. [ ] Implement a UIView that uses the context renderer for its drawing
+5. [x] Create UIBezierPath cubic smoothing
+6. [x] implement CGContextRenderer
+7. [x] Implement a UIView that uses the context renderer for its drawing
 8. [ ] implement background rendering to image
 9. [ ] implement background rendering to vector PDF
 
 
 ### Smoothing:
 
-- [ ] SmoothStroke model for generating fixed-width UIBezierPaths
+- [x] SmoothStroke model for generating fixed-width UIBezierPaths
 - [ ] SmoothStroke model for generating variable-width UIBezierPaths
 
 
@@ -88,10 +96,10 @@ Next steps:
 
 The below should also implement undo/redo
 
-- [ ] Basic CGContext rendering
+- [x] Basic CGContext rendering
        - with and without background image
-- [ ] naive DrawRect
-- [ ] smarter DrawRect
+- [x] naive DrawRect
+- [x] smarter DrawRect
 - [ ] CAShapeLayer
 - [ ] CAShapeLayer with flattened cache 
 - [ ] SceneKit (git@github.com:adamwulf/SKDraw.git)
