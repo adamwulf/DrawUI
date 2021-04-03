@@ -62,7 +62,7 @@
         <!--NaiveDrawRect-->
         <scene sceneID="zGv-TZ-59T">
             <objects>
-                <viewController id="8Sh-bC-g2X" customClass="DrawRectViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8Sh-bC-g2X" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Idv-ej-oKN">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,7 +113,7 @@
         <!--SmartDrawRect-->
         <scene sceneID="g4G-8K-SJx">
             <objects>
-                <viewController id="RGc-eH-SHM" customClass="DrawRectViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="RGc-eH-SHM" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dN3-UW-cDC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

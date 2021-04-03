@@ -1,5 +1,5 @@
 //
-//  DrawRectView.swift
+//  BezierView.swift
 //  DrawUI
 //
 //  Created by Adam Wulf on 3/28/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class DrawRectView: UIView, Consumer {
+public class BezierView: UIView, Consumer {
 
     public typealias Consumes = BezierStream.Produces
 
