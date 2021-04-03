@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sP7-PE-svj">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -32,11 +31,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="DebugViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ws6-cd-wAk" customClass="DebugView" customModule="DrawUIExample" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <viewLayoutGuide key="safeArea" id="wof-Dh-4Ni"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
@@ -63,16 +62,16 @@
         <!--NaiveDrawRect-->
         <scene sceneID="zGv-TZ-59T">
             <objects>
-                <viewController id="8Sh-bC-g2X" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8Sh-bC-g2X" customClass="DrawRectViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Idv-ej-oKN">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LI0-x3-xff" customClass="NaiveDrawRectView" customModule="DrawUI">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZMy-S6-X7X">
-                                        <rect key="frame" x="31.5" y="64" width="351" height="32"/>
+                                        <rect key="frame" x="124.5" y="20" width="351" height="32"/>
                                         <segments>
                                             <segment title="Pen"/>
                                             <segment title="Marker"/>
@@ -114,16 +113,16 @@
         <!--SmartDrawRect-->
         <scene sceneID="g4G-8K-SJx">
             <objects>
-                <viewController id="RGc-eH-SHM" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="RGc-eH-SHM" customClass="DrawRectViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dN3-UW-cDC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESC-cj-5Je" customClass="SmartDrawRectView" customModule="DrawUI">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="XsJ-CP-Rr9">
-                                        <rect key="frame" x="31.5" y="64" width="351" height="32"/>
+                                        <rect key="frame" x="124.5" y="20" width="351" height="32"/>
                                         <segments>
                                             <segment title="Pen"/>
                                             <segment title="Marker"/>

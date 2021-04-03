@@ -36,7 +36,7 @@ class DrawRectViewController: BaseViewController {
     let savitzkyGolay = NaiveSavitzkyGolay()
     let bezierStream = BezierStream(smoother: AntigrainSmoother())
     let attributeStream = AttributesStream()
-    @IBOutlet var pathView: RenderView!
+    @IBOutlet var pathView: DrawRectView!
     @IBOutlet var toolPicker: UISegmentedControl!
 
     required init?(coder: NSCoder) {

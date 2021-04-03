@@ -9,7 +9,7 @@ import UIKit
 import MMSwiftToolbox
 import PerformanceBezier
 
-public class NaiveDrawRectView: RenderView {
+public class NaiveDrawRectView: DrawRectView {
 
     private var model: BezierStream.Produces = BezierStream.Produces.empty
 
