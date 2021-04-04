@@ -119,7 +119,7 @@ public class AttributesStream: ProducerConsumer {
         }
 
         consumers.forEach({ $0.process(output) })
-        return input
+        return output
     }
 }
 

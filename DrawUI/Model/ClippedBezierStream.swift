@@ -22,12 +22,13 @@ public class ClippedBezierStream: ProducerConsumer {
         }
     }
 
-    public typealias Consumes = PolylineStream.Produces
+    public typealias Consumes = BezierStream.Produces
 
     public enum Delta: Equatable, CustomDebugStringConvertible {
         case addedBezierPath(index: Int)
-        case updatedBezierPath(index: Int, updatedIndexes: IndexSet)
+        case updatedBezierPath(index: Int, updatedElementIndexes: IndexSet)
         case completedBezierPath(index: Int)
+        case replacedBezierPath(index: Int, withPathIndexes: IndexSet)
         case unhandled(event: DrawEvent)
 
         public var debugDescription: String {
@@ -38,6 +39,8 @@ public class ClippedBezierStream: ProducerConsumer {
                 return "updatedBezierPath(\(index), \(indexSet)"
             case .completedBezierPath(let index):
                 return "completedBezierPath(\(index))"
+            case .replacedBezierPath(let index, let indexSet):
+                return "replacedBezierPath(\(index), \(indexSet)"
             case .unhandled(let event):
                 return "unhandledEvent(\(event.identifier))"
             }
@@ -82,34 +85,20 @@ public class ClippedBezierStream: ProducerConsumer {
 
     @discardableResult
     public func produce(with input: Consumes) -> Produces {
-        var deltas: [Delta] = []
-
+        var output = Produces(paths: input.paths, deltas: [])
         for delta in input.deltas {
             switch delta {
-            case .addedPolyline(let lineIndex):
-                assert(indexToIndex[lineIndex] == nil, "Cannot add existing line")
-                let line = input.lines[lineIndex]
-                let builder = BezierBuilder(smoother: smoother)
-                builder.update(with: line, at: IndexSet(0 ..< line.points.count))
-                let builderIndex = builders.count
-                indexToIndex[lineIndex] = builderIndex
-                builders.append(builder)
-                deltas.append(.addedBezierPath(index: builderIndex))
-            case .updatedPolyline(let lineIndex, let updatedIndexes):
-                let line = input.lines[lineIndex]
-                guard let builderIndex = indexToIndex[lineIndex] else { assertionFailure("path at \(lineIndex) does not exist"); continue }
-                let builder = builders[builderIndex]
-                let updateElementIndexes = builder.update(with: line, at: updatedIndexes)
-                deltas.append(.updatedBezierPath(index: builderIndex, updatedIndexes: updateElementIndexes))
-            case .completedPolyline(let lineIndex):
-                guard let index = indexToIndex[lineIndex] else { assertionFailure("path at \(lineIndex) does not exist"); continue }
-                deltas.append(.completedBezierPath(index: index))
+            case .addedBezierPath(let index):
+                output.deltas += [.addedBezierPath(index: index)]
+            case .updatedBezierPath(let index, let updatedIndexes):
+                output.deltas += [.updatedBezierPath(index: index, updatedElementIndexes: updatedIndexes)]
+            case .completedBezierPath(let index):
+                output.deltas += [.completedBezierPath(index: index)]
             case .unhandled(let event):
-                deltas.append(.unhandled(event: event))
+                output.deltas += [.unhandled(event: event)]
             }
         }
 
-        let output = ClippedBezierStream.Produces(paths: builders.map({ $0.path }), deltas: deltas)
         consumers.forEach({ $0.process(output) })
         return output
     }

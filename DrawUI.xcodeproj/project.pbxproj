@@ -218,9 +218,7 @@
 				C580259B24E9E1150043130D /* TouchPath.swift */,
 				C559CBF924EB9489006D263C /* PolylineStream.swift */,
 				C559CBFA24EB9489006D263C /* Polyline.swift */,
-				C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */,
-				C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */,
-				C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */,
+				C5ADBE77261A7D8E007DDC16 /* PolylineFilters */,
 				C55E42AB25FEAF7400093DEC /* BezierSmoothers */,
 				C5094CE125FEB0A60001AE2A /* BezierStream.swift */,
 				C5255130260527B7009876B9 /* AttributesStream.swift */,
@@ -252,6 +250,16 @@
 				C59582BB25FF366500C4B202 /* SmartDrawRectView.swift */,
 			);
 			path = BezierStreamRender;
+			sourceTree = "<group>";
+		};
+		C5ADBE77261A7D8E007DDC16 /* PolylineFilters */ = {
+			isa = PBXGroup;
+			children = (
+				C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */,
+				C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */,
+				C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */,
+			);
+			path = PolylineFilters;
 			sourceTree = "<group>";
 		};
 		C5C159A424E9AF1C00B52B4B = {
