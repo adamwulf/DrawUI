@@ -11,6 +11,11 @@ public class BezierView: UIView, Consumer {
 
     public typealias Consumes = BezierStream.Produces
 
+    override public func layoutSubviews() {
+        setNeedsDisplay()
+        super.layoutSubviews()
+    }
+
     public func consume(_ input: BezierStream.Produces) {
         // noop
     }

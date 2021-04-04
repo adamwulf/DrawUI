@@ -13,6 +13,11 @@ class DebugView: UIView {
     var smoothStrokes: [UIBezierPath] = []
     private var deltas: [PolylineStream.Delta]?
 
+    override public func layoutSubviews() {
+        setNeedsDisplay()
+        super.layoutSubviews()
+    }
+
     func add(deltas: [PolylineStream.Delta]) {
         if self.deltas == nil {
             self.deltas = []
