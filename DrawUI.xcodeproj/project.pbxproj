@@ -138,7 +138,6 @@
 		C5C159DB24E9AF8100B52B4B /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		C5C159E124E9B2F800B52B4B /* TouchEventGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchEventGestureRecognizer.swift; sourceTree = "<group>"; };
 		C5C159E624E9BC6500B52B4B /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
-		C5C5CC34254E028200B6662F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntigrainSmoother.swift; sourceTree = "<group>"; };
 		C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntigrainSmootherTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,29 +181,12 @@
 			path = Tabs;
 			sourceTree = "<group>";
 		};
-		C525512F2605279B009876B9 /* Step 6 - Stroke Attributes */ = {
-			isa = PBXGroup;
-			children = (
-				C5255130260527B7009876B9 /* AttributesStream.swift */,
-			);
-			path = "Step 6 - Stroke Attributes";
-			sourceTree = "<group>";
-		};
 		C5420EAA2549096F00473D8A /* Test Data */ = {
 			isa = PBXGroup;
 			children = (
 				C5420EA42549096700473D8A /* events.json */,
 			);
 			name = "Test Data";
-			sourceTree = "<group>";
-		};
-		C559CBFE24EB9AAF006D263C /* Step 4 - Polyline Filters */ = {
-			isa = PBXGroup;
-			children = (
-				C58B501A254E020D0010F195 /* Naive */,
-				C58B501B254E021A0010F195 /* Optimized */,
-			);
-			path = "Step 4 - Polyline Filters";
 			sourceTree = "<group>";
 		};
 		C55CC110260F1F9300C42FBB /* ColorCodable */ = {
@@ -216,56 +198,36 @@
 			path = ColorCodable;
 			sourceTree = "<group>";
 		};
-		C55E42A625FEAF2D00093DEC /* Step 5 - Beziers */ = {
-			isa = PBXGroup;
-			children = (
-				C55E42AB25FEAF7400093DEC /* Smoothers */,
-				C5094CE125FEB0A60001AE2A /* BezierStream.swift */,
-			);
-			path = "Step 5 - Beziers";
-			sourceTree = "<group>";
-		};
-		C55E42AB25FEAF7400093DEC /* Smoothers */ = {
+		C55E42AB25FEAF7400093DEC /* BezierSmoothers */ = {
 			isa = PBXGroup;
 			children = (
 				C5721093260469C000DEB0C0 /* Smoother.swift */,
 				C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */,
 				C572108F260468FA00DEB0C0 /* LineSmoother.swift */,
 			);
-			path = Smoothers;
+			path = BezierSmoothers;
 			sourceTree = "<group>";
 		};
 		C58025A224EA26BB0043130D /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */,
-				C58025A324EA26C40043130D /* Step 1 - Touch */,
-				C58025A424EA26DA0043130D /* Step 2 - Coalesce into Points */,
-				C58025B824EA4F6A0043130D /* Step 3 - Generate Polylines */,
-				C559CBFE24EB9AAF006D263C /* Step 4 - Polyline Filters */,
-				C55E42A625FEAF2D00093DEC /* Step 5 - Beziers */,
-				C525512F2605279B009876B9 /* Step 6 - Stroke Attributes */,
-				C59582BA25FF363500C4B202 /* Step 7 - Render or Clip */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		C58025A324EA26C40043130D /* Step 1 - Touch */ = {
-			isa = PBXGroup;
-			children = (
 				C5C159BA24E9AF3600B52B4B /* TouchEventStream.swift */,
 				C5C159B924E9AF3600B52B4B /* TouchEvent.swift */,
-			);
-			path = "Step 1 - Touch";
-			sourceTree = "<group>";
-		};
-		C58025A424EA26DA0043130D /* Step 2 - Coalesce into Points */ = {
-			isa = PBXGroup;
-			children = (
 				C580259E24E9E1C10043130D /* TouchPathStream.swift */,
 				C580259B24E9E1150043130D /* TouchPath.swift */,
+				C559CBF924EB9489006D263C /* PolylineStream.swift */,
+				C559CBFA24EB9489006D263C /* Polyline.swift */,
+				C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */,
+				C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */,
+				C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */,
+				C55E42AB25FEAF7400093DEC /* BezierSmoothers */,
+				C5094CE125FEB0A60001AE2A /* BezierStream.swift */,
+				C5255130260527B7009876B9 /* AttributesStream.swift */,
+				C5825DD3261A7B5D00A67837 /* BezierStreamRender */,
+				C5825DC5261A77A000A67837 /* ClippedBezierStream.swift */,
 			);
-			path = "Step 2 - Coalesce into Points";
+			path = Model;
 			sourceTree = "<group>";
 		};
 		C58025AA24EA3F150043130D /* DrawUITests */ = {
@@ -282,58 +244,14 @@
 			path = DrawUITests;
 			sourceTree = "<group>";
 		};
-		C58025B824EA4F6A0043130D /* Step 3 - Generate Polylines */ = {
-			isa = PBXGroup;
-			children = (
-				C559CBF924EB9489006D263C /* PolylineStream.swift */,
-				C559CBFA24EB9489006D263C /* Polyline.swift */,
-			);
-			path = "Step 3 - Generate Polylines";
-			sourceTree = "<group>";
-		};
-		C5825D9F2618EED100A67837 /* Render */ = {
+		C5825DD3261A7B5D00A67837 /* BezierStreamRender */ = {
 			isa = PBXGroup;
 			children = (
 				C5AF2DFA26112B15006F2CC2 /* BezierView.swift */,
 				C59582C125FF388000C4B202 /* NaiveDrawRectView.swift */,
 				C59582BB25FF366500C4B202 /* SmartDrawRectView.swift */,
 			);
-			path = Render;
-			sourceTree = "<group>";
-		};
-		C5825DA22618EEDB00A67837 /* Clip */ = {
-			isa = PBXGroup;
-			children = (
-				C5825DC5261A77A000A67837 /* ClippedBezierStream.swift */,
-			);
-			path = Clip;
-			sourceTree = "<group>";
-		};
-		C58B501A254E020D0010F195 /* Naive */ = {
-			isa = PBXGroup;
-			children = (
-				C5C5CC34254E028200B6662F /* README.md */,
-				C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */,
-				C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */,
-				C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */,
-			);
-			path = Naive;
-			sourceTree = "<group>";
-		};
-		C58B501B254E021A0010F195 /* Optimized */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Optimized;
-			sourceTree = "<group>";
-		};
-		C59582BA25FF363500C4B202 /* Step 7 - Render or Clip */ = {
-			isa = PBXGroup;
-			children = (
-				C5825DA22618EEDB00A67837 /* Clip */,
-				C5825D9F2618EED100A67837 /* Render */,
-			);
-			path = "Step 7 - Render or Clip";
+			path = BezierStreamRender;
 			sourceTree = "<group>";
 		};
 		C5C159A424E9AF1C00B52B4B = {
