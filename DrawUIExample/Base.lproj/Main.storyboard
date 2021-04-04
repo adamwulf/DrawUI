@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sP7-PE-svj">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -31,11 +32,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="DebugViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ws6-cd-wAk" customClass="DebugView" customModule="DrawUIExample" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <viewLayoutGuide key="safeArea" id="wof-Dh-4Ni"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
@@ -64,14 +65,14 @@
             <objects>
                 <viewController id="8Sh-bC-g2X" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Idv-ej-oKN">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LI0-x3-xff" customClass="NaiveDrawRectView" customModule="DrawUI">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZMy-S6-X7X">
-                                        <rect key="frame" x="124.5" y="20" width="351" height="32"/>
+                                        <rect key="frame" x="31.5" y="64" width="351" height="32"/>
                                         <segments>
                                             <segment title="Pen"/>
                                             <segment title="Marker"/>
@@ -92,7 +93,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="f0A-NO-UKJ"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.78931863741441211" green="0.78931863741441211" blue="0.78931863741441211" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="LI0-x3-xff" firstAttribute="leading" secondItem="Idv-ej-oKN" secondAttribute="leading" id="2Cr-hI-Wfw"/>
                             <constraint firstItem="LI0-x3-xff" firstAttribute="top" secondItem="Idv-ej-oKN" secondAttribute="top" id="Ehy-rr-Sz9"/>
@@ -108,21 +109,21 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XnE-I2-dIb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-623" y="1299"/>
+            <point key="canvasLocation" x="138" y="1298"/>
         </scene>
         <!--SmartDrawRect-->
         <scene sceneID="g4G-8K-SJx">
             <objects>
                 <viewController id="RGc-eH-SHM" customClass="BezierViewController" customModule="DrawUIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dN3-UW-cDC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESC-cj-5Je" customClass="SmartDrawRectView" customModule="DrawUI">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="XsJ-CP-Rr9">
-                                        <rect key="frame" x="124.5" y="20" width="351" height="32"/>
+                                        <rect key="frame" x="31.5" y="64" width="351" height="32"/>
                                         <segments>
                                             <segment title="Pen"/>
                                             <segment title="Marker"/>
@@ -143,7 +144,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="z8N-Vc-yoA"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.79483167430000001" green="0.79483167430000001" blue="0.79483167430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ESC-cj-5Je" firstAttribute="top" secondItem="dN3-UW-cDC" secondAttribute="top" id="4SS-vA-8n4"/>
                             <constraint firstItem="ESC-cj-5Je" firstAttribute="leading" secondItem="dN3-UW-cDC" secondAttribute="leading" id="RPj-K2-6BM"/>

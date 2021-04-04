@@ -49,22 +49,19 @@ public class ClippedBezierStream: ProducerConsumer {
 
     // MARK: - Private
 
-    var smoother: Smoother
     var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
-    private var builders: [BezierBuilder] = []
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
     private(set) var indexToIndex: [Int: Int] = [:]
 
     // MARK: - Init
 
-    public init(smoother: Smoother) {
-        self.smoother = smoother
+    public init() {
+        // noop
     }
 
     // MARK: - Consumer<Polyline>
 
     public func reset() {
-        builders = []
         indexToIndex = [:]
         consumers.forEach({ $0.reset() })
     }
@@ -101,58 +98,6 @@ public class ClippedBezierStream: ProducerConsumer {
 
         consumers.forEach({ $0.process(output) })
         return output
-    }
-
-    private class BezierBuilder {
-        private var elements: [BezierStream.Element] = []
-        private let smoother: Smoother
-        private(set) var path = UIBezierPath()
-
-        init(smoother: Smoother) {
-            self.smoother = smoother
-        }
-
-        @discardableResult
-        func update(with line: Polyline, at lineIndexes: IndexSet) -> IndexSet {
-            let updatedPathIndexes = smoother.elementIndexes(for: line, at: lineIndexes)
-            let updatedPath: UIBezierPath
-            if let min = updatedPathIndexes.min(),
-               min - 1 < path.elementCount,
-               min - 1 >= 0 {
-                updatedPath = path.trimming(toElement: min - 1, andTValue: 1.0)
-            } else {
-                updatedPath = path.buildEmpty()
-            }
-            guard
-                let min = updatedPathIndexes.min(),
-                let max = updatedPathIndexes.max()
-            else {
-                return updatedPathIndexes
-            }
-            for elementIndex in min ... max {
-                assert(elementIndex <= elements.count, "Invalid element index")
-                if updatedPathIndexes.contains(elementIndex) {
-                    let element = smoother.element(for: line, at: elementIndex)
-                    if elementIndex == elements.count {
-                        elements.append(element)
-                    } else {
-                        elements[elementIndex] = element
-                    }
-                    updatedPath.append(element)
-                } else {
-                    // use the existing element
-                    let element = elements[elementIndex]
-                    elements.append(element)
-                    updatedPath.append(element)
-                }
-            }
-            for elementIndex in max + 1 ..< elements.count {
-                let element = elements[elementIndex]
-                updatedPath.append(element)
-            }
-            path = updatedPath
-            return updatedPathIndexes
-        }
     }
 }
 
