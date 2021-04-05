@@ -1,5 +1,5 @@
 //
-//  DrawRectViewController.swift
+//  BezierViewController.swift
 //  DrawUIExample
 //
 //  Created by Adam Wulf on 3/14/21.
@@ -9,7 +9,7 @@ import UIKit
 import DrawUI
 import MMSwiftToolbox
 
-class DrawRectViewController: BaseViewController {
+class BezierViewController: BaseViewController {
 
     enum ToolIndex: Int {
         case pen = 0
@@ -36,7 +36,7 @@ class DrawRectViewController: BaseViewController {
     let savitzkyGolay = NaiveSavitzkyGolay()
     let bezierStream = BezierStream(smoother: AntigrainSmoother())
     let attributeStream = AttributesStream()
-    @IBOutlet var pathView: RenderView!
+    @IBOutlet var pathView: BezierView!
     @IBOutlet var toolPicker: UISegmentedControl!
 
     required init?(coder: NSCoder) {
@@ -60,7 +60,7 @@ class DrawRectViewController: BaseViewController {
 
     @IBAction func toolDidChange(_ sender: Any) {
         guard
-            let tool = DrawRectViewController.ToolIndex(rawValue: toolPicker.selectedSegmentIndex)
+            let tool = BezierViewController.ToolIndex(rawValue: toolPicker.selectedSegmentIndex)
         else {
             return
         }

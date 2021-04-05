@@ -10,15 +10,17 @@ import UIKit
 public class ClippedBezierStream: ProducerConsumer {
 
     public struct Produces {
+        public let valid: IndexSet
         public var paths: [UIBezierPath]
         public var deltas: [Delta]
-        public init(paths: [UIBezierPath], deltas: [Delta]) {
+        public init(paths: [UIBezierPath], valid: IndexSet, deltas: [Delta]) {
+            self.valid = valid
             self.paths = paths
             self.deltas = deltas
         }
 
         static var empty: Produces {
-            return Produces(paths: [], deltas: [])
+            return Produces(paths: [], valid: IndexSet(), deltas: [])
         }
     }
 
@@ -29,6 +31,7 @@ public class ClippedBezierStream: ProducerConsumer {
         case updatedBezierPath(index: Int, updatedElementIndexes: IndexSet)
         case completedBezierPath(index: Int)
         case replacedBezierPath(index: Int, withPathIndexes: IndexSet)
+        case invalidatedBezierPath(index: Int)
         case unhandled(event: DrawEvent)
 
         public var debugDescription: String {
@@ -41,6 +44,8 @@ public class ClippedBezierStream: ProducerConsumer {
                 return "completedBezierPath(\(index))"
             case .replacedBezierPath(let index, let indexSet):
                 return "replacedBezierPath(\(index), \(indexSet)"
+            case .invalidatedBezierPath(let index):
+                return "invalidatedBezierPath(\(index))"
             case .unhandled(let event):
                 return "unhandledEvent(\(event.identifier))"
             }
@@ -51,7 +56,9 @@ public class ClippedBezierStream: ProducerConsumer {
 
     var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
+    private(set) var paths: [UIBezierPath] = []
     private(set) var indexToIndex: [Int: Int] = [:]
+    private(set) var valid: IndexSet = IndexSet()
 
     // MARK: - Init
 
@@ -82,20 +89,37 @@ public class ClippedBezierStream: ProducerConsumer {
 
     @discardableResult
     public func produce(with input: Consumes) -> Produces {
-        var output = Produces(paths: input.paths, deltas: [])
+        var deltas: [Delta] = []
         for delta in input.deltas {
             switch delta {
             case .addedBezierPath(let index):
-                output.deltas += [.addedBezierPath(index: index)]
+                let myIndex = paths.count
+                paths.append(input.paths[index])
+                indexToIndex[index] = myIndex
+                valid.insert(myIndex)
+                deltas += [.addedBezierPath(index: myIndex)]
             case .updatedBezierPath(let index, let updatedIndexes):
-                output.deltas += [.updatedBezierPath(index: index, updatedElementIndexes: updatedIndexes)]
+                guard let myIndex = indexToIndex[index] else { assertionFailure("path at \(index) does not exist"); continue }
+                paths[myIndex] = input.paths[index]
+                deltas += [.updatedBezierPath(index: myIndex, updatedElementIndexes: updatedIndexes)]
             case .completedBezierPath(let index):
-                output.deltas += [.completedBezierPath(index: index)]
+                guard let myIndex = indexToIndex[index] else { assertionFailure("path at \(index) does not exist"); continue }
+                let path = paths[myIndex]
+
+                if path.color != nil {
+                    deltas += [.completedBezierPath(index: myIndex)]
+                } else {
+                    // For eraser paths, clip all of the completed ink paths and remove the original
+                    // eraser path.
+                    valid.remove(myIndex)
+                    deltas += [.invalidatedBezierPath(index: myIndex)]
+                }
             case .unhandled(let event):
-                output.deltas += [.unhandled(event: event)]
+                deltas += [.unhandled(event: event)]
             }
         }
 
+        let output = Produces(paths: paths, valid: valid, deltas: deltas)
         consumers.forEach({ $0.process(output) })
         return output
     }
@@ -103,7 +127,8 @@ public class ClippedBezierStream: ProducerConsumer {
 
 public extension ClippedBezierStream.Produces {
     func draw(at rect: CGRect, in context: CGContext) {
-        for path in paths {
+        for index in valid {
+            let path = paths[index]
             if rect.intersects(path.bounds.expand(by: path.lineWidth)) {
                 if let color = path.color {
                     context.setStrokeColor(color.cgColor)
