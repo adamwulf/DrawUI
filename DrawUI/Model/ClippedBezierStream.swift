@@ -115,6 +115,18 @@ public class ClippedBezierStream: ProducerConsumer {
                     // eraser path.
                     valid.remove(myIndex)
                     deltas += [.invalidatedBezierPath(index: myIndex)]
+
+                    #if DEBUG
+                    // fake clipping until i get ClippingBezier into SPM.
+                    // replace the path with another color
+                    let inputIndex = 0
+                    deltas += [.replacedBezierPath(index: myIndex, withPathIndexes: IndexSet(integer: paths.count))]
+                    let updated = paths[inputIndex].copy() as! UIBezierPath
+                    updated.color = .purple
+
+                    valid.replace(at: inputIndex, with: [paths.count])
+                    paths.append(updated)
+                    #endif
                 }
             case .unhandled(let event):
                 deltas += [.unhandled(event: event)]
