@@ -9,18 +9,20 @@ import UIKit
 
 public class ClippedBezierStream: ProducerConsumer {
 
+    public typealias OrderedIndexSet = OrderedSet<Int>
+
     public struct Produces {
-        public let valid: IndexSet
+        public let valid: OrderedIndexSet
         public var paths: [UIBezierPath]
         public var deltas: [Delta]
-        public init(paths: [UIBezierPath], valid: IndexSet, deltas: [Delta]) {
+        public init(paths: [UIBezierPath], valid: OrderedIndexSet, deltas: [Delta]) {
             self.valid = valid
             self.paths = paths
             self.deltas = deltas
         }
 
         static var empty: Produces {
-            return Produces(paths: [], valid: IndexSet(), deltas: [])
+            return Produces(paths: [], valid: OrderedIndexSet(), deltas: [])
         }
     }
 
@@ -58,7 +60,7 @@ public class ClippedBezierStream: ProducerConsumer {
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
     private(set) var paths: [UIBezierPath] = []
     private(set) var indexToIndex: [Int: Int] = [:]
-    private(set) var valid: IndexSet = IndexSet()
+    private(set) var valid: OrderedIndexSet = OrderedIndexSet()
 
     // MARK: - Init
 
@@ -96,7 +98,7 @@ public class ClippedBezierStream: ProducerConsumer {
                 let myIndex = paths.count
                 paths.append(input.paths[index])
                 indexToIndex[index] = myIndex
-                valid.insert(myIndex)
+                valid.append(myIndex)
                 deltas += [.addedBezierPath(index: myIndex)]
             case .updatedBezierPath(let index, let updatedIndexes):
                 guard let myIndex = indexToIndex[index] else { assertionFailure("path at \(index) does not exist"); continue }

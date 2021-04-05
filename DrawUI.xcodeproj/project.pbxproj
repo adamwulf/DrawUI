@@ -59,6 +59,8 @@
 		C5EBA7FA261ABA3C000E29D3 /* ClippedBezierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EBA7F9261ABA3C000E29D3 /* ClippedBezierView.swift */; };
 		C5EBA7FE261ABA78000E29D3 /* NaiveClippedDrawRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EBA7FD261ABA78000E29D3 /* NaiveClippedDrawRectView.swift */; };
 		C5EBA802261ABABE000E29D3 /* ClippedBezierViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EBA801261ABABE000E29D3 /* ClippedBezierViewController.swift */; };
+		C5EBA80C261ABEF8000E29D3 /* OrderedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EBA80B261ABEF8000E29D3 /* OrderedSet.swift */; };
+		C5EBA810261ABF4F000E29D3 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5EBA80F261ABF4F000E29D3 /* LICENSE.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +148,8 @@
 		C5EBA7F9261ABA3C000E29D3 /* ClippedBezierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClippedBezierView.swift; sourceTree = "<group>"; };
 		C5EBA7FD261ABA78000E29D3 /* NaiveClippedDrawRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveClippedDrawRectView.swift; sourceTree = "<group>"; };
 		C5EBA801261ABABE000E29D3 /* ClippedBezierViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClippedBezierViewController.swift; sourceTree = "<group>"; };
+		C5EBA80B261ABEF8000E29D3 /* OrderedSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedSet.swift; sourceTree = "<group>"; };
+		C5EBA80F261ABF4F000E29D3 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +300,7 @@
 			children = (
 				C5825DA92618F24500A67837 /* docs */,
 				C53651B62544CC7E00FA25A4 /* README.md */,
+				C5EBA809261ABED2000E29D3 /* External */,
 				C55CC110260F1F9300C42FBB /* ColorCodable */,
 				C5C159E024E9B2F000B52B4B /* Gestures */,
 				C5C159D924E9AF7300B52B4B /* Extensions */,
@@ -355,6 +360,23 @@
 				C5EBA7FD261ABA78000E29D3 /* NaiveClippedDrawRectView.swift */,
 			);
 			path = ClippedBezierStreamRender;
+			sourceTree = "<group>";
+		};
+		C5EBA809261ABED2000E29D3 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				C5EBA80A261ABEE9000E29D3 /* OrderedSet */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		C5EBA80A261ABEE9000E29D3 /* OrderedSet */ = {
+			isa = PBXGroup;
+			children = (
+				C5EBA80F261ABF4F000E29D3 /* LICENSE.txt */,
+				C5EBA80B261ABEF8000E29D3 /* OrderedSet.swift */,
+			);
+			path = OrderedSet;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -493,6 +515,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5EBA810261ABF4F000E29D3 /* LICENSE.txt in Resources */,
 				C55CC118260F1FEF00C42FBB /* LICENSE in Resources */,
 				C53651B72544CC7F00FA25A4 /* README.md in Resources */,
 			);
@@ -554,6 +577,7 @@
 				C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */,
 				C559CC0224EB9ACA006D263C /* NaiveDouglasPeucker.swift in Sources */,
 				C55CC112260F1F9E00C42FBB /* ColorCodable.swift in Sources */,
+				C5EBA80C261ABEF8000E29D3 /* OrderedSet.swift in Sources */,
 				C59582C225FF388000C4B202 /* NaiveDrawRectView.swift in Sources */,
 				C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */,
 				C5C159E224E9B2F800B52B4B /* TouchEventGestureRecognizer.swift in Sources */,
