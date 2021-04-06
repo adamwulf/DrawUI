@@ -17,6 +17,7 @@
 		C5255131260527B7009876B9 /* AttributesStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5255130260527B7009876B9 /* AttributesStream.swift */; };
 		C53651B72544CC7F00FA25A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C53651B62544CC7E00FA25A4 /* README.md */; };
 		C5420EA52549096700473D8A /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = C5420EA42549096700473D8A /* events.json */; };
+		C555A7DE261BBFCE0017E1B4 /* ClippingBezier in Frameworks */ = {isa = PBXBuildFile; productRef = C555A7DD261BBFCE0017E1B4 /* ClippingBezier */; };
 		C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* PolylineStream.swift */; };
 		C559CBFD24EB9489006D263C /* Polyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFA24EB9489006D263C /* Polyline.swift */; };
 		C559CC0024EB9ABE006D263C /* NaiveSavitzkyGolay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */; };
@@ -166,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C59582F125FF4A1F00C4B202 /* PerformanceBezier in Frameworks */,
+				C555A7DE261BBFCE0017E1B4 /* ClippingBezier in Frameworks */,
 				C5094CF825FEBA3B0001AE2A /* MMSwiftToolbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,6 +433,7 @@
 			packageProductDependencies = (
 				C5094CF725FEBA3B0001AE2A /* MMSwiftToolbox */,
 				C59582F025FF4A1F00C4B202 /* PerformanceBezier */,
+				C555A7DD261BBFCE0017E1B4 /* ClippingBezier */,
 			);
 			productName = DrawUI;
 			productReference = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */;
@@ -490,6 +493,7 @@
 			packageReferences = (
 				C5094CF625FEBA3B0001AE2A /* XCRemoteSwiftPackageReference "MMSwiftToolbox" */,
 				C59582EF25FF4A1F00C4B202 /* XCRemoteSwiftPackageReference "PerformanceBezier" */,
+				C555A7DC261BBFCE0017E1B4 /* XCRemoteSwiftPackageReference "ClippingBezier" */,
 			);
 			productRefGroup = C5C159AF24E9AF1C00B52B4B /* Products */;
 			projectDirPath = "";
@@ -827,6 +831,11 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-fcxx-modules",
+					"-fmodules",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.milestonemade.DrawUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -852,6 +861,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-fcxx-modules",
+					"-fmodules",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.milestonemade.DrawUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -949,6 +963,14 @@
 				kind = branch;
 			};
 		};
+		C555A7DC261BBFCE0017E1B4 /* XCRemoteSwiftPackageReference "ClippingBezier" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adamwulf/ClippingBezier.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		C59582EF25FF4A1F00C4B202 /* XCRemoteSwiftPackageReference "PerformanceBezier" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/adamwulf/PerformanceBezier";
@@ -964,6 +986,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C5094CF625FEBA3B0001AE2A /* XCRemoteSwiftPackageReference "MMSwiftToolbox" */;
 			productName = MMSwiftToolbox;
+		};
+		C555A7DD261BBFCE0017E1B4 /* ClippingBezier */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C555A7DC261BBFCE0017E1B4 /* XCRemoteSwiftPackageReference "ClippingBezier" */;
+			productName = ClippingBezier;
 		};
 		C59582F025FF4A1F00C4B202 /* PerformanceBezier */ = {
 			isa = XCSwiftPackageProductDependency;
