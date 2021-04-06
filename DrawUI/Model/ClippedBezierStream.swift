@@ -112,21 +112,24 @@ public class ClippedBezierStream: ProducerConsumer {
                 if path.color != nil {
                     deltas += [.completedBezierPath(index: myIndex)]
                 } else {
-                    for inputIndex in 0 ..< index {
-                        guard let anIndex = indexToIndex[inputIndex] else { continue }
+                    // loop through all of the paths except this one
+                    for validIndex in valid.indices where validIndex != index {
+                        guard let anIndex = indexToIndex[validIndex] else { continue }
 
                         // fake clipping until i get ClippingBezier into SPM.
                         // replace the path with another color
-                        let updated = paths[inputIndex].copy() as! UIBezierPath
+                        let updated = paths[validIndex].copy() as! UIBezierPath
 
                         guard let intersections = updated.findIntersections(withClosedPath: path, andBeginsInside: nil) else { continue }
 
                         if !intersections.isEmpty {
+                            // if we found a path that intersects our eraser, just color it purple for now.
+                            // this doesn't track the new index correctly at all, but it's fine for now as a proof of concept.
                             deltas += [.replacedBezierPath(index: anIndex, withPathIndexes: IndexSet(integer: paths.count))]
                             updated.color = .purple
                             updated.lineWidth = CGFloat(Int.random(in: 1...10))
 
-                            guard let setIndex = valid.index(of: inputIndex) else { continue }
+                            guard let setIndex = valid.index(of: validIndex) else { continue }
                             valid.replace(at: setIndex, with: [paths.count])
                             paths.append(updated)
                         }
