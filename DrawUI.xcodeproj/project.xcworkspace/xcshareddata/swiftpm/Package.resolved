@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/adamwulf/ClippingBezier.git",
         "state": {
           "branch": "main",
-          "revision": "63633d1e2276f7451c1d0bc01c8bff3889c002bf",
+          "revision": "9cde6dd3396ad59d3636e4c6e3f55847de48bf30",
           "version": null
         }
       },
@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/adamwulf/PerformanceBezier",
         "state": {
           "branch": "main",
-          "revision": "4620a20fb5199238672ad0e1ef446c946ccbe9c7",
+          "revision": "8fdf84e1f0afce94d93cbced6460931609c8ecc4",
           "version": null
         }
       }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ClippingBezier
 
 public class ClippedBezierStream: ProducerConsumer {
 
@@ -111,22 +112,30 @@ public class ClippedBezierStream: ProducerConsumer {
                 if path.color != nil {
                     deltas += [.completedBezierPath(index: myIndex)]
                 } else {
+                    for inputIndex in 0 ..< index {
+                        guard let anIndex = indexToIndex[inputIndex] else { continue }
+
+                        // fake clipping until i get ClippingBezier into SPM.
+                        // replace the path with another color
+                        let updated = paths[inputIndex].copy() as! UIBezierPath
+
+                        guard let intersections = updated.findIntersections(withClosedPath: path, andBeginsInside: nil) else { continue }
+
+                        if !intersections.isEmpty {
+                            deltas += [.replacedBezierPath(index: anIndex, withPathIndexes: IndexSet(integer: paths.count))]
+                            updated.color = .purple
+                            updated.lineWidth = CGFloat(Int.random(in: 1...10))
+
+                            guard let setIndex = valid.index(of: inputIndex) else { continue }
+                            valid.replace(at: setIndex, with: [paths.count])
+                            paths.append(updated)
+                        }
+                    }
                     // For eraser paths, clip all of the completed ink paths and remove the original
                     // eraser path.
                     valid.remove(myIndex)
                     deltas += [.invalidatedBezierPath(index: myIndex)]
 
-                    #if DEBUG
-                    // fake clipping until i get ClippingBezier into SPM.
-                    // replace the path with another color
-                    let inputIndex = 0
-                    deltas += [.replacedBezierPath(index: myIndex, withPathIndexes: IndexSet(integer: paths.count))]
-                    let updated = paths[inputIndex].copy() as! UIBezierPath
-                    updated.color = .purple
-
-                    valid.replace(at: inputIndex, with: [paths.count])
-                    paths.append(updated)
-                    #endif
                 }
             case .unhandled(let event):
                 deltas += [.unhandled(event: event)]
