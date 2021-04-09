@@ -67,6 +67,8 @@ public class AttributesStream: ProducerConsumer {
     var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
     private(set) public var style: ToolStyle
 
+    public var styleOverride: ((_ delta: BezierStream.Delta) -> ToolStyle?)?
+
     // MARK: - Init
 
     public init() {
@@ -98,8 +100,11 @@ public class AttributesStream: ProducerConsumer {
     public func produce(with input: Consumes) -> Produces {
         var output = Produces(paths: input.paths, deltas: [])
         for delta in input.deltas {
+            let override = styleOverride?(delta)
+
             switch delta {
             case .addedBezierPath(let index):
+                let style = override ?? self.style
                 let path = input.paths[index]
                 path.lineCapStyle = .round
                 path.lineJoinStyle = .round
@@ -109,7 +114,7 @@ public class AttributesStream: ProducerConsumer {
             case .unhandled(let event):
                 if let event = event as? ToolEvent {
                     // update our style and consume the event
-                    style = event.style
+                    style = override ?? event.style
                 } else {
                     output.deltas += [delta]
                 }
