@@ -92,7 +92,7 @@ public class PolylineStream: ProducerConsumer {
             case .addedTouchPath(let pathIndex):
                 assert(indexToIndex[pathIndex] == nil, "Cannot add existing line")
                 let line = input.paths[pathIndex]
-                let smoothStroke = Polyline(touchPoints: line)
+                let smoothStroke = Polyline(touchPath: line)
                 let index = lines.count
                 indexToIndex[pathIndex] = index
                 lines.append(smoothStroke)

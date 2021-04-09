@@ -93,11 +93,15 @@ extension TouchEvent {
         let pred: Bool
         let update: EstimationUpdateIndex?
 
-        init(id: UITouchIdentifier? = nil, loc: CGPoint, pred: Bool? = nil, update: EstimationUpdateIndex? = nil) {
-            self.id = id ?? UUID().uuidString
+        init(id: UITouchIdentifier = UUID().uuidString, loc: CGPoint, pred: Bool? = nil, update: EstimationUpdateIndex? = nil) {
+            self.id = id
             self.loc = loc
             self.pred = pred ?? false
             self.update = update
+        }
+
+        init(x: CGFloat, y: CGFloat) {
+            self.init(loc: CGPoint(x: x, y: y))
         }
     }
 
@@ -118,5 +122,19 @@ extension TouchEvent {
                        isUpdate: hasUpdate && phaseEvent.updatePhase != .began,
                        isPrediction: phaseEvent.event.pred)
         }
+    }
+}
+
+extension TouchPath.Point {
+    static func newFrom(_ simpleEvents: [TouchEvent.Simple]) -> [TouchPath.Point] {
+        let events = TouchEvent.newFrom(simpleEvents)
+        return events.map({ TouchPath.Point(event: $0) })
+    }
+}
+
+extension Polyline.Point {
+    static func newFrom(_ simpleEvents: [TouchEvent.Simple]) -> [Polyline.Point] {
+        let points = TouchPath.Point.newFrom(simpleEvents)
+        return points.map({ Polyline.Point(touchPoint: $0) })
     }
 }

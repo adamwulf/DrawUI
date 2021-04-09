@@ -15,10 +15,17 @@ public struct Polyline {
     public let touchIdentifier: String
     public var points: [Point]
 
-    init(touchPoints: TouchPath) {
-        isComplete = touchPoints.isComplete
-        touchIdentifier = touchPoints.touchIdentifier
-        points = touchPoints.points.map({ Point(touchPoint: $0) })
+    public init(touchPath: TouchPath) {
+        isComplete = touchPath.isComplete
+        touchIdentifier = touchPath.touchIdentifier
+        points = touchPath.points.map({ Point(touchPoint: $0) })
+    }
+
+    public init(points: [Point]) {
+        assert(!points.isEmpty)
+        self.isComplete = true
+        self.touchIdentifier = points.first!.event.touchIdentifier
+        self.points = points
     }
 
     mutating func update(with path: TouchPath, indexSet: IndexSet) -> IndexSet {
@@ -81,7 +88,7 @@ extension Polyline {
             return touchPoint.expectsUpdate
         }
 
-        init(touchPoint: TouchPath.Point) {
+        public init(touchPoint: TouchPath.Point) {
             self.force = touchPoint.event.force
             self.location = touchPoint.event.location
             self.altitudeAngle = touchPoint.event.altitudeAngle

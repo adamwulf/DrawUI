@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// Input: a stream of touch events that match our `touchIdentifier`
 /// Output: coalesce all of the touch events into defined points along the stroke
@@ -164,7 +165,7 @@ extension TouchPath {
             return self.event.isPrediction || self.event.expectsUpdate
         }
 
-        init(event: TouchEvent) {
+        public init(event: TouchEvent) {
             events = [event]
         }
 

@@ -26,6 +26,7 @@
 		C55B2CB926000C58004F6BDF /* ProducerConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */; };
 		C55CC112260F1F9E00C42FBB /* ColorCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55CC111260F1F9E00C42FBB /* ColorCodable.swift */; };
 		C55CC118260F1FEF00C42FBB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C55CC117260F1FEF00C42FBB /* LICENSE */; };
+		C55F4AB626201379008B05F1 /* BezierStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55F4AB526201379008B05F1 /* BezierStreamTests.swift */; };
 		C5721090260468FA00DEB0C0 /* LineSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C572108F260468FA00DEB0C0 /* LineSmoother.swift */; };
 		C5721094260469C000DEB0C0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5721093260469C000DEB0C0 /* Smoother.swift */; };
 		C580259C24E9E1150043130D /* TouchPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* TouchPath.swift */; };
@@ -112,6 +113,7 @@
 		C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerConsumer.swift; sourceTree = "<group>"; };
 		C55CC111260F1F9E00C42FBB /* ColorCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodable.swift; sourceTree = "<group>"; };
 		C55CC117260F1FEF00C42FBB /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		C55F4AB526201379008B05F1 /* BezierStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierStreamTests.swift; sourceTree = "<group>"; };
 		C572108F260468FA00DEB0C0 /* LineSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSmoother.swift; sourceTree = "<group>"; };
 		C5721093260469C000DEB0C0 /* Smoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smoother.swift; sourceTree = "<group>"; };
 		C580259B24E9E1150043130D /* TouchPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPath.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				C5005F562548E14500E6DD0C /* TouchPathTests.swift */,
 				C58B5016254DFCCA0010F195 /* PolylineTests.swift */,
 				C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */,
+				C55F4AB526201379008B05F1 /* BezierStreamTests.swift */,
 				C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */,
 				C58025AD24EA3F150043130D /* Info.plist */,
 			);
@@ -565,6 +568,7 @@
 			files = (
 				C5005F572548E14500E6DD0C /* TouchPathTests.swift in Sources */,
 				C5C5CC4F254E0DDD00B6662F /* AntigrainSmootherTests.swift in Sources */,
+				C55F4AB626201379008B05F1 /* BezierStreamTests.swift in Sources */,
 				C58B5017254DFCCA0010F195 /* PolylineTests.swift in Sources */,
 				C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */,
 				C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */,
