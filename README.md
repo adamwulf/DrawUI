@@ -114,3 +114,7 @@ The below should also implement undo/redo
 - [ ] Implement naive DistanceThinning filtering
 - [ ] Implement optimized DistanceThinning filtering
 
+ 
+ ## Support
+ 
+ - Has DrawUI saved you time? Become a [Github Sponsor](https://github.com/sponsors/adamwulf) and buy me a coffee ☕️ 😄
