@@ -81,7 +81,9 @@ class BezierStreamTests: XCTestCase {
 
         let bezierStream = BezierStream(smoother: AntigrainSmoother())
         let attributeStream = buildAttributeStream()
-        let attributedOutput = attributeStream.produce(with: bezierStream.produce(with: polylineOutput))
+
+        let bezierOutput = bezierStream.produce(with: polylineOutput)
+        let attributedOutput = attributeStream.produce(with: bezierOutput)
 
         XCTAssert(polylineOutput.lines[0] == attributedOutput.paths[0])
         XCTAssert(attributedOutput.paths[0].color == .black)
@@ -98,7 +100,9 @@ class BezierStreamTests: XCTestCase {
 
         let bezierStream = BezierStream(smoother: AntigrainSmoother())
         let attributeStream = buildAttributeStream()
-        let attributedOutput = attributeStream.produce(with: bezierStream.produce(with: polylineOutput))
+
+        let bezierOutput = bezierStream.produce(with: polylineOutput)
+        let attributedOutput = attributeStream.produce(with: bezierOutput)
 
         XCTAssert(polylineOutput.lines[0] == attributedOutput.paths[0])
         XCTAssert(attributedOutput.paths[0].color == .black)
