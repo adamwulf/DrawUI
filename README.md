@@ -117,4 +117,4 @@ The below should also implement undo/redo
  
  ## Support
  
- - Has DrawUI saved you time? Become a [Github Sponsor](https://github.com/sponsors/adamwulf) and buy me a coffee ☕️ 😄
+Has DrawUI saved you time? Become a [Github Sponsor](https://github.com/sponsors/adamwulf) and buy me a coffee ☕️ 😄
