@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/adamwulf/ClippingBezier.git",
         "state": {
           "branch": "main",
-          "revision": "9cde6dd3396ad59d3636e4c6e3f55847de48bf30",
+          "revision": "2ef870e8e2684debbd9b75d40174c679c2f9f088",
           "version": null
         }
       },
@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/adamwulf/MMSwiftToolbox.git",
         "state": {
           "branch": "main",
-          "revision": "288d07c57b4e8797456c693a443b0823e2cd2d6a",
+          "revision": "13deff176c469427f31ddd4060ab604e2ce585ac",
           "version": null
         }
       },
@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/adamwulf/PerformanceBezier",
         "state": {
           "branch": "main",
-          "revision": "8fdf84e1f0afce94d93cbced6460931609c8ecc4",
+          "revision": "10b4437301f9763911801686a644c7a16fd00796",
           "version": null
         }
       }

@@ -7,8 +7,38 @@
 
 import XCTest
 import DrawUI
+import MMSwiftToolbox
+
+typealias Event = TouchEvent.Simple
 
 extension Polyline {
+
+    init(from start: Event, to end: Event, step: CGFloat = 10) {
+        guard step > 0 else {
+            self.init(points: Polyline.Point.newFrom([start, end]))
+            return
+        }
+
+        let dist = start.loc.distance(to: end.loc)
+        let vec = (end.loc - start.loc).normalize(to: step)
+
+        var events = [start]
+        var previous = start.loc
+        for _ in 0 ..< Int(dist / step) {
+            let next = previous + vec
+            events.append(Event(loc: next))
+            previous = next
+        }
+        if let last = events.last?.loc,
+           end.loc != last {
+            events.append(end)
+        }
+
+        self.init(points: Polyline.Point.newFrom(events))
+    }
+
+    // Assert that the defined points along the Polyline align exactly with
+    // the element endpoints along the Bezier path.
     static func == (lhs: Polyline, rhs: UIBezierPath) -> Bool {
         guard lhs.points.count == rhs.elementCount else { XCTFail(); return false }
         for (i, point) in lhs.points.enumerated() {
@@ -22,8 +52,6 @@ extension Polyline {
 }
 
 class BezierStreamTests: XCTestCase {
-    typealias Event = TouchEvent.Simple
-
     static let pen = AttributesStream.ToolStyle(width: 10, color: .black)
     static let eraser = AttributesStream.ToolStyle(width: 10, color: nil)
 
