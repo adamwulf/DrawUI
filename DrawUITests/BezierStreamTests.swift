@@ -52,8 +52,21 @@ extension Polyline {
 }
 
 class BezierStreamTests: XCTestCase {
-    static let pen = AttributesStream.ToolStyle(width: 10, color: .black)
+    static let pen = AttributesStream.ToolStyle(width: 1.5, color: .black)
     static let eraser = AttributesStream.ToolStyle(width: 10, color: nil)
+
+    func buildAttributeStream() -> AttributesStream {
+        let attributeStream = AttributesStream()
+        attributeStream.styleOverride = { delta in
+            switch delta {
+            case .addedBezierPath(let index):
+                return index == 0 ? Self.pen : Self.eraser
+            default:
+                return nil
+            }
+        }
+        return attributeStream
+    }
 
     func testSimpleBezierPath() throws {
         let completeEvents = [Event(x: 100, y: 100),
@@ -66,20 +79,34 @@ class BezierStreamTests: XCTestCase {
         let line = Polyline(points: points)
         let polylineOutput = PolylineStream.Produces(lines: [line], deltas: [.addedPolyline(index: 0)])
 
-        let attributeStream = AttributesStream()
-        attributeStream.styleOverride = { delta in
-            switch delta {
-            case .addedBezierPath(let index):
-                return index == 0 ? Self.pen : Self.eraser
-            default:
-                return nil
-            }
-        }
         let bezierStream = BezierStream(smoother: AntigrainSmoother())
+        let attributeStream = buildAttributeStream()
+        let attributedOutput = attributeStream.produce(with: bezierStream.produce(with: polylineOutput))
+
+        XCTAssert(polylineOutput.lines[0] == attributedOutput.paths[0])
+        XCTAssert(attributedOutput.paths[0].color == .black)
+        XCTAssert(attributedOutput.paths[0].lineWidth == 1.5)
+        XCTAssertEqual(attributedOutput.deltas[0], .addedBezierPath(index: 0))
+    }
+
+    func testSimpleErase() throws {
+        let line1 = Polyline(from: Event(x: 100, y: 100), to: Event(x: 200, y: 100))
+        let line2 = Polyline(from: Event(x: 150, y: 0), to: Event(x: 150, y: 200))
+
+        let polylineOutput = PolylineStream.Produces(lines: [line1, line2],
+                                                     deltas: [.addedPolyline(index: 0), .addedPolyline(index: 1)])
+
+        let bezierStream = BezierStream(smoother: AntigrainSmoother())
+        let attributeStream = buildAttributeStream()
         let attributedOutput = attributeStream.produce(with: bezierStream.produce(with: polylineOutput))
 
         XCTAssert(polylineOutput.lines[0] == attributedOutput.paths[0])
         XCTAssert(attributedOutput.paths[0].color == .black)
         XCTAssertEqual(attributedOutput.deltas[0], .addedBezierPath(index: 0))
+
+        XCTAssert(polylineOutput.lines[1] == attributedOutput.paths[1])
+        XCTAssert(attributedOutput.paths[1].color == nil)
+        XCTAssert(attributedOutput.paths[1].lineWidth == 10)
+        XCTAssertEqual(attributedOutput.deltas[1], .addedBezierPath(index: 1))
     }
 }
