@@ -30,6 +30,12 @@ extension ProducerConsumer {
     public func consume(_ input: Consumes) {
         produce(with: input)
     }
+
+    @discardableResult
+    public func nextStep<Customer>(_ consumer: Customer) -> Customer where Customer: Consumer, Customer.Consumes == Produces {
+        addConsumer(consumer)
+        return consumer
+    }
 }
 
 class ExampleStream: Producer {

@@ -66,6 +66,8 @@ public class AttributesStream: ProducerConsumer {
 
     var consumers: [(process: (Produces) -> Void, reset: () -> Void)] = []
     private(set) public var style: ToolStyle
+    /// The most recent output that was produced
+    public private(set) var produced: Produces?
 
     public var styleOverride: ((_ delta: BezierStream.Delta) -> ToolStyle?)?
 
@@ -123,6 +125,7 @@ public class AttributesStream: ProducerConsumer {
             }
         }
 
+        produced = output
         consumers.forEach({ $0.process(output) })
         return output
     }

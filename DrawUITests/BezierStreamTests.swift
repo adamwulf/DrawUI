@@ -15,7 +15,7 @@ class BezierStreamTests: XCTestCase {
     static let pen = AttributesStream.ToolStyle(width: 1.5, color: .black)
     static let eraser = AttributesStream.ToolStyle(width: 10, color: nil)
 
-    func buildAttributeStream() -> AttributesStream {
+    lazy var attributeStream = { () -> AttributesStream in
         let attributeStream = AttributesStream()
         attributeStream.styleOverride = { delta in
             switch delta {
@@ -26,6 +26,10 @@ class BezierStreamTests: XCTestCase {
             }
         }
         return attributeStream
+    }()
+
+    override func setUp() {
+        attributeStream.reset()
     }
 
     func testSimpleBezierPath() throws {
@@ -40,7 +44,6 @@ class BezierStreamTests: XCTestCase {
         let polylineOutput = PolylineStream.Produces(lines: [line], deltas: [.addedPolyline(index: 0)])
 
         let bezierStream = BezierStream(smoother: AntigrainSmoother())
-        let attributeStream = buildAttributeStream()
 
         let bezierOutput = bezierStream.produce(with: polylineOutput)
         let attributedOutput = attributeStream.produce(with: bezierOutput)
@@ -58,7 +61,6 @@ class BezierStreamTests: XCTestCase {
         let touchPathStream = TouchPathStream()
         let polylineStream = PolylineStream()
         let bezierStream = BezierStream(smoother: AntigrainSmoother())
-        let attributeStream = buildAttributeStream()
 
         let touchPathOutput = touchPathStream.produce(with: touchEvents)
         let polylineOutput = polylineStream.produce(with: touchPathOutput)
@@ -72,5 +74,37 @@ class BezierStreamTests: XCTestCase {
         XCTAssert(attributedOutput.paths[0].color == .black)
         XCTAssertEqual(attributedOutput.deltas[0], .addedBezierPath(index: 0))
         XCTAssertEqual(attributedOutput.deltas[1], .completedBezierPath(index: 0))
+    }
+
+    func testUpdatedLines() throws {
+        let simpleEvents = Event.events(from: CGPoint(x: 100, y: 100), to: CGPoint(x: 200, y: 100))
+        let touchEvents = TouchEvent.newFrom(simpleEvents)
+
+        let touchPathStream = TouchPathStream()
+
+        touchPathStream
+            .nextStep(PolylineStream())
+            .nextStep(BezierStream(smoother: AntigrainSmoother()))
+            .nextStep(attributeStream)
+
+        let firstEvents = Array(touchEvents[0..<5])
+        let lastEvents = Array(touchEvents[5...])
+
+        touchPathStream.produce(with: firstEvents)
+
+        guard let output1 = attributeStream.produced else { XCTFail(); return }
+
+        XCTAssertEqual(output1.paths.count, 1)
+        XCTAssertEqual(output1.deltas.count, 1)
+        XCTAssertEqual(output1.deltas[0], .addedBezierPath(index: 0))
+
+        touchPathStream.produce(with: lastEvents)
+
+        guard let output2 = attributeStream.produced else { XCTFail(); return }
+
+        XCTAssertEqual(output2.paths.count, 1)
+        XCTAssertEqual(output2.deltas.count, 2)
+        XCTAssertEqual(output2.deltas[0], .updatedBezierPath(index: 0, updatedIndexes: IndexSet(4..<simpleEvents.count)))
+        XCTAssertEqual(output2.deltas[1], .completedBezierPath(index: 0))
     }
 }

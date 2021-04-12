@@ -48,6 +48,8 @@ public class PolylineStream: ProducerConsumer {
     public private(set) var lines: [Polyline]
     /// Maps the index of a TouchPointCollection from our input to the index of the matching stroke in `strokes`
     public private(set) var indexToIndex: [Int: Int]
+    /// The most recent output that was produced
+    public private(set) var produced: Produces?
 
     // MARK: - Init
 
@@ -113,6 +115,7 @@ public class PolylineStream: ProducerConsumer {
         }
 
         let output = Produces(lines: lines, deltas: deltas)
+        produced = output
         consumers.forEach({ $0.process(output) })
         return output
     }
