@@ -7,6 +7,7 @@
 
 import UIKit
 import DrawUI
+import MMSwiftToolbox
 
 extension Array where Element: Equatable {
     // Remove first collection element that is equal to the given `object`:
@@ -125,6 +126,34 @@ extension TouchEvent {
     }
 }
 
+extension TouchEvent.Simple {
+    static func events(from start: CGPoint, to end: CGPoint, step: CGFloat = 10) -> [TouchEvent.Simple] {
+        let touchId: UITouchIdentifier = UUID().uuidString
+        let startEvent = Event(id: touchId, loc: start)
+        let endEvent = Event(id: touchId, loc: end)
+        guard step > 0 else {
+            return [startEvent, endEvent]
+        }
+
+        let dist = start.distance(to: end)
+        let vec = (end - start).normalize(to: step)
+
+        var events = [startEvent]
+        var previous = start
+        for _ in 0 ..< Int(dist / step) {
+            let next = previous + vec
+            events.append(Event(id: touchId, loc: next))
+            previous = next
+        }
+        if let last = events.last?.loc,
+           end != last {
+            events.append(endEvent)
+        }
+
+        return events
+    }
+}
+
 extension TouchPath.Point {
     static func newFrom(_ simpleEvents: [TouchEvent.Simple]) -> [TouchPath.Point] {
         let events = TouchEvent.newFrom(simpleEvents)
@@ -136,5 +165,19 @@ extension Polyline.Point {
     static func newFrom(_ simpleEvents: [TouchEvent.Simple]) -> [Polyline.Point] {
         let points = TouchPath.Point.newFrom(simpleEvents)
         return points.map({ Polyline.Point(touchPoint: $0) })
+    }
+}
+
+extension Polyline {
+    // Assert that the defined points along the Polyline align exactly with
+    // the element endpoints along the Bezier path.
+    static func == (lhs: Polyline, rhs: UIBezierPath) -> Bool {
+        guard lhs.points.count == rhs.elementCount else { return false }
+        for (i, point) in lhs.points.enumerated() {
+            guard point.location == rhs.pointOnPath(atElement: i, andTValue: 1) else {
+                return false
+            }
+        }
+        return true
     }
 }

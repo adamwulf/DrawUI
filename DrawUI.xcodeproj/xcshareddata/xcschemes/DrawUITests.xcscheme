@@ -20,6 +20,20 @@
                ReferencedContainer = "container:DrawUI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C58025A824EA3F150043130D"
+               BuildableName = "DrawUITests.xctest"
+               BlueprintName = "DrawUITests"
+               ReferencedContainer = "container:DrawUI.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

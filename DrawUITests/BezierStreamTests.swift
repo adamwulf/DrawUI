@@ -11,46 +11,6 @@ import MMSwiftToolbox
 
 typealias Event = TouchEvent.Simple
 
-extension Polyline {
-
-    init(from start: Event, to end: Event, step: CGFloat = 10) {
-        guard step > 0 else {
-            self.init(points: Polyline.Point.newFrom([start, end]))
-            return
-        }
-
-        let dist = start.loc.distance(to: end.loc)
-        let vec = (end.loc - start.loc).normalize(to: step)
-
-        var events = [start]
-        var previous = start.loc
-        for _ in 0 ..< Int(dist / step) {
-            let next = previous + vec
-            events.append(Event(loc: next))
-            previous = next
-        }
-        if let last = events.last?.loc,
-           end.loc != last {
-            events.append(end)
-        }
-
-        self.init(points: Polyline.Point.newFrom(events))
-    }
-
-    // Assert that the defined points along the Polyline align exactly with
-    // the element endpoints along the Bezier path.
-    static func == (lhs: Polyline, rhs: UIBezierPath) -> Bool {
-        guard lhs.points.count == rhs.elementCount else { XCTFail(); return false }
-        for (i, point) in lhs.points.enumerated() {
-            guard point.location == rhs.pointOnPath(atElement: i, andTValue: 1) else {
-                XCTFail()
-                return false
-            }
-        }
-        return true
-    }
-}
-
 class BezierStreamTests: XCTestCase {
     static let pen = AttributesStream.ToolStyle(width: 1.5, color: .black)
     static let eraser = AttributesStream.ToolStyle(width: 10, color: nil)
@@ -91,26 +51,26 @@ class BezierStreamTests: XCTestCase {
         XCTAssertEqual(attributedOutput.deltas[0], .addedBezierPath(index: 0))
     }
 
-    func testSimpleErase() throws {
-        let line1 = Polyline(from: Event(x: 100, y: 100), to: Event(x: 200, y: 100))
-        let line2 = Polyline(from: Event(x: 150, y: 0), to: Event(x: 150, y: 200))
+    func testGeneratedLines() throws {
+        let simpleEvents = Event.events(from: CGPoint(x: 100, y: 100), to: CGPoint(x: 200, y: 100))
+        let touchEvents = TouchEvent.newFrom(simpleEvents)
 
-        let polylineOutput = PolylineStream.Produces(lines: [line1, line2],
-                                                     deltas: [.addedPolyline(index: 0), .addedPolyline(index: 1)])
-
+        let touchPathStream = TouchPathStream()
+        let polylineStream = PolylineStream()
         let bezierStream = BezierStream(smoother: AntigrainSmoother())
         let attributeStream = buildAttributeStream()
 
+        let touchPathOutput = touchPathStream.produce(with: touchEvents)
+        let polylineOutput = polylineStream.produce(with: touchPathOutput)
         let bezierOutput = bezierStream.produce(with: polylineOutput)
         let attributedOutput = attributeStream.produce(with: bezierOutput)
+
+        XCTAssertEqual(attributedOutput.paths.count, 1)
+        XCTAssertEqual(attributedOutput.deltas.count, 2)
 
         XCTAssert(polylineOutput.lines[0] == attributedOutput.paths[0])
         XCTAssert(attributedOutput.paths[0].color == .black)
         XCTAssertEqual(attributedOutput.deltas[0], .addedBezierPath(index: 0))
-
-        XCTAssert(polylineOutput.lines[1] == attributedOutput.paths[1])
-        XCTAssert(attributedOutput.paths[1].color == nil)
-        XCTAssert(attributedOutput.paths[1].lineWidth == 10)
-        XCTAssertEqual(attributedOutput.deltas[1], .addedBezierPath(index: 1))
+        XCTAssertEqual(attributedOutput.deltas[1], .completedBezierPath(index: 0))
     }
 }
