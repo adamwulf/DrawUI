@@ -40,6 +40,8 @@
 		C59582BC25FF366500C4B202 /* SmartDrawRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59582BB25FF366500C4B202 /* SmartDrawRectView.swift */; };
 		C59582C225FF388000C4B202 /* NaiveDrawRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59582C125FF388000C4B202 /* NaiveDrawRectView.swift */; };
 		C59582F125FF4A1F00C4B202 /* PerformanceBezier in Frameworks */ = {isa = PBXBuildFile; productRef = C59582F025FF4A1F00C4B202 /* PerformanceBezier */; };
+		C5A52855263E0CFA002B3D63 /* ClippedBezierStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A52854263E0CFA002B3D63 /* ClippedBezierStreamTests.swift */; };
+		C5A52857263E0F3B002B3D63 /* UIBezierPath+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A52856263E0F3B002B3D63 /* UIBezierPath+Extensions.swift */; };
 		C5AF2DFB26112B15006F2CC2 /* BezierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AF2DFA26112B15006F2CC2 /* BezierView.swift */; };
 		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159B924E9AF3600B52B4B /* TouchEvent.swift */; };
@@ -128,6 +130,8 @@
 		C594308124F0E3640097D52B /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		C59582BB25FF366500C4B202 /* SmartDrawRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartDrawRectView.swift; sourceTree = "<group>"; };
 		C59582C125FF388000C4B202 /* NaiveDrawRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveDrawRectView.swift; sourceTree = "<group>"; };
+		C5A52854263E0CFA002B3D63 /* ClippedBezierStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClippedBezierStreamTests.swift; sourceTree = "<group>"; };
+		C5A52856263E0F3B002B3D63 /* UIBezierPath+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Extensions.swift"; sourceTree = "<group>"; };
 		C5AF2DFA26112B15006F2CC2 /* BezierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierView.swift; sourceTree = "<group>"; };
 		C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C159B124E9AF1C00B52B4B /* DrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawUI.h; sourceTree = "<group>"; };
@@ -253,6 +257,7 @@
 				C58B5016254DFCCA0010F195 /* PolylineTests.swift */,
 				C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */,
 				C55F4AB526201379008B05F1 /* BezierStreamTests.swift */,
+				C5A52854263E0CFA002B3D63 /* ClippedBezierStreamTests.swift */,
 				C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */,
 				C58025AD24EA3F150043130D /* Info.plist */,
 			);
@@ -346,6 +351,7 @@
 				C5C159DA24E9AF8100B52B4B /* UITouch+Extensions.swift */,
 				C507F3E225041E0B001A7821 /* Clamping.swift */,
 				C5825DCB261A781D00A67837 /* UIBezierPath+Elements.swift */,
+				C5A52856263E0F3B002B3D63 /* UIBezierPath+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -568,6 +574,7 @@
 			files = (
 				C5005F572548E14500E6DD0C /* TouchPathTests.swift in Sources */,
 				C5C5CC4F254E0DDD00B6662F /* AntigrainSmootherTests.swift in Sources */,
+				C5A52855263E0CFA002B3D63 /* ClippedBezierStreamTests.swift in Sources */,
 				C55F4AB626201379008B05F1 /* BezierStreamTests.swift in Sources */,
 				C58B5017254DFCCA0010F195 /* PolylineTests.swift in Sources */,
 				C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */,
@@ -600,6 +607,7 @@
 				C5825DCC261A781D00A67837 /* UIBezierPath+Elements.swift in Sources */,
 				C559CC0024EB9ABE006D263C /* NaiveSavitzkyGolay.swift in Sources */,
 				C5C159DD24E9AF8100B52B4B /* Array+Extensions.swift in Sources */,
+				C5A52857263E0F3B002B3D63 /* UIBezierPath+Extensions.swift in Sources */,
 				C5EBA7FE261ABA78000E29D3 /* NaiveClippedDrawRectView.swift in Sources */,
 				C580259C24E9E1150043130D /* TouchPath.swift in Sources */,
 				C5825DC6261A77A000A67837 /* ClippedBezierStream.swift in Sources */,

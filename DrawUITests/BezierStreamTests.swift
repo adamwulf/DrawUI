@@ -9,8 +9,6 @@ import XCTest
 import DrawUI
 import MMSwiftToolbox
 
-typealias Event = TouchEvent.Simple
-
 class BezierStreamTests: XCTestCase {
     static let pen = AttributesStream.ToolStyle(width: 1.5, color: .black)
     static let eraser = AttributesStream.ToolStyle(width: 10, color: nil)

@@ -112,31 +112,35 @@ public class ClippedBezierStream: ProducerConsumer {
                 if path.color != nil {
                     deltas += [.completedBezierPath(index: myIndex)]
                 } else {
+                    let strokedPath = path.strokedPath()
+                    var replacedIndexes: [Int: [Int]] = [:]
+                    var addedPaths: [UIBezierPath] = []
+                    // For eraser paths, don't clip the eraser with itself
+                    valid.remove(myIndex)
                     // loop through all of the paths except this one
-                    for validIndex in valid.indices where validIndex != index {
+                    for validIndex in valid.indices {
                         guard let anIndex = indexToIndex[validIndex] else { continue }
 
                         // fake clipping until i get ClippingBezier into SPM.
                         // replace the path with another color
                         let updated = paths[validIndex].copy() as! UIBezierPath
 
-                        guard let intersections = updated.findIntersections(withClosedPath: path, andBeginsInside: nil) else { continue }
+                        guard let difference = updated.difference(with: strokedPath) else { continue }
 
-                        if !intersections.isEmpty {
-                            // if we found a path that intersects our eraser, just color it purple for now.
-                            // this doesn't track the new index correctly at all, but it's fine for now as a proof of concept.
-                            deltas += [.replacedBezierPath(index: anIndex, withPathIndexes: IndexSet(integer: paths.count))]
-                            updated.color = .purple
-                            updated.lineWidth = CGFloat(Int.random(in: 1...10))
+                        let minIndex = paths.count + addedPaths.count
+                        paths.append(contentsOf: difference)
+                        let maxIndex = paths.count + addedPaths.count
 
-                            guard let setIndex = valid.index(of: validIndex) else { continue }
-                            valid.replace(at: setIndex, with: [paths.count])
-                            paths.append(updated)
-                        }
+                        addedPaths.append(contentsOf: difference)
+                        let indexesOfAddedPaths = IndexSet(integersIn: minIndex..<maxIndex)
+                        deltas += [.replacedBezierPath(index: anIndex, withPathIndexes: indexesOfAddedPaths)]
+
+                        replacedIndexes[anIndex] = Array(minIndex..<maxIndex)
                     }
-                    // For eraser paths, clip all of the completed ink paths and remove the original
-                    // eraser path.
-                    valid.remove(myIndex)
+                    replacedIndexes.forEach { (key: Int, value: [Int]) in
+                        valid.replace(at: key, with: value)
+                    }
+
                     deltas += [.invalidatedBezierPath(index: myIndex)]
 
                 }
