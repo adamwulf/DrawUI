@@ -42,6 +42,7 @@
 		C59582F125FF4A1F00C4B202 /* PerformanceBezier in Frameworks */ = {isa = PBXBuildFile; productRef = C59582F025FF4A1F00C4B202 /* PerformanceBezier */; };
 		C5A52855263E0CFA002B3D63 /* ClippedBezierStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A52854263E0CFA002B3D63 /* ClippedBezierStreamTests.swift */; };
 		C5A52857263E0F3B002B3D63 /* UIBezierPath+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A52856263E0F3B002B3D63 /* UIBezierPath+Extensions.swift */; };
+		C5A52859263E1680002B3D63 /* OrderedSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A52858263E1680002B3D63 /* OrderedSetTests.swift */; };
 		C5AF2DFB26112B15006F2CC2 /* BezierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AF2DFA26112B15006F2CC2 /* BezierView.swift */; };
 		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159B924E9AF3600B52B4B /* TouchEvent.swift */; };
@@ -132,6 +133,7 @@
 		C59582C125FF388000C4B202 /* NaiveDrawRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveDrawRectView.swift; sourceTree = "<group>"; };
 		C5A52854263E0CFA002B3D63 /* ClippedBezierStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClippedBezierStreamTests.swift; sourceTree = "<group>"; };
 		C5A52856263E0F3B002B3D63 /* UIBezierPath+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Extensions.swift"; sourceTree = "<group>"; };
+		C5A52858263E1680002B3D63 /* OrderedSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedSetTests.swift; sourceTree = "<group>"; };
 		C5AF2DFA26112B15006F2CC2 /* BezierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierView.swift; sourceTree = "<group>"; };
 		C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C159B124E9AF1C00B52B4B /* DrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawUI.h; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */,
 				C55F4AB526201379008B05F1 /* BezierStreamTests.swift */,
 				C5A52854263E0CFA002B3D63 /* ClippedBezierStreamTests.swift */,
+				C5A52858263E1680002B3D63 /* OrderedSetTests.swift */,
 				C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */,
 				C58025AD24EA3F150043130D /* Info.plist */,
 			);
@@ -576,6 +579,7 @@
 				C5C5CC4F254E0DDD00B6662F /* AntigrainSmootherTests.swift in Sources */,
 				C5A52855263E0CFA002B3D63 /* ClippedBezierStreamTests.swift in Sources */,
 				C55F4AB626201379008B05F1 /* BezierStreamTests.swift in Sources */,
+				C5A52859263E1680002B3D63 /* OrderedSetTests.swift in Sources */,
 				C58B5017254DFCCA0010F195 /* PolylineTests.swift in Sources */,
 				C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */,
 				C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */,
