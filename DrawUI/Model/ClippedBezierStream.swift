@@ -128,9 +128,9 @@ public class ClippedBezierStream: ProducerConsumer {
                             !intersections.isEmpty,
                             let difference = updated.difference(with: strokedPath) else { continue }
 
-                        let minIndex = paths.count + addedPaths.count
+                        let minIndex = paths.count
                         paths.append(contentsOf: difference)
-                        let maxIndex = paths.count + addedPaths.count
+                        let maxIndex = paths.count
 
                         addedPaths.append(contentsOf: difference)
                         let indexesOfAddedPaths = IndexSet(integersIn: minIndex..<maxIndex)
