@@ -30,24 +30,21 @@ class ClippedBezierStreamTests: XCTestCase {
         attributeStream.reset()
     }
 
-    // TODO: make sure that the indexes returned for the clippedOutput are valid path indexes.
-    // I'm not certain that i'm accounting for attributedOutput index vs clippedOutput index
-    // vs validIndexes.index/element.
     func testClippedLines() throws {
-        let simpleEvents = Event.events(from: CGPoint(x: 100, y: 100), to: CGPoint(x: 200, y: 100)) +
+        var simpleEvents = Event.events(from: CGPoint(x: 100, y: 100), to: CGPoint(x: 200, y: 100)) +
             Event.events(from: CGPoint(x: 150, y: 50), to: CGPoint(x: 150, y: 150))
-        let touchEvents = TouchEvent.newFrom(simpleEvents)
+        var touchEvents = TouchEvent.newFrom(simpleEvents)
 
         let touchPathStream = TouchPathStream()
         let polylineStream = PolylineStream()
         let bezierStream = BezierStream(smoother: AntigrainSmoother())
         let clippedStream = ClippedBezierStream()
 
-        let touchPathOutput = touchPathStream.produce(with: touchEvents)
-        let polylineOutput = polylineStream.produce(with: touchPathOutput)
-        let bezierOutput = bezierStream.produce(with: polylineOutput)
-        let attributedOutput = attributeStream.produce(with: bezierOutput)
-        let clippedOutput = clippedStream.produce(with: attributedOutput)
+        var touchPathOutput = touchPathStream.produce(with: touchEvents)
+        var polylineOutput = polylineStream.produce(with: touchPathOutput)
+        var bezierOutput = bezierStream.produce(with: polylineOutput)
+        var attributedOutput = attributeStream.produce(with: bezierOutput)
+        var clippedOutput = clippedStream.produce(with: attributedOutput)
 
         XCTAssertEqual(clippedOutput.paths.count, 4)
         XCTAssertEqual(clippedOutput.deltas.count, 5)
@@ -57,5 +54,21 @@ class ClippedBezierStreamTests: XCTestCase {
         XCTAssertEqual(clippedOutput.deltas[2], .addedBezierPath(index: 1))
         XCTAssertEqual(clippedOutput.deltas[3], .replacedBezierPath(index: 0, withPathIndexes: IndexSet(2..<4)))
         XCTAssertEqual(clippedOutput.deltas[4], .invalidatedBezierPath(index: 1))
+
+        simpleEvents = Event.events(from: CGPoint(x: 175, y: 50), to: CGPoint(x: 175, y: 150))
+        touchEvents = TouchEvent.newFrom(simpleEvents)
+
+        touchPathOutput = touchPathStream.produce(with: touchEvents)
+        polylineOutput = polylineStream.produce(with: touchPathOutput)
+        bezierOutput = bezierStream.produce(with: polylineOutput)
+        attributedOutput = attributeStream.produce(with: bezierOutput)
+        clippedOutput = clippedStream.produce(with: attributedOutput)
+
+        XCTAssertEqual(clippedOutput.paths.count, 7)
+        XCTAssertEqual(clippedOutput.deltas.count, 3)
+
+        XCTAssertEqual(clippedOutput.deltas[0], .addedBezierPath(index: 4))
+        XCTAssertEqual(clippedOutput.deltas[1], .replacedBezierPath(index: 3, withPathIndexes: IndexSet(5..<7)))
+        XCTAssertEqual(clippedOutput.deltas[2], .invalidatedBezierPath(index: 4))
     }
 }

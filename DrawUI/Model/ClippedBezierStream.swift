@@ -118,14 +118,15 @@ public class ClippedBezierStream: ProducerConsumer {
                     // For eraser paths, don't clip the eraser with itself
                     valid.remove(myIndex)
                     // loop through all of the paths except this one
-                    for validIndex in valid.indices {
-                        guard let anIndex = indexToIndex[validIndex] else { continue }
-
+                    for validIndex in valid {
                         // fake clipping until i get ClippingBezier into SPM.
                         // replace the path with another color
                         let updated = paths[validIndex].copy() as! UIBezierPath
 
-                        guard let difference = updated.difference(with: strokedPath) else { continue }
+                        guard
+                            let intersections = updated.findIntersections(withClosedPath: strokedPath, andBeginsInside: nil),
+                            !intersections.isEmpty,
+                            let difference = updated.difference(with: strokedPath) else { continue }
 
                         let minIndex = paths.count + addedPaths.count
                         paths.append(contentsOf: difference)
@@ -133,16 +134,15 @@ public class ClippedBezierStream: ProducerConsumer {
 
                         addedPaths.append(contentsOf: difference)
                         let indexesOfAddedPaths = IndexSet(integersIn: minIndex..<maxIndex)
-                        deltas += [.replacedBezierPath(index: anIndex, withPathIndexes: indexesOfAddedPaths)]
+                        deltas += [.replacedBezierPath(index: validIndex, withPathIndexes: indexesOfAddedPaths)]
 
-                        replacedIndexes[anIndex] = Array(minIndex..<maxIndex)
+                        replacedIndexes[validIndex] = Array(minIndex..<maxIndex)
                     }
-                    replacedIndexes.forEach { (key: Int, value: [Int]) in
-                        valid.replace(at: key, with: value)
+                    replacedIndexes.forEach { (originalPathIndex: Int, replacedPathIndexes: [Int]) in
+                        valid.replace(element: originalPathIndex, with: replacedPathIndexes)
                     }
 
                     deltas += [.invalidatedBezierPath(index: myIndex)]
-
                 }
             case .unhandled(let event):
                 deltas += [.unhandled(event: event)]

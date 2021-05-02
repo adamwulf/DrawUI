@@ -112,6 +112,13 @@ extension OrderedSet {
         array.replaceSubrange(index ..< index + 1, with: elements)
     }
 
+    public mutating func replace(element: Element, with elements: [Element]) {
+        guard let index = index(of: element) else { return }
+        set.remove(element)
+        let elements = elements.compactMap({ set.insert($0).inserted ? $0 : nil })
+        array.replaceSubrange(index ..< index + 1, with: elements)
+    }
+
     public mutating func replaceSubrange(_ range: Range<Index>, with elements: [Element]) {
         let toRemove = range.map({ self[$0] })
         toRemove.forEach({ set.remove($0) })
