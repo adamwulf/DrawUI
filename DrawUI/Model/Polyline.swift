@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-public struct Polyline {
+open struct Polyline {
 
     // MARK: - Public Properties
     public private(set) var isComplete: Bool

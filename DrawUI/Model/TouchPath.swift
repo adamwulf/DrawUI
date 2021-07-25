@@ -19,7 +19,7 @@ import CoreGraphics
 /// the same point, so that it can output a series of points [A, B, C]
 ///
 /// The output points also know if they are predicted, expecting updates, or is finished
-public class TouchPath {
+open class TouchPath {
 
     // MARK: - Public Properties
     public private(set) var touchIdentifier: String

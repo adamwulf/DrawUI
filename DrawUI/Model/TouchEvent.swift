@@ -38,7 +38,7 @@ public class DrawEvent: Codable {
     }
 }
 
-public class TouchEvent: DrawEvent {
+open class TouchEvent: DrawEvent {
 
     /// An identifier unique to the touch that created this event. Events with the same
     /// touch will also have the same touchIdentifier
