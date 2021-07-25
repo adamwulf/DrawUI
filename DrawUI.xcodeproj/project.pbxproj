@@ -7,83 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */; };
-		C5005F572548E14500E6DD0C /* TouchPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5005F562548E14500E6DD0C /* TouchPathTests.swift */; };
-		C507F3E325041E0B001A7821 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507F3E225041E0B001A7821 /* Clamping.swift */; };
-		C5094CE225FEB0A60001AE2A /* BezierStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5094CE125FEB0A60001AE2A /* BezierStream.swift */; };
 		C5094CE925FEB6770001AE2A /* BezierViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5094CE825FEB6770001AE2A /* BezierViewController.swift */; };
 		C5094CEF25FEB6FB0001AE2A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5094CEE25FEB6FB0001AE2A /* BaseViewController.swift */; };
-		C5094CF825FEBA3B0001AE2A /* MMSwiftToolbox in Frameworks */ = {isa = PBXBuildFile; productRef = C5094CF725FEBA3B0001AE2A /* MMSwiftToolbox */; };
-		C5255131260527B7009876B9 /* AttributesStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5255130260527B7009876B9 /* AttributesStream.swift */; };
-		C53651B72544CC7F00FA25A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C53651B62544CC7E00FA25A4 /* README.md */; };
-		C5420EA52549096700473D8A /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = C5420EA42549096700473D8A /* events.json */; };
-		C555A7DE261BBFCE0017E1B4 /* ClippingBezier in Frameworks */ = {isa = PBXBuildFile; productRef = C555A7DD261BBFCE0017E1B4 /* ClippingBezier */; };
-		C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBF924EB9489006D263C /* PolylineStream.swift */; };
-		C559CBFD24EB9489006D263C /* Polyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFA24EB9489006D263C /* Polyline.swift */; };
-		C559CC0024EB9ABE006D263C /* NaiveSavitzkyGolay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */; };
-		C559CC0224EB9ACA006D263C /* NaiveDouglasPeucker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */; };
-		C559CC0724EBA6C0006D263C /* NaivePointDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */; };
-		C55B2CB926000C58004F6BDF /* ProducerConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */; };
-		C55CC112260F1F9E00C42FBB /* ColorCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55CC111260F1F9E00C42FBB /* ColorCodable.swift */; };
-		C55CC118260F1FEF00C42FBB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C55CC117260F1FEF00C42FBB /* LICENSE */; };
-		C55F4AB626201379008B05F1 /* BezierStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55F4AB526201379008B05F1 /* BezierStreamTests.swift */; };
-		C5721090260468FA00DEB0C0 /* LineSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C572108F260468FA00DEB0C0 /* LineSmoother.swift */; };
-		C5721094260469C000DEB0C0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5721093260469C000DEB0C0 /* Smoother.swift */; };
-		C580259C24E9E1150043130D /* TouchPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259B24E9E1150043130D /* TouchPath.swift */; };
-		C580259F24E9E1C10043130D /* TouchPathStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C580259E24E9E1C10043130D /* TouchPathStream.swift */; };
-		C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58025AB24EA3F150043130D /* TestsOfTests.swift */; };
-		C58025AE24EA3F150043130D /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */; };
-		C5825DC6261A77A000A67837 /* ClippedBezierStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5825DC5261A77A000A67837 /* ClippedBezierStream.swift */; };
-		C5825DCC261A781D00A67837 /* UIBezierPath+Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5825DCB261A781D00A67837 /* UIBezierPath+Elements.swift */; };
-		C58B5017254DFCCA0010F195 /* PolylineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B5016254DFCCA0010F195 /* PolylineTests.swift */; };
-		C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C594308124F0E3640097D52B /* CGPoint+Extensions.swift */; };
-		C59582BC25FF366500C4B202 /* SmartDrawRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59582BB25FF366500C4B202 /* SmartDrawRectView.swift */; };
-		C59582C225FF388000C4B202 /* NaiveDrawRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59582C125FF388000C4B202 /* NaiveDrawRectView.swift */; };
-		C59582F125FF4A1F00C4B202 /* PerformanceBezier in Frameworks */ = {isa = PBXBuildFile; productRef = C59582F025FF4A1F00C4B202 /* PerformanceBezier */; };
-		C5A52855263E0CFA002B3D63 /* ClippedBezierStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A52854263E0CFA002B3D63 /* ClippedBezierStreamTests.swift */; };
-		C5A52857263E0F3B002B3D63 /* UIBezierPath+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A52856263E0F3B002B3D63 /* UIBezierPath+Extensions.swift */; };
-		C5A52859263E1680002B3D63 /* OrderedSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A52858263E1680002B3D63 /* OrderedSetTests.swift */; };
-		C5AF2DFB26112B15006F2CC2 /* BezierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AF2DFA26112B15006F2CC2 /* BezierView.swift */; };
-		C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C159B124E9AF1C00B52B4B /* DrawUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159B924E9AF3600B52B4B /* TouchEvent.swift */; };
-		C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159BA24E9AF3600B52B4B /* TouchEventStream.swift */; };
+		C524927226AE2E6D00479E00 /* Inkable in Frameworks */ = {isa = PBXBuildFile; productRef = C524927126AE2E6D00479E00 /* Inkable */; };
 		C5C159C424E9AF4E00B52B4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159C324E9AF4E00B52B4B /* AppDelegate.swift */; };
 		C5C159C624E9AF4E00B52B4B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159C524E9AF4E00B52B4B /* SceneDelegate.swift */; };
 		C5C159C824E9AF4E00B52B4B /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159C724E9AF4E00B52B4B /* DebugViewController.swift */; };
 		C5C159CB24E9AF4E00B52B4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5C159C924E9AF4E00B52B4B /* Main.storyboard */; };
 		C5C159CD24E9AF4E00B52B4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5C159CC24E9AF4E00B52B4B /* Assets.xcassets */; };
 		C5C159D024E9AF4E00B52B4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5C159CE24E9AF4E00B52B4B /* LaunchScreen.storyboard */; };
-		C5C159D824E9AF6100B52B4B /* DrawUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */; };
-		C5C159DC24E9AF8100B52B4B /* UITouch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159DA24E9AF8100B52B4B /* UITouch+Extensions.swift */; };
-		C5C159DD24E9AF8100B52B4B /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159DB24E9AF8100B52B4B /* Array+Extensions.swift */; };
-		C5C159DF24E9AFAA00B52B4B /* DrawUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C5C159E224E9B2F800B52B4B /* TouchEventGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159E124E9B2F800B52B4B /* TouchEventGestureRecognizer.swift */; };
 		C5C159E724E9BC6500B52B4B /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C159E624E9BC6500B52B4B /* DebugView.swift */; };
-		C5C5CC41254E089000B6662F /* AntigrainSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */; };
-		C5C5CC4F254E0DDD00B6662F /* AntigrainSmootherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */; };
-		C5EBA7FA261ABA3C000E29D3 /* ClippedBezierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EBA7F9261ABA3C000E29D3 /* ClippedBezierView.swift */; };
-		C5EBA7FE261ABA78000E29D3 /* NaiveClippedDrawRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EBA7FD261ABA78000E29D3 /* NaiveClippedDrawRectView.swift */; };
 		C5EBA802261ABABE000E29D3 /* ClippedBezierViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EBA801261ABABE000E29D3 /* ClippedBezierViewController.swift */; };
-		C5EBA80C261ABEF8000E29D3 /* OrderedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EBA80B261ABEF8000E29D3 /* OrderedSet.swift */; };
-		C5EBA810261ABF4F000E29D3 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5EBA80F261ABF4F000E29D3 /* LICENSE.txt */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		C58025AF24EA3F150043130D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C5C159A524E9AF1C00B52B4B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C5C159AD24E9AF1C00B52B4B;
-			remoteInfo = DrawUI;
-		};
-		C5C159D524E9AF5E00B52B4B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C5C159A524E9AF1C00B52B4B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C5C159AD24E9AF1C00B52B4B;
-			remoteInfo = DrawUI;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		C5C159DE24E9AFA000B52B4B /* CopyFiles */ = {
@@ -92,54 +27,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C5C159DF24E9AFAA00B52B4B /* DrawUI.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
-		C5005F562548E14500E6DD0C /* TouchPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPathTests.swift; sourceTree = "<group>"; };
-		C507F3E225041E0B001A7821 /* Clamping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
-		C5094CE125FEB0A60001AE2A /* BezierStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierStream.swift; sourceTree = "<group>"; };
 		C5094CE825FEB6770001AE2A /* BezierViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierViewController.swift; sourceTree = "<group>"; };
 		C5094CEE25FEB6FB0001AE2A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		C5255130260527B7009876B9 /* AttributesStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesStream.swift; sourceTree = "<group>"; };
-		C53651B62544CC7E00FA25A4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		C5420EA42549096700473D8A /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
-		C559CBF924EB9489006D263C /* PolylineStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolylineStream.swift; sourceTree = "<group>"; };
-		C559CBFA24EB9489006D263C /* Polyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Polyline.swift; sourceTree = "<group>"; };
-		C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveSavitzkyGolay.swift; sourceTree = "<group>"; };
-		C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveDouglasPeucker.swift; sourceTree = "<group>"; };
-		C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaivePointDistance.swift; sourceTree = "<group>"; };
-		C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducerConsumer.swift; sourceTree = "<group>"; };
-		C55CC111260F1F9E00C42FBB /* ColorCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodable.swift; sourceTree = "<group>"; };
-		C55CC117260F1FEF00C42FBB /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		C55F4AB526201379008B05F1 /* BezierStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierStreamTests.swift; sourceTree = "<group>"; };
-		C572108F260468FA00DEB0C0 /* LineSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSmoother.swift; sourceTree = "<group>"; };
-		C5721093260469C000DEB0C0 /* Smoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smoother.swift; sourceTree = "<group>"; };
-		C580259B24E9E1150043130D /* TouchPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPath.swift; sourceTree = "<group>"; };
-		C580259E24E9E1C10043130D /* TouchPathStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchPathStream.swift; sourceTree = "<group>"; };
-		C58025A924EA3F150043130D /* DrawUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C58025AB24EA3F150043130D /* TestsOfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsOfTests.swift; sourceTree = "<group>"; };
-		C58025AD24EA3F150043130D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C5825DA92618F24500A67837 /* docs */ = {isa = PBXFileReference; lastKnownFileType = text; path = docs; sourceTree = SOURCE_ROOT; };
-		C5825DC5261A77A000A67837 /* ClippedBezierStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClippedBezierStream.swift; sourceTree = "<group>"; };
-		C5825DCB261A781D00A67837 /* UIBezierPath+Elements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Elements.swift"; sourceTree = "<group>"; };
-		C58B5016254DFCCA0010F195 /* PolylineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolylineTests.swift; sourceTree = "<group>"; };
-		C594308124F0E3640097D52B /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
-		C59582BB25FF366500C4B202 /* SmartDrawRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartDrawRectView.swift; sourceTree = "<group>"; };
-		C59582C125FF388000C4B202 /* NaiveDrawRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveDrawRectView.swift; sourceTree = "<group>"; };
-		C5A52854263E0CFA002B3D63 /* ClippedBezierStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClippedBezierStreamTests.swift; sourceTree = "<group>"; };
-		C5A52856263E0F3B002B3D63 /* UIBezierPath+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Extensions.swift"; sourceTree = "<group>"; };
-		C5A52858263E1680002B3D63 /* OrderedSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedSetTests.swift; sourceTree = "<group>"; };
-		C5AF2DFA26112B15006F2CC2 /* BezierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierView.swift; sourceTree = "<group>"; };
-		C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DrawUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5C159B124E9AF1C00B52B4B /* DrawUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawUI.h; sourceTree = "<group>"; };
-		C5C159B224E9AF1C00B52B4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C5C159B924E9AF3600B52B4B /* TouchEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchEvent.swift; sourceTree = "<group>"; };
-		C5C159BA24E9AF3600B52B4B /* TouchEventStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchEventStream.swift; sourceTree = "<group>"; };
 		C5C159C124E9AF4E00B52B4B /* DrawUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C159C324E9AF4E00B52B4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5C159C524E9AF4E00B52B4B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,43 +43,16 @@
 		C5C159CC24E9AF4E00B52B4B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5C159CF24E9AF4E00B52B4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C5C159D124E9AF4E00B52B4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C5C159DA24E9AF8100B52B4B /* UITouch+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITouch+Extensions.swift"; sourceTree = "<group>"; };
-		C5C159DB24E9AF8100B52B4B /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
-		C5C159E124E9B2F800B52B4B /* TouchEventGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchEventGestureRecognizer.swift; sourceTree = "<group>"; };
 		C5C159E624E9BC6500B52B4B /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
-		C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntigrainSmoother.swift; sourceTree = "<group>"; };
-		C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntigrainSmootherTests.swift; sourceTree = "<group>"; };
-		C5EBA7F9261ABA3C000E29D3 /* ClippedBezierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClippedBezierView.swift; sourceTree = "<group>"; };
-		C5EBA7FD261ABA78000E29D3 /* NaiveClippedDrawRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveClippedDrawRectView.swift; sourceTree = "<group>"; };
 		C5EBA801261ABABE000E29D3 /* ClippedBezierViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClippedBezierViewController.swift; sourceTree = "<group>"; };
-		C5EBA80B261ABEF8000E29D3 /* OrderedSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedSet.swift; sourceTree = "<group>"; };
-		C5EBA80F261ABF4F000E29D3 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C58025A624EA3F150043130D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C58025AE24EA3F150043130D /* DrawUI.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C5C159AB24E9AF1C00B52B4B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C59582F125FF4A1F00C4B202 /* PerformanceBezier in Frameworks */,
-				C555A7DE261BBFCE0017E1B4 /* ClippingBezier in Frameworks */,
-				C5094CF825FEBA3B0001AE2A /* MMSwiftToolbox in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C5C159BE24E9AF4E00B52B4B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5C159D824E9AF6100B52B4B /* DrawUI.framework in Frameworks */,
+				C524927226AE2E6D00479E00 /* Inkable in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,96 +70,9 @@
 			path = Tabs;
 			sourceTree = "<group>";
 		};
-		C5420EAA2549096F00473D8A /* Test Data */ = {
-			isa = PBXGroup;
-			children = (
-				C5420EA42549096700473D8A /* events.json */,
-			);
-			name = "Test Data";
-			sourceTree = "<group>";
-		};
-		C55CC110260F1F9300C42FBB /* ColorCodable */ = {
-			isa = PBXGroup;
-			children = (
-				C55CC111260F1F9E00C42FBB /* ColorCodable.swift */,
-				C55CC117260F1FEF00C42FBB /* LICENSE */,
-			);
-			path = ColorCodable;
-			sourceTree = "<group>";
-		};
-		C55E42AB25FEAF7400093DEC /* BezierSmoothers */ = {
-			isa = PBXGroup;
-			children = (
-				C5721093260469C000DEB0C0 /* Smoother.swift */,
-				C5C5CC40254E089000B6662F /* AntigrainSmoother.swift */,
-				C572108F260468FA00DEB0C0 /* LineSmoother.swift */,
-			);
-			path = BezierSmoothers;
-			sourceTree = "<group>";
-		};
-		C58025A224EA26BB0043130D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				C55B2CB826000C58004F6BDF /* ProducerConsumer.swift */,
-				C5C159BA24E9AF3600B52B4B /* TouchEventStream.swift */,
-				C5C159B924E9AF3600B52B4B /* TouchEvent.swift */,
-				C580259E24E9E1C10043130D /* TouchPathStream.swift */,
-				C580259B24E9E1150043130D /* TouchPath.swift */,
-				C559CBF924EB9489006D263C /* PolylineStream.swift */,
-				C559CBFA24EB9489006D263C /* Polyline.swift */,
-				C5ADBE77261A7D8E007DDC16 /* PolylineFilters */,
-				C55E42AB25FEAF7400093DEC /* BezierSmoothers */,
-				C5094CE125FEB0A60001AE2A /* BezierStream.swift */,
-				C5255130260527B7009876B9 /* AttributesStream.swift */,
-				C5825DD3261A7B5D00A67837 /* BezierStreamRender */,
-				C5825DC5261A77A000A67837 /* ClippedBezierStream.swift */,
-				C5EBA7F8261ABA1D000E29D3 /* ClippedBezierStreamRender */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		C58025AA24EA3F150043130D /* DrawUITests */ = {
-			isa = PBXGroup;
-			children = (
-				C5420EAA2549096F00473D8A /* Test Data */,
-				C58025AB24EA3F150043130D /* TestsOfTests.swift */,
-				C5005F562548E14500E6DD0C /* TouchPathTests.swift */,
-				C58B5016254DFCCA0010F195 /* PolylineTests.swift */,
-				C5C5CC4E254E0DDD00B6662F /* AntigrainSmootherTests.swift */,
-				C55F4AB526201379008B05F1 /* BezierStreamTests.swift */,
-				C5A52854263E0CFA002B3D63 /* ClippedBezierStreamTests.swift */,
-				C5A52858263E1680002B3D63 /* OrderedSetTests.swift */,
-				C5005F4E2548C1F100E6DD0C /* TestHelpers.swift */,
-				C58025AD24EA3F150043130D /* Info.plist */,
-			);
-			path = DrawUITests;
-			sourceTree = "<group>";
-		};
-		C5825DD3261A7B5D00A67837 /* BezierStreamRender */ = {
-			isa = PBXGroup;
-			children = (
-				C5AF2DFA26112B15006F2CC2 /* BezierView.swift */,
-				C59582C125FF388000C4B202 /* NaiveDrawRectView.swift */,
-				C59582BB25FF366500C4B202 /* SmartDrawRectView.swift */,
-			);
-			path = BezierStreamRender;
-			sourceTree = "<group>";
-		};
-		C5ADBE77261A7D8E007DDC16 /* PolylineFilters */ = {
-			isa = PBXGroup;
-			children = (
-				C559CBFF24EB9ABE006D263C /* NaiveSavitzkyGolay.swift */,
-				C559CC0124EB9ACA006D263C /* NaiveDouglasPeucker.swift */,
-				C559CC0624EBA6C0006D263C /* NaivePointDistance.swift */,
-			);
-			path = PolylineFilters;
-			sourceTree = "<group>";
-		};
 		C5C159A424E9AF1C00B52B4B = {
 			isa = PBXGroup;
 			children = (
-				C5C159B024E9AF1C00B52B4B /* DrawUI */,
-				C58025AA24EA3F150043130D /* DrawUITests */,
 				C5C159C224E9AF4E00B52B4B /* DrawUIExample */,
 				C5C159AF24E9AF1C00B52B4B /* Products */,
 				C5C159D724E9AF6100B52B4B /* Frameworks */,
@@ -301,27 +82,9 @@
 		C5C159AF24E9AF1C00B52B4B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */,
 				C5C159C124E9AF4E00B52B4B /* DrawUIExample.app */,
-				C58025A924EA3F150043130D /* DrawUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		C5C159B024E9AF1C00B52B4B /* DrawUI */ = {
-			isa = PBXGroup;
-			children = (
-				C5825DA92618F24500A67837 /* docs */,
-				C53651B62544CC7E00FA25A4 /* README.md */,
-				C5EBA809261ABED2000E29D3 /* External */,
-				C55CC110260F1F9300C42FBB /* ColorCodable */,
-				C5C159E024E9B2F000B52B4B /* Gestures */,
-				C5C159D924E9AF7300B52B4B /* Extensions */,
-				C58025A224EA26BB0043130D /* Model */,
-				C5C159B124E9AF1C00B52B4B /* DrawUI.h */,
-				C5C159B224E9AF1C00B52B4B /* Info.plist */,
-			);
-			path = DrawUI;
 			sourceTree = "<group>";
 		};
 		C5C159C224E9AF4E00B52B4B /* DrawUIExample */ = {
@@ -346,111 +109,9 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C5C159D924E9AF7300B52B4B /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				C5C159DB24E9AF8100B52B4B /* Array+Extensions.swift */,
-				C594308124F0E3640097D52B /* CGPoint+Extensions.swift */,
-				C5C159DA24E9AF8100B52B4B /* UITouch+Extensions.swift */,
-				C507F3E225041E0B001A7821 /* Clamping.swift */,
-				C5825DCB261A781D00A67837 /* UIBezierPath+Elements.swift */,
-				C5A52856263E0F3B002B3D63 /* UIBezierPath+Extensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		C5C159E024E9B2F000B52B4B /* Gestures */ = {
-			isa = PBXGroup;
-			children = (
-				C5C159E124E9B2F800B52B4B /* TouchEventGestureRecognizer.swift */,
-			);
-			path = Gestures;
-			sourceTree = "<group>";
-		};
-		C5EBA7F8261ABA1D000E29D3 /* ClippedBezierStreamRender */ = {
-			isa = PBXGroup;
-			children = (
-				C5EBA7F9261ABA3C000E29D3 /* ClippedBezierView.swift */,
-				C5EBA7FD261ABA78000E29D3 /* NaiveClippedDrawRectView.swift */,
-			);
-			path = ClippedBezierStreamRender;
-			sourceTree = "<group>";
-		};
-		C5EBA809261ABED2000E29D3 /* External */ = {
-			isa = PBXGroup;
-			children = (
-				C5EBA80A261ABEE9000E29D3 /* OrderedSet */,
-			);
-			path = External;
-			sourceTree = "<group>";
-		};
-		C5EBA80A261ABEE9000E29D3 /* OrderedSet */ = {
-			isa = PBXGroup;
-			children = (
-				C5EBA80F261ABF4F000E29D3 /* LICENSE.txt */,
-				C5EBA80B261ABEF8000E29D3 /* OrderedSet.swift */,
-			);
-			path = OrderedSet;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		C5C159A924E9AF1C00B52B4B /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5C159B324E9AF1C00B52B4B /* DrawUI.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		C58025A824EA3F150043130D /* DrawUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C58025B324EA3F150043130D /* Build configuration list for PBXNativeTarget "DrawUITests" */;
-			buildPhases = (
-				C58025A524EA3F150043130D /* Sources */,
-				C58025A624EA3F150043130D /* Frameworks */,
-				C58025A724EA3F150043130D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C58025B024EA3F150043130D /* PBXTargetDependency */,
-			);
-			name = DrawUITests;
-			packageProductDependencies = (
-			);
-			productName = DrawUITests;
-			productReference = C58025A924EA3F150043130D /* DrawUITests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		C5C159AD24E9AF1C00B52B4B /* DrawUI */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C5C159B624E9AF1C00B52B4B /* Build configuration list for PBXNativeTarget "DrawUI" */;
-			buildPhases = (
-				C5C159A924E9AF1C00B52B4B /* Headers */,
-				C559CC0524EBA414006D263C /* SwiftLint */,
-				C5C159AA24E9AF1C00B52B4B /* Sources */,
-				C5C159AB24E9AF1C00B52B4B /* Frameworks */,
-				C5C159AC24E9AF1C00B52B4B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = DrawUI;
-			packageProductDependencies = (
-				C5094CF725FEBA3B0001AE2A /* MMSwiftToolbox */,
-				C59582F025FF4A1F00C4B202 /* PerformanceBezier */,
-				C555A7DD261BBFCE0017E1B4 /* ClippingBezier */,
-			);
-			productName = DrawUI;
-			productReference = C5C159AE24E9AF1C00B52B4B /* DrawUI.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		C5C159C024E9AF4E00B52B4B /* DrawUIExample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C5C159D224E9AF4E00B52B4B /* Build configuration list for PBXNativeTarget "DrawUIExample" */;
@@ -463,10 +124,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				C5C159D624E9AF5E00B52B4B /* PBXTargetDependency */,
 			);
 			name = DrawUIExample;
 			packageProductDependencies = (
+				C524927126AE2E6D00479E00 /* Inkable */,
 			);
 			productName = DrawUIExample;
 			productReference = C5C159C124E9AF4E00B52B4B /* DrawUIExample.app */;
@@ -481,13 +142,6 @@
 				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
-					C58025A824EA3F150043130D = {
-						CreatedOnToolsVersion = 12.0;
-					};
-					C5C159AD24E9AF1C00B52B4B = {
-						CreatedOnToolsVersion = 12.0;
-						LastSwiftMigration = 1240;
-					};
 					C5C159C024E9AF4E00B52B4B = {
 						CreatedOnToolsVersion = 12.0;
 					};
@@ -503,40 +157,18 @@
 			);
 			mainGroup = C5C159A424E9AF1C00B52B4B;
 			packageReferences = (
-				C5094CF625FEBA3B0001AE2A /* XCRemoteSwiftPackageReference "MMSwiftToolbox" */,
-				C59582EF25FF4A1F00C4B202 /* XCRemoteSwiftPackageReference "PerformanceBezier" */,
-				C555A7DC261BBFCE0017E1B4 /* XCRemoteSwiftPackageReference "ClippingBezier" */,
+				C524926E26AE2E0000479E00 /* XCRemoteSwiftPackageReference "Inkable" */,
 			);
 			productRefGroup = C5C159AF24E9AF1C00B52B4B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C5C159AD24E9AF1C00B52B4B /* DrawUI */,
-				C58025A824EA3F150043130D /* DrawUITests */,
 				C5C159C024E9AF4E00B52B4B /* DrawUIExample */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C58025A724EA3F150043130D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5420EA52549096700473D8A /* events.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C5C159AC24E9AF1C00B52B4B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5EBA810261ABF4F000E29D3 /* LICENSE.txt in Resources */,
-				C55CC118260F1FEF00C42FBB /* LICENSE in Resources */,
-				C53651B72544CC7F00FA25A4 /* README.md in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C5C159BF24E9AF4E00B52B4B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -549,80 +181,7 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		C559CC0524EBA414006D263C /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nif which swiftlint >/dev/null; then\nswiftlint --config \"$SRCROOT/.swiftlint.yml\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		C58025A524EA3F150043130D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5005F572548E14500E6DD0C /* TouchPathTests.swift in Sources */,
-				C5C5CC4F254E0DDD00B6662F /* AntigrainSmootherTests.swift in Sources */,
-				C5A52855263E0CFA002B3D63 /* ClippedBezierStreamTests.swift in Sources */,
-				C55F4AB626201379008B05F1 /* BezierStreamTests.swift in Sources */,
-				C5A52859263E1680002B3D63 /* OrderedSetTests.swift in Sources */,
-				C58B5017254DFCCA0010F195 /* PolylineTests.swift in Sources */,
-				C5005F4F2548C1F100E6DD0C /* TestHelpers.swift in Sources */,
-				C58025AC24EA3F150043130D /* TestsOfTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C5C159AA24E9AF1C00B52B4B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5094CE225FEB0A60001AE2A /* BezierStream.swift in Sources */,
-				C5EBA7FA261ABA3C000E29D3 /* ClippedBezierView.swift in Sources */,
-				C507F3E325041E0B001A7821 /* Clamping.swift in Sources */,
-				C5C159BB24E9AF3600B52B4B /* TouchEvent.swift in Sources */,
-				C559CC0224EB9ACA006D263C /* NaiveDouglasPeucker.swift in Sources */,
-				C55CC112260F1F9E00C42FBB /* ColorCodable.swift in Sources */,
-				C5EBA80C261ABEF8000E29D3 /* OrderedSet.swift in Sources */,
-				C59582C225FF388000C4B202 /* NaiveDrawRectView.swift in Sources */,
-				C594308224F0E3640097D52B /* CGPoint+Extensions.swift in Sources */,
-				C5C159E224E9B2F800B52B4B /* TouchEventGestureRecognizer.swift in Sources */,
-				C55B2CB926000C58004F6BDF /* ProducerConsumer.swift in Sources */,
-				C580259F24E9E1C10043130D /* TouchPathStream.swift in Sources */,
-				C559CC0724EBA6C0006D263C /* NaivePointDistance.swift in Sources */,
-				C5C159DC24E9AF8100B52B4B /* UITouch+Extensions.swift in Sources */,
-				C5C159BC24E9AF3600B52B4B /* TouchEventStream.swift in Sources */,
-				C59582BC25FF366500C4B202 /* SmartDrawRectView.swift in Sources */,
-				C5AF2DFB26112B15006F2CC2 /* BezierView.swift in Sources */,
-				C5C5CC41254E089000B6662F /* AntigrainSmoother.swift in Sources */,
-				C5825DCC261A781D00A67837 /* UIBezierPath+Elements.swift in Sources */,
-				C559CC0024EB9ABE006D263C /* NaiveSavitzkyGolay.swift in Sources */,
-				C5C159DD24E9AF8100B52B4B /* Array+Extensions.swift in Sources */,
-				C5A52857263E0F3B002B3D63 /* UIBezierPath+Extensions.swift in Sources */,
-				C5EBA7FE261ABA78000E29D3 /* NaiveClippedDrawRectView.swift in Sources */,
-				C580259C24E9E1150043130D /* TouchPath.swift in Sources */,
-				C5825DC6261A77A000A67837 /* ClippedBezierStream.swift in Sources */,
-				C559CBFD24EB9489006D263C /* Polyline.swift in Sources */,
-				C559CBFC24EB9489006D263C /* PolylineStream.swift in Sources */,
-				C5721094260469C000DEB0C0 /* Smoother.swift in Sources */,
-				C5255131260527B7009876B9 /* AttributesStream.swift in Sources */,
-				C5721090260468FA00DEB0C0 /* LineSmoother.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C5C159BD24E9AF4E00B52B4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -638,19 +197,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C58025B024EA3F150043130D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C5C159AD24E9AF1C00B52B4B /* DrawUI */;
-			targetProxy = C58025AF24EA3F150043130D /* PBXContainerItemProxy */;
-		};
-		C5C159D624E9AF5E00B52B4B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C5C159AD24E9AF1C00B52B4B /* DrawUI */;
-			targetProxy = C5C159D524E9AF5E00B52B4B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C5C159C924E9AF4E00B52B4B /* Main.storyboard */ = {
@@ -672,42 +218,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		C58025B124EA3F150043130D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MU27A4SCKC;
-				INFOPLIST_FILE = DrawUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.milestonemade.DrawUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		C58025B224EA3F150043130D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MU27A4SCKC;
-				INFOPLIST_FILE = DrawUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.milestonemade.DrawUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		C5C159B424E9AF1C00B52B4B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -838,67 +348,6 @@
 			};
 			name = Release;
 		};
-		C5C159B724E9AF1C00B52B4B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = MU27A4SCKC;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = DrawUI/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-fcxx-modules",
-					"-fmodules",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.milestonemade.DrawUI;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		C5C159B824E9AF1C00B52B4B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = MU27A4SCKC;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = DrawUI/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-fcxx-modules",
-					"-fmodules",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.milestonemade.DrawUI;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		C5C159D324E9AF4E00B52B4B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -940,29 +389,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C58025B324EA3F150043130D /* Build configuration list for PBXNativeTarget "DrawUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C58025B124EA3F150043130D /* Debug */,
-				C58025B224EA3F150043130D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C5C159A824E9AF1C00B52B4B /* Build configuration list for PBXProject "DrawUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C5C159B424E9AF1C00B52B4B /* Debug */,
 				C5C159B524E9AF1C00B52B4B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C5C159B624E9AF1C00B52B4B /* Build configuration list for PBXNativeTarget "DrawUI" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C5C159B724E9AF1C00B52B4B /* Debug */,
-				C5C159B824E9AF1C00B52B4B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -979,25 +410,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C5094CF625FEBA3B0001AE2A /* XCRemoteSwiftPackageReference "MMSwiftToolbox" */ = {
+		C524926E26AE2E0000479E00 /* XCRemoteSwiftPackageReference "Inkable" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/adamwulf/MMSwiftToolbox.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-		C555A7DC261BBFCE0017E1B4 /* XCRemoteSwiftPackageReference "ClippingBezier" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/adamwulf/ClippingBezier.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-		C59582EF25FF4A1F00C4B202 /* XCRemoteSwiftPackageReference "PerformanceBezier" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/adamwulf/PerformanceBezier";
+			repositoryURL = "https://github.com/adamwulf/Inkable.git";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -1006,20 +421,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C5094CF725FEBA3B0001AE2A /* MMSwiftToolbox */ = {
+		C524927126AE2E6D00479E00 /* Inkable */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C5094CF625FEBA3B0001AE2A /* XCRemoteSwiftPackageReference "MMSwiftToolbox" */;
-			productName = MMSwiftToolbox;
-		};
-		C555A7DD261BBFCE0017E1B4 /* ClippingBezier */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C555A7DC261BBFCE0017E1B4 /* XCRemoteSwiftPackageReference "ClippingBezier" */;
-			productName = ClippingBezier;
-		};
-		C59582F025FF4A1F00C4B202 /* PerformanceBezier */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C59582EF25FF4A1F00C4B202 /* XCRemoteSwiftPackageReference "PerformanceBezier" */;
-			productName = PerformanceBezier;
+			package = C524926E26AE2E0000479E00 /* XCRemoteSwiftPackageReference "Inkable" */;
+			productName = Inkable;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

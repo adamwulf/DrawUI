@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import DrawUI
+import Inkable
 import MMSwiftToolbox
 
 class BezierViewController: BaseViewController {

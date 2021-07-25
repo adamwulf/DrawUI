@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import DrawUI
+import Inkable
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
